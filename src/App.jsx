@@ -127,9 +127,11 @@ const workToDo = [
 
 function SectionLabel({ children }) {
   return (
-    <div className="flex items-center gap-3 mb-5">
-      <div className="h-px w-8 bg-lime-400 shrink-0" />
-      <p className="text-xs font-bold uppercase tracking-[0.3em] text-lime-400">{children}</p>
+    <div className="mb-5 flex items-center gap-3">
+      <div className="h-px w-8 shrink-0 bg-lime-400" />
+      <p className="text-xs font-bold uppercase tracking-[0.3em] text-lime-400" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
+        {children}
+      </p>
     </div>
   );
 }
@@ -140,20 +142,16 @@ export default function App() {
 
       {/* ── HEADER ── */}
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#050505]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="relative flex h-10 w-10 items-center justify-center border border-lime-400/40 bg-black">
-              <div className="absolute inset-0 border border-white/5" />
-              <div className="flex items-baseline">
-                <span className="text-xl font-black leading-none text-white">U</span>
-                <span className="text-xl font-black leading-none text-lime-400">H</span>
-              </div>
-            </div>
-            <div>
-              <p className="text-[9px] font-bold uppercase tracking-[0.45em] text-lime-400/60 leading-none">The</p>
-              <p className="text-base font-black uppercase tracking-wide text-white leading-tight">Ultimate Human</p>
-            </div>
-          </div>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+          {/* Logo image */}
+          <a href="#" className="shrink-0 no-underline">
+            <img
+              src="/images/logo.png"
+              alt="The Ultimate Human"
+              className="h-9 w-auto object-contain md:h-11"
+              style={{ maxWidth: "200px" }}
+            />
+          </a>
 
           <nav className="hidden gap-8 md:flex">
             {[
@@ -166,7 +164,8 @@ export default function App() {
               <a
                 key={href}
                 href={href}
-                className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400 no-underline transition-colors hover:text-white"
+                className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 no-underline transition-colors hover:text-white"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 {label}
               </a>
@@ -175,7 +174,8 @@ export default function App() {
 
           <a
             href="#signup"
-            className="border border-lime-400 bg-lime-400 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+            className="border border-lime-400 bg-lime-400 px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Join the Waitlist
           </a>
@@ -185,107 +185,107 @@ export default function App() {
       <main>
 
         {/* ── HERO ── */}
-        <section className="relative flex min-h-screen items-center overflow-hidden bg-[#050505]">
-          {/* Stadium atmosphere layers */}
-          <div className="pointer-events-none absolute inset-0">
-            {/* Ceiling spotlight */}
-            <div
-              className="absolute left-1/2 top-0 h-[65%] w-[70%] -translate-x-1/2"
-              style={{ background: "radial-gradient(ellipse at top, rgba(255,255,255,0.055) 0%, transparent 65%)" }}
-            />
-            {/* Left beam */}
-            <div
-              className="absolute left-0 top-0 h-full w-1/2"
-              style={{ background: "radial-gradient(ellipse at left top, rgba(255,255,255,0.03) 0%, transparent 55%)" }}
-            />
-            {/* Right beam */}
-            <div
-              className="absolute right-0 top-0 h-full w-1/2"
-              style={{ background: "radial-gradient(ellipse at right top, rgba(255,255,255,0.03) 0%, transparent 55%)" }}
-            />
-            {/* Floor lime glow */}
-            <div
-              className="absolute bottom-0 left-0 right-0 h-[45%]"
-              style={{ background: "radial-gradient(ellipse at bottom, rgba(132,204,22,0.09) 0%, transparent 70%)" }}
-            />
-            {/* Top lime accent line */}
-            <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/35 to-transparent" />
-            {/* Bottom fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] to-transparent" />
-          </div>
+        <section
+          className="relative flex min-h-[90vh] items-center overflow-hidden"
+          style={{
+            backgroundImage: "url('/images/uh-hero-arena-floor-no-text-2400x1400.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center center",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          {/* Dark overlays for text legibility */}
+          <div className="pointer-events-none absolute inset-0 bg-black/65" />
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.30) 50%, rgba(5,5,5,0.85) 90%, #050505 100%)",
+            }}
+          />
+          {/* Vignette — darken edges so copy stays readable */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%)",
+            }}
+          />
+          {/* Lime accent line top */}
+          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/40 to-transparent" />
+          {/* Bottom site-bg fade */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050505] to-transparent" />
 
-          <div className="relative mx-auto w-full max-w-7xl px-6 py-32 md:py-40">
+          <div className="relative mx-auto w-full max-w-7xl px-6 py-20 md:py-24">
             <motion.div
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              className="max-w-5xl"
+              transition={{ duration: 0.85, ease: "easeOut" }}
+              className="max-w-4xl"
             >
               {/* Live badge */}
-              <div className="mb-10 inline-flex items-center gap-3 border border-lime-400/20 bg-lime-400/[0.05] px-4 py-2">
+              <div className="mb-7 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.07] px-4 py-2">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400">
-                  theultimatehuman.fitness · Founding Athlete Waitlist Now Open
-                </span>
-              </div>
-
-              {/* UH lockup */}
-              <div className="mb-6 flex items-baseline gap-3">
                 <span
-                  className="text-7xl font-black leading-none tracking-tighter text-white md:text-9xl"
-                  style={{ textShadow: "0 0 80px rgba(255,255,255,0.08)" }}
+                  className="text-xs font-bold uppercase tracking-[0.25em] text-lime-400"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
-                  UH
-                </span>
-                <span className="mb-2 self-end text-base font-bold uppercase tracking-[0.35em] text-neutral-500 md:text-lg">
-                  / ULTIMATE HUMAN
+                  Founding Athlete Waitlist Now Open
                 </span>
               </div>
 
               {/* Main headline */}
               <h1
-                className="text-5xl font-black uppercase leading-none tracking-tight md:text-7xl lg:text-8xl"
+                className="text-metallic uppercase leading-none tracking-tight"
                 style={{
-                  background: "linear-gradient(175deg, #ffffff 0%, #d4d4d4 35%, #8a8a8a 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
+                  fontSize: "clamp(2.4rem, 5.5vw, 5.25rem)",
+                  lineHeight: 1.05,
+                  fontFamily: "'Oswald', sans-serif",
+                  fontWeight: 700,
                 }}
               >
-                THE AI-POWERED
+                The AI-Powered
                 <br />
-                OPERATING SYSTEM
+                Operating System
                 <br />
-                FOR HUMAN
-                <br className="hidden sm:block" />
-                PERFORMANCE
+                for Human
+                <br />
+                Performance
               </h1>
 
               {/* Slogan */}
-              <div className="mt-8 flex items-center gap-4">
-                <div className="h-px w-12 bg-lime-400 shrink-0" />
-                <p className="text-sm font-bold uppercase tracking-[0.45em] text-lime-400">
-                  MEASURE. TRAIN. COMPETE. EVOLVE.
+              <div className="mt-7 flex items-center gap-4">
+                <div className="h-px w-10 shrink-0 bg-lime-400" />
+                <p
+                  className="text-sm font-bold uppercase tracking-[0.45em] text-lime-400"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  Measure. Train. Compete. Evolve.
                 </p>
               </div>
 
               {/* Sub-copy */}
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-neutral-400">
-                The Ultimate Human is a next-generation indoor fitness competition designed to measure complete human capability. Speed, stamina, strength, coordination, balance and mobility — combined into one adaptive performance score.
+              <p
+                className="mt-6 max-w-xl text-lg leading-7 text-neutral-300"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 500 }}
+              >
+                A next-generation indoor fitness competition that measures complete human capability — speed, stamina, strength, coordination, balance and mobility — combined into one adaptive performance score.
               </p>
 
               {/* CTAs */}
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
                 <a
                   href="#signup"
-                  className="inline-flex items-center justify-center bg-lime-400 px-8 py-4 text-sm font-black uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+                  className="inline-flex items-center justify-center bg-lime-400 px-7 py-3.5 text-sm font-black uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Join the Founding Athlete Waitlist
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
                 <a
                   href="#challenge"
-                  className="inline-flex items-center justify-center border border-white/20 bg-white/[0.03] px-8 py-4 text-sm font-black uppercase tracking-[0.15em] text-white no-underline transition-colors hover:bg-white/[0.07]"
+                  className="inline-flex items-center justify-center border border-white/25 bg-black/30 px-7 py-3.5 text-sm font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/10"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Explore the Challenge
                   <ChevronRight className="ml-2 h-4 w-4" />
@@ -293,15 +293,20 @@ export default function App() {
               </div>
 
               {/* Stats row */}
-              <div className="mt-12 flex flex-wrap gap-8">
+              <div className="mt-10 flex flex-wrap gap-8">
                 {[
                   ["Indoor Events", "All Venues"],
                   ["All Abilities", "Every Level"],
                   ["Personal Score", "Your Benchmark"],
                 ].map(([label, sub]) => (
-                  <div key={label} className="border-l border-lime-400/30 pl-4">
-                    <p className="text-xs font-black uppercase tracking-[0.2em] text-white">{label}</p>
-                    <p className="mt-0.5 text-xs text-neutral-600">{sub}</p>
+                  <div key={label} className="border-l border-lime-400/35 pl-4">
+                    <p
+                      className="text-xs font-black uppercase tracking-[0.2em] text-white"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      {label}
+                    </p>
+                    <p className="mt-0.5 text-xs text-neutral-500">{sub}</p>
                   </div>
                 ))}
               </div>
@@ -314,15 +319,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
               <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
-              <h2
-                className="text-3xl font-black uppercase tracking-wide text-white md:text-4xl"
-                style={{
-                  background: "linear-gradient(180deg, #ffffff 0%, #aaaaaa 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
+              <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
                 Every Dimension. Measured.
               </h2>
             </div>
@@ -331,17 +328,20 @@ export default function App() {
               {capabilities.map(({ label, icon: Icon }, i) => (
                 <motion.div
                   key={label}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="group flex flex-col items-center gap-4 bg-[#0d0d0d] p-7 transition-all hover:bg-[#111]"
+                  transition={{ duration: 0.35, delay: i * 0.04 }}
+                  className="group flex flex-col items-center gap-4 bg-[#0d0d0d] p-7 transition-colors hover:bg-[#111]"
                 >
                   <Icon
                     className="h-6 w-6 text-neutral-600 transition-colors group-hover:text-lime-400"
                     strokeWidth={1.5}
                   />
-                  <p className="text-center text-[10px] font-black uppercase tracking-[0.25em] text-neutral-500 transition-colors group-hover:text-white">
+                  <p
+                    className="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-500 transition-colors group-hover:text-white"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
                     {label}
                   </p>
                 </motion.div>
@@ -358,17 +358,17 @@ export default function App() {
               {[
                 {
                   icon: Flame,
-                  title: "HARD, BUT NOT STUPID",
+                  title: "Hard, But Not Stupid",
                   text: "You will work hard, but this is not designed to destroy you. It is designed to reveal how well you move, adapt and recover.",
                 },
                 {
                   icon: Timer,
-                  title: "45–70 MINUTES",
+                  title: "45–70 Minutes",
                   text: "Long enough to matter. Short enough to be repeatable. Designed for high energy, fast transitions and visible competition.",
                 },
                 {
                   icon: Zap,
-                  title: "ADAPT UNDER FATIGUE",
+                  title: "Adapt Under Fatigue",
                   text: "The signature test is not one movement. It is how quickly you can switch between speed, control, strength and coordination.",
                 },
               ].map(({ icon: Icon, title, text }) => (
@@ -376,8 +376,8 @@ export default function App() {
                   <div className="mb-7 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04]">
                     <Icon className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-lg font-black uppercase tracking-wider text-white">{title}</h3>
-                  <p className="mt-4 leading-7 text-neutral-400">{text}</p>
+                  <h3 className="text-xl uppercase tracking-wide text-white">{title}</h3>
+                  <p className="mt-4 text-base leading-7 text-neutral-400">{text}</p>
                 </div>
               ))}
             </div>
@@ -389,12 +389,12 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>The Event Format</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 10 Challenge Zones.
                 <br />
                 One Complete Test.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 Each zone is simple to understand, hard to master and designed to expose a different part of your athletic capability. Minimal equipment. Maximum variety.
               </p>
             </div>
@@ -406,14 +406,22 @@ export default function App() {
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
+                  transition={{ duration: 0.35, delay: index * 0.04 }}
                   className="group relative bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]"
                 >
                   <div className="absolute left-0 top-0 h-0 w-px bg-lime-400 transition-all duration-500 group-hover:h-full" />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-lime-400/50">
+                  <p
+                    className="text-[10px] font-bold uppercase tracking-[0.35em] text-lime-400/55"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
                     Zone {String(index + 1).padStart(2, "0")}
                   </p>
-                  <p className="mt-3 text-sm font-black uppercase tracking-wide text-white">{item}</p>
+                  <p
+                    className="mt-3 text-sm font-bold uppercase tracking-wide text-white"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {item}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -427,34 +435,34 @@ export default function App() {
             {/* Left col */}
             <div>
               <SectionLabel>Your Personal Benchmark</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Leave with More
                 <br />
                 Than a Medal.
               </h2>
-              <p className="mt-6 text-lg leading-8 text-neutral-400">
+              <p className="mt-6 text-lg leading-7 text-neutral-400">
                 Every participant receives an Ultimate Human Score showing performance across six areas. You will know what you are good at, what is holding you back and how to train for your next attempt.
               </p>
-              <p className="mt-4 text-lg leading-8 text-neutral-400">The aim is simple: come back better.</p>
+              <p className="mt-4 text-lg leading-7 text-neutral-400">The aim is simple: come back better.</p>
 
               <div className="mt-10 border border-white/[0.07] bg-[#0d0d0d] p-7">
                 <SectionLabel>How Is It Calculated?</SectionLabel>
-                <h3 className="text-2xl font-black uppercase tracking-tight text-white">
+                <h3 className="text-2xl uppercase tracking-tight text-white">
                   Your Ultimate Human Score
                 </h3>
-                <p className="mt-4 leading-7 text-neutral-400">
-                  Your Ultimate Human Score is calculated using our proprietary algorithm, which weights your performance across multiple capability areas including speed, stamina, strength, coordination, balance and mobility.
+                <p className="mt-4 text-base leading-7 text-neutral-400">
+                  Your score is calculated using our proprietary algorithm, which weights your performance across multiple capability areas including speed, stamina, strength, coordination, balance and mobility.
                 </p>
-                <p className="mt-4 leading-7 text-neutral-400">
+                <p className="mt-4 text-base leading-7 text-neutral-400">
                   The scoring model also takes into account factors such as your age category and previous athletic experience to create a more meaningful and balanced assessment of your overall human capability.
                 </p>
               </div>
 
-              {/* Domain description cards */}
+              {/* Domain description grid */}
               <div className="mt-6 grid gap-px bg-white/[0.05] sm:grid-cols-2">
                 {domains.map((d) => (
                   <div key={d.title} className="bg-[#0d0d0d] p-5">
-                    <p className="text-xs font-black uppercase tracking-[0.2em] text-white">{d.title}</p>
+                    <h3 className="text-base uppercase tracking-wide text-white">{d.title}</h3>
                     <p className="mt-2 text-sm leading-6 text-neutral-500">{d.text}</p>
                   </div>
                 ))}
@@ -466,10 +474,13 @@ export default function App() {
               <div className="border-b border-white/[0.06] p-7">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-neutral-600">
+                    <p
+                      className="text-[10px] font-bold uppercase tracking-[0.35em] text-neutral-600"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
                       Performance Dashboard
                     </p>
-                    <h3 className="mt-2 text-2xl font-black uppercase tracking-tight text-white">
+                    <h3 className="mt-2 text-2xl uppercase tracking-tight text-white">
                       Ultimate Human Score
                     </h3>
                   </div>
@@ -477,18 +488,23 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="space-y-px bg-white/[0.04] p-0">
+              <div className="space-y-px bg-white/[0.04]">
                 {domains.map((d, i) => (
                   <motion.div
                     key={d.title}
-                    initial={{ opacity: 0, x: 20 }}
+                    initial={{ opacity: 0, x: 18 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.45, delay: i * 0.07 }}
+                    transition={{ duration: 0.4, delay: i * 0.07 }}
                     className="bg-[#0d0d0d] p-5"
                   >
                     <div className="mb-2.5 flex items-center justify-between">
-                      <p className="text-xs font-black uppercase tracking-[0.2em] text-neutral-300">{d.title}</p>
+                      <p
+                        className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-300"
+                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                      >
+                        {d.title}
+                      </p>
                       <p className="text-xs font-bold text-lime-400">{d.value}</p>
                     </div>
                     <div className="h-1 w-full bg-white/[0.06]">
@@ -506,12 +522,14 @@ export default function App() {
 
               <div className="border-t border-white/[0.06] p-7">
                 <div className="flex items-center justify-between">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-600">
+                  <p
+                    className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-600"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
                     Overall Score
                   </p>
-                  <p className="text-3xl font-black text-white">
-                    78
-                    <span className="ml-1 text-sm font-normal text-neutral-600">/100</span>
+                  <p className="text-3xl text-white" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}>
+                    78<span className="ml-1 text-sm font-normal text-neutral-600">/100</span>
                   </p>
                 </div>
                 <div className="mt-3 h-1.5 w-full bg-white/[0.06]">
@@ -530,12 +548,12 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-12">
               <SectionLabel>Ways to Compete</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Go Solo, Pair Up
                 <br />
                 or Bring a Team.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 The Ultimate Human is designed for serious competitors, first-time challengers, gym communities and workplace teams.
               </p>
             </div>
@@ -549,7 +567,12 @@ export default function App() {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04] transition-colors group-hover:border-lime-400/40 group-hover:bg-lime-400/[0.08]">
                     <Trophy className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
                   </div>
-                  <p className="text-sm font-black uppercase tracking-[0.15em] text-white">{label}</p>
+                  <p
+                    className="text-sm font-bold uppercase tracking-[0.15em] text-white"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {label}
+                  </p>
                 </div>
               ))}
             </div>
@@ -561,7 +584,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-12">
               <SectionLabel>Why Enter?</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Because Fitness
                 <br />
                 Should Mean Capability.
@@ -572,15 +595,15 @@ export default function App() {
               {whyEnter.map((item, i) => (
                 <motion.div
                   key={item.title}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  transition={{ duration: 0.45, delay: i * 0.1 }}
                   className="bg-[#0d0d0d] p-9"
                 >
                   <div className="mb-5 h-px w-8 bg-lime-400" />
-                  <h3 className="text-xl font-black uppercase tracking-wide text-white">{item.title}</h3>
-                  <p className="mt-4 leading-7 text-neutral-400">{item.text}</p>
+                  <h3 className="text-xl uppercase tracking-wide text-white">{item.title}</h3>
+                  <p className="mt-4 text-base leading-7 text-neutral-400">{item.text}</p>
                 </motion.div>
               ))}
             </div>
@@ -592,12 +615,12 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>AI-Powered Performance Intelligence</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Discover the Athlete
                 <br />
                 You Really Are.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 The Ultimate Human combines competition with AI-powered capability analysis to help you understand how you move, perform and improve.
               </p>
             </div>
@@ -606,10 +629,10 @@ export default function App() {
               {aiFeatures.map((feature, i) => (
                 <motion.div
                   key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  transition={{ duration: 0.45, delay: i * 0.1 }}
                   className="relative bg-[#0d0d0d]"
                 >
                   <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
@@ -617,22 +640,22 @@ export default function App() {
                     <div className="mb-7 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04]">
                       <BarChart3 className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-2xl font-black uppercase tracking-tight text-white">{feature.title}</h3>
-                    <p className="mt-4 leading-7 text-neutral-400">{feature.text}</p>
+                    <h3 className="text-2xl uppercase tracking-tight text-white">{feature.title}</h3>
+                    <p className="mt-4 text-base leading-7 text-neutral-400">{feature.text}</p>
 
                     <div className="mt-8 space-y-px bg-white/[0.04]">
                       {feature.points.map((point) => (
-                        <div
-                          key={point}
-                          className="flex items-center gap-4 bg-[#0d0d0d] px-5 py-4"
-                        >
+                        <div key={point} className="flex items-center gap-4 bg-[#0d0d0d] px-5 py-4">
                           <CheckCircle2 className="h-4 w-4 shrink-0 text-lime-400" strokeWidth={2} />
                           <p className="text-sm text-neutral-300">{point}</p>
                         </div>
                       ))}
                     </div>
 
-                    <button className="mt-8 border border-lime-400 bg-transparent px-6 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-lime-400 transition-colors hover:bg-lime-400 hover:text-black">
+                    <button
+                      className="mt-8 border border-lime-400 bg-transparent px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-lime-400 transition-colors hover:bg-lime-400 hover:text-black"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
                       Try the AI Assessment
                     </button>
                   </div>
@@ -647,10 +670,10 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>Founding Athlete Pricing</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Get in Early.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 Early launch pricing for the first Ultimate Human events. Founding athlete places will be limited and pricing will increase after launch release.
               </p>
             </div>
@@ -659,22 +682,31 @@ export default function App() {
               {foundingPricing.map((item, i) => (
                 <motion.div
                   key={item.category}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  transition={{ duration: 0.35, delay: i * 0.08 }}
                   className="relative bg-[#0d0d0d]"
                 >
                   <div className="absolute left-0 top-0 h-px w-1/2 bg-gradient-to-r from-lime-400/60 to-transparent" />
                   <div className="p-7">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-600">
+                    <p
+                      className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
                       {item.category}
                     </p>
-                    <p className="text-metallic-price mt-5 text-5xl font-black">{item.price}</p>
+                    <p
+                      className="text-metallic-price mt-5 text-5xl"
+                      style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                    >
+                      {item.price}
+                    </p>
                     <p className="mt-2 text-sm text-neutral-500">{item.detail}</p>
                     <a
                       href="#signup"
-                      className="mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[11px] font-black uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+                      className="mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-xs font-bold uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       Join Waitlist
                     </a>
@@ -684,7 +716,10 @@ export default function App() {
             </div>
 
             <div className="mt-px bg-[#0a0a0a] p-8">
-              <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500">
+              <p
+                className="mb-6 text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
                 Founding Athlete Benefits Include:
               </p>
               <div className="grid gap-4 md:grid-cols-2">
@@ -709,12 +744,12 @@ export default function App() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>The People Behind The Ultimate Human</SectionLabel>
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Built by People Obsessed
                 <br />
                 with Human Performance.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 The Ultimate Human combines elite coaching, combat sport experience, movement science and a slightly unhealthy enthusiasm for fitness racing.
               </p>
             </div>
@@ -753,11 +788,14 @@ export default function App() {
           <div className="mx-auto max-w-5xl">
             <div className="mb-8 inline-flex items-center gap-3 border border-amber-400/20 bg-amber-400/[0.04] px-4 py-2">
               <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-amber-400">
+              <span
+                className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
                 Pre-Launch Notice
               </span>
             </div>
-            <h2 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
+            <h2 className="text-3xl uppercase tracking-tight text-white md:text-4xl">
               What Is Still Being Finalised?
             </h2>
 
@@ -778,7 +816,6 @@ export default function App() {
         <section id="signup" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
           <div className="mx-auto max-w-5xl">
             <div className="relative overflow-hidden border border-white/[0.08] bg-[#0a0a0a] p-12 text-center">
-              {/* Glow effects */}
               <div
                 className="pointer-events-none absolute inset-0"
                 style={{
@@ -798,35 +835,29 @@ export default function App() {
 
                 <SectionLabel>Founding Athlete Registration</SectionLabel>
 
-                <h2
-                  className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl"
-                  style={{
-                    background: "linear-gradient(175deg, #ffffff 0%, #d0d0d0 50%, #888 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
+                <h2 className="text-metallic text-4xl uppercase tracking-tight md:text-5xl">
                   Become One of the
                   <br />
                   First Ultimate Humans
                 </h2>
 
-                <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+                <p className="mx-auto mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                   Get early access to launch events, training plans, founding athlete pricing, rankings and exclusive first-release places.
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                   <a
                     href="https://theultimatehuman.fitness"
-                    className="inline-flex items-center bg-lime-400 px-8 py-4 text-sm font-black uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+                    className="inline-flex items-center bg-lime-400 px-8 py-4 text-sm font-bold uppercase tracking-[0.15em] text-black no-underline transition-colors hover:bg-lime-300"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     Join at theultimatehuman.fitness
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                   <a
                     href="mailto:hello@theultimatehuman.fitness"
-                    className="inline-flex items-center border border-white/20 bg-white/[0.03] px-8 py-4 text-sm font-black uppercase tracking-[0.15em] text-white no-underline transition-colors hover:bg-white/[0.07]"
+                    className="inline-flex items-center border border-white/20 bg-white/[0.03] px-8 py-4 text-sm font-bold uppercase tracking-[0.15em] text-white no-underline transition-colors hover:bg-white/[0.07]"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     Invite Your Gym
                   </a>
@@ -839,18 +870,18 @@ export default function App() {
 
       {/* ── FOOTER ── */}
       <footer className="border-t border-white/[0.06] bg-[#050505] px-6 py-10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
-          <div className="flex items-center gap-3">
-            <div className="flex items-baseline">
-              <span className="text-lg font-black text-white">U</span>
-              <span className="text-lg font-black text-lime-400">H</span>
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-700">
-              / Ultimate Human
-            </span>
-          </div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-700">
-            MEASURE. TRAIN. COMPETE. EVOLVE.
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 md:flex-row">
+          <img
+            src="/images/logo.png"
+            alt="The Ultimate Human"
+            className="h-7 w-auto object-contain opacity-50"
+            style={{ maxWidth: "160px" }}
+          />
+          <p
+            className="text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-700"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Measure. Train. Compete. Evolve.
           </p>
           <p className="text-xs text-neutral-700">
             © 2027 The Ultimate Human · theultimatehuman.fitness
@@ -864,19 +895,25 @@ export default function App() {
 function FounderCard({ initials, name, role, quote }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.45 }}
       className="relative bg-[#0d0d0d]"
     >
       <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-white/10 to-transparent" />
       <div className="p-8">
-        <div className="mb-6 flex h-14 w-14 items-center justify-center border border-white/10 bg-[#111] text-xl font-black text-white">
+        <div className="mb-6 flex h-14 w-14 items-center justify-center border border-white/10 bg-[#111] text-xl font-bold text-white"
+             style={{ fontFamily: "'Oswald', sans-serif" }}>
           {initials}
         </div>
-        <h3 className="text-xl font-black uppercase tracking-wide text-white">{name}</h3>
-        <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-lime-400/70">{role}</p>
+        <h3 className="text-xl uppercase tracking-wide text-white">{name}</h3>
+        <p
+          className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-lime-400/70"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          {role}
+        </p>
         <p className="mt-5 text-sm leading-7 text-neutral-500">"{quote}"</p>
       </div>
     </motion.div>
