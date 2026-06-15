@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect, useMemo, useCallback } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Gauge,
@@ -24,6 +24,10 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
+/* ─────────────────────────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────────────────────────── */
 
 const capabilities = [
   { label: "ENDURANCE", icon: Heart },
@@ -125,31 +129,330 @@ const workToDo = [
   "Training plans and gym partner locations are in development.",
 ];
 
+/* ─────────────────────────────────────────────────────────────────
+   SHARED COMPONENTS
+───────────────────────────────────────────────────────────────── */
+
 function SectionLabel({ children }) {
   return (
     <div className="mb-5 flex items-center gap-3">
       <div className="h-px w-8 shrink-0 bg-lime-400" />
-      <p className="text-xs font-bold uppercase tracking-[0.3em] text-lime-400" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
+      <p
+        className="text-xs font-bold uppercase tracking-[0.3em] text-lime-400"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
         {children}
       </p>
     </div>
   );
 }
 
+/* ─────────────────────────────────────────────────────────────────
+   HERO ARENA BACKGROUND
+   All animated layers live here; mouse glow is driven by a direct
+   DOM ref to avoid re-rendering the rest of the hero on mousemove.
+───────────────────────────────────────────────────────────────── */
+
+function HeroArenaBackground({ heroRef, reducedMotion }) {
+  const mouseGlowRef = useRef(null);
+
+  /* Stable particle list — deterministic so it doesn't flicker */
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 22 }, (_, i) => ({
+        id: i,
+        x: ((i * 41 + 13) % 88) + 6,
+        y: ((i * 29 + 9) % 82) + 6,
+        size: i % 4 === 0 ? 2.5 : i % 3 === 0 ? 1.5 : 1,
+        dur: 9 + ((i * 3) % 11),
+        delay: (i * 1.9) % 7,
+        opacity: (5 + ((i * 7) % 20)) / 100,
+        lime: i % 5 === 0,
+      })),
+    []
+  );
+
+  /* Direct-DOM mouse glow — zero React re-renders */
+  useEffect(() => {
+    if (reducedMotion) return;
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const onMove = (e) => {
+      if (!mouseGlowRef.current) return;
+      const r = hero.getBoundingClientRect();
+      if (e.clientY < r.top || e.clientY > r.bottom) return;
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top) / r.height) * 100;
+      mouseGlowRef.current.style.background = `radial-gradient(circle 700px at ${x}% ${y}%, rgba(163,230,53,0.042) 0%, transparent 70%)`;
+    };
+
+    hero.addEventListener("mousemove", onMove);
+    return () => hero.removeEventListener("mousemove", onMove);
+  }, [heroRef, reducedMotion]);
+
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 select-none overflow-hidden"
+      aria-hidden="true"
+    >
+      {/* 1 ── Base black */}
+      <div className="absolute inset-0 bg-[#050505]" />
+
+      {/* 2 ── Overhead ambient glow (simulates stadium ceiling lights) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 75% 55% at 62% -5%, rgba(255,255,255,0.055) 0%, transparent 100%)",
+        }}
+      />
+
+      {/* 3 ── Spotlight beam 1 — primary right beam */}
+      <div
+        className="uh-beam-1 absolute"
+        style={{
+          top: 0,
+          left: "54%",
+          width: "320px",
+          height: "100%",
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.028) 45%, transparent 80%)",
+          clipPath: "polygon(38% 0%, 62% 0%, 86% 100%, 14% 100%)",
+          transformOrigin: "50% 0%",
+          animation: reducedMotion ? "none" : "uh-beam-1 11s ease-in-out infinite",
+        }}
+      />
+
+      {/* 4 ── Spotlight beam 2 — secondary centre-left */}
+      <div
+        className="uh-beam-2 absolute"
+        style={{
+          top: 0,
+          left: "34%",
+          width: "220px",
+          height: "80%",
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.065) 0%, rgba(255,255,255,0.012) 50%, transparent 85%)",
+          clipPath: "polygon(35% 0%, 65% 0%, 88% 100%, 12% 100%)",
+          transformOrigin: "50% 0%",
+          animation: reducedMotion ? "none" : "uh-beam-2 15s ease-in-out infinite 1s",
+        }}
+      />
+
+      {/* 5 ── Spotlight beam 3 — far right accent */}
+      <div
+        className="uh-beam-3 absolute"
+        style={{
+          top: 0,
+          left: "74%",
+          width: "160px",
+          height: "70%",
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 75%)",
+          clipPath: "polygon(30% 0%, 70% 0%, 95% 100%, 5% 100%)",
+          transformOrigin: "50% 0%",
+          animation: reducedMotion ? "none" : "uh-beam-3 19s ease-in-out infinite 3s",
+        }}
+      />
+
+      {/* 6 ── Perspective arena floor grid */}
+      <div
+        className="uh-grid absolute"
+        style={{
+          bottom: 0,
+          left: "-60%",
+          right: "-60%",
+          height: "58%",
+          backgroundImage: `
+            linear-gradient(rgba(163,230,53,0.09) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(163,230,53,0.09) 1px, transparent 1px)
+          `,
+          backgroundSize: "80px 80px",
+          transform: "perspective(550px) rotateX(74deg)",
+          transformOrigin: "bottom center",
+          animation: reducedMotion ? "none" : "uh-grid-scroll 4.5s linear infinite",
+        }}
+      />
+
+      {/* 7 ── Floor lime ambient glow */}
+      <div
+        className="absolute bottom-0 left-0 right-0"
+        style={{
+          height: "45%",
+          background:
+            "radial-gradient(ellipse 90% 80% at 50% 100%, rgba(132,204,22,0.065) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* 8 ── Oversized UH watermark — outline text, bottom-right */}
+      <div
+        className="absolute select-none"
+        style={{
+          bottom: "-8%",
+          right: "-4%",
+          fontFamily: "'Oswald', sans-serif",
+          fontWeight: 700,
+          fontSize: "clamp(9rem, 26vw, 24rem)",
+          lineHeight: 0.88,
+          color: "transparent",
+          WebkitTextStroke: "1.5px rgba(163,230,53,0.07)",
+          letterSpacing: "-0.03em",
+          userSelect: "none",
+        }}
+        aria-hidden="true"
+      >
+        UH
+      </div>
+
+      {/* 9 ── Floating particles (dust / stadium light motes) */}
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          style={{
+            position: "absolute",
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            borderRadius: "50%",
+            background: p.lime
+              ? `rgba(163,230,53,${p.opacity * 3})`
+              : `rgba(255,255,255,${p.opacity * 2.5})`,
+          }}
+          animate={
+            reducedMotion
+              ? {}
+              : {
+                  y: [0, -(14 + (p.id % 10)), 0],
+                  opacity: [p.opacity, p.opacity * 0.2, p.opacity],
+                }
+          }
+          transition={{
+            duration: p.dur,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* 10 ── Lime scan line — travels slowly top→bottom */}
+      <div
+        className="uh-scanline absolute left-0 right-0 h-px"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, rgba(163,230,53,0.45) 25%, rgba(163,230,53,0.65) 50%, rgba(163,230,53,0.45) 75%, transparent)",
+          animation: reducedMotion ? "none" : "uh-scanline 12s linear infinite 1.5s",
+          top: 0,
+        }}
+      />
+
+      {/* 11 ── Grain / film noise */}
+      <svg
+        className="absolute inset-0 h-full w-full"
+        style={{ opacity: 0.045 }}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <filter id="uh-grain">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.68"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#uh-grain)" />
+      </svg>
+
+      {/* 12 ── Mouse-reactive lime glow (DOM ref, no re-renders) */}
+      <div ref={mouseGlowRef} className="absolute inset-0" />
+
+      {/* 13 ── Left readability gradient — keeps headline legible */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.55) 55%, rgba(5,5,5,0.10) 100%)",
+        }}
+      />
+
+      {/* 14 ── Bottom site-bg fade */}
+      <div
+        className="absolute bottom-0 left-0 right-0"
+        style={{
+          height: "120px",
+          background: "linear-gradient(to top, #050505, transparent)",
+        }}
+      />
+
+      {/* 15 ── Top lime accent line */}
+      <div
+        className="absolute left-0 right-0 top-0 h-px"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, rgba(163,230,53,0.4) 40%, rgba(163,230,53,0.4) 60%, transparent)",
+        }}
+      />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   FOUNDER CARD
+───────────────────────────────────────────────────────────────── */
+
+function FounderCard({ initials, name, role, quote }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45 }}
+      className="relative bg-[#0d0d0d]"
+    >
+      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-white/10 to-transparent" />
+      <div className="p-8">
+        <div
+          className="mb-6 flex h-14 w-14 items-center justify-center border border-white/10 bg-[#111] text-xl font-bold text-white"
+          style={{ fontFamily: "'Oswald', sans-serif" }}
+        >
+          {initials}
+        </div>
+        <h3 className="text-xl uppercase tracking-wide text-white">{name}</h3>
+        <p
+          className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-lime-400/70"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          {role}
+        </p>
+        <p className="mt-5 text-sm leading-7 text-neutral-500">"{quote}"</p>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   APP
+───────────────────────────────────────────────────────────────── */
+
 export default function App() {
+  const heroRef = useRef(null);
+  const reducedMotion = useReducedMotion();
+
   return (
     <div className="min-h-screen bg-[#050505] text-white">
 
       {/* ── HEADER ── */}
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#050505]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          {/* Logo image */}
           <a href="#" className="shrink-0 no-underline">
             <img
               src="/images/logo.png"
               alt="The Ultimate Human"
-              className="h-9 w-auto object-contain md:h-11"
-              style={{ maxWidth: "200px" }}
+              className="h-10 w-auto object-contain md:h-12"
+              style={{ maxWidth: "190px" }}
             />
           </a>
 
@@ -186,45 +489,20 @@ export default function App() {
 
         {/* ── HERO ── */}
         <section
-          className="relative flex min-h-[90vh] items-center overflow-hidden"
-          style={{
-            backgroundImage: "url('/images/uh-hero-arena-floor-no-text-2400x1400.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
-          }}
+          ref={heroRef}
+          className="relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
-          {/* Dark overlays for text legibility */}
-          <div className="pointer-events-none absolute inset-0 bg-black/65" />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.30) 50%, rgba(5,5,5,0.85) 90%, #050505 100%)",
-            }}
-          />
-          {/* Vignette — darken edges so copy stays readable */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%)",
-            }}
-          />
-          {/* Lime accent line top */}
-          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/40 to-transparent" />
-          {/* Bottom site-bg fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050505] to-transparent" />
+          <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
           <div className="relative mx-auto w-full max-w-7xl px-6 py-20 md:py-24">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, ease: "easeOut" }}
-              className="max-w-4xl"
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="max-w-3xl"
             >
-              {/* Live badge */}
-              <div className="mb-7 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.07] px-4 py-2">
+              {/* Badge */}
+              <div className="mb-7 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
                 <span
                   className="text-xs font-bold uppercase tracking-[0.25em] text-lime-400"
@@ -238,7 +516,7 @@ export default function App() {
               <h1
                 className="text-metallic uppercase leading-none tracking-tight"
                 style={{
-                  fontSize: "clamp(2.4rem, 5.5vw, 5.25rem)",
+                  fontSize: "clamp(2.25rem, 5.2vw, 5rem)",
                   lineHeight: 1.05,
                   fontFamily: "'Oswald', sans-serif",
                   fontWeight: 700,
@@ -269,7 +547,9 @@ export default function App() {
                 className="mt-6 max-w-xl text-lg leading-7 text-neutral-300"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 500 }}
               >
-                A next-generation indoor fitness competition that measures complete human capability — speed, stamina, strength, coordination, balance and mobility — combined into one adaptive performance score.
+                A next-generation indoor fitness competition that measures complete
+                human capability — speed, stamina, strength, coordination, balance
+                and mobility — combined into one adaptive performance score.
               </p>
 
               {/* CTAs */}
@@ -292,7 +572,7 @@ export default function App() {
                 </a>
               </div>
 
-              {/* Stats row */}
+              {/* Stats */}
               <div className="mt-10 flex flex-wrap gap-8">
                 {[
                   ["Indoor Events", "All Venues"],
@@ -306,7 +586,7 @@ export default function App() {
                     >
                       {label}
                     </p>
-                    <p className="mt-0.5 text-xs text-neutral-500">{sub}</p>
+                    <p className="mt-0.5 text-xs text-neutral-600">{sub}</p>
                   </div>
                 ))}
               </div>
@@ -395,7 +675,8 @@ export default function App() {
                 One Complete Test.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                Each zone is simple to understand, hard to master and designed to expose a different part of your athletic capability. Minimal equipment. Maximum variety.
+                Each zone is simple to understand, hard to master and designed to expose
+                a different part of your athletic capability. Minimal equipment. Maximum variety.
               </p>
             </div>
 
@@ -431,8 +712,6 @@ export default function App() {
         {/* ── SCORE DASHBOARD ── */}
         <section id="score" className="border-t border-white/[0.06] bg-[#050505] px-6 py-24">
           <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[1fr_1.1fr] md:items-start">
-
-            {/* Left col */}
             <div>
               <SectionLabel>Your Personal Benchmark</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -441,7 +720,9 @@ export default function App() {
                 Than a Medal.
               </h2>
               <p className="mt-6 text-lg leading-7 text-neutral-400">
-                Every participant receives an Ultimate Human Score showing performance across six areas. You will know what you are good at, what is holding you back and how to train for your next attempt.
+                Every participant receives an Ultimate Human Score showing performance across six areas.
+                You will know what you are good at, what is holding you back and how to train for your
+                next attempt.
               </p>
               <p className="mt-4 text-lg leading-7 text-neutral-400">The aim is simple: come back better.</p>
 
@@ -451,14 +732,17 @@ export default function App() {
                   Your Ultimate Human Score
                 </h3>
                 <p className="mt-4 text-base leading-7 text-neutral-400">
-                  Your score is calculated using our proprietary algorithm, which weights your performance across multiple capability areas including speed, stamina, strength, coordination, balance and mobility.
+                  Your score is calculated using our proprietary algorithm, which weights your performance
+                  across multiple capability areas including speed, stamina, strength, coordination,
+                  balance and mobility.
                 </p>
                 <p className="mt-4 text-base leading-7 text-neutral-400">
-                  The scoring model also takes into account factors such as your age category and previous athletic experience to create a more meaningful and balanced assessment of your overall human capability.
+                  The scoring model also takes into account factors such as your age category and previous
+                  athletic experience to create a more meaningful and balanced assessment of your overall
+                  human capability.
                 </p>
               </div>
 
-              {/* Domain description grid */}
               <div className="mt-6 grid gap-px bg-white/[0.05] sm:grid-cols-2">
                 {domains.map((d) => (
                   <div key={d.title} className="bg-[#0d0d0d] p-5">
@@ -469,7 +753,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right col — performance dashboard */}
             <div className="border border-white/[0.08] bg-[#0d0d0d]">
               <div className="border-b border-white/[0.06] p-7">
                 <div className="flex items-center justify-between">
@@ -528,7 +811,10 @@ export default function App() {
                   >
                     Overall Score
                   </p>
-                  <p className="text-3xl text-white" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}>
+                  <p
+                    className="text-3xl text-white"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                  >
                     78<span className="ml-1 text-sm font-normal text-neutral-600">/100</span>
                   </p>
                 </div>
@@ -554,7 +840,8 @@ export default function App() {
                 or Bring a Team.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human is designed for serious competitors, first-time challengers, gym communities and workplace teams.
+                The Ultimate Human is designed for serious competitors, first-time challengers,
+                gym communities and workplace teams.
               </p>
             </div>
 
@@ -621,7 +908,8 @@ export default function App() {
                 You Really Are.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human combines competition with AI-powered capability analysis to help you understand how you move, perform and improve.
+                The Ultimate Human combines competition with AI-powered capability analysis to help
+                you understand how you move, perform and improve.
               </p>
             </div>
 
@@ -674,7 +962,8 @@ export default function App() {
                 Get in Early.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                Early launch pricing for the first Ultimate Human events. Founding athlete places will be limited and pricing will increase after launch release.
+                Early launch pricing for the first Ultimate Human events. Founding athlete places will
+                be limited and pricing will increase after launch release.
               </p>
             </div>
 
@@ -750,7 +1039,8 @@ export default function App() {
                 with Human Performance.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human combines elite coaching, combat sport experience, movement science and a slightly unhealthy enthusiasm for fitness racing.
+                The Ultimate Human combines elite coaching, combat sport experience, movement science
+                and a slightly unhealthy enthusiasm for fitness racing.
               </p>
             </div>
 
@@ -842,7 +1132,8 @@ export default function App() {
                 </h2>
 
                 <p className="mx-auto mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                  Get early access to launch events, training plans, founding athlete pricing, rankings and exclusive first-release places.
+                  Get early access to launch events, training plans, founding athlete pricing, rankings
+                  and exclusive first-release places.
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -874,8 +1165,8 @@ export default function App() {
           <img
             src="/images/logo.png"
             alt="The Ultimate Human"
-            className="h-7 w-auto object-contain opacity-50"
-            style={{ maxWidth: "160px" }}
+            className="h-7 w-auto object-contain opacity-40"
+            style={{ maxWidth: "150px" }}
           />
           <p
             className="text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-700"
@@ -889,33 +1180,5 @@ export default function App() {
         </div>
       </footer>
     </div>
-  );
-}
-
-function FounderCard({ initials, name, role, quote }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.45 }}
-      className="relative bg-[#0d0d0d]"
-    >
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-white/10 to-transparent" />
-      <div className="p-8">
-        <div className="mb-6 flex h-14 w-14 items-center justify-center border border-white/10 bg-[#111] text-xl font-bold text-white"
-             style={{ fontFamily: "'Oswald', sans-serif" }}>
-          {initials}
-        </div>
-        <h3 className="text-xl uppercase tracking-wide text-white">{name}</h3>
-        <p
-          className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-lime-400/70"
-          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-        >
-          {role}
-        </p>
-        <p className="mt-5 text-sm leading-7 text-neutral-500">"{quote}"</p>
-      </div>
-    </motion.div>
   );
 }
