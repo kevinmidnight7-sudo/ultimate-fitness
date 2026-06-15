@@ -154,21 +154,19 @@ function SectionLabel({ children }) {
 function HeroArenaBackground({ heroRef, reducedMotion }) {
   const mouseGlowRef = useRef(null);
 
-  /* Deterministic particles — no Math.random() to keep render stable */
+  /* 16 curated particles — fewer, more intentional */
   const particles = useMemo(
     () =>
-      Array.from({ length: 28 }, (_, i) => ({
+      Array.from({ length: 16 }, (_, i) => ({
         id: i,
-        x: ((i * 41 + 13) % 88) + 6,
-        y: ((i * 29 + 9) % 82) + 6,
-        /* size varies: tiny dust (1px), mid (2px), bright mote (3px) */
-        size: i % 7 === 0 ? 3 : i % 4 === 0 ? 2 : 1,
-        dur: 10 + ((i * 3) % 13),
-        delay: (i * 1.7) % 8,
-        opacity: (4 + ((i * 7) % 22)) / 100,
-        lime: i % 5 === 0,
-        /* larger motes rise higher */
-        rise: i % 7 === 0 ? 28 : i % 4 === 0 ? 18 : 11,
+        x: ((i * 53 + 17) % 82) + 12,
+        y: ((i * 31 + 11) % 76) + 8,
+        size: i % 8 === 0 ? 3 : i % 3 === 0 ? 2 : 1,
+        dur: 12 + ((i * 4) % 14),
+        delay: (i * 2.1) % 9,
+        opacity: (3 + ((i * 5) % 16)) / 100,
+        lime: i % 6 === 0,
+        rise: i % 8 === 0 ? 24 : i % 3 === 0 ? 15 : 9,
       })),
     []
   );
@@ -184,7 +182,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
       if (e.clientY < r.top || e.clientY > r.bottom) return;
       const x = ((e.clientX - r.left) / r.width) * 100;
       const y = ((e.clientY - r.top) / r.height) * 100;
-      mouseGlowRef.current.style.background = `radial-gradient(circle 750px at ${x}% ${y}%, rgba(163,230,53,0.038) 0%, transparent 65%)`;
+      mouseGlowRef.current.style.background = `radial-gradient(circle 800px at ${x}% ${y}%, rgba(163,230,53,0.03) 0%, transparent 65%)`;
     };
     hero.addEventListener("mousemove", onMove);
     return () => hero.removeEventListener("mousemove", onMove);
@@ -195,28 +193,28 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
       className="pointer-events-none absolute inset-0 select-none overflow-hidden"
       aria-hidden="true"
     >
-      {/* 01 ── Base */}
+      {/* 01 Base */}
       <div className="absolute inset-0 bg-[#050505]" />
 
-      {/* 02 ── Wide ambient overhead glow — stadium ceiling lights */}
+      {/* 02 Overhead ambient — wide stadium ceiling wash */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 90% 60% at 60% -8%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 45%, transparent 75%)",
+            "radial-gradient(ellipse 90% 60% at 60% -8%, rgba(255,255,255,0.062) 0%, rgba(255,255,255,0.016) 45%, transparent 75%)",
         }}
       />
 
-      {/* 03 ── Secondary warm ambient — right-side arena depth */}
+      {/* 03 Right arena depth glow */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 55% 80% at 90% 30%, rgba(255,255,255,0.04) 0%, transparent 70%)",
+            "radial-gradient(ellipse 55% 80% at 92% 28%, rgba(255,255,255,0.03) 0%, transparent 70%)",
         }}
       />
 
-      {/* 04 ── Beam 1 — primary right, stronger */}
+      {/* 04 Beam 1 — primary right spotlight */}
       <div
         className="uh-beam-1 absolute"
         style={{
@@ -225,29 +223,29 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           width: "360px",
           height: "100%",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.055) 38%, rgba(255,255,255,0.012) 65%, transparent 85%)",
+            "linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.038) 38%, rgba(255,255,255,0.008) 65%, transparent 85%)",
           clipPath: "polygon(40% 0%, 60% 0%, 84% 100%, 16% 100%)",
           transformOrigin: "50% 0%",
           animation: reducedMotion ? "none" : "uh-beam-1 11s ease-in-out infinite",
         }}
       />
 
-      {/* 04a ── Lens flare source — beam 1 origin */}
+      {/* 04a Lens source dot — beam 1 */}
       <div
         className="uh-lens-1 absolute"
         style={{
           top: "0px",
           left: "calc(55% + 160px - 3px)",
-          width: "6px",
-          height: "6px",
+          width: "5px",
+          height: "5px",
           borderRadius: "50%",
-          background: "rgba(255,255,255,0.95)",
-          boxShadow: "0 0 12px 5px rgba(255,255,255,0.12)",
+          background: "rgba(255,255,255,0.88)",
+          boxShadow: "0 0 9px 4px rgba(255,255,255,0.08)",
           animation: reducedMotion ? "none" : "uh-lens-pulse 11s ease-in-out infinite",
         }}
       />
 
-      {/* 05 ── Beam 2 — secondary centre-left */}
+      {/* 05 Beam 2 — secondary centre-left */}
       <div
         className="uh-beam-2 absolute"
         style={{
@@ -256,14 +254,14 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           width: "240px",
           height: "82%",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.022) 48%, transparent 80%)",
+            "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.015) 48%, transparent 80%)",
           clipPath: "polygon(34% 0%, 66% 0%, 90% 100%, 10% 100%)",
           transformOrigin: "50% 0%",
           animation: reducedMotion ? "none" : "uh-beam-2 15s ease-in-out infinite 1.2s",
         }}
       />
 
-      {/* 05a ── Lens flare source — beam 2 origin */}
+      {/* 05a Lens source dot — beam 2 */}
       <div
         className="uh-lens-2 absolute"
         style={{
@@ -272,13 +270,13 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           width: "4px",
           height: "4px",
           borderRadius: "50%",
-          background: "rgba(255,255,255,0.8)",
-          boxShadow: "0 0 8px 3px rgba(255,255,255,0.08)",
+          background: "rgba(255,255,255,0.7)",
+          boxShadow: "0 0 6px 2px rgba(255,255,255,0.055)",
           animation: reducedMotion ? "none" : "uh-lens-pulse-2 15s ease-in-out infinite 1.2s",
         }}
       />
 
-      {/* 06 ── Beam 3 — far-right accent */}
+      {/* 06 Beam 3 — far-right accent */}
       <div
         className="uh-beam-3 absolute"
         style={{
@@ -287,23 +285,17 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           width: "180px",
           height: "72%",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.015) 50%, transparent 80%)",
+            "linear-gradient(180deg, rgba(255,255,255,0.052) 0%, rgba(255,255,255,0.01) 50%, transparent 80%)",
           clipPath: "polygon(28% 0%, 72% 0%, 95% 100%, 5% 100%)",
           transformOrigin: "50% 0%",
           animation: reducedMotion ? "none" : "uh-beam-3 19s ease-in-out infinite 3s",
         }}
       />
 
-      {/* 07 ── Stadium arc rings — suggest curved seating tiers */}
+      {/* 07 Stadium arc rings — seating tiers */}
       <div
         className="absolute"
-        style={{
-          top: "2%",
-          right: "-8%",
-          width: "68%",
-          height: "78%",
-          pointerEvents: "none",
-        }}
+        style={{ top: "2%", right: "-8%", width: "68%", height: "78%", pointerEvents: "none" }}
       >
         <svg
           width="100%"
@@ -313,32 +305,32 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          {/* Outer tiers — white, very faint */}
-          <ellipse cx="320" cy="240" rx="580" ry="310" stroke="rgba(255,255,255,0.038)" strokeWidth="1" />
-          <ellipse cx="320" cy="252" rx="480" ry="252" stroke="rgba(255,255,255,0.048)" strokeWidth="0.8" />
-          <ellipse cx="320" cy="264" rx="380" ry="196" stroke="rgba(255,255,255,0.038)" strokeWidth="0.7" />
-          {/* Middle tier — lime accent */}
-          <ellipse cx="320" cy="276" rx="280" ry="140" stroke="rgba(163,230,53,0.06)" strokeWidth="0.8" />
-          {/* Inner ring — brighter lime, animated */}
+          <ellipse cx="320" cy="240" rx="580" ry="310" stroke="rgba(255,255,255,0.028)" strokeWidth="1" />
+          <ellipse cx="320" cy="252" rx="480" ry="252" stroke="rgba(255,255,255,0.038)" strokeWidth="0.8" />
+          <ellipse cx="320" cy="264" rx="380" ry="196" stroke="rgba(255,255,255,0.028)" strokeWidth="0.7" />
+          <ellipse cx="320" cy="276" rx="280" ry="140" stroke="rgba(163,230,53,0.048)" strokeWidth="0.8" />
           <motion.ellipse
             cx="320"
             cy="288"
             rx="180"
             ry="86"
-            stroke="rgba(163,230,53,0.09)"
+            stroke="rgba(163,230,53,0.072)"
             strokeWidth="0.7"
             fill="none"
-            animate={reducedMotion ? {} : { opacity: [0.6, 1, 0.6] }}
+            animate={reducedMotion ? {} : { opacity: [0.45, 1, 0.45] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
-          {/* Innermost — hint of a scoreboard or rig */}
-          <ellipse cx="320" cy="296" rx="90" ry="38" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-          {/* Vertical center rig line */}
-          <line x1="320" y1="0" x2="320" y2="290" stroke="rgba(255,255,255,0.025)" strokeWidth="0.5" strokeDasharray="4 6" />
+          <ellipse cx="320" cy="296" rx="90" ry="38" stroke="rgba(255,255,255,0.02)" strokeWidth="0.5" />
+          <line
+            x1="320" y1="0" x2="320" y2="290"
+            stroke="rgba(255,255,255,0.016)"
+            strokeWidth="0.5"
+            strokeDasharray="4 6"
+          />
         </svg>
       </div>
 
-      {/* 08 ── Perspective arena floor grid */}
+      {/* 08 Perspective arena floor grid */}
       <div
         className="uh-grid absolute"
         style={{
@@ -347,8 +339,8 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           right: "-60%",
           height: "60%",
           backgroundImage: `
-            linear-gradient(rgba(163,230,53,0.12) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(163,230,53,0.12) 1px, transparent 1px)
+            linear-gradient(rgba(163,230,53,0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(163,230,53,0.07) 1px, transparent 1px)
           `,
           backgroundSize: "90px 90px",
           transform: "perspective(520px) rotateX(76deg)",
@@ -357,7 +349,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         }}
       />
 
-      {/* 08a ── Floor grid edge fade — natural floor depth */}
+      {/* 08a Floor grid edge fade */}
       <div
         className="absolute bottom-0 left-0 right-0"
         style={{
@@ -367,35 +359,35 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         }}
       />
 
-      {/* 09 ── Floor lime ambient glow */}
+      {/* 09 Floor lime ambient glow */}
       <div
         className="absolute bottom-0 left-0 right-0"
         style={{
           height: "48%",
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(132,204,22,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(132,204,22,0.052) 0%, transparent 70%)",
         }}
       />
 
-      {/* 10 ── Arena horizon line — floor / stage edge */}
+      {/* 10 Arena horizon line */}
       <div
         className="absolute left-0 right-0"
         style={{
           bottom: "36%",
           height: "1px",
           background:
-            "linear-gradient(to right, transparent 5%, rgba(163,230,53,0.1) 28%, rgba(163,230,53,0.22) 50%, rgba(163,230,53,0.1) 72%, transparent 95%)",
+            "linear-gradient(to right, transparent 5%, rgba(163,230,53,0.07) 28%, rgba(163,230,53,0.16) 50%, rgba(163,230,53,0.07) 72%, transparent 95%)",
         }}
       />
 
-      {/* 11 ── Logo watermark — floor reflection bottom-right */}
+      {/* 11 Logo watermark — floor right */}
       <div
         className="absolute"
         style={{
           bottom: "6%",
           right: "4%",
           width: "clamp(170px, 21vw, 300px)",
-          opacity: 0.07,
+          opacity: 0.06,
           filter: "grayscale(1) brightness(4) blur(0.5px)",
           pointerEvents: "none",
           userSelect: "none",
@@ -405,7 +397,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         <img src="/images/logo.png" alt="" className="w-full" />
       </div>
 
-      {/* 12 ── Floating particles */}
+      {/* 12 Floating particles */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
@@ -417,14 +409,13 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
             height: `${p.size}px`,
             borderRadius: "50%",
             background: p.lime
-              ? `rgba(163,230,53,${Math.min(p.opacity * 3.5, 0.55)})`
-              : `rgba(255,255,255,${Math.min(p.opacity * 3, 0.5)})`,
-            /* Brighter motes get a subtle halo */
+              ? `rgba(163,230,53,${Math.min(p.opacity * 2.8, 0.42)})`
+              : `rgba(255,255,255,${Math.min(p.opacity * 2.4, 0.36)})`,
             boxShadow:
               p.size === 3
                 ? p.lime
-                  ? `0 0 6px 2px rgba(163,230,53,${p.opacity * 2})`
-                  : `0 0 6px 2px rgba(255,255,255,${p.opacity})`
+                  ? `0 0 5px 2px rgba(163,230,53,${p.opacity * 1.3})`
+                  : `0 0 5px 2px rgba(255,255,255,${p.opacity * 0.65})`
                 : "none",
           }}
           animate={
@@ -432,28 +423,26 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
               ? {}
               : {
                   y: [0, -p.rise, 0],
-                  opacity: [p.opacity, p.opacity * 0.15, p.opacity],
+                  opacity: [p.opacity, p.opacity * 0.1, p.opacity],
                 }
           }
           transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
 
-      {/* 13 ── Lime scan line */}
+      {/* 13 Cinematic vignette — darker edges, lighter center */}
       <div
-        className="uh-scanline absolute left-0 right-0 h-px"
+        className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to right, transparent, rgba(163,230,53,0.5) 25%, rgba(163,230,53,0.7) 50%, rgba(163,230,53,0.5) 75%, transparent)",
-          animation: reducedMotion ? "none" : "uh-scanline 14s linear infinite 2s",
-          top: 0,
+            "radial-gradient(ellipse 88% 82% at 55% 42%, transparent 38%, rgba(0,0,0,0.26) 68%, rgba(0,0,0,0.55) 100%)",
         }}
       />
 
-      {/* 14 ── Film grain / noise */}
+      {/* 14 Film grain / noise */}
       <svg
         className="absolute inset-0 h-full w-full"
-        style={{ opacity: 0.048 }}
+        style={{ opacity: 0.04 }}
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
@@ -464,30 +453,30 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         <rect width="100%" height="100%" filter="url(#uh-grain)" />
       </svg>
 
-      {/* 15 ── Mouse-reactive lime glow (direct DOM ref) */}
+      {/* 15 Mouse-reactive lime glow */}
       <div ref={mouseGlowRef} className="absolute inset-0" />
 
-      {/* 16 ── Left readability gradient — deep on far left, fades right */}
+      {/* 16 Left readability gradient */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to right, rgba(5,5,5,0.98) 0%, rgba(5,5,5,0.92) 22%, rgba(5,5,5,0.7) 42%, rgba(5,5,5,0.3) 62%, rgba(5,5,5,0.05) 100%)",
+            "linear-gradient(to right, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.90) 20%, rgba(5,5,5,0.67) 40%, rgba(5,5,5,0.24) 60%, rgba(5,5,5,0.04) 100%)",
         }}
       />
 
-      {/* 17 ── Bottom site-bg fade */}
+      {/* 17 Bottom site-bg fade */}
       <div
         className="absolute bottom-0 left-0 right-0"
         style={{ height: "130px", background: "linear-gradient(to top, #050505, transparent)" }}
       />
 
-      {/* 18 ── Top lime accent line */}
+      {/* 18 Top accent line */}
       <div
         className="absolute left-0 right-0 top-0 h-px"
         style={{
           background:
-            "linear-gradient(to right, rgba(163,230,53,0.5) 0%, rgba(163,230,53,0.7) 40%, rgba(163,230,53,0.7) 60%, rgba(163,230,53,0.5) 100%)",
+            "linear-gradient(to right, transparent 0%, rgba(163,230,53,0.28) 25%, rgba(163,230,53,0.5) 50%, rgba(163,230,53,0.28) 75%, transparent 100%)",
         }}
       />
     </div>
@@ -543,16 +532,24 @@ export default function App() {
     <div className="min-h-screen bg-[#050505] text-white">
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#050505]/92 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
-          <a href="#" className="shrink-0 no-underline">
-            <img
-              src="/images/logo.png"
-              alt="The Ultimate Human"
-              className="h-11 w-auto object-contain md:h-14"
-              style={{ maxWidth: "170px" }}
-            />
-          </a>
+      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#050505]/94 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+
+          {/* Logo + separator */}
+          <div className="flex items-center gap-6 shrink-0">
+            <a href="#" className="shrink-0 no-underline">
+              <img
+                src="/images/logo.png"
+                alt="The Ultimate Human"
+                className="h-10 w-auto object-contain md:h-12"
+                style={{
+                  maxWidth: "160px",
+                  filter: "drop-shadow(0 1px 10px rgba(255,255,255,0.08))",
+                }}
+              />
+            </a>
+            <div className="hidden md:block h-6 w-px shrink-0 bg-white/[0.09]" />
+          </div>
 
           <nav className="hidden gap-8 md:flex">
             {[
@@ -565,7 +562,7 @@ export default function App() {
               <a
                 key={href}
                 href={href}
-                className="text-[12px] font-bold uppercase tracking-[0.22em] text-neutral-400 no-underline transition-colors hover:text-white"
+                className="text-[11.5px] font-bold uppercase tracking-[0.22em] text-neutral-500 no-underline transition-colors hover:text-white"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 {label}
@@ -575,7 +572,7 @@ export default function App() {
 
           <a
             href="#signup"
-            className="btn-lime-glow border border-lime-400 bg-lime-400 px-5 py-2.5 text-[12px] font-black uppercase tracking-[0.18em] text-black no-underline hover:bg-lime-300"
+            className="btn-lime-glow border border-lime-400 bg-lime-400 px-5 py-2.5 text-[11.5px] font-black uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Join the Waitlist
@@ -592,18 +589,18 @@ export default function App() {
         >
           <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
-          <div className="relative mx-auto w-full max-w-7xl px-6 py-20 md:py-24">
+          <div className="relative mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: "easeOut" }}
-              className="max-w-3xl"
+              className="max-w-[640px]"
             >
               {/* Badge */}
-              <div className="mb-7 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.07] px-4 py-2.5">
+              <div className="mb-5 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2.5">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
                 <span
-                  className="text-[12px] font-bold uppercase tracking-[0.28em] text-lime-400"
+                  className="text-[11.5px] font-bold uppercase tracking-[0.26em] text-lime-400"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Founding Athlete Waitlist Now Open
@@ -614,8 +611,8 @@ export default function App() {
               <h1
                 className="text-metallic uppercase leading-none tracking-tight"
                 style={{
-                  fontSize: "clamp(2.2rem, 5vw, 4.9rem)",
-                  lineHeight: 1.04,
+                  fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                  lineHeight: 1.03,
                   fontFamily: "'Oswald', sans-serif",
                   fontWeight: 700,
                 }}
@@ -629,11 +626,11 @@ export default function App() {
                 Performance
               </h1>
 
-              {/* Decorative separator after headline */}
-              <div className="mt-6 flex items-center gap-4">
-                <div className="h-px flex-1 max-w-[200px] bg-gradient-to-r from-lime-400/60 to-transparent" />
+              {/* Slogan separator */}
+              <div className="mt-5 flex items-center gap-4">
+                <div className="h-px w-10 shrink-0 bg-lime-400/60" />
                 <p
-                  className="text-[12px] font-bold uppercase tracking-[0.48em] text-lime-400"
+                  className="text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/80"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Measure. Train. Compete. Evolve.
@@ -642,7 +639,7 @@ export default function App() {
 
               {/* Sub-copy */}
               <p
-                className="mt-6 max-w-xl text-[1.05rem] leading-7 text-neutral-300"
+                className="mt-5 max-w-xl text-base leading-7 text-neutral-300"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 500 }}
               >
                 A next-generation indoor fitness competition that measures complete
@@ -651,10 +648,10 @@ export default function App() {
               </p>
 
               {/* CTAs */}
-              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#signup"
-                  className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[13px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
+                  className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[12.5px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Join the Founding Athlete Waitlist
@@ -662,7 +659,7 @@ export default function App() {
                 </a>
                 <a
                   href="#challenge"
-                  className="inline-flex items-center justify-center border border-white/25 bg-black/40 px-7 py-4 text-[13px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.08] hover:border-white/40"
+                  className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[12.5px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Explore the Challenge
@@ -671,21 +668,21 @@ export default function App() {
               </div>
 
               {/* Stats */}
-              <div className="mt-10 flex flex-wrap gap-8">
+              <div className="mt-8 flex flex-wrap gap-7">
                 {[
                   ["Indoor Events", "All Venues"],
                   ["All Abilities", "Every Level"],
                   ["Personal Score", "Your Benchmark"],
                 ].map(([label, sub]) => (
-                  <div key={label} className="border-l-2 border-lime-400/40 pl-4">
+                  <div key={label} className="border-l-2 border-lime-400/35 pl-4">
                     <p
-                      className="text-[12px] font-black uppercase tracking-[0.22em] text-white"
+                      className="text-[11.5px] font-black uppercase tracking-[0.22em] text-white"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {label}
                     </p>
                     <p
-                      className="mt-0.5 text-[11px] uppercase tracking-[0.15em] text-neutral-500"
+                      className="mt-0.5 text-[10.5px] uppercase tracking-[0.15em] text-neutral-600"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {sub}
@@ -698,13 +695,25 @@ export default function App() {
         </section>
 
         {/* ── CAPABILITY PILLARS ── */}
-        <section className="border-y border-lime-400/[0.08] bg-[#080808] px-6 py-20">
+        <section className="border-y border-lime-400/[0.07] bg-[#080808] px-6 py-20">
           <div className="mx-auto max-w-7xl">
-            <div className="mb-12 text-center">
+            <div className="mb-10 text-center">
               <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
               <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
                 Every Dimension. Measured.
               </h2>
+            </div>
+
+            {/* Technical divider before grid */}
+            <div className="mb-px flex items-center gap-4">
+              <div className="h-px flex-1 bg-white/[0.04]" />
+              <span
+                className="text-[10px] font-bold uppercase tracking-[0.35em] text-neutral-800"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                10 Pillars
+              </span>
+              <div className="h-px flex-1 bg-white/[0.04]" />
             </div>
 
             <div className="grid grid-cols-2 gap-px bg-white/[0.05] sm:grid-cols-5">
@@ -717,7 +726,6 @@ export default function App() {
                   transition={{ duration: 0.35, delay: i * 0.04 }}
                   className="group relative flex flex-col items-center gap-4 overflow-hidden bg-[#0d0d0d] p-7 transition-colors hover:bg-[#111]"
                 >
-                  {/* Top sweep line on hover */}
                   <div className="absolute left-0 top-0 h-px w-0 bg-lime-400 transition-all duration-500 group-hover:w-full" />
                   <Icon
                     className="h-6 w-6 text-neutral-600 transition-colors group-hover:text-lime-400"
@@ -757,7 +765,10 @@ export default function App() {
                   text: "The signature test is not one movement. It is how quickly you can switch between speed, control, strength and coordination.",
                 },
               ].map(({ icon: Icon, title, text }) => (
-                <div key={title} className="lime-glow-hover group bg-[#0a0a0a] p-10 transition-colors hover:bg-[#0d0d0d]">
+                <div
+                  key={title}
+                  className="lime-glow-hover group bg-[#0a0a0a] p-10 transition-colors hover:bg-[#0d0d0d]"
+                >
                   <div className="mb-7 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04] transition-colors group-hover:border-lime-400/40 group-hover:bg-lime-400/[0.07]">
                     <Icon className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
                   </div>
@@ -772,7 +783,7 @@ export default function App() {
         {/* ── CHALLENGE ZONES ── */}
         <section id="format" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
           <div className="mx-auto max-w-7xl">
-            <div className="mb-14">
+            <div className="mb-12">
               <SectionLabel>The Event Format</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 10 Challenge Zones.
@@ -785,6 +796,18 @@ export default function App() {
               </p>
             </div>
 
+            {/* Technical divider */}
+            <div className="mb-px flex items-center gap-4">
+              <div className="h-px flex-1 bg-white/[0.05]" />
+              <span
+                className="text-[10px] font-bold uppercase tracking-[0.35em] text-neutral-800"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                10 Events
+              </span>
+              <div className="h-px flex-1 bg-white/[0.05]" />
+            </div>
+
             <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-5">
               {exercises.map((item, index) => (
                 <motion.div
@@ -795,10 +818,9 @@ export default function App() {
                   transition={{ duration: 0.35, delay: index * 0.04 }}
                   className="lime-glow-hover group relative bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]"
                 >
-                  {/* Left lime border sweeps down */}
                   <div className="absolute left-0 top-0 h-0 w-px bg-lime-400 transition-all duration-500 group-hover:h-full" />
                   <p
-                    className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400/55"
+                    className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400/50"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     Zone {String(index + 1).padStart(2, "0")}
@@ -816,8 +838,16 @@ export default function App() {
         </section>
 
         {/* ── SCORE DASHBOARD ── */}
-        <section id="score" className="border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
-          <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[1fr_1.1fr] md:items-start">
+        <section id="score" className="relative border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
+          {/* Subtle overhead atmosphere */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 65% 45% at 50% 0%, rgba(255,255,255,0.016) 0%, transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto grid max-w-7xl gap-14 md:grid-cols-[1fr_1.1fr] md:items-start">
             <div>
               <SectionLabel>Your Personal Benchmark</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -1117,7 +1147,7 @@ export default function App() {
                     </p>
                     <a
                       href="#signup"
-                      className="btn-lime-glow mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] text-black no-underline hover:bg-lime-300"
+                      className="btn-lime-glow mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       Join Waitlist
@@ -1236,21 +1266,38 @@ export default function App() {
         </section>
 
         {/* ── SIGNUP / WAITLIST ── */}
-        <section id="signup" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
-          <div className="mx-auto max-w-5xl">
-            <div className="relative overflow-hidden border border-white/[0.08] bg-[#0a0a0a] p-12 text-center">
+        <section id="signup" className="relative border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
+          {/* Section ambient glow */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.038) 0%, transparent 70%)",
+            }}
+          />
+
+          <div className="relative mx-auto max-w-5xl">
+            <div className="relative overflow-hidden border border-white/[0.09] bg-[#070707] p-10 text-center md:p-16">
+
+              {/* Corner accent marks */}
+              <div className="absolute left-0 top-0 h-8 w-8 border-l border-t border-lime-400/40" />
+              <div className="absolute right-0 top-0 h-8 w-8 border-r border-t border-lime-400/40" />
+              <div className="absolute bottom-0 left-0 h-8 w-8 border-b border-l border-lime-400/22" />
+              <div className="absolute bottom-0 right-0 h-8 w-8 border-b border-r border-lime-400/22" />
+
+              {/* Top glow + accent line */}
               <div
                 className="pointer-events-none absolute inset-0"
                 style={{
                   background:
-                    "radial-gradient(ellipse at center top, rgba(132,204,22,0.08) 0%, transparent 58%)",
+                    "radial-gradient(ellipse at center top, rgba(132,204,22,0.10) 0%, transparent 52%)",
                 }}
               />
-              <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/50 to-transparent" />
+              <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/55 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
 
               <div className="relative">
-                <div className="mb-7 flex justify-center">
+                <div className="mb-6 flex justify-center">
                   <div className="flex h-14 w-14 items-center justify-center border border-lime-400/30 bg-lime-400/[0.06]">
                     <Mail className="h-6 w-6 text-lime-400" strokeWidth={1.5} />
                   </div>
@@ -1258,21 +1305,36 @@ export default function App() {
 
                 <SectionLabel>Founding Athlete Registration</SectionLabel>
 
-                <h2 className="text-metallic text-4xl uppercase tracking-tight md:text-5xl">
+                <h2
+                  className="text-metallic uppercase tracking-tight"
+                  style={{ fontSize: "clamp(2rem, 4vw, 3.6rem)", lineHeight: 1.06, fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                >
                   Become One of the
                   <br />
                   First Ultimate Humans
                 </h2>
 
-                <p className="mx-auto mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
+                <p className="mx-auto mt-5 max-w-xl text-lg leading-7 text-neutral-400">
                   Get early access to launch events, training plans, founding athlete pricing, rankings
                   and exclusive first-release places.
                 </p>
 
-                <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                {/* Scarcity line */}
+                <div className="mt-5 flex items-center justify-center gap-4">
+                  <div className="h-px w-10 shrink-0 bg-lime-400/35" />
+                  <p
+                    className="text-[11px] font-bold uppercase tracking-[0.26em] text-lime-400/65"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    Limited founding places — pricing increases at launch
+                  </p>
+                  <div className="h-px w-10 shrink-0 bg-lime-400/35" />
+                </div>
+
+                <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
                   <a
                     href="https://theultimatehuman.fitness"
-                    className="btn-lime-glow inline-flex items-center bg-lime-400 px-8 py-4 text-[13px] font-bold uppercase tracking-[0.18em] text-black no-underline hover:bg-lime-300"
+                    className="btn-lime-glow inline-flex items-center bg-lime-400 px-9 py-5 text-[13px] font-black uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     Join at theultimatehuman.fitness
@@ -1280,7 +1342,7 @@ export default function App() {
                   </a>
                   <a
                     href="mailto:hello@theultimatehuman.fitness"
-                    className="inline-flex items-center border border-white/20 bg-white/[0.04] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.18em] text-white no-underline transition-colors hover:border-white/35 hover:bg-white/[0.08]"
+                    className="inline-flex items-center border border-white/20 bg-white/[0.04] px-8 py-5 text-[13px] font-bold uppercase tracking-[0.18em] text-white no-underline transition-colors hover:border-white/35 hover:bg-white/[0.08]"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     Invite Your Gym
@@ -1298,8 +1360,8 @@ export default function App() {
           <img
             src="/images/logo.png"
             alt="The Ultimate Human"
-            className="h-8 w-auto object-contain opacity-40"
-            style={{ maxWidth: "160px" }}
+            className="h-8 w-auto object-contain"
+            style={{ maxWidth: "150px", opacity: 0.32 }}
           />
           <p
             className="text-[11px] font-bold uppercase tracking-[0.42em] text-neutral-700"
