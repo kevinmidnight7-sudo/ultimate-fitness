@@ -24,6 +24,53 @@ h3 {
   font-weight: 700;
 }
 
+/* ── Hero arena animations ───────────────────────────────────── */
+
+@keyframes uh-beam-1 {
+  0%, 100% { transform: rotate(-14deg); opacity: 0.9; }
+  50%       { transform: rotate(0deg);  opacity: 0.5; }
+}
+
+@keyframes uh-beam-2 {
+  0%, 100% { transform: rotate(22deg); opacity: 0.7; }
+  50%       { transform: rotate(10deg); opacity: 0.35; }
+}
+
+@keyframes uh-beam-3 {
+  0%, 100% { transform: rotate(-38deg); opacity: 0.4; }
+  50%       { transform: rotate(-26deg); opacity: 0.18; }
+}
+
+@keyframes uh-grid-scroll {
+  0%   { background-position: 50% 0px; }
+  100% { background-position: 50% 80px; }
+}
+
+@keyframes uh-scanline {
+  0%   { top: -1%;   opacity: 0;   }
+  4%   { opacity: 0.75; }
+  96%  { opacity: 0.2;  }
+  100% { top: 101%;  opacity: 0;   }
+}
+
+@keyframes uh-pulse-ring {
+  0%, 100% { transform: scale(1);   opacity: 0.12; }
+  50%       { transform: scale(1.06); opacity: 0.06; }
+}
+
+/* Disable all custom animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .uh-beam-1,
+  .uh-beam-2,
+  .uh-beam-3,
+  .uh-grid,
+  .uh-scanline {
+    animation: none !important;
+  }
+}
+
+/* ── Metallic text utilities ─────────────────────────────────── */
+
 .text-metallic {
   background: linear-gradient(175deg, #ffffff 0%, #d4d4d4 35%, #8a8a8a 100%);
   -webkit-background-clip: text;
