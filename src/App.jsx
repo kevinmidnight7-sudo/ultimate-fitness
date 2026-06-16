@@ -232,6 +232,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
             "linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.038) 38%, rgba(255,255,255,0.008) 65%, transparent 85%)",
           clipPath: "polygon(40% 0%, 60% 0%, 84% 100%, 16% 100%)",
           transformOrigin: "50% 0%",
+          filter: "blur(6px)",
           animation: reducedMotion ? "none" : "uh-beam-1 11s ease-in-out infinite",
         }}
       />
@@ -263,6 +264,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
             "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.015) 48%, transparent 80%)",
           clipPath: "polygon(34% 0%, 66% 0%, 90% 100%, 10% 100%)",
           transformOrigin: "50% 0%",
+          filter: "blur(5px)",
           animation: reducedMotion ? "none" : "uh-beam-2 15s ease-in-out infinite 1.2s",
         }}
       />
@@ -294,6 +296,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
             "linear-gradient(180deg, rgba(255,255,255,0.052) 0%, rgba(255,255,255,0.01) 50%, transparent 80%)",
           clipPath: "polygon(28% 0%, 72% 0%, 95% 100%, 5% 100%)",
           transformOrigin: "50% 0%",
+          filter: "blur(4px)",
           animation: reducedMotion ? "none" : "uh-beam-3 19s ease-in-out infinite 3s",
         }}
       />
