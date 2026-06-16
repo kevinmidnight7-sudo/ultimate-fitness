@@ -741,30 +741,38 @@ export default function App() {
                 </span>
               </div>
 
-              {/* Headline */}
-              <h1
-                className="text-metallic uppercase leading-none tracking-tight"
-                style={{
-                  fontSize: "clamp(2.4rem, 5vw, 5rem)",
-                  lineHeight: 1.03,
-                  fontFamily: "'Oswald', sans-serif",
-                  fontWeight: 700,
-                }}
-              >
-                The AI-Powered
-                <br />
-                Operating System
-                <br />
-                for Human
-                <br />
-                Performance
-              </h1>
+              {/* Headline with vertical left accent */}
+              <div className="relative pl-5 md:pl-6">
+                {/* Vertical lime bar — fades into the arena graphics below */}
+                <div
+                  className="absolute left-0 top-0 w-[2px]"
+                  style={{
+                    height: "115%",
+                    background:
+                      "linear-gradient(to bottom, rgba(163,230,53,0.9) 0%, rgba(163,230,53,0.7) 38%, rgba(163,230,53,0.25) 70%, transparent 100%)",
+                  }}
+                />
+                <h1
+                  className="text-metallic uppercase leading-none tracking-tight"
+                  style={{
+                    fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                    lineHeight: 1.03,
+                    fontFamily: "'Oswald', sans-serif",
+                    fontWeight: 700,
+                  }}
+                >
+                  The AI-Powered
+                  <br />
+                  Operating System
+                  <br />
+                  for Human
+                  <br />
+                  Performance
+                </h1>
 
-              {/* Slogan separator */}
-              <div className="mt-5 flex items-center gap-4">
-                <div className="h-px w-10 shrink-0 bg-lime-400/60" />
+                {/* Slogan — indented to sit flush with headline text */}
                 <p
-                  className="text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/80"
+                  className="mt-5 text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/75"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Measure. Train. Compete. Evolve.
