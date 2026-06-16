@@ -301,7 +301,17 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
       {/* 07 Stadium arc rings — seating tiers */}
       <div
         className="absolute"
-        style={{ top: "2%", right: "-8%", width: "68%", height: "78%", pointerEvents: "none" }}
+        style={{
+          top: "2%",
+          right: "-12%",
+          width: "70%",
+          height: "78%",
+          pointerEvents: "none",
+          maskImage:
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 22%, black 42%, black 72%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 22%, black 42%, black 72%, transparent 100%)",
+        }}
       >
         <svg
           width="100%"
