@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
@@ -24,6 +24,12 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
+/* ─────────────────────────────────────────────────────────────────
+   PASSWORD — change this to whatever you want
+───────────────────────────────────────────────────────────────── */
+
+const SITE_PASSWORD = "ultimatehuman";
 
 /* ─────────────────────────────────────────────────────────────────
    DATA
@@ -484,6 +490,126 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   PASSWORD GATE
+───────────────────────────────────────────────────────────────── */
+
+function PasswordGate({ onUnlock }) {
+  const [value, setValue] = useState("");
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  const attempt = (e) => {
+    e.preventDefault();
+    if (value.trim().toLowerCase() === SITE_PASSWORD.toLowerCase()) {
+      try { localStorage.setItem("uh_unlocked", "1"); } catch {}
+      onUnlock();
+    } else {
+      setError(true);
+      setShake(true);
+      setValue("");
+      setTimeout(() => setShake(false), 520);
+    }
+  };
+
+  return (
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050505] px-6">
+
+      {/* Background atmosphere */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(132,204,22,0.055) 0%, transparent 68%)",
+        }}
+      />
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/45 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+
+      <div className="relative flex w-full max-w-[360px] flex-col items-center text-center">
+
+        {/* Logo */}
+        <img
+          src="/images/logo.png"
+          alt="The Ultimate Human"
+          className="mb-10 h-16 w-auto object-contain md:h-[72px]"
+          style={{
+            maxWidth: "220px",
+            filter: "drop-shadow(0 2px 18px rgba(255,255,255,0.10))",
+          }}
+        />
+
+        {/* Headline */}
+        <h1
+          className="text-metallic uppercase"
+          style={{
+            fontSize: "clamp(3.2rem, 9vw, 5.2rem)",
+            lineHeight: 0.96,
+            fontFamily: "'Oswald', sans-serif",
+            fontWeight: 700,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Coming
+          <br />
+          Soon
+        </h1>
+
+        {/* Slogan */}
+        <div className="mt-6 flex items-center gap-3">
+          <div className="h-px w-8 shrink-0 bg-lime-400/45" />
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/70"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Measure. Train. Compete. Evolve.
+          </p>
+          <div className="h-px w-8 shrink-0 bg-lime-400/45" />
+        </div>
+
+        {/* Divider */}
+        <div className="my-10 w-full border-t border-white/[0.07]" />
+
+        {/* Label */}
+        <p
+          className="mb-4 text-[11px] font-bold uppercase tracking-[0.32em] text-neutral-600"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          Enter access code to preview
+        </p>
+
+        {/* Form */}
+        <form onSubmit={attempt} className={`w-full${shake ? " uh-shake" : ""}`}>
+          <input
+            type="password"
+            value={value}
+            autoComplete="off"
+            placeholder="Access code"
+            onChange={(e) => { setValue(e.target.value); setError(false); }}
+            className={`uh-code-input${error ? " is-error" : ""} w-full bg-white/[0.03] px-5 py-4 text-center text-[14px] font-semibold uppercase tracking-[0.24em] text-white placeholder-neutral-800`}
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          />
+          {error && (
+            <p
+              className="mt-2 text-[11px] font-bold uppercase tracking-[0.22em] text-red-400/75"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Incorrect access code
+            </p>
+          )}
+          <button
+            type="submit"
+            className="btn-lime-glow mt-3 w-full bg-lime-400 py-4 text-[12.5px] font-black uppercase tracking-[0.22em] text-black transition-colors hover:bg-lime-300"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Unlock Preview
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
    FOUNDER CARD
 ───────────────────────────────────────────────────────────────── */
 
@@ -525,8 +651,16 @@ function FounderCard({ initials, name, role, quote }) {
 ───────────────────────────────────────────────────────────────── */
 
 export default function App() {
+  /* Gate — all hooks must come before any conditional return */
+  const [unlocked, setUnlocked] = useState(() => {
+    try { return localStorage.getItem("uh_unlocked") === "1"; } catch { return false; }
+  });
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
+
+  if (!unlocked) {
+    return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#050505] text-white">
