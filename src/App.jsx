@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button";
    PASSWORD — change this to whatever you want
 ───────────────────────────────────────────────────────────────── */
 
-const SITE_PASSWORD = "ultimatehuman";
+const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* ─────────────────────────────────────────────────────────────────
    DATA
