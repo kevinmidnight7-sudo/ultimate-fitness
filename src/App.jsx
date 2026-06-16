@@ -324,22 +324,20 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <ellipse cx="320" cy="240" rx="580" ry="310" stroke="rgba(255,255,255,0.028)" strokeWidth="1" />
-          <ellipse cx="320" cy="252" rx="480" ry="252" stroke="rgba(255,255,255,0.038)" strokeWidth="0.8" />
-          <ellipse cx="320" cy="264" rx="380" ry="196" stroke="rgba(255,255,255,0.028)" strokeWidth="0.7" />
-          <ellipse cx="320" cy="276" rx="280" ry="140" stroke="rgba(163,230,53,0.048)" strokeWidth="0.8" />
+          {/* Only inner rings — outer ellipses read as horizontal lines at this scale */}
+          <ellipse cx="320" cy="276" rx="280" ry="140" stroke="rgba(163,230,53,0.042)" strokeWidth="0.8" />
           <motion.ellipse
             cx="320"
             cy="288"
             rx="180"
             ry="86"
-            stroke="rgba(163,230,53,0.072)"
+            stroke="rgba(163,230,53,0.065)"
             strokeWidth="0.7"
             fill="none"
             animate={reducedMotion ? {} : { opacity: [0.45, 1, 0.45] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
-          <ellipse cx="320" cy="296" rx="90" ry="38" stroke="rgba(255,255,255,0.02)" strokeWidth="0.5" />
+          <ellipse cx="320" cy="296" rx="90" ry="38" stroke="rgba(255,255,255,0.018)" strokeWidth="0.5" />
           <line
             x1="320" y1="0" x2="320" y2="290"
             stroke="rgba(255,255,255,0.016)"
