@@ -375,16 +375,6 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         }}
       />
 
-      {/* 10 Arena horizon line */}
-      <div
-        className="absolute left-0 right-0"
-        style={{
-          bottom: "36%",
-          height: "1px",
-          background:
-            "linear-gradient(to right, transparent 5%, rgba(163,230,53,0.07) 28%, rgba(163,230,53,0.16) 50%, rgba(163,230,53,0.07) 72%, transparent 95%)",
-        }}
-      />
 
       {/* 11 Logo watermark — floor right */}
       <div
