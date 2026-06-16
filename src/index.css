@@ -113,3 +113,29 @@ h3 {
 .btn-lime-glow:hover {
   box-shadow: 0 0 24px rgba(163, 230, 53, 0.5);
 }
+
+/* ── Password gate ───────────────────────────────────────────── */
+
+@keyframes uh-shake {
+  0%, 100% { transform: translateX(0); }
+  18%, 54%  { transform: translateX(-7px); }
+  36%, 72%  { transform: translateX(7px); }
+}
+
+.uh-shake {
+  animation: uh-shake 0.48s ease-in-out;
+}
+
+.uh-code-input {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.uh-code-input:focus {
+  border-color: rgba(163, 230, 53, 0.55);
+}
+
+.uh-code-input.is-error {
+  border-color: rgba(239, 68, 68, 0.55);
+}
