@@ -437,16 +437,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         />
       ))}
 
-      {/* 13 Cinematic vignette — darker edges, lighter center */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 88% 82% at 55% 42%, transparent 38%, rgba(0,0,0,0.26) 68%, rgba(0,0,0,0.55) 100%)",
-        }}
-      />
-
-      {/* 14 Film grain / noise */}
+      {/* 13 Film grain / noise */}
       <svg
         className="absolute inset-0 h-full w-full"
         style={{ opacity: 0.04 }}
@@ -463,16 +454,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
       {/* 15 Mouse-reactive lime glow */}
       <div ref={mouseGlowRef} className="absolute inset-0" />
 
-      {/* 16 Left readability gradient */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.90) 20%, rgba(5,5,5,0.67) 40%, rgba(5,5,5,0.24) 60%, rgba(5,5,5,0.04) 100%)",
-        }}
-      />
-
-      {/* 17 Bottom site-bg fade */}
+      {/* 16 Bottom site-bg fade */}
       <div
         className="absolute bottom-0 left-0 right-0"
         style={{ height: "130px", background: "linear-gradient(to top, #050505, transparent)" }}
@@ -720,11 +702,11 @@ export default function App() {
         {/* ── HERO ── */}
         <section
           ref={heroRef}
-          className="relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
+          className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
           <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
-          <div className="relative mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
+          <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
