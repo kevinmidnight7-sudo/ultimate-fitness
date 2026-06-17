@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   Gauge,
@@ -633,6 +633,26 @@ export default function App() {
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
 
+  /* Headline glow — grey-to-white metallic gradient brightens as the user scrolls */
+  const { scrollY } = useScroll();
+  const headlineGlow = useTransform(scrollY, [0, 320], [0, 1]);
+  const headlineBackground = useTransform(
+    headlineGlow,
+    [0, 1],
+    [
+      "linear-gradient(170deg, #ffffff 0%, #e0e0e0 30%, #a0a0a0 65%, #707070 100%)",
+      "linear-gradient(170deg, #ffffff 0%, #ffffff 30%, #ffffff 65%, #ffffff 100%)",
+    ]
+  );
+  const headlineFilter = useTransform(
+    headlineGlow,
+    [0, 1],
+    [
+      "drop-shadow(0 0 0px rgba(255,255,255,0)) drop-shadow(0 0 0px rgba(163,230,53,0))",
+      "drop-shadow(0 0 10px rgba(255,255,255,0.65)) drop-shadow(0 0 26px rgba(163,230,53,0.4))",
+    ]
+  );
+
   if (!unlocked) {
     return <PasswordGate onUnlock={() => setUnlocked(true)} />;
   }
@@ -727,13 +747,15 @@ export default function App() {
                       "linear-gradient(to bottom, rgba(163,230,53,0.9) 0%, rgba(163,230,53,0.7) 38%, rgba(163,230,53,0.25) 70%, transparent 100%)",
                   }}
                 />
-                <h1
+                <motion.h1
                   className="text-metallic uppercase leading-none tracking-tight"
                   style={{
                     fontSize: "clamp(2.4rem, 5vw, 5rem)",
                     lineHeight: 1.03,
                     fontFamily: "'Oswald', sans-serif",
                     fontWeight: 700,
+                    backgroundImage: reducedMotion ? undefined : headlineBackground,
+                    filter: reducedMotion ? undefined : headlineFilter,
                   }}
                 >
                   The AI-Powered
@@ -743,7 +765,7 @@ export default function App() {
                   for Human
                   <br />
                   Performance
-                </h1>
+                </motion.h1>
 
                 {/* Slogan — indented to sit flush with headline text */}
                 <p
