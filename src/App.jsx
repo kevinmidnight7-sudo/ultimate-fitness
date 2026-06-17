@@ -506,29 +506,6 @@ const foundingPricing = [
   { category: "Corporate Team", price: "From £599", detail: "Includes rankings + team scoring" },
 ];
 
-const aiFeatures = [
-  {
-    title: "Discover Your Ultimate Human Profile",
-    text: "Answer a few questions about your age, training background, strengths and goals and our AI assessment engine will generate your likely Ultimate Human profile.",
-    points: [
-      "Identify your strongest capability areas",
-      "Reveal your likely weak zones",
-      "Understand your athletic archetype",
-      "Receive personalised training insights",
-    ],
-  },
-  {
-    title: "AI Race Simulator",
-    text: "Estimate your likely Ultimate Human Score before race day based on your training history, movement background and current fitness level.",
-    points: [
-      "Predicted completion score",
-      "Likely ranking percentile",
-      "Projected strongest events",
-      "Performance improvement opportunities",
-    ],
-  },
-];
-
 const workToDo = [
   "First UK event dates and venues will be confirmed soon.",
   "Final scoring standards are being tested before launch.",
@@ -1310,12 +1287,12 @@ function EventStructureSection() {
           </div>
 
           {/* Division selector */}
-          <div className="flex shrink-0 gap-px bg-white/[0.06]">
+          <div className="flex w-full shrink-0 gap-px bg-white/[0.06] sm:w-auto">
             {divisions.map((d) => (
               <button
                 key={d.key}
                 onClick={() => setDivision(d.key)}
-                className={`px-5 py-3 text-[12px] font-bold uppercase tracking-[0.18em] transition-colors ${
+                className={`flex-1 px-3 py-3 text-[11px] tracking-[0.1em] sm:flex-none sm:px-5 sm:text-[12px] sm:tracking-[0.18em] font-bold uppercase transition-colors ${
                   division === d.key
                     ? "bg-lime-400 text-black"
                     : "bg-[#0d0d0d] text-neutral-400 hover:bg-[#151515] hover:text-white"
@@ -1362,18 +1339,27 @@ function EventStructureSection() {
         </AnimatePresence>
 
         {/* Event flow map — mission-control route */}
-        <div className="mt-10 overflow-x-auto pb-4">
-          <div className="flex min-w-max items-center gap-1.5 px-1">
-            {labours.map((labour) => (
-              <React.Fragment key={labour.number}>
-                <FlowNode label="Run" sub={current.runDistance} run />
-                <FlowConnector />
-                <FlowNode label={`L${labour.number}`} sub={labour.name} />
-                <FlowConnector />
-              </React.Fragment>
-            ))}
-            <FlowNode label="L10" sub="Final Circuit" final />
+        <div className="relative mt-10">
+          <div className="overflow-x-auto pb-4">
+            <div className="flex min-w-max items-center gap-1.5 px-1">
+              {labours.map((labour) => (
+                <React.Fragment key={labour.number}>
+                  <FlowNode label="Run" sub={current.runDistance} run />
+                  <FlowConnector />
+                  <FlowNode label={`L${labour.number}`} sub={labour.name} />
+                  <FlowConnector />
+                </React.Fragment>
+              ))}
+              <FlowNode label="L10" sub="Final Circuit" final />
+            </div>
           </div>
+          <div className="pointer-events-none absolute bottom-4 right-0 top-0 w-10 bg-gradient-to-l from-[#080808] to-transparent sm:hidden" />
+          <p
+            className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600 sm:hidden"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Swipe to see the full route →
+          </p>
         </div>
 
         {/* Labours 1–9 — accordion, one open at a time */}
@@ -2078,7 +2064,7 @@ function YourJourneyHub() {
   const [modal, setModal] = useState(null);
 
   return (
-    <section className="border-t border-white/[0.06] bg-[#070707] px-6 py-24">
+    <section id="journey" className="border-t border-white/[0.06] bg-[#070707] px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <SectionLabel>Start Here</SectionLabel>
@@ -2841,7 +2827,7 @@ function TierCard({ tier, index }) {
 
 function SubscriptionSection() {
   return (
-    <section className="border-t border-white/[0.06] bg-[#050505] px-6 py-28">
+    <section id="membership" className="border-t border-white/[0.06] bg-[#050505] px-6 py-28">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 inline-flex items-center gap-2.5 border border-amber-400/15 bg-amber-400/[0.03] px-3.5 py-1.5">
           <AlertTriangle className="h-3 w-3 text-amber-400/80" strokeWidth={1.5} />
@@ -2854,7 +2840,7 @@ function SubscriptionSection() {
         </div>
 
         <div className="mb-14 max-w-2xl">
-          <SectionLabel>Membership</SectionLabel>
+          <SectionLabel>Membership & Coaching Platform</SectionLabel>
           <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             One Platform.
             <br />
@@ -2864,6 +2850,12 @@ function SubscriptionSection() {
             The Ultimate Human is being built as an ongoing platform, not just an
             event. Subscriptions will give athletes, coaches, gyms and teams
             continuous access to scoring, training insight and AI-assisted coaching.
+          </p>
+          <p
+            className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            This is your ongoing platform access — separate from event entry.
           </p>
         </div>
 
@@ -2951,10 +2943,11 @@ export default function App() {
 
           <nav className="hidden gap-8 md:flex">
             {[
-              { label: "The Challenge", href: "#challenge" },
-              { label: "Format", href: "#format" },
+              { label: "Journey", href: "#journey" },
+              { label: "Event", href: "#format" },
               { label: "Score", href: "#score" },
-              { label: "Categories", href: "#categories" },
+              { label: "AI Coach", href: "#coaching" },
+              { label: "Membership", href: "#membership" },
               { label: "Sign Up", href: "#signup" },
             ].map(({ label, href }) => (
               <a
@@ -3342,81 +3335,23 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── AI FEATURES ── */}
-        <section className="border-t border-lime-400/[0.07] bg-[#080808] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
-            <div className="mb-14">
-              <SectionLabel>AI-Powered Performance Intelligence</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                Discover the Athlete
-                <br />
-                You Really Are.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human combines competition with AI-powered capability analysis to help
-                you understand how you move, perform and improve.
-              </p>
-            </div>
-
-            <div className="grid gap-px bg-white/[0.05] lg:grid-cols-2">
-              {aiFeatures.map((feature, i) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: i * 0.1 }}
-                  className="relative bg-[#0d0d0d]"
-                >
-                  <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
-                  <div className="p-9">
-                    <div className="mb-7 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04]">
-                      <BarChart3 className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-2xl uppercase tracking-tight text-white">{feature.title}</h3>
-                    <p className="mt-4 text-base leading-7 text-neutral-400">{feature.text}</p>
-
-                    <div className="mt-8 space-y-px bg-white/[0.04]">
-                      {feature.points.map((point) => (
-                        <div
-                          key={point}
-                          className="flex items-center gap-4 bg-[#0d0d0d] px-5 py-4 transition-colors hover:bg-[#111]"
-                        >
-                          <CheckCircle2 className="h-4 w-4 shrink-0 text-lime-400" strokeWidth={2} />
-                          <p
-                            className="text-[13px] text-neutral-300"
-                            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                          >
-                            {point}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <button
-                      className="mt-8 border border-lime-400/60 bg-transparent px-6 py-3 text-[12px] font-bold uppercase tracking-[0.22em] text-lime-400 transition-all hover:border-lime-400 hover:bg-lime-400 hover:text-black"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      Try the AI Assessment
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── PRICING ── */}
         <section className="border-t border-white/[0.06] bg-[#050505] px-6 py-24">
           <div className="mx-auto max-w-7xl">
             <div className="mb-14">
-              <SectionLabel>Founding Athlete Pricing</SectionLabel>
+              <SectionLabel>Event Entry Pricing</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Get in Early.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 Early launch pricing for the first Ultimate Human events. Founding athlete places will
                 be limited and pricing will increase after launch release.
+              </p>
+              <p
+                className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                This is your event entry fee — not your platform membership.
               </p>
             </div>
 
