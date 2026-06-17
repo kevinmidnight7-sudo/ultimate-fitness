@@ -30,6 +30,7 @@ import {
   UserCheck,
   ChevronDown,
   Weight,
+  PlayCircle,
 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -315,11 +316,20 @@ const aiAnalysisCategories = [
   "Movement Consistency",
 ];
 
+const aiSampleVideos = ["Bear Crawl Push", "Lunges", "Wall Balls / Hoop Shot"];
+
+const aiFeedbackQuotes = [
+  "Your stride length is reducing glute engagement and increasing quad fatigue.",
+  "Your hips rise under fatigue, making your bear crawl less efficient.",
+  "You're initiating the throw too early with your arms, reducing power from the legs.",
+];
+
 const aiHowItWorks = [
   {
     icon: Upload,
     title: "Upload Your Video",
     text: "Record or upload a short clip of the movement you want analysed.",
+    videos: aiSampleVideos,
   },
   {
     icon: Activity,
@@ -331,7 +341,38 @@ const aiHowItWorks = [
     icon: UserCheck,
     title: "Receive Expert Coaching",
     text: "The system will support athletes with clear, practical feedback and a training focus designed to move your score.",
+    quotes: aiFeedbackQuotes,
   },
+];
+
+const aiImprovementAreas = [
+  {
+    icon: CheckCircle2,
+    title: "What You're Doing Well",
+    text: "The strengths you should continue to develop.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Biggest Improvement Opportunities",
+    text: "The one or two changes that will have the greatest impact on performance.",
+  },
+  {
+    icon: Target,
+    title: "Personalised Coaching Drills",
+    text: "Simple exercises and movement cues designed to improve technique.",
+  },
+  {
+    icon: BarChart3,
+    title: "Estimated Score Gain",
+    text: "The likely improvement in your Ultimate Human Score if you implement the recommended changes.",
+  },
+];
+
+const aiProfileEvolution = [
+  "Where you're strongest",
+  "What is limiting your performance",
+  "How your movement is improving",
+  "Where your next gains will come from",
 ];
 
 const subscriptionTiers = [
@@ -1415,6 +1456,7 @@ const aiTabs = [
 
 function HowItWorksCard({ step, index }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [quotesOpen, setQuotesOpen] = useState(false);
 
   return (
     <motion.div
@@ -1435,6 +1477,29 @@ function HowItWorksCard({ step, index }) {
       </p>
       <h3 className="mt-2 text-xl uppercase tracking-wide text-white">{step.title}</h3>
       <p className="mt-3 text-sm leading-6 text-neutral-400">{step.text}</p>
+
+      {step.videos && (
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {step.videos.map((label) => (
+            <div
+              key={label}
+              className="group relative flex aspect-square flex-col items-center justify-center gap-1.5 border border-white/[0.08] bg-[#111] px-1.5 text-center transition-colors hover:border-lime-400/30"
+            >
+              <PlayCircle
+                className="h-5 w-5 text-neutral-600 transition-colors group-hover:text-lime-400"
+                strokeWidth={1.5}
+              />
+              <p className="text-[9.5px] font-bold uppercase leading-tight tracking-[0.06em] text-neutral-400">
+                {label}
+              </p>
+              <span className="absolute left-1 top-1 text-[8px] font-bold uppercase tracking-[0.1em] text-neutral-600">
+                Sample
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
       {step.categories && (
         <>
           <button
@@ -1474,7 +1539,157 @@ function HowItWorksCard({ step, index }) {
           </AnimatePresence>
         </>
       )}
+
+      {step.quotes && (
+        <>
+          <button
+            onClick={() => setQuotesOpen((o) => !o)}
+            className="mt-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-lime-400/80 transition-colors hover:text-lime-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            aria-expanded={quotesOpen}
+          >
+            See Example Feedback
+            <ChevronDown
+              className={`h-3.5 w-3.5 transition-transform duration-300 ${quotesOpen ? "rotate-180" : ""}`}
+              strokeWidth={2}
+            />
+          </button>
+          <AnimatePresence initial={false}>
+            {quotesOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 space-y-2">
+                  {step.quotes.map((quote) => (
+                    <p
+                      key={quote}
+                      className="border-l-2 border-lime-400/40 bg-lime-400/[0.04] py-1.5 pl-3 text-[12.5px] italic leading-5 text-neutral-300"
+                    >
+                      "{quote}"
+                    </p>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
     </motion.div>
+  );
+}
+
+function ImprovementAreasPanel() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="mt-12 border border-white/[0.08] bg-[#0a0a0a]">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 p-7 text-left transition-colors hover:bg-[#0d0d0d]"
+      >
+        <div>
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/70"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Every Assessment Includes
+          </p>
+          <h3 className="mt-2 text-xl uppercase tracking-wide text-white md:text-2xl">
+            See Exactly Where You Can Improve
+          </h3>
+        </div>
+        <ChevronDown
+          className={`h-5 w-5 shrink-0 text-neutral-500 transition-transform ${open ? "rotate-180" : ""}`}
+          strokeWidth={1.5}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="grid grid-cols-1 gap-px bg-white/[0.06] border-t border-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+              {aiImprovementAreas.map(({ icon: Icon, title, text }) => (
+                <div key={title} className="bg-[#0d0d0d] p-6">
+                  <Icon className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
+                  <h4 className="mt-4 text-[13px] font-bold uppercase leading-tight tracking-[0.06em] text-white">
+                    {title}
+                  </h4>
+                  <p className="mt-2 text-[12.5px] leading-5 text-neutral-500">{text}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function PersonalCapabilityCoach() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="mt-6 border border-lime-400/[0.15] bg-lime-400/[0.03] p-7">
+      <div className="flex items-start gap-4">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-lime-400/30 bg-lime-400/[0.08]">
+          <Sparkles className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
+        </div>
+        <div className="flex-1">
+          <h4 className="text-[13px] font-bold uppercase tracking-[0.16em] text-white">
+            Your Personal Capability Coach
+          </h4>
+          <p className="mt-2 text-[13px] leading-5 text-neutral-400">
+            As you upload more videos and complete more challenges, your Ultimate
+            Human profile evolves — getting a clearer picture of your movement every
+            time.
+          </p>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            className="mt-3 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-lime-400/80 transition-colors hover:text-lime-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            What Your Profile Tracks
+            <ChevronDown
+              className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+              strokeWidth={2}
+            />
+          </button>
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {aiProfileEvolution.map((point) => (
+                    <div key={point} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-400" strokeWidth={2} />
+                      <p className="text-[12.5px] leading-5 text-neutral-400">{point}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -1973,6 +2188,9 @@ function AICoachingSection() {
             <HowItWorksCard key={step.title} step={step} index={i} />
           ))}
         </div>
+
+        <ImprovementAreasPanel />
+        <PersonalCapabilityCoach />
 
         <p className="mx-auto mt-10 max-w-2xl text-center text-lg leading-7 text-neutral-300">
           The AI is not replacing coaches. It is making expert coaching accessible to
