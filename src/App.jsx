@@ -362,17 +362,9 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
           backgroundSize: "90px 90px",
           transform: "perspective(520px) rotateX(76deg)",
           transformOrigin: "bottom center",
+          maskImage: "radial-gradient(ellipse 70% 100% at 50% 100%, black 25%, transparent 85%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 100% at 50% 100%, black 25%, transparent 85%)",
           animation: reducedMotion ? "none" : "uh-grid-scroll 5s linear infinite",
-        }}
-      />
-
-      {/* 08a Floor grid edge fade */}
-      <div
-        className="absolute bottom-0 left-0 right-0"
-        style={{
-          height: "62%",
-          background:
-            "radial-gradient(ellipse 100% 100% at 50% 100%, transparent 35%, rgba(5,5,5,0.55) 65%, rgba(5,5,5,0.9) 90%)",
         }}
       />
 
