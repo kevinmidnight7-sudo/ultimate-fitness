@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   Gauge,
@@ -20,6 +20,14 @@ import {
   RotateCcw,
   Brain,
   ChevronRight,
+  Mountain,
+  Sparkles,
+  Upload,
+  MessageCircle,
+  Users,
+  Building2,
+  TrendingUp,
+  UserCheck,
 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -49,25 +57,249 @@ const capabilities = [
 ];
 
 const domains = [
-  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 88 },
-  { title: "Stamina", text: "Keep going when your lungs and legs want a vote.", value: 82 },
   { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 76 },
-  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 70 },
-  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 64 },
+  { title: "Power", text: "Convert strength into explosive output when it matters.", value: 73 },
+  { title: "Endurance", text: "Keep going when your lungs and legs want a vote.", value: 82 },
+  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 88 },
   { title: "Mobility", text: "Move well, not just hard.", value: 58 },
+  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 70 },
+  { title: "Resilience", text: "Absorb fatigue and setbacks without falling apart.", value: 67 },
+  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 64 },
+  { title: "Recovery", text: "Bounce back between efforts and across the whole event.", value: 61 },
+  { title: "Control Under Pressure", text: "Keep technique and decisions sharp when it's hard.", value: 72 },
 ];
 
-const exercises = [
-  "Reactive Shuttle Sprint",
-  "Bear Crawl Grid",
-  "Sandbag Carry Circuit",
-  "Balance Traverse",
-  "Burpee Broad Jump Ladder",
-  "Med Ball Accuracy Throws",
-  "Single-Leg Movement Flow",
-  "Shuttle Carry Relay",
-  "Ground-to-Overhead Complex",
-  "The Ultimate Flow",
+const uhsReveals = [
+  { title: "What You're Strongest At", text: "The capabilities carrying your score today." },
+  { title: "What's Limiting You", text: "The weak link holding your overall result back." },
+  { title: "Where You Can Improve", text: "Specific, trainable targets — not vague advice." },
+  { title: "How You Evolve Over Time", text: "A profile that updates every time you compete." },
+];
+
+const comparisonRaces = [
+  {
+    name: "HYROX",
+    tagline: "Tests hybrid racing.",
+    text: "Built for endurance-paced functional racing against the clock.",
+    icon: Timer,
+  },
+  {
+    name: "Spartan",
+    tagline: "Tests obstacle grit.",
+    text: "Built to test grit, obstacle problem-solving and raw toughness.",
+    icon: Mountain,
+  },
+  {
+    name: "CrossFit",
+    tagline: "Tests high-intensity fitness.",
+    text: "Built to test varied, high-intensity functional fitness.",
+    icon: Dumbbell,
+  },
+];
+
+const uhComparison = {
+  name: "Ultimate Human",
+  tagline: "Tests the whole human.",
+  text: "Built to measure every dimension of human capability, together, under fatigue.",
+  icon: Sparkles,
+};
+
+const divisions = [
+  {
+    key: "foundation",
+    label: "Foundation",
+    runDistance: "400m",
+    finalRun: "400m",
+    totalRunning: "4.0km",
+  },
+  {
+    key: "intermediate",
+    label: "Intermediate",
+    runDistance: "600m",
+    finalRun: "600m",
+    totalRunning: "6.0km",
+  },
+  {
+    key: "elite",
+    label: "Elite",
+    runDistance: "800m",
+    finalRun: "800m",
+    totalRunning: "8.0km",
+  },
+];
+
+const labours = [
+  {
+    number: 1,
+    name: "Prone Shuttle",
+    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
+  },
+  {
+    number: 2,
+    name: "Bear Crawl Push",
+    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
+  },
+  {
+    number: 3,
+    name: "Carry + Lunge",
+    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
+  },
+  {
+    number: 4,
+    name: "Rope Load Drag",
+    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
+  },
+  {
+    number: 5,
+    name: "Hoop Shot",
+    reps: {
+      foundation: "50 attempts · 3:00 cap",
+      intermediate: "80 attempts · 4:00 cap",
+      elite: "120 attempts · 5:00 cap",
+    },
+  },
+  {
+    number: 6,
+    name: "Sandbag Get-Ups",
+    reps: { foundation: "20 reps", intermediate: "35 reps", elite: "50 reps" },
+  },
+  {
+    number: 7,
+    name: "Devil's Advance",
+    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
+  },
+  {
+    number: 8,
+    name: "Step-Ups",
+    reps: { foundation: "50 reps", intermediate: "80 reps", elite: "120 reps" },
+  },
+  {
+    number: 9,
+    name: "Ground-to-Overhead",
+    reps: { foundation: "50 reps", intermediate: "80 reps", elite: "120 reps" },
+  },
+];
+
+const finalCircuit = {
+  foundation: [
+    ["Ground-to-Shoulder", "6 reps"],
+    ["Step-Ups", "12 reps"],
+    ["Bear Crawl Push", "10m"],
+    ["Hero Load Carry", "20m"],
+    ["Final Run", "400m"],
+  ],
+  intermediate: [
+    ["Ground-to-Shoulder", "10 reps"],
+    ["Step-Ups", "20 reps"],
+    ["Bear Crawl Push", "20m"],
+    ["Hero Load Carry", "40m"],
+    ["Final Run", "600m"],
+  ],
+  elite: [
+    ["Ground-to-Shoulder", "15 reps"],
+    ["Step-Ups", "30 reps"],
+    ["Bear Crawl Push", "30m"],
+    ["Hero Load Carry", "60m"],
+    ["Final Run", "800m"],
+  ],
+};
+
+const aiScoreBars = [
+  { label: "Speed", value: 75 },
+  { label: "Stamina", value: 78 },
+  { label: "Strength", value: 73 },
+  { label: "Coordination", value: 81 },
+  { label: "Balance", value: 69 },
+  { label: "Mobility", value: 77 },
+];
+
+const aiTrainingFocus = [
+  "Improve bear crawl hip control under fatigue.",
+  "Build rope drag power endurance.",
+  "Improve hoop shot accuracy after running.",
+];
+
+const aiScoreGains = [
+  { label: "Lunges", from: 72, to: 79 },
+  { label: "Bear Crawl", from: 65, to: 74 },
+  { label: "Wall Balls", from: 68, to: 76 },
+];
+
+const aiAnalysisCategories = [
+  "Movement Efficiency",
+  "Body Position",
+  "Stability",
+  "Coordination",
+  "Rhythm",
+  "Fatigue Breakdown",
+  "Movement Consistency",
+];
+
+const aiHowItWorks = [
+  {
+    icon: Upload,
+    title: "Upload Your Video",
+    text: "Record or upload a short clip of the movement you want analysed.",
+  },
+  {
+    icon: Activity,
+    title: "UH AI Analysis",
+    text: "The UH AI coaching system is designed to help identify how you move against the Ultimate Human Movement Standard™.",
+    categories: aiAnalysisCategories,
+  },
+  {
+    icon: UserCheck,
+    title: "Receive Expert Coaching",
+    text: "The system will support athletes with clear, practical feedback and a training focus designed to move your score.",
+  },
+];
+
+const subscriptionTiers = [
+  {
+    name: "Athlete",
+    icon: Activity,
+    cta: "Join the Waitlist",
+    points: [
+      "Track your UHS profile",
+      "Access training insights",
+      "Upload selected movement videos",
+      "Join events and rankings",
+    ],
+  },
+  {
+    name: "Pro Athlete",
+    icon: TrendingUp,
+    highlighted: true,
+    cta: "Register Interest",
+    points: [
+      "More movement analysis",
+      "Deeper score improvement tracking",
+      "Priority race insights",
+      "Advanced coaching feedback",
+    ],
+  },
+  {
+    name: "Coach / Gym",
+    icon: Users,
+    cta: "Register Interest",
+    points: [
+      "Manage athlete profiles",
+      "Review movement submissions",
+      "Support training groups",
+      "Gym leaderboard tools",
+    ],
+  },
+  {
+    name: "Corporate Team",
+    icon: Building2,
+    cta: "Coming Soon",
+    points: [
+      "Team entries",
+      "Group capability benchmarking",
+      "Workplace challenge formats",
+      "Corporate performance reports",
+    ],
+  },
 ];
 
 const categories = [
@@ -86,7 +318,7 @@ const whyEnter = [
   },
   {
     title: "You get your Ultimate Human Score",
-    text: "A personal performance score across speed, stamina, strength, coordination, balance and mobility.",
+    text: "A personal performance score across ten capability areas — strength, power, endurance, speed, mobility, coordination, resilience, balance, recovery and control under pressure.",
   },
   {
     title: "Train for it anywhere",
@@ -622,6 +854,634 @@ function FounderCard({ initials, name, role, quote }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   EVENT STRUCTURE — division-aware mission-control event map
+───────────────────────────────────────────────────────────────── */
+
+function FlowNode({ label, sub, run, final: isFinal }) {
+  return (
+    <div
+      className={`flex shrink-0 flex-col items-center justify-center border px-4 py-3 text-center ${
+        run
+          ? "border-white/10 bg-[#0a0a0a]"
+          : isFinal
+          ? "border-lime-400/50 bg-lime-400/[0.08]"
+          : "border-lime-400/20 bg-[#0d0d0d]"
+      }`}
+      style={{ minWidth: run ? "74px" : "108px" }}
+    >
+      <span
+        className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
+          run ? "text-neutral-500" : isFinal ? "text-lime-300" : "text-lime-400/70"
+        }`}
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        {label}
+      </span>
+      <span
+        className={`mt-1 whitespace-nowrap text-[11px] font-bold uppercase ${
+          run ? "text-neutral-300" : "text-white"
+        }`}
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        {sub}
+      </span>
+    </div>
+  );
+}
+
+function FlowConnector() {
+  return <div className="h-px w-5 shrink-0 bg-lime-400/30" />;
+}
+
+function EventStructureSection() {
+  const [division, setDivision] = useState("intermediate");
+  const current = divisions.find((d) => d.key === division);
+
+  return (
+    <section id="format" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-8">
+          <div className="max-w-2xl">
+            <SectionLabel>The UHS Event Structure</SectionLabel>
+            <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              10 Labours.
+              <br />
+              One Continuous Test.
+            </h2>
+            <p className="mt-5 text-lg leading-7 text-neutral-400">
+              A run before every labour. Nine capability tests. One final circuit.
+              Choose a division to see exact distances and reps.
+            </p>
+          </div>
+
+          {/* Division selector */}
+          <div className="flex shrink-0 gap-px bg-white/[0.06]">
+            {divisions.map((d) => (
+              <button
+                key={d.key}
+                onClick={() => setDivision(d.key)}
+                className={`px-5 py-3 text-[12px] font-bold uppercase tracking-[0.18em] transition-colors ${
+                  division === d.key
+                    ? "bg-lime-400 text-black"
+                    : "bg-[#0d0d0d] text-neutral-400 hover:bg-[#151515] hover:text-white"
+                }`}
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {d.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Division distance summary */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={division}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="mb-px grid grid-cols-1 gap-px bg-white/[0.05] sm:grid-cols-3"
+          >
+            {[
+              ["Run Before Each Labour", current.runDistance],
+              ["Final Run · Labour 10", current.finalRun],
+              ["Total Running Distance", current.totalRunning],
+            ].map(([label, value]) => (
+              <div key={label} className="bg-[#0d0d0d] p-6 text-center">
+                <p
+                  className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {label}
+                </p>
+                <p
+                  className="mt-3 text-3xl text-lime-400"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                >
+                  {value}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Event flow map — mission-control route */}
+        <div className="mt-10 overflow-x-auto pb-4">
+          <div className="flex min-w-max items-center gap-1.5 px-1">
+            {labours.map((labour) => (
+              <React.Fragment key={labour.number}>
+                <FlowNode label="Run" sub={current.runDistance} run />
+                <FlowConnector />
+                <FlowNode label={`L${labour.number}`} sub={labour.name} />
+                <FlowConnector />
+              </React.Fragment>
+            ))}
+            <FlowNode label="L10" sub="Final Circuit" final />
+          </div>
+        </div>
+
+        {/* Labours 1–9 */}
+        <div className="mt-12 grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-3">
+          {labours.map((labour, index) => (
+            <motion.div
+              key={labour.number}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: index * 0.04 }}
+              className="lime-glow-hover group relative bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]"
+            >
+              <div className="absolute left-0 top-0 h-0 w-px bg-lime-400 transition-all duration-500 group-hover:h-full" />
+              <p
+                className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400/50"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                Labour {String(labour.number).padStart(2, "0")}
+              </p>
+              <p
+                className="mt-3 text-sm font-bold uppercase tracking-wide text-white"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {labour.name}
+              </p>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={division}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="mt-2 text-lg"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, color: "#a3e635" }}
+                >
+                  {labour.reps[division]}
+                </motion.p>
+              </AnimatePresence>
+            </motion.div>
+          ))}
+
+          {/* Labour 10 — Final Circuit */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, delay: labours.length * 0.04 }}
+            className="relative bg-[#0d0d0d] p-6 ring-1 ring-lime-400/40"
+          >
+            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
+            <p
+              className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Labour 10
+            </p>
+            <p
+              className="mt-3 text-sm font-bold uppercase tracking-wide text-white"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Final Circuit
+            </p>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={division}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="mt-4 space-y-2"
+              >
+                {finalCircuit[division].map(([name, value]) => (
+                  <div
+                    key={name}
+                    className="flex items-center justify-between border-b border-white/[0.06] pb-2 last:border-0 last:pb-0"
+                  >
+                    <span
+                      className="text-[12px] text-neutral-400"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      {name}
+                    </span>
+                    <span
+                      className="text-[12px] font-bold text-lime-400"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   AI COACHING DASHBOARD
+───────────────────────────────────────────────────────────────── */
+
+function AICoachingSection() {
+  const [tick, setTick] = useState(0);
+
+  return (
+    <section className="border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 max-w-3xl">
+          <SectionLabel>Built by Coaches. Powered by AI.</SectionLabel>
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Improve Your Movement.
+            <br />
+            Improve Your Score.
+          </h2>
+          <p className="mt-5 text-lg leading-7 text-neutral-400">
+            Most fitness platforms tell you to work harder. Ultimate Human helps you
+            move better. Upload a video of your exercise and the UH AI coaching
+            platform is being built to analyse your movement against the Ultimate
+            Human Movement Standard™ — developed by coaches, athletes and movement
+            specialists.
+          </p>
+
+          <p
+            className="mt-7 text-[12px] font-bold uppercase tracking-[0.26em] text-lime-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Form Beats Speed. Technique Beats Weight.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2.5">
+            {[
+              "Moving more efficiently",
+              "Better balance & coordination",
+              "More power from technique",
+              "Reducing energy leaks",
+              "Managing fatigue",
+            ].map((tag) => (
+              <span
+                key={tag}
+                className="border border-white/[0.1] bg-white/[0.03] px-3.5 py-1.5 text-[11px] text-neutral-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Dashboard */}
+        <div className="grid gap-px bg-white/[0.06] lg:grid-cols-3">
+          {/* 01 — Athlete Inputs */}
+          <div className="bg-[#0d0d0d] p-7">
+            <p
+              className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              01 Athlete Inputs
+            </p>
+            <div className="mt-6 space-y-4">
+              {[
+                ["Name", "Sarah"],
+                ["Age", "42"],
+                ["Division", "Intermediate"],
+                ["Training Frequency", "3–4 sessions / week"],
+                ["Strength Background", "Regular gym training"],
+                ["Movement Confidence", "Good"],
+                ["Biggest Concern", "Fatigue & form loss"],
+              ].map(([label, value]) => (
+                <div key={label}>
+                  <p
+                    className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-600"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {label}
+                  </p>
+                  <div
+                    className="mt-1.5 border border-white/[0.08] bg-[#111] px-3 py-2.5 text-[13px] text-neutral-200"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setTick((t) => t + 1)}
+              className="btn-lime-glow mt-7 w-full border border-lime-400 bg-lime-400 px-5 py-3.5 text-[12px] font-black uppercase tracking-[0.18em] text-black transition-colors hover:bg-lime-300"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Generate Race Prediction
+            </button>
+          </div>
+
+          {/* 02 — Predicted UHS */}
+          <div className="bg-[#0d0d0d] p-7">
+            <p
+              className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              02 Predicted UHS
+            </p>
+            <div className="mt-6 flex items-end gap-5">
+              <p
+                className="text-6xl text-lime-400"
+                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+              >
+                77
+              </p>
+              <div className="pb-2">
+                <p
+                  className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-neutral-500"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  Athlete Type
+                </p>
+                <p
+                  className="text-xl uppercase tracking-wide text-white"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                >
+                  The Hybrid
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 grid grid-cols-2 gap-px bg-white/[0.05]">
+              <div className="bg-[#111] p-4">
+                <p
+                  className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  Predicted Completion
+                </p>
+                <p className="mt-1.5 text-base font-bold text-white">108–110 min</p>
+              </div>
+              <div className="bg-[#111] p-4">
+                <p
+                  className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  Recommended Entry
+                </p>
+                <p className="mt-1.5 text-base font-bold text-lime-400">Intermediate</p>
+              </div>
+            </div>
+
+            <div className="mt-7 space-y-3.5">
+              {aiScoreBars.map((bar, i) => (
+                <div key={bar.label}>
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <span
+                      className="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      {bar.label}
+                    </span>
+                    <span className="text-[11px] font-bold text-lime-400">{bar.value}</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/[0.06]">
+                    <motion.div
+                      key={tick}
+                      className="h-1.5 bg-lime-400"
+                      style={{ boxShadow: "0 0 8px rgba(163,230,53,0.45)" }}
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${bar.value}%` }}
+                      viewport={{ once: false }}
+                      transition={{ duration: 0.8, delay: i * 0.06, ease: "easeOut" }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 03 — Coaching Output */}
+          <div className="bg-[#0d0d0d] p-7">
+            <p
+              className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              03 Coaching Output
+            </p>
+
+            <h4 className="mt-6 text-sm font-bold uppercase tracking-wide text-white">
+              Training Focus
+            </h4>
+            <div className="mt-3 space-y-2.5">
+              {aiTrainingFocus.map((point, i) => (
+                <div key={point} className="flex gap-3">
+                  <span className="text-[12px] font-bold text-lime-400">{i + 1}</span>
+                  <p className="text-[13px] leading-5 text-neutral-300">{point}</p>
+                </div>
+              ))}
+            </div>
+
+            <h4 className="mt-7 text-sm font-bold uppercase tracking-wide text-white">
+              Estimated Score Gain
+            </h4>
+            <div className="mt-3 space-y-px bg-white/[0.05]">
+              {aiScoreGains.map((g) => (
+                <div key={g.label} className="flex items-center justify-between bg-[#111] px-4 py-3">
+                  <span
+                    className="text-[12px] text-neutral-300"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {g.label}
+                  </span>
+                  <span
+                    className="text-[12px] font-bold text-white"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {g.from} <span className="text-neutral-600">→</span>{" "}
+                    <span className="text-lime-400">{g.to}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="#signup"
+              className="group mt-7 flex items-center gap-4 border border-lime-400/25 bg-lime-400/[0.05] p-4 no-underline transition-colors hover:border-lime-400/50 hover:bg-lime-400/[0.09]"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-lime-400/30 bg-lime-400/[0.08]">
+                <MessageCircle className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p
+                  className="text-[12px] font-bold uppercase tracking-[0.16em] text-white"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  Ask a Coach
+                </p>
+                <p className="mt-0.5 text-[12px] text-neutral-400">
+                  Need help interpreting your score? Ask a coach.
+                </p>
+              </div>
+              <ChevronRight className="ml-auto h-4 w-4 shrink-0 text-lime-400 transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+        </div>
+
+        {/* How It Works */}
+        <div className="mt-px grid gap-px bg-white/[0.05] md:grid-cols-3">
+          {aiHowItWorks.map((step, i) => (
+            <motion.div
+              key={step.title}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="bg-[#0d0d0d] p-8"
+            >
+              <div className="mb-5 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04]">
+                <step.icon className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
+              </div>
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/60"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                Step {i + 1}
+              </p>
+              <h3 className="mt-2 text-xl uppercase tracking-wide text-white">{step.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-400">{step.text}</p>
+              {step.categories && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {step.categories.map((cat) => (
+                    <span
+                      key={cat}
+                      className="border border-lime-400/20 bg-lime-400/[0.04] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-lime-400/80"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        <p className="mx-auto mt-10 max-w-2xl text-center text-lg leading-7 text-neutral-300">
+          The AI is not replacing coaches. It is making expert coaching accessible to
+          every athlete, every day.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   SUBSCRIPTIONS
+───────────────────────────────────────────────────────────────── */
+
+function SubscriptionSection() {
+  return (
+    <section className="border-t border-white/[0.06] bg-[#050505] px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6 inline-flex items-center gap-3 border border-amber-400/22 bg-amber-400/[0.04] px-4 py-2">
+          <AlertTriangle className="h-3.5 w-3.5 text-amber-400" strokeWidth={1.5} />
+          <span
+            className="text-[11px] font-bold uppercase tracking-[0.26em] text-amber-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Pre-Launch · Details Subject to Change
+          </span>
+        </div>
+
+        <div className="mb-14 max-w-2xl">
+          <SectionLabel>Membership</SectionLabel>
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            One Platform.
+            <br />
+            Every Level of Athlete.
+          </h2>
+          <p className="mt-5 text-lg leading-7 text-neutral-400">
+            The Ultimate Human is being built as an ongoing platform, not just an
+            event. Subscriptions will give athletes, coaches, gyms and teams
+            continuous access to scoring, training insight and AI-assisted coaching.
+          </p>
+        </div>
+
+        <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-4">
+          {subscriptionTiers.map((tier, i) => (
+            <motion.div
+              key={tier.name}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              whileHover={{ y: -5 }}
+              className={`group relative flex flex-col bg-[#0d0d0d] p-7 transition-colors ${
+                tier.highlighted ? "ring-1 ring-lime-400/40" : "hover:bg-[#111]"
+              }`}
+            >
+              {tier.highlighted && (
+                <>
+                  <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
+                  <span
+                    className="absolute right-6 top-6 text-[9.5px] font-bold uppercase tracking-[0.2em] text-lime-400"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    Most Capability
+                  </span>
+                </>
+              )}
+              <div
+                className={`flex h-11 w-11 items-center justify-center border ${
+                  tier.highlighted
+                    ? "border-lime-400/40 bg-lime-400/[0.08]"
+                    : "border-white/[0.12] bg-white/[0.03]"
+                }`}
+              >
+                <tier.icon
+                  className={`h-5 w-5 ${tier.highlighted ? "text-lime-400" : "text-neutral-500"}`}
+                  strokeWidth={1.5}
+                />
+              </div>
+              <h3 className="mt-6 text-xl uppercase tracking-wide text-white">{tier.name}</h3>
+              <div className="mt-5 flex-1 space-y-3">
+                {tier.points.map((point) => (
+                  <div key={point} className="flex items-start gap-3">
+                    <CheckCircle2
+                      className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${
+                        tier.highlighted ? "text-lime-400" : "text-neutral-600"
+                      }`}
+                      strokeWidth={2}
+                    />
+                    <p className="text-[13px] leading-5 text-neutral-400">{point}</p>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="#signup"
+                className={`mt-7 block px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] no-underline transition-colors ${
+                  tier.highlighted
+                    ? "btn-lime-glow border border-lime-400 bg-lime-400 text-black hover:bg-lime-300"
+                    : "border border-white/20 bg-white/[0.03] text-white hover:border-white/40 hover:bg-white/[0.08]"
+                }`}
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {tier.cta}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-px flex flex-wrap items-center justify-between gap-4 bg-[#0a0a0a] p-6">
+          <p className="text-[13px] text-neutral-400">
+            Questions about subscriptions, scoring or training focus?
+          </p>
+          <a
+            href="#signup"
+            className="inline-flex items-center gap-2 border border-lime-400/30 bg-lime-400/[0.05] px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.16em] text-lime-400 no-underline transition-colors hover:border-lime-400/55 hover:bg-lime-400/[0.1]"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            <MessageCircle className="h-3.5 w-3.5" /> Ask a Coach
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
    APP
 ───────────────────────────────────────────────────────────────── */
 
@@ -778,10 +1638,17 @@ export default function App() {
 
               {/* Sub-copy */}
               <p
-                className="mt-5 max-w-xl text-base leading-7 text-neutral-300"
+                className="mt-5 max-w-xl text-base leading-7 text-white"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600 }}
+              >
+                Most races only measure one or two aspects of capability.{" "}
+                <span className="text-lime-400">UH goes further.</span>
+              </p>
+              <p
+                className="mt-3 max-w-xl text-base leading-7 text-neutral-400"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 500 }}
               >
-                A next-generation indoor fitness competition that measures complete
+                A next-generation fitness competition that measures complete
                 human capability — speed, stamina, strength, coordination, balance
                 and mobility — combined into one adaptive performance score.
               </p>
@@ -809,7 +1676,7 @@ export default function App() {
               {/* Stats */}
               <div className="mt-8 flex flex-wrap gap-7">
                 {[
-                  ["Indoor Events", "All Venues"],
+                  ["Live Events", "All Venues"],
                   ["All Abilities", "Every Level"],
                   ["Personal Score", "Your Benchmark"],
                 ].map(([label, sub]) => (
@@ -882,6 +1749,104 @@ export default function App() {
           </div>
         </section>
 
+        {/* ── UH TESTS THE WHOLE HUMAN ── */}
+        <section className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-12 max-w-3xl">
+              <SectionLabel>Why UH Is Different</SectionLabel>
+              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+                Most Races Test One Thing.
+                <br />
+                UH Tests the Whole Human.
+              </h2>
+              <p className="mt-5 text-lg leading-7 text-neutral-400">
+                Most races only measure one or two aspects of capability. They tell
+                you if you can run, lift, endure or suffer.{" "}
+                <span className="font-bold text-white">UH goes further.</span>
+              </p>
+            </div>
+
+            <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-4">
+              {comparisonRaces.map((race, i) => (
+                <motion.div
+                  key={race.name}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="group bg-[#0d0d0d] p-8 transition-colors hover:bg-[#111]"
+                >
+                  <race.icon
+                    className="h-6 w-6 text-neutral-600 transition-colors group-hover:text-neutral-300"
+                    strokeWidth={1.5}
+                  />
+                  <h3 className="mt-6 text-lg uppercase tracking-wide text-neutral-300">
+                    {race.name}
+                  </h3>
+                  <p
+                    className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {race.tagline}
+                  </p>
+                  <p className="mt-4 text-sm leading-6 text-neutral-500">{race.text}</p>
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: comparisonRaces.length * 0.08 }}
+                whileHover={{ y: -5 }}
+                className="lime-glow-hover relative bg-[#0d0d0d] p-8 ring-1 ring-lime-400/40"
+              >
+                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
+                <uhComparison.icon className="h-6 w-6 text-lime-400" strokeWidth={1.5} />
+                <h3 className="mt-6 text-lg uppercase tracking-wide text-white">
+                  {uhComparison.name}
+                </h3>
+                <p
+                  className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-lime-400"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {uhComparison.tagline}
+                </p>
+                <p className="mt-4 text-sm leading-6 text-neutral-300">{uhComparison.text}</p>
+              </motion.div>
+            </div>
+
+            <div className="mt-px bg-[#0a0a0a] p-9 md:p-11">
+              <p className="max-w-3xl text-lg leading-8 text-neutral-300">
+                To achieve complete optimisation, full fitness and longevity, we need
+                to measure everything that makes the Ultimate Human.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {[
+                  "Strength",
+                  "Power",
+                  "Endurance",
+                  "Speed",
+                  "Mobility",
+                  "Coordination",
+                  "Resilience",
+                  "Balance",
+                  "Recovery",
+                  "Control Under Pressure",
+                ].map((tag) => (
+                  <span
+                    key={tag}
+                    className="border border-lime-400/25 bg-lime-400/[0.05] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-lime-400"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── CHALLENGE OVERVIEW ── */}
         <section id="challenge" className="bg-[#050505] px-6 py-20">
           <div className="mx-auto max-w-7xl">
@@ -891,7 +1856,7 @@ export default function App() {
                 {
                   icon: Flame,
                   title: "Hard, But Not Stupid",
-                  text: "You will work hard, but this is not designed to destroy you. It is designed to reveal how well you move, adapt and recover.",
+                  text: "UH is designed to challenge the whole human without reducing fitness to punishment. The goal is not to destroy you. It is to reveal what you're capable of, expose what needs work, and give you a clear path to get stronger, fitter and more durable for life.",
                 },
                 {
                   icon: Timer,
@@ -919,62 +1884,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── CHALLENGE ZONES ── */}
-        <section id="format" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
-            <div className="mb-12">
-              <SectionLabel>The Event Format</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                10 Challenge Zones.
-                <br />
-                One Complete Test.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                Each zone is simple to understand, hard to master and designed to expose a different
-                part of your athletic capability. Minimal equipment. Maximum variety.
-              </p>
-            </div>
-
-            {/* Technical divider */}
-            <div className="mb-px flex items-center gap-4">
-              <div className="h-px flex-1 bg-white/[0.05]" />
-              <span
-                className="text-[10px] font-bold uppercase tracking-[0.35em] text-neutral-800"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                10 Events
-              </span>
-              <div className="h-px flex-1 bg-white/[0.05]" />
-            </div>
-
-            <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-5">
-              {exercises.map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: index * 0.04 }}
-                  className="lime-glow-hover group relative bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]"
-                >
-                  <div className="absolute left-0 top-0 h-0 w-px bg-lime-400 transition-all duration-500 group-hover:h-full" />
-                  <p
-                    className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400/50"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    Zone {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <p
-                    className="mt-3 text-sm font-bold uppercase tracking-wide text-white"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    {item}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <EventStructureSection />
 
         {/* ── SCORE DASHBOARD ── */}
         <section id="score" className="relative border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
@@ -995,21 +1905,36 @@ export default function App() {
                 Than a Medal.
               </h2>
               <p className="mt-6 text-lg leading-7 text-neutral-400">
-                Every participant receives an Ultimate Human Score showing performance across six areas.
-                You will know what you are good at, what is holding you back and how to train for your
-                next attempt.
+                Every participant receives an Ultimate Human Score showing performance across
+                ten capability areas — the whole human, not just the parts that are easy to
+                measure.
               </p>
               <p className="mt-4 text-lg leading-7 text-neutral-400">The aim is simple: come back better.</p>
 
-              <div className="mt-10 border border-white/[0.07] bg-[#0d0d0d] p-7">
+              <div className="mt-8 grid gap-px bg-white/[0.05] sm:grid-cols-2">
+                {uhsReveals.map((item) => (
+                  <div key={item.title} className="flex gap-3 bg-[#0d0d0d] p-5">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-400" strokeWidth={2} />
+                    <div>
+                      <p className="text-[12.5px] font-bold uppercase tracking-[0.12em] text-white">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 text-[12.5px] leading-5 text-neutral-500">{item.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 border border-white/[0.07] bg-[#0d0d0d] p-7">
                 <SectionLabel>How Is It Calculated?</SectionLabel>
                 <h3 className="text-2xl uppercase tracking-tight text-white">
                   Your Ultimate Human Score
                 </h3>
                 <p className="mt-4 text-base leading-7 text-neutral-400">
-                  Your score is calculated using our proprietary algorithm, which weights your performance
-                  across multiple capability areas including speed, stamina, strength, coordination,
-                  balance and mobility.
+                  Your score is calculated using our proprietary algorithm, which weights your
+                  performance across ten capability areas: strength, power, endurance, speed,
+                  mobility, coordination, resilience, balance, recovery and control under
+                  pressure.
                 </p>
                 <p className="mt-4 text-base leading-7 text-neutral-400">
                   The scoring model also takes into account factors such as your age category and previous
@@ -1091,12 +2016,12 @@ export default function App() {
                     className="text-3xl text-white"
                     style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
                   >
-                    78<span className="ml-1 text-sm font-normal text-neutral-600">/100</span>
+                    71<span className="ml-1 text-sm font-normal text-neutral-600">/100</span>
                   </p>
                 </div>
                 <div className="mt-3 h-1.5 w-full bg-white/[0.06]">
                   <div
-                    className="h-1.5 w-[78%] bg-gradient-to-r from-lime-400 to-lime-600"
+                    className="h-1.5 w-[71%] bg-gradient-to-r from-lime-400 to-lime-600"
                     style={{ boxShadow: "0 0 10px rgba(163,230,53,0.4)" }}
                   />
                 </div>
@@ -1107,6 +2032,8 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <AICoachingSection />
 
         {/* ── CATEGORIES ── */}
         <section id="categories" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
@@ -1325,6 +2252,8 @@ export default function App() {
           </div>
         </section>
 
+        <SubscriptionSection />
+
         {/* ── FOUNDERS ── */}
         <section className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
           <div className="mx-auto max-w-7xl">
@@ -1343,8 +2272,8 @@ export default function App() {
 
             <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
               <FounderCard
-                initials="AH"
-                name="Andie Heath"
+                initials="AS"
+                name="Andie Stoneham"
                 role="Founder · Performance Coach · Programme Designer"
                 quote="Most fitness events reward one dominant attribute. We wanted to build something that rewards adaptability, composure and complete human capability."
               />
@@ -1363,7 +2292,7 @@ export default function App() {
               <FounderCard
                 initials="KB"
                 name="Ken Brotherston"
-                role="Founder · Businessman · Fitness Race Enthusiast"
+                role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
               />
             </div>
