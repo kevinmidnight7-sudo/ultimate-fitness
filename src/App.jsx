@@ -31,6 +31,11 @@ import {
   ChevronDown,
   Weight,
   PlayCircle,
+  X,
+  Compass,
+  ClipboardList,
+  Calculator,
+  Film,
 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -322,6 +327,45 @@ const aiFeedbackQuotes = [
   "Your stride length is reducing glute engagement and increasing quad fatigue.",
   "Your hips rise under fatigue, making your bear crawl less efficient.",
   "You're initiating the throw too early with your arms, reducing power from the legs.",
+];
+
+const movementCoachCards = [
+  {
+    title: "Bear Crawl Push",
+    sees: "Your hips rise under fatigue, making your bear crawl less efficient.",
+    cue: "Brace your core and keep your hips low through the full rep.",
+    from: 65,
+    to: 74,
+  },
+  {
+    title: "Lunges",
+    sees: "Your stride length is reducing glute engagement and increasing quad fatigue.",
+    cue: "Shorten your stride slightly and drive through the full foot.",
+    from: 72,
+    to: 79,
+  },
+  {
+    title: "Hoop Shot",
+    sees: "You're initiating the throw too early with your arms, reducing power from the legs.",
+    cue: "Load through your legs first, then release with your arms.",
+    from: 68,
+    to: 76,
+  },
+];
+
+const journeyQuizQuestions = [
+  {
+    q: "Where are you in your training journey?",
+    options: ["Just starting out", "Training consistently", "Competing or racing", "Highly experienced"],
+  },
+  {
+    q: "What do you most want to improve?",
+    options: ["Strength", "Endurance & stamina", "Mobility & coordination", "Mental resilience"],
+  },
+  {
+    q: "What limits your performance most?",
+    options: ["Fatigue under pressure", "Technique breakdown", "Lack of structured training", "Recovery & consistency"],
+  },
 ];
 
 const aiHowItWorks = [
@@ -1650,9 +1694,9 @@ function PersonalCapabilityCoach() {
             Your Personal Capability Coach
           </h4>
           <p className="mt-2 text-[13px] leading-5 text-neutral-400">
-            As you upload more videos and complete more challenges, your Ultimate
-            Human profile evolves — getting a clearer picture of your movement every
-            time.
+            As athletes upload more videos and complete more challenges, their UH
+            profile evolves over time — revealing strengths, limitations, movement
+            improvements and the next best training focus.
           </p>
           <button
             type="button"
@@ -1690,6 +1734,433 @@ function PersonalCapabilityCoach() {
         </div>
       </div>
     </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   MOVEMENT COACH PREVIEW (inside AI Coaching section)
+───────────────────────────────────────────────────────────────── */
+
+function MovementCoachPreview() {
+  const [openCard, setOpenCard] = useState(movementCoachCards[0].title);
+
+  return (
+    <div className="mt-12">
+      <div className="mb-5 flex items-center gap-3">
+        <Film className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
+        <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
+          Movement Coach Preview
+        </h3>
+      </div>
+      <div className="grid gap-px bg-white/[0.05] md:grid-cols-3">
+        {movementCoachCards.map((card) => {
+          const isOpen = openCard === card.title;
+          return (
+            <div key={card.title} className="bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm font-bold uppercase tracking-wide text-white">{card.title}</p>
+                <span className="flex shrink-0 items-center gap-1.5 border border-lime-400/30 bg-lime-400/[0.08] px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-lime-400">
+                  <CheckCircle2 className="h-3 w-3" strokeWidth={2} />
+                  Analysed
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpenCard(isOpen ? null : card.title)}
+                aria-expanded={isOpen}
+                className="mt-4 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-lime-400/80 transition-colors hover:text-lime-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {isOpen ? "Hide Analysis" : "Show Analysis"}
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  strokeWidth={2}
+                />
+              </button>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 space-y-3.5">
+                      <div>
+                        <p
+                          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                        >
+                          What UH Sees
+                        </p>
+                        <p className="mt-1.5 text-[13px] leading-5 text-neutral-300">{card.sees}</p>
+                      </div>
+                      <div>
+                        <p
+                          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                        >
+                          Coaching Cue
+                        </p>
+                        <p className="mt-1.5 text-[13px] leading-5 text-lime-300">{card.cue}</p>
+                      </div>
+                      <div className="flex items-center justify-between border border-white/[0.08] bg-[#111] px-3 py-2.5">
+                        <span
+                          className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-500"
+                          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                        >
+                          Est. Score Gain
+                        </span>
+                        <span
+                          className="text-[12px] font-bold text-white"
+                          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                        >
+                          {card.from} <span className="text-neutral-600">→</span>{" "}
+                          <span className="text-lime-400">{card.to}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   YOUR JOURNEY HUB
+───────────────────────────────────────────────────────────────── */
+
+function JourneyModal({ title, onClose, children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ duration: 0.22 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative max-h-[88vh] w-full max-w-lg overflow-y-auto border border-white/[0.1] bg-[#0b0b0b] p-7"
+      >
+        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/55 to-transparent" />
+        <div className="flex items-center justify-between">
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.28em] text-lime-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            {title}
+          </p>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="flex h-8 w-8 items-center justify-center border border-white/[0.1] text-neutral-400 transition-colors hover:border-white/25 hover:text-white"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="mt-6">{children}</div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function AthleteTypeQuiz({ onClose }) {
+  const [step, setStep] = useState(0);
+  const [selected, setSelected] = useState({});
+  const total = journeyQuizQuestions.length;
+  const isResult = step >= total;
+
+  const choose = (qIndex, option) => {
+    setSelected((prev) => ({ ...prev, [qIndex]: option }));
+    setTimeout(() => setStep((s) => s + 1), 250);
+  };
+
+  if (isResult) {
+    return (
+      <div>
+        <div className="mb-5 h-1 w-full bg-lime-400" />
+        <p
+          className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          Your Snapshot Result
+        </p>
+        <h3 className="mt-2 text-3xl uppercase tracking-tight text-white">The Hybrid</h3>
+        <div className="mt-6 space-y-px bg-white/[0.05]">
+          {[
+            ["Likely Strengths", "Stamina + Coordination"],
+            ["Limiting Factor", "Strength under fatigue"],
+            ["Recommended Entry", "Intermediate"],
+          ].map(([label, value]) => (
+            <div key={label} className="flex items-center justify-between bg-[#111] px-4 py-3">
+              <span
+                className="text-[12px] text-neutral-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {label}
+              </span>
+              <span className="text-[12px] font-bold text-lime-400">{value}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 text-[12.5px] leading-5 text-neutral-500">
+          This is a quick preview — your full UHS Report breaks this down across all 10 capability
+          pillars.
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="#score"
+            onClick={onClose}
+            className="btn-lime-glow flex-1 border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-black uppercase tracking-[0.16em] text-black no-underline transition-colors hover:bg-lime-300"
+          >
+            See Full Score Breakdown
+          </a>
+          <a
+            href="#signup"
+            onClick={onClose}
+            className="flex-1 border border-white/20 bg-white/[0.04] px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.16em] text-white no-underline transition-colors hover:border-white/35 hover:bg-white/[0.08]"
+          >
+            Join the Waitlist
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  const question = journeyQuizQuestions[step];
+
+  return (
+    <div>
+      <div className="mb-5 h-1 w-full bg-white/[0.06]">
+        <motion.div
+          className="h-1 bg-lime-400"
+          initial={{ width: 0 }}
+          animate={{ width: `${(step / total) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+      <p
+        className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        Question {step + 1} of {total}
+      </p>
+      <h3 className="mt-2 text-xl leading-7 text-white">{question.q}</h3>
+      <div className="mt-5 space-y-2.5">
+        {question.options.map((option) => {
+          const isSelected = selected[step] === option;
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => choose(step, option)}
+              className={`block w-full border px-4 py-3 text-left text-[13.5px] transition-colors ${
+                isSelected
+                  ? "border-lime-400 bg-lime-400/[0.12] text-lime-300"
+                  : "border-white/[0.1] bg-white/[0.02] text-neutral-300 hover:border-lime-400/30 hover:bg-white/[0.05]"
+              }`}
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              {option}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function FullAssessmentPreview({ onClose }) {
+  return (
+    <div>
+      <p className="text-[13px] leading-5 text-neutral-400">
+        The full Human Context assessment captures the inputs behind your UHS Report — training
+        history, movement confidence and goals.
+      </p>
+      <div className="mt-5 space-y-px bg-white/[0.05]">
+        {[
+          ["Training Frequency", "3–4 sessions / week"],
+          ["Strength Background", "Regular gym training"],
+          ["Movement Confidence", "Good"],
+          ["Biggest Concern", "Fatigue & form loss"],
+        ].map(([label, value]) => (
+          <div key={label} className="flex items-center justify-between bg-[#111] px-4 py-3">
+            <span
+              className="text-[12px] text-neutral-400"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              {label}
+            </span>
+            <span
+              className="text-[12px] font-bold text-white"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              {value}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-5 text-[12.5px] leading-5 text-neutral-500">
+        This feeds your UHS Score, your Athlete Type and your AI training focus.
+      </p>
+      <a
+        href="#coaching"
+        onClick={onClose}
+        className="btn-lime-glow mt-6 flex items-center justify-center border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-black uppercase tracking-[0.16em] text-black no-underline transition-colors hover:bg-lime-300"
+      >
+        See the Full AI Dashboard
+        <ArrowRight className="ml-2 h-4 w-4" />
+      </a>
+    </div>
+  );
+}
+
+const journeyCards = [
+  {
+    key: "quiz",
+    icon: Compass,
+    title: "Discover Your Type",
+    text: "Answer 3 quick questions to preview your Athlete Type.",
+    cta: "Take the Snapshot",
+    action: "modal",
+  },
+  {
+    key: "assessment",
+    icon: ClipboardList,
+    title: "Full Assessment",
+    text: "Preview the Human Context inputs behind your UHS Report.",
+    cta: "Preview Assessment",
+    action: "modal",
+  },
+  {
+    key: "score",
+    icon: Calculator,
+    title: "Score Simulator",
+    text: "See how the Ultimate Human Score is calculated.",
+    cta: "Open Score Dashboard",
+    action: "scroll",
+    href: "#score",
+  },
+  {
+    key: "train",
+    icon: Dumbbell,
+    title: "Train to Improve",
+    text: "Explore the event structure, labours and working weights.",
+    cta: "View Event Structure",
+    action: "scroll",
+    href: "#format",
+  },
+  {
+    key: "coach",
+    icon: Film,
+    title: "Movement Coach",
+    text: "Get AI movement analysis and personalised coaching cues.",
+    cta: "See AI Coaching",
+    action: "scroll",
+    href: "#coaching",
+  },
+];
+
+function YourJourneyHub() {
+  const [modal, setModal] = useState(null);
+
+  return (
+    <section className="border-t border-white/[0.06] bg-[#070707] px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-12 max-w-2xl">
+          <SectionLabel>Start Here</SectionLabel>
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Your Journey to
+            <br />
+            The Ultimate Human.
+          </h2>
+          <p className="mt-5 text-lg leading-7 text-neutral-400">
+            Five steps. One profile that gets sharper every time you use it.
+          </p>
+        </div>
+
+        <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-5">
+          {journeyCards.map((card, i) => {
+            const Icon = card.icon;
+            const cardBody = (
+              <>
+                <div className="absolute left-0 top-0 h-px w-0 bg-lime-400 transition-all duration-500 group-hover:w-full" />
+                <div className="flex h-11 w-11 items-center justify-center border border-white/[0.1] bg-white/[0.03] transition-colors group-hover:border-lime-400/40 group-hover:bg-lime-400/[0.08]">
+                  <Icon
+                    className="h-5 w-5 text-neutral-500 transition-colors group-hover:text-lime-400"
+                    strokeWidth={1.5}
+                  />
+                </div>
+                <h3 className="mt-5 text-base font-bold uppercase tracking-wide text-white">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-[13px] leading-5 text-neutral-500">{card.text}</p>
+                <span
+                  className="mt-5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-lime-400/80 transition-colors group-hover:text-lime-400"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {card.cta}
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </span>
+              </>
+            );
+
+            return (
+              <motion.div
+                key={card.key}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.06 }}
+              >
+                {card.action === "scroll" ? (
+                  <a
+                    href={card.href}
+                    className="group relative flex flex-col items-start overflow-hidden bg-[#0d0d0d] p-6 text-left no-underline transition-colors hover:bg-[#111]"
+                  >
+                    {cardBody}
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setModal(card.key)}
+                    className="group relative flex w-full flex-col items-start overflow-hidden bg-[#0d0d0d] p-6 text-left transition-colors hover:bg-[#111]"
+                  >
+                    {cardBody}
+                  </button>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {modal === "quiz" && (
+          <JourneyModal title="Discover Your Type" onClose={() => setModal(null)}>
+            <AthleteTypeQuiz onClose={() => setModal(null)} />
+          </JourneyModal>
+        )}
+        {modal === "assessment" && (
+          <JourneyModal title="Full Assessment Preview" onClose={() => setModal(null)}>
+            <FullAssessmentPreview onClose={() => setModal(null)} />
+          </JourneyModal>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }
 
@@ -2092,7 +2563,7 @@ function AICoachingSection() {
   };
 
   return (
-    <section className="border-t border-lime-400/[0.07] bg-[#060606] px-6 py-28">
+    <section id="coaching" className="border-t border-lime-400/[0.07] bg-[#060606] px-6 py-28">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 max-w-3xl">
           <SectionLabel>Built by Coaches. Powered by AI.</SectionLabel>
@@ -2189,6 +2660,7 @@ function AICoachingSection() {
           ))}
         </div>
 
+        <MovementCoachPreview />
         <ImprovementAreasPanel />
         <PersonalCapabilityCoach />
 
@@ -2637,6 +3109,8 @@ export default function App() {
           </div>
         </section>
 
+        <YourJourneyHub />
+
         {/* ── CAPABILITY PILLARS ── */}
         <section className="border-y border-lime-400/[0.07] bg-[#080808] px-6 py-20">
           <div className="mx-auto max-w-7xl">
@@ -3064,40 +3538,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── PRE-LAUNCH NOTICE ── */}
-        <section className="border-t border-white/[0.06] bg-[#060606] px-6 py-16">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-8 inline-flex items-center gap-3 border border-amber-400/22 bg-amber-400/[0.04] px-4 py-2.5">
-              <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
-              <span
-                className="text-[12px] font-bold uppercase tracking-[0.28em] text-amber-400"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                Pre-Launch Notice
-              </span>
-            </div>
-            <h2 className="text-3xl uppercase tracking-tight text-white md:text-4xl">
-              What Is Still Being Finalised?
-            </h2>
-
-            <div className="mt-8 grid gap-px bg-white/[0.05] md:grid-cols-2">
-              {workToDo.map((item) => (
-                <div key={item} className="flex gap-4 bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]">
-                  <div className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center border border-lime-400/30">
-                    <div className="h-1.5 w-1.5 bg-lime-400" />
-                  </div>
-                  <p
-                    className="text-[13px] leading-6 text-neutral-300"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── SIGNUP / WAITLIST ── */}
         <section id="signup" className="relative border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
           {/* Section ambient glow */}
@@ -3182,6 +3622,40 @@ export default function App() {
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── PRE-LAUNCH NOTICE ── */}
+        <section className="border-t border-white/[0.06] bg-[#060606] px-6 py-16">
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-8 inline-flex items-center gap-3 border border-amber-400/22 bg-amber-400/[0.04] px-4 py-2.5">
+              <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
+              <span
+                className="text-[12px] font-bold uppercase tracking-[0.28em] text-amber-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                Pre-Launch Notice
+              </span>
+            </div>
+            <h2 className="text-3xl uppercase tracking-tight text-white md:text-4xl">
+              What Is Still Being Finalised?
+            </h2>
+
+            <div className="mt-8 grid gap-px bg-white/[0.05] md:grid-cols-2">
+              {workToDo.map((item) => (
+                <div key={item} className="flex gap-4 bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]">
+                  <div className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center border border-lime-400/30">
+                    <div className="h-1.5 w-1.5 bg-lime-400" />
+                  </div>
+                  <p
+                    className="text-[13px] leading-6 text-neutral-300"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {item}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
