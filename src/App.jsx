@@ -24,8 +24,6 @@ import {
   Sparkles,
   Upload,
   MessageCircle,
-  Users,
-  Building2,
   TrendingUp,
   UserCheck,
   ChevronDown,
@@ -421,52 +419,58 @@ const aiProfileEvolution = [
 
 const subscriptionTiers = [
   {
-    name: "Athlete",
+    name: "Explorer",
     icon: Activity,
-    summary: "Track your score, get insights and join events.",
+    price: "£14.99/mo",
+    summary: "For people starting their Ultimate Human journey.",
     cta: "Join the Waitlist",
     points: [
-      "Track your UHS profile",
-      "Access training insights",
-      "Upload selected movement videos",
-      "Join events and rankings",
+      "Ultimate Human Score",
+      "Wearable integration",
+      "Monthly fitness assessment",
+      "AI-powered training recommendations",
+      "Performance dashboard",
+      "Access to community challenges",
+      "10% discount on UH events",
+      "Monthly member newsletter and insights",
     ],
   },
   {
-    name: "Pro Athlete",
+    name: "Adventurer",
     icon: TrendingUp,
     highlighted: true,
-    summary: "Deeper analysis and priority coaching feedback.",
-    cta: "Register Interest",
+    price: "£24.99/mo",
+    summary: "For people committed to improving their performance.",
+    cta: "Join the Waitlist",
+    includesNote: "Everything in Explorer, plus:",
     points: [
-      "More movement analysis",
-      "Deeper score improvement tracking",
-      "Priority race insights",
-      "Advanced coaching feedback",
+      "Weekly Ultimate Human Score updates",
+      "Personalised AI coaching",
+      "Recovery and readiness insights",
+      "Goal setting and progress tracking",
+      "Exercise technique analysis from uploaded videos",
+      "Priority event booking",
+      "20% discount on UH events",
+      "Access to member-only challenges and leaderboards",
     ],
   },
   {
-    name: "Coach / Gym",
-    icon: Users,
-    summary: "Manage athletes and run your own leaderboard.",
-    cta: "Register Interest",
+    name: "Ultimate",
+    icon: Sparkles,
+    price: "£39.99/mo",
+    summary: "For those serious about maximising performance and longevity.",
+    cta: "Join the Waitlist",
+    includesNote: "Everything in Adventurer, plus:",
     points: [
-      "Manage athlete profiles",
-      "Review movement submissions",
-      "Support training groups",
-      "Gym leaderboard tools",
-    ],
-  },
-  {
-    name: "Corporate Team",
-    icon: Building2,
-    summary: "Benchmark and challenge your team together.",
-    cta: "Coming Soon",
-    points: [
-      "Team entries",
-      "Group capability benchmarking",
-      "Workplace challenge formats",
-      "Corporate performance reports",
+      "Advanced AI Performance Coach",
+      "Detailed movement and form analysis",
+      "Personalised training and recovery plans",
+      "Longevity and healthspan insights",
+      "Quarterly expert coaching review",
+      "Exclusive webinars and coaching content",
+      "VIP event registration",
+      "30% discount on UH events",
+      "Founding member rewards and partner benefits",
     ],
   },
 ];
@@ -2559,11 +2563,11 @@ function AICoachingSection() {
             Improve Your Score.
           </h2>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
-            Most fitness platforms tell you to work harder. Ultimate Human helps you
-            move better. Upload a video of your exercise and the UH AI coaching
-            platform is being built to analyse your movement against the Ultimate
-            Human Movement Standard™ — developed by coaches, athletes and movement
-            specialists.
+            Most fitness platforms measure effort. Ultimate Human measures
+            capability, then shows you how to improve it. Upload a video of your
+            exercise and the UH AI coaching platform is being built to analyse your
+            movement against the Ultimate Human Movement Standard™ — developed by
+            coaches, athletes and movement specialists.
           </p>
 
           <p
@@ -2590,6 +2594,15 @@ function AICoachingSection() {
             ))}
           </div>
         </div>
+
+        <p
+          className="mb-6 max-w-3xl text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          Based on your profile, training background and movement confidence,
+          Ultimate Human estimates your likely event performance and recommends
+          the right entry level.
+        </p>
 
         {/* Mobile / tablet — tabbed dashboard */}
         <div className="lg:hidden">
@@ -2750,7 +2763,7 @@ function TierCard({ tier, index }) {
             className="absolute right-6 top-6 text-[9.5px] font-bold uppercase tracking-[0.2em] text-lime-400"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            Most Capability
+            Most Popular
           </span>
         </>
       )}
@@ -2767,6 +2780,14 @@ function TierCard({ tier, index }) {
         />
       </div>
       <h3 className="mt-6 text-xl uppercase tracking-wide text-white">{tier.name}</h3>
+      {tier.price && (
+        <p
+          className={`mt-1.5 text-2xl ${tier.highlighted ? "text-lime-400" : "text-white"}`}
+          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+        >
+          {tier.price}
+        </p>
+      )}
       <p className="mt-2 text-[13px] leading-5 text-neutral-400">{tier.summary}</p>
 
       <button
@@ -2793,6 +2814,14 @@ function TierCard({ tier, index }) {
             className="overflow-hidden"
           >
             <div className="mt-4 space-y-3 pb-1">
+              {tier.includesNote && (
+                <p
+                  className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-600"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {tier.includesNote}
+                </p>
+              )}
               {tier.points.map((point) => (
                 <div key={point} className="flex items-start gap-3">
                   <CheckCircle2
@@ -2827,7 +2856,7 @@ function TierCard({ tier, index }) {
 
 function SubscriptionSection() {
   return (
-    <section id="membership" className="border-t border-white/[0.06] bg-[#050505] px-6 py-28">
+    <section id="membership" className="border-t border-white/[0.06] bg-[#080808] px-6 py-28">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 inline-flex items-center gap-2.5 border border-amber-400/15 bg-amber-400/[0.03] px-3.5 py-1.5">
           <AlertTriangle className="h-3 w-3 text-amber-400/80" strokeWidth={1.5} />
@@ -2847,9 +2876,13 @@ function SubscriptionSection() {
             Every Level of Athlete.
           </h2>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
-            The Ultimate Human is being built as an ongoing platform, not just an
-            event. Subscriptions will give athletes, coaches, gyms and teams
-            continuous access to scoring, training insight and AI-assisted coaching.
+            An Ultimate Human subscription is designed to keep you progressing long
+            after race day. Members get ongoing AI-powered coaching, personalised
+            training recommendations, performance tracking and recovery insights —
+            plus exclusive event discounts, priority race entries and member-only
+            challenges. Your Ultimate Human Score evolves with you, giving a clear
+            measure of progress across strength, endurance, mobility and overall
+            performance.
           </p>
           <p
             className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
@@ -2859,7 +2892,7 @@ function SubscriptionSection() {
           </p>
         </div>
 
-        <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px bg-white/[0.05] md:grid-cols-3">
           {subscriptionTiers.map((tier, i) => (
             <TierCard key={tier.name} tier={tier} index={i} />
           ))}
@@ -3335,6 +3368,8 @@ export default function App() {
           </div>
         </section>
 
+        <SubscriptionSection />
+
         {/* ── PRICING ── */}
         <section className="border-t border-white/[0.06] bg-[#050505] px-6 py-24">
           <div className="mx-auto max-w-7xl">
@@ -3425,8 +3460,6 @@ export default function App() {
             </div>
           </div>
         </section>
-
-        <SubscriptionSection />
 
         {/* ── FOUNDERS ── */}
         <section className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
