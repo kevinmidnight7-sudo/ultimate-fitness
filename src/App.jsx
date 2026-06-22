@@ -3083,9 +3083,9 @@ export default function App() {
                 className="mt-3 max-w-xl text-base leading-7 text-neutral-400"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 500 }}
               >
-                A next-generation fitness competition that measures complete
-                human capability — speed, stamina, strength, coordination, balance
-                and mobility — combined into one adaptive performance score.
+                We assess your human capability across ten areas, give you a score,
+                then show you how to improve it through coaching, movement analysis
+                and training focus.
               </p>
 
               {/* CTAs */}
