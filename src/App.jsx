@@ -970,35 +970,64 @@ function PasswordGate({ onUnlock }) {
    FOUNDER CARD
 ───────────────────────────────────────────────────────────────── */
 
-function FounderCard({ initials, name, role, quote }) {
+function FounderCard({ photo, ratio, name, role, quote }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45 }}
-      className="lime-glow-hover relative bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
+      className="lime-glow-hover group relative overflow-hidden bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
     >
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-white/[0.12] via-white/[0.06] to-transparent" />
-      <div className="p-8">
-        <div
-          className="mb-6 flex h-14 w-14 items-center justify-center border border-white/[0.12] bg-[#111] text-xl font-bold text-white"
-          style={{ fontFamily: "'Oswald', sans-serif" }}
-        >
-          {initials}
-        </div>
-        <h3 className="text-xl uppercase tracking-wide text-white">{name}</h3>
-        <div className="mt-2 flex items-center gap-2">
-          <div className="h-px w-5 shrink-0 bg-lime-400/50" />
-          <p
-            className="text-[11px] font-bold uppercase tracking-[0.18em] text-lime-400/75"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            {role}
-          </p>
-        </div>
-        <p className="mt-5 text-sm leading-7 text-neutral-500">"{quote}"</p>
+      <div className="absolute left-0 top-0 z-10 h-px w-full bg-gradient-to-r from-lime-400/40 via-white/[0.08] to-transparent" />
+      <div className="relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
+        <img
+          src={photo}
+          alt={name}
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          loading="lazy"
+        />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0d0d0d] to-transparent" />
       </div>
+
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between px-6 py-4 text-left"
+      >
+        <h3 className="text-lg uppercase tracking-wide text-white">{name}</h3>
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-lime-400/30 text-lime-400 transition-colors group-hover:border-lime-400/60">
+          <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6">
+              <div className="flex items-center gap-2">
+                <div className="h-px w-5 shrink-0 bg-lime-400/50" />
+                <p
+                  className="text-[11px] font-bold uppercase tracking-[0.18em] text-lime-400/75"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {role}
+                </p>
+              </div>
+              <p className="mt-4 text-sm leading-7 text-neutral-500">"{quote}"</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -3479,25 +3508,29 @@ export default function App() {
 
             <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
               <FounderCard
-                initials="AS"
+                photo="/images/founders/andie.jpg"
+                ratio="1023 / 1537"
                 name="Andie Stoneham"
                 role="Founder · Performance Coach · Programme Designer"
                 quote="Most fitness events reward one dominant attribute. We wanted to build something that rewards adaptability, composure and complete human capability."
               />
               <FounderCard
-                initials="LH"
+                photo="/images/founders/laura.png"
+                ratio="1023 / 1537"
                 name="Laura Hathaway"
                 role="Performance Coach · Qualified Osteopath"
                 quote="Real performance is not just strength or endurance. It is how efficiently and intelligently your body moves under pressure and fatigue."
               />
               <FounderCard
-                initials="JH"
+                photo="/images/founders/john.png"
+                ratio="1023 / 1537"
                 name="John 'The Hitman' Hathaway"
                 role="Champion UFC Fighter · Coach"
                 quote="The people who stay calm, adaptable and explosive when tired are usually the hardest people to beat. That is what this competition is designed to expose."
               />
               <FounderCard
-                initials="KB"
+                photo="/images/founders/ken.jpg"
+                ratio="1149 / 1369"
                 name="Ken Brotherston"
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
