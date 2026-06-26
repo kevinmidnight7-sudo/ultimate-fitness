@@ -238,9 +238,9 @@ const workingWeights = [
   },
   {
     name: "Devil's Advance",
-    foundation: { women: "10kg bag", men: "15kg bag" },
-    intermediate: { women: "15kg bag", men: "25kg bag" },
-    elite: { women: "20kg bag", men: "35kg bag" },
+    foundation: { women: "10kg dumbbells", men: "15kg dumbbells" },
+    intermediate: { women: "15kg dumbbells", men: "25kg dumbbells" },
+    elite: { women: "20kg dumbbells", men: "35kg dumbbells" },
   },
   {
     name: "Step-Ups",
