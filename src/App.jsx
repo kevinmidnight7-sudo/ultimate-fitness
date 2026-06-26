@@ -869,14 +869,17 @@ function PasswordGate({ onUnlock }) {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050505] px-6">
+    <div
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6"
+      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
 
       {/* Background atmosphere */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(132,204,22,0.055) 0%, transparent 68%)",
+            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(132,204,22,0.08) 0%, transparent 68%)",
         }}
       />
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/45 to-transparent" />
@@ -1303,8 +1306,19 @@ function EventStructureSection() {
   const current = divisions.find((d) => d.key === division);
 
   return (
-    <section id="format" className="border-t border-white/[0.06] bg-[#080808] px-6 py-28">
-      <div className="mx-auto max-w-7xl">
+    <section
+      id="format"
+      className="relative border-t border-white/[0.06] px-6 py-28"
+      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-8">
           <div className="max-w-2xl">
             <SectionLabel>The UHS Event Structure</SectionLabel>
@@ -2097,8 +2111,19 @@ function YourJourneyHub() {
   const [modal, setModal] = useState(null);
 
   return (
-    <section id="journey" className="border-t border-white/[0.06] bg-[#070707] px-6 py-24">
-      <div className="mx-auto max-w-7xl">
+    <section
+      id="journey"
+      className="relative border-t border-white/[0.06] px-6 py-24"
+      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <SectionLabel>Start Here</SectionLabel>
           <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -2301,12 +2326,16 @@ function ScoreSection() {
   const tabContent = { overview: overviewPanel, breakdown: breakdownPanel, path: pathPanel };
 
   return (
-    <section id="score" className="relative border-t border-lime-400/[0.07] bg-[#060606] px-6 py-28">
+    <section
+      id="score"
+      className="relative border-t border-lime-400/[0.07] px-6 py-28"
+      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 65% 45% at 50% 0%, rgba(255,255,255,0.016) 0%, transparent 70%)",
+            "radial-gradient(ellipse 65% 45% at 50% 0%, rgba(255,255,255,0.016) 0%, transparent 70%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.08) 0%, transparent 65%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -2582,8 +2611,19 @@ function AICoachingSection() {
   };
 
   return (
-    <section id="coaching" className="border-t border-lime-400/[0.07] bg-[#060606] px-6 py-28">
-      <div className="mx-auto max-w-7xl">
+    <section
+      id="coaching"
+      className="relative border-t border-lime-400/[0.07] px-6 py-28"
+      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
         <div className="mb-10 max-w-3xl">
           <SectionLabel>Built by Coaches. Powered by AI.</SectionLabel>
           <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -2885,8 +2925,19 @@ function TierCard({ tier, index }) {
 
 function SubscriptionSection() {
   return (
-    <section id="membership" className="border-t border-white/[0.06] bg-[#080808] px-6 py-28">
-      <div className="mx-auto max-w-7xl">
+    <section
+      id="membership"
+      className="relative border-t border-white/[0.06] px-6 py-28"
+      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 10% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
         <div className="mb-6 inline-flex items-center gap-2.5 border border-amber-400/15 bg-amber-400/[0.03] px-3.5 py-1.5">
           <AlertTriangle className="h-3 w-3 text-amber-400/80" strokeWidth={1.5} />
           <span
@@ -3167,8 +3218,18 @@ export default function App() {
         <YourJourneyHub />
 
         {/* ── CAPABILITY PILLARS ── */}
-        <section className="border-y border-lime-400/[0.07] bg-[#080808] px-6 py-20">
-          <div className="mx-auto max-w-7xl">
+        <section
+          className="relative border-y border-lime-400/[0.07] px-6 py-20"
+          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(163,230,53,0.09) 0%, transparent 62%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <div className="mb-10 text-center">
               <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
               <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
@@ -3216,8 +3277,18 @@ export default function App() {
         </section>
 
         {/* ── UH TESTS THE WHOLE HUMAN ── */}
-        <section className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
+        <section
+          className="relative border-t border-white/[0.06] px-6 py-24"
+          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <div className="mb-12 max-w-3xl">
               <SectionLabel>Why UH Is Different</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -3287,8 +3358,19 @@ export default function App() {
         </section>
 
         {/* ── CHALLENGE OVERVIEW ── */}
-        <section id="challenge" className="bg-[#050505] px-6 py-20">
-          <div className="mx-auto max-w-7xl">
+        <section
+          id="challenge"
+          className="relative px-6 py-20"
+          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <SectionLabel>The Challenge</SectionLabel>
             <div className="grid gap-px bg-white/[0.05] md:grid-cols-3">
               {[
@@ -3330,8 +3412,19 @@ export default function App() {
         <AICoachingSection />
 
         {/* ── CATEGORIES ── */}
-        <section id="categories" className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
+        <section
+          id="categories"
+          className="relative border-t border-white/[0.06] px-6 py-24"
+          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <div className="mb-12">
               <SectionLabel>Ways to Compete</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -3367,8 +3460,18 @@ export default function App() {
         </section>
 
         {/* ── WHY ENTER ── */}
-        <section className="border-t border-white/[0.06] bg-[#050505] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
+        <section
+          className="relative border-t border-white/[0.06] px-6 py-24"
+          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <div className="mb-12">
               <SectionLabel>Why Enter?</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -3400,8 +3503,18 @@ export default function App() {
         <SubscriptionSection />
 
         {/* ── PRICING ── */}
-        <section className="border-t border-white/[0.06] bg-[#050505] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
+        <section
+          className="relative border-t border-white/[0.06] px-6 py-24"
+          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>Event Entry Pricing</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
@@ -3550,13 +3663,17 @@ export default function App() {
         </section>
 
         {/* ── SIGNUP / WAITLIST ── */}
-        <section id="signup" className="relative border-t border-lime-400/[0.07] bg-[#060606] px-6 py-24">
+        <section
+          id="signup"
+          className="relative border-t border-lime-400/[0.07] px-6 py-24"
+          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+        >
           {/* Section ambient glow */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.038) 0%, transparent 70%)",
+                "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.07) 0%, transparent 70%)",
             }}
           />
 
@@ -3638,7 +3755,10 @@ export default function App() {
         </section>
 
         {/* ── PRE-LAUNCH NOTICE ── */}
-        <section className="border-t border-white/[0.06] bg-[#060606] px-6 py-16">
+        <section
+          className="border-t border-white/[0.06] px-6 py-16"
+          style={{ background: "linear-gradient(180deg, #09090a 0%, #0a0a0a 100%)" }}
+        >
           <div className="mx-auto max-w-5xl">
             <div className="mb-8 inline-flex items-center gap-3 border border-amber-400/22 bg-amber-400/[0.04] px-4 py-2.5">
               <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
