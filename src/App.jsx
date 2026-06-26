@@ -3491,8 +3491,18 @@ export default function App() {
         </section>
 
         {/* ── FOUNDERS ── */}
-        <section className="border-t border-white/[0.06] bg-[#080808] px-6 py-24">
-          <div className="mx-auto max-w-7xl">
+        <section
+          className="relative border-t border-white/[0.06] px-6 py-24"
+          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 65% 55% at 12% 0%, rgba(163,230,53,0.14) 0%, transparent 62%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.1) 0%, transparent 65%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>The People Behind The Ultimate Human</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
