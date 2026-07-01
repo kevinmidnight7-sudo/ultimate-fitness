@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useInView } from "framer-motion";
+import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
 import {
   ArrowRight,
   Gauge,
@@ -20,7 +21,6 @@ import {
   RotateCcw,
   Brain,
   ChevronRight,
-  Mountain,
   Sparkles,
   Upload,
   MessageCircle,
@@ -62,6 +62,36 @@ const capabilities = [
   { label: "MENTAL FORTITUDE", icon: Brain },
 ];
 
+const pillarRadarData = [
+  { pillar: "ENDURANCE", value: 82 },
+  { pillar: "STRENGTH", value: 76 },
+  { pillar: "POWER", value: 73 },
+  { pillar: "SPEED", value: 88 },
+  { pillar: "AGILITY", value: 65 },
+  { pillar: "BALANCE", value: 64 },
+  { pillar: "COORDINATION", value: 70 },
+  { pillar: "RESILIENCE", value: 67 },
+  { pillar: "MOBILITY", value: 58 },
+  { pillar: "MENTAL", value: 72 },
+];
+
+const differenceTable = {
+  dimensions: [
+    "Endurance & Running",
+    "Loaded Strength",
+    "Speed & Agility",
+    "Coordination & Skill",
+    "Personal Score Report",
+    "Adapts Over Time",
+  ],
+  brands: [
+    { name: "HYROX",          ratings: ["full","partial","none","none","none","none"] },
+    { name: "Spartan",        ratings: ["full","full","full","partial","none","none"] },
+    { name: "CrossFit",       ratings: ["full","full","full","full","partial","none"] },
+    { name: "ULTIMATE HUMAN", ratings: ["full","full","full","full","full","full"], highlighted: true },
+  ],
+};
+
 const domains = [
   { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 76 },
   { title: "Power", text: "Convert strength into explosive output when it matters.", value: 73 },
@@ -82,33 +112,6 @@ const uhsReveals = [
   { title: "How You Evolve Over Time", text: "A profile that updates every time you compete." },
 ];
 
-const comparisonRaces = [
-  {
-    name: "HYROX",
-    tagline: "Tests hybrid racing.",
-    text: "Built for endurance-paced functional racing against the clock.",
-    icon: Timer,
-  },
-  {
-    name: "Spartan",
-    tagline: "Tests obstacle grit.",
-    text: "Built to test grit, obstacle problem-solving and raw toughness.",
-    icon: Mountain,
-  },
-  {
-    name: "CrossFit",
-    tagline: "Tests high-intensity fitness.",
-    text: "Built to test varied, high-intensity functional fitness.",
-    icon: Dumbbell,
-  },
-];
-
-const uhComparison = {
-  name: "Ultimate Human",
-  tagline: "Tests the whole human.",
-  text: "Built to measure every dimension of human capability, together, under fatigue.",
-  icon: Sparkles,
-};
 
 const divisions = [
   {
@@ -532,6 +535,152 @@ function SectionLabel({ children }) {
         {children}
       </p>
     </div>
+  );
+}
+
+/* Placeholder block for images not yet sourced — dashed border, labelled */
+function ImageBlock({ id, aspectRatio = "16/9", searchTerms, treatment, className = "" }) {
+  return (
+    <div
+      className={`relative flex items-center justify-center overflow-hidden ${className}`}
+      style={{
+        aspectRatio,
+        border: "1.5px dashed rgba(163,230,53,0.2)",
+        background: "rgba(163,230,53,0.025)",
+      }}
+    >
+      <div className="px-6 text-center">
+        <p
+          className="mb-1 text-[9px] font-bold uppercase tracking-[0.4em] text-lime-400/40"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          Image Placeholder
+        </p>
+        <p className="mb-2 text-[13px] font-bold uppercase tracking-wide text-white/40">
+          {id}
+        </p>
+        {searchTerms && (
+          <p className="mb-1 text-[11px] italic text-neutral-700">"{searchTerms}"</p>
+        )}
+        {treatment && (
+          <p className="text-[10px] text-neutral-800">Treatment: {treatment}</p>
+        )}
+        <p
+          className="mt-3 text-[10px] text-neutral-800"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          → /images/marketing/{id}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* Radar chart component for 10 Pillars section */
+function CapabilityPillarsSection() {
+  const radarRef = useRef(null);
+  const isInView = useInView(radarRef, { once: true, margin: "-80px" });
+
+  return (
+    <section
+      className="relative border-y border-lime-400/[0.07] px-6 py-20"
+      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(163,230,53,0.09) 0%, transparent 62%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-12 text-center">
+          <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
+          <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
+            Every Dimension. Measured.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-500">
+            The Ultimate Human Score spans all 10 axes simultaneously — not just the ones you train.
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-12">
+          {/* Radar chart */}
+          <div ref={radarRef} className="w-full shrink-0 lg:w-[520px]">
+            <ResponsiveContainer width="100%" height={460}>
+              <RadarChart
+                key={isInView ? "active" : "idle"}
+                data={pillarRadarData}
+                cx="50%"
+                cy="50%"
+                outerRadius="68%"
+              >
+                <PolarGrid
+                  stroke="rgba(255,255,255,0.05)"
+                  gridType="polygon"
+                />
+                <PolarAngleAxis
+                  dataKey="pillar"
+                  tick={{
+                    fill: "rgba(255,255,255,0.28)",
+                    fontSize: 9.5,
+                    fontFamily: "'Barlow Condensed', sans-serif",
+                    fontWeight: 700,
+                    letterSpacing: "0.18em",
+                  }}
+                />
+                <Radar
+                  dataKey="value"
+                  stroke="rgba(163,230,53,0.7)"
+                  fill="rgba(163,230,53,0.08)"
+                  strokeWidth={1.5}
+                  dot={{ fill: "rgba(163,230,53,0.6)", r: 2.5, strokeWidth: 0 }}
+                  isAnimationActive={isInView}
+                  animationDuration={1400}
+                  animationEasing="ease-out"
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+            <p
+              className="text-center text-[9.5px] font-bold uppercase tracking-[0.3em] text-neutral-700"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Sample athlete profile · Intermediate division
+            </p>
+          </div>
+
+          {/* Pillar list */}
+          <div className="grid w-full grid-cols-2 gap-x-8 gap-y-0">
+            {capabilities.map(({ label, icon: Icon }, i) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: i * 0.05 }}
+                className="flex items-center gap-3 border-b border-white/[0.04] py-3.5"
+              >
+                <Icon
+                  className="h-4 w-4 shrink-0 text-lime-400/45"
+                  strokeWidth={1.5}
+                />
+                <div>
+                  <p
+                    className="text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-400"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {label}
+                  </p>
+                  <p className="text-[11px] text-neutral-700">
+                    {pillarRadarData[i].value}/100
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -2136,59 +2285,66 @@ function YourJourneyHub() {
           </p>
         </div>
 
-        <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-5">
-          {journeyCards.map((card, i) => {
-            const Icon = card.icon;
-            const cardBody = (
-              <>
-                <div className="absolute left-0 top-0 h-px w-0 bg-lime-400 transition-all duration-500 group-hover:w-full" />
-                <div className="flex h-11 w-11 items-center justify-center border border-white/[0.1] bg-white/[0.03] transition-colors group-hover:border-lime-400/40 group-hover:bg-lime-400/[0.08]">
+        {/* Horizontal path / timeline */}
+        <div className="relative">
+          {/* Connecting line — desktop only */}
+          <div className="absolute left-0 right-0 top-[2.75rem] hidden h-px bg-white/[0.07] lg:block" />
+
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-0">
+            {journeyCards.map((card, i) => {
+              const Icon = card.icon;
+              const inner = (
+                <motion.div
+                  key={card.key}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.08 }}
+                  className="group flex flex-col items-start px-0 lg:px-5 lg:first:pl-0 lg:last:pr-0"
+                >
+                  {/* Step number circle */}
+                  <div className="relative z-10 mb-5 flex h-[2.75rem] w-[2.75rem] shrink-0 items-center justify-center rounded-full border border-white/[0.12] bg-[#0d0d0d] transition-colors group-hover:border-lime-400/50 group-hover:bg-lime-400/[0.07]">
+                    <span
+                      className="text-[11px] font-bold tabular-nums text-neutral-600 transition-colors group-hover:text-lime-400"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      0{i + 1}
+                    </span>
+                  </div>
                   <Icon
-                    className="h-5 w-5 text-neutral-500 transition-colors group-hover:text-lime-400"
+                    className="mb-3 h-5 w-5 text-neutral-600 transition-colors group-hover:text-lime-400/70"
                     strokeWidth={1.5}
                   />
-                </div>
-                <h3 className="mt-5 text-base font-bold uppercase tracking-wide text-white">
-                  {card.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-5 text-neutral-500">{card.text}</p>
-                <span
-                  className="mt-5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-lime-400/80 transition-colors group-hover:text-lime-400"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  {card.cta}
-                  <ChevronRight className="h-3.5 w-3.5" />
-                </span>
-              </>
-            );
+                  <h3 className="text-[15px] font-bold uppercase tracking-wide text-white">
+                    {card.title}
+                  </h3>
+                  <p className="mt-2 text-[12.5px] leading-5 text-neutral-600">{card.text}</p>
+                  <span
+                    className="mt-4 flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-[0.18em] text-lime-400/60 transition-colors group-hover:text-lime-400"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {card.cta}
+                    <ChevronRight className="h-3 w-3" />
+                  </span>
+                </motion.div>
+              );
 
-            return (
-              <motion.div
-                key={card.key}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: i * 0.06 }}
-              >
-                {card.action === "scroll" ? (
-                  <a
-                    href={card.href}
-                    className="group relative flex flex-col items-start overflow-hidden bg-[#0d0d0d] p-6 text-left no-underline transition-colors hover:bg-[#111]"
-                  >
-                    {cardBody}
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setModal(card.key)}
-                    className="group relative flex w-full flex-col items-start overflow-hidden bg-[#0d0d0d] p-6 text-left transition-colors hover:bg-[#111]"
-                  >
-                    {cardBody}
-                  </button>
-                )}
-              </motion.div>
-            );
-          })}
+              return card.action === "scroll" ? (
+                <a key={card.key} href={card.href} className="no-underline">
+                  {inner}
+                </a>
+              ) : (
+                <button
+                  key={card.key}
+                  type="button"
+                  onClick={() => setModal(card.key)}
+                  className="w-full text-left"
+                >
+                  {inner}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -2822,18 +2978,33 @@ function TierCard({ tier, index }) {
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
       className={`group relative flex flex-col bg-[#0d0d0d] p-7 transition-colors ${
-        tier.highlighted ? "ring-1 ring-lime-400/40" : "hover:bg-[#111]"
+        tier.highlighted
+          ? "ring-1 ring-lime-400/55 md:-translate-y-2 md:shadow-[0_0_48px_rgba(163,230,53,0.1)]"
+          : "hover:bg-[#111]"
       }`}
     >
       {tier.highlighted && (
         <>
-          <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
-          <span
-            className="absolute right-6 top-6 text-[9.5px] font-bold uppercase tracking-[0.2em] text-lime-400"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 via-lime-400/60 to-transparent" />
+          {/* Ribbon badge */}
+          <div
+            className="absolute right-0 top-0 overflow-hidden"
+            style={{ width: 72, height: 72 }}
           >
-            Most Popular
-          </span>
+            <div
+              className="absolute flex items-center justify-center bg-lime-400 text-[8px] font-black uppercase tracking-[0.18em] text-black"
+              style={{
+                fontFamily: "'Barlow Condensed', sans-serif",
+                width: 100,
+                top: 18,
+                right: -22,
+                transform: "rotate(45deg)",
+                transformOrigin: "center",
+              }}
+            >
+              Popular
+            </div>
+          </div>
         </>
       )}
       <div
@@ -3006,6 +3177,11 @@ export default function App() {
   });
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
+  const { scrollY: navScrollY } = useScroll();
+  const [navScrolled, setNavScrolled] = useState(false);
+  useEffect(() => {
+    return navScrollY.on("change", (v) => setNavScrolled(v > 60));
+  }, [navScrollY]);
 
   /* Headline glow — grey-to-white metallic gradient brightens as the user scrolls */
   const { scrollY } = useScroll();
@@ -3035,7 +3211,7 @@ export default function App() {
     <div className="min-h-screen bg-[#050505] text-white">
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#050505]/94 backdrop-blur-xl">
+      <header className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-colors duration-300 ${navScrolled ? "border-white/[0.06] bg-[#050505]/95" : "border-transparent bg-[#050505]/40"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
 
           {/* Logo + separator */}
@@ -3091,6 +3267,17 @@ export default function App() {
           ref={heroRef}
           className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
+          {/* Hero athlete image — place file at /images/marketing/hero-athlete-primary.jpg (16:9, 1920×1080 min) */}
+          {/* When image is ready: replace ImageBlock with <img src="/images/marketing/hero-athlete-primary.jpg" className="absolute inset-0 h-full w-full object-cover object-center opacity-35" /> */}
+          <div className="pointer-events-none absolute inset-0 z-[1]">
+            <ImageBlock
+              id="hero-athlete-primary.jpg"
+              aspectRatio="16/9"
+              searchTerms="athlete explosive sled push dark gym dramatic lighting"
+              treatment="Duotone B&W/lime · left-to-right dark gradient overlay · grain"
+              className="h-full w-full opacity-30"
+            />
+          </div>
           <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
           <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
@@ -3217,66 +3404,9 @@ export default function App() {
 
         <YourJourneyHub />
 
-        {/* ── CAPABILITY PILLARS ── */}
-        <section
-          className="relative border-y border-lime-400/[0.07] px-6 py-20"
-          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(163,230,53,0.09) 0%, transparent 62%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mb-10 text-center">
-              <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
-              <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
-                Every Dimension. Measured.
-              </h2>
-            </div>
+        <CapabilityPillarsSection />
 
-            {/* Technical divider before grid */}
-            <div className="mb-px flex items-center gap-4">
-              <div className="h-px flex-1 bg-white/[0.04]" />
-              <span
-                className="text-[10px] font-bold uppercase tracking-[0.35em] text-neutral-800"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                10 Pillars
-              </span>
-              <div className="h-px flex-1 bg-white/[0.04]" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-px bg-white/[0.05] sm:grid-cols-5">
-              {capabilities.map(({ label, icon: Icon }, i) => (
-                <motion.div
-                  key={label}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: i * 0.04 }}
-                  className="group relative flex flex-col items-center gap-4 overflow-hidden bg-[#0d0d0d] p-7 transition-colors hover:bg-[#111]"
-                >
-                  <div className="absolute left-0 top-0 h-px w-0 bg-lime-400 transition-all duration-500 group-hover:w-full" />
-                  <Icon
-                    className="h-6 w-6 text-neutral-600 transition-colors group-hover:text-lime-400"
-                    strokeWidth={1.5}
-                  />
-                  <p
-                    className="text-center text-[11px] font-bold uppercase tracking-[0.24em] text-neutral-500 transition-colors group-hover:text-white"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    {label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── UH TESTS THE WHOLE HUMAN ── */}
+        {/* ── WHY UH IS DIFFERENT ── */}
         <section
           className="relative border-t border-white/[0.06] px-6 py-24"
           style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
@@ -3303,55 +3433,73 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-4">
-              {comparisonRaces.map((race, i) => (
-                <motion.div
-                  key={race.name}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="group bg-[#0d0d0d] p-8 transition-colors hover:bg-[#111]"
-                >
-                  <race.icon
-                    className="h-6 w-6 text-neutral-600 transition-colors group-hover:text-neutral-300"
-                    strokeWidth={1.5}
-                  />
-                  <h3 className="mt-6 text-lg uppercase tracking-wide text-neutral-300">
-                    {race.name}
-                  </h3>
-                  <p
-                    className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-neutral-600"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    {race.tagline}
-                  </p>
-                  <p className="mt-4 text-sm leading-6 text-neutral-500">{race.text}</p>
-                </motion.div>
-              ))}
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: comparisonRaces.length * 0.08 }}
-                whileHover={{ y: -5 }}
-                className="lime-glow-hover relative bg-[#0d0d0d] p-8 ring-1 ring-lime-400/40"
-              >
-                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
-                <uhComparison.icon className="h-6 w-6 text-lime-400" strokeWidth={1.5} />
-                <h3 className="mt-6 text-lg uppercase tracking-wide text-white">
-                  {uhComparison.name}
-                </h3>
-                <p
-                  className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-lime-400"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  {uhComparison.tagline}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-neutral-300">{uhComparison.text}</p>
-              </motion.div>
-            </div>
+            {/* Comparison table */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="overflow-x-auto"
+            >
+              <table className="w-full border-collapse text-left">
+                <thead>
+                  <tr>
+                    <th className="w-44 py-4 pr-6 text-left">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-700"
+                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                      >
+                        Capability
+                      </span>
+                    </th>
+                    {differenceTable.brands.map((brand) => (
+                      <th
+                        key={brand.name}
+                        className={`px-6 py-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] ${
+                          brand.highlighted ? "text-lime-400" : "text-neutral-500"
+                        }`}
+                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                      >
+                        {brand.name}
+                        {brand.highlighted && (
+                          <div className="mx-auto mt-1 h-px w-8 bg-lime-400/50" />
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {differenceTable.dimensions.map((dim, rowIdx) => (
+                    <motion.tr
+                      key={dim}
+                      initial={{ opacity: 0, x: -8 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: rowIdx * 0.06 }}
+                      className="border-t border-white/[0.05]"
+                    >
+                      <td className="py-4 pr-6 text-[13px] text-neutral-400">{dim}</td>
+                      {differenceTable.brands.map((brand) => {
+                        const rating = brand.ratings[rowIdx];
+                        return (
+                          <td key={brand.name} className={`px-6 py-4 text-center ${brand.highlighted ? "bg-lime-400/[0.03]" : ""}`}>
+                            {rating === "full" && (
+                              <CheckCircle2 className="mx-auto h-4 w-4 text-lime-400/80" strokeWidth={2} />
+                            )}
+                            {rating === "partial" && (
+                              <div className="mx-auto h-px w-4 bg-neutral-600" />
+                            )}
+                            {rating === "none" && (
+                              <X className="mx-auto h-4 w-4 text-neutral-800" strokeWidth={2} />
+                            )}
+                          </td>
+                        );
+                      })}
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
 
             <WhyDifferentExplainer />
           </div>
@@ -3360,7 +3508,7 @@ export default function App() {
         {/* ── CHALLENGE OVERVIEW ── */}
         <section
           id="challenge"
-          className="relative px-6 py-20"
+          className="relative px-6 pb-0 pt-20"
           style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -3372,37 +3520,43 @@ export default function App() {
           />
           <div className="relative mx-auto max-w-7xl">
             <SectionLabel>The Challenge</SectionLabel>
-            <div className="grid gap-px bg-white/[0.05] md:grid-cols-3">
+            {/* Slim three-point strip */}
+            <div className="mb-12 flex flex-col divide-y divide-white/[0.06] md:flex-row md:divide-x md:divide-y-0">
               {[
-                {
-                  icon: Flame,
-                  title: "Hard, But Not Stupid",
-                  text: "UH is designed to challenge the whole human without reducing fitness to punishment. The goal is not to destroy you. It is to reveal what you're capable of, expose what needs work, and give you a clear path to get stronger, fitter and more durable for life.",
-                },
-                {
-                  icon: Timer,
-                  title: "45–70 Minutes",
-                  text: "Long enough to matter. Short enough to be repeatable. Designed for high energy, fast transitions and visible competition.",
-                },
-                {
-                  icon: Zap,
-                  title: "Adapt Under Fatigue",
-                  text: "The signature test is not one movement. It is how quickly you can switch between speed, control, strength and coordination.",
-                },
-              ].map(({ icon: Icon, title, text }) => (
-                <div
+                { icon: Flame,  title: "Hard, But Not Stupid", sub: "Designed to reveal — not destroy" },
+                { icon: Timer,  title: "45–70 Minutes",         sub: "High energy · Fast transitions · Visible competition" },
+                { icon: Zap,    title: "Adapt Under Fatigue",   sub: "Speed → Control → Strength → Coordination" },
+              ].map(({ icon: Icon, title, sub }, i) => (
+                <motion.div
                   key={title}
-                  className="lime-glow-hover group bg-[#0a0a0a] p-10 transition-colors hover:bg-[#0d0d0d]"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.08 }}
+                  className="flex flex-1 items-center gap-5 px-6 py-7 first:pl-0 last:pr-0 md:px-10"
                 >
-                  <div className="mb-7 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04] transition-colors group-hover:border-lime-400/40 group-hover:bg-lime-400/[0.07]">
-                    <Icon className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
+                  <Icon className="h-5 w-5 shrink-0 text-lime-400/60" strokeWidth={1.5} />
+                  <div>
+                    <p className="text-[15px] font-bold uppercase tracking-wide text-white">{title}</p>
+                    <p
+                      className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-neutral-600"
+                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    >
+                      {sub}
+                    </p>
                   </div>
-                  <h3 className="text-xl uppercase tracking-wide text-white">{title}</h3>
-                  <p className="mt-4 text-base leading-7 text-neutral-400">{text}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
+          {/* Full-width image band */}
+          <ImageBlock
+            id="challenge-fatigue-moment.jpg"
+            aspectRatio="21/9"
+            searchTerms="athlete exhausted determined mid-workout dramatic shadow"
+            treatment="Duotone B&W/lime · dark vignette top + bottom"
+            className="w-full"
+          />
         </section>
 
         <EventStructureSection />
@@ -3461,7 +3615,7 @@ export default function App() {
 
         {/* ── WHY ENTER ── */}
         <section
-          className="relative border-t border-white/[0.06] px-6 py-24"
+          className="relative border-t border-white/[0.06]"
           style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -3471,31 +3625,48 @@ export default function App() {
                 "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
             }}
           />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mb-12">
+          {/* Two-column: image left, list right */}
+          <div className="relative flex flex-col lg:flex-row">
+            {/* Left — lifestyle image */}
+            <div className="lg:w-[42%] lg:shrink-0">
+              <ImageBlock
+                id="why-enter-lifestyle.jpg"
+                aspectRatio="4/5"
+                searchTerms="person training outdoors early morning determination"
+                treatment="Duotone matching hero · right-edge gradient fade"
+                className="h-full min-h-[360px] w-full"
+              />
+            </div>
+
+            {/* Right — stacked list */}
+            <div className="flex flex-1 flex-col justify-center px-8 py-16 lg:px-14 lg:py-24">
               <SectionLabel>Why Enter?</SectionLabel>
               <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Because Fitness
                 <br />
                 Should Mean Capability.
               </h2>
-            </div>
 
-            <div className="grid gap-px bg-white/[0.05] md:grid-cols-2">
-              {whyEnter.map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: i * 0.1 }}
-                  className="lime-glow-hover group bg-[#0d0d0d] p-9 transition-colors hover:bg-[#0f0f0f]"
-                >
-                  <div className="mb-5 h-px w-8 bg-lime-400 transition-all duration-300 group-hover:w-14" />
-                  <h3 className="text-xl uppercase tracking-wide text-white">{item.title}</h3>
-                  <p className="mt-4 text-base leading-7 text-neutral-400">{item.text}</p>
-                </motion.div>
-              ))}
+              <div className="mt-10 space-y-0">
+                {whyEnter.map((item, i) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, x: 12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: i * 0.08 }}
+                    className="border-t border-white/[0.06] py-6"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-lime-400/50" />
+                      <div>
+                        <p className="text-[15px] font-bold uppercase tracking-wide text-white">{item.title}</p>
+                        <p className="mt-1.5 text-[13px] leading-6 text-neutral-500">{item.text}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -3668,6 +3839,16 @@ export default function App() {
           className="relative border-t border-lime-400/[0.07] px-6 py-24"
           style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
         >
+          {/* Background image placeholder — swap for real asset when ready */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <ImageBlock
+              id="signup-background.jpg"
+              aspectRatio="21/9"
+              searchTerms="dark textured concrete gym floor top-down OR reuse hero-athlete-primary"
+              treatment="8-12% opacity · dark · form sits on top with card bg overlay"
+              className="h-full w-full opacity-[0.08]"
+            />
+          </div>
           {/* Section ambient glow */}
           <div
             className="pointer-events-none absolute inset-0"
