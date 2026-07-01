@@ -3001,9 +3001,11 @@ function SubscriptionSection() {
 
 export default function App() {
   /* Gate — all hooks must come before any conditional return */
-  const [unlocked, setUnlocked] = useState(() => {
-    try { return localStorage.getItem("uh_unlocked") === "1"; } catch { return false; }
-  });
+  // GATE DISABLED FOR TESTING — restore the line below to re-enable
+  const [unlocked, setUnlocked] = useState(true);
+  // const [unlocked, setUnlocked] = useState(() => {
+  //   try { return localStorage.getItem("uh_unlocked") === "1"; } catch { return false; }
+  // });
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
 
