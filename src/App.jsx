@@ -3839,14 +3839,14 @@ export default function App() {
           className="relative border-t border-lime-400/[0.07] px-6 py-24"
           style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
         >
-          {/* Background image placeholder — swap for real asset when ready */}
+          {/* Branded UH arena-floor asset, low opacity behind the form */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <ImageBlock
-              id="signup-background.jpg"
-              aspectRatio="21/9"
-              searchTerms="dark textured concrete gym floor top-down OR reuse hero-athlete-primary"
-              treatment="8-12% opacity · dark · form sits on top with card bg overlay"
-              className="h-full w-full opacity-[0.08]"
+            <img
+              src="/images/uh-hero-arena-floor-no-text-2400x1400.jpg"
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-cover object-center opacity-[0.28]"
+              loading="lazy"
             />
           </div>
           {/* Section ambient glow */}
