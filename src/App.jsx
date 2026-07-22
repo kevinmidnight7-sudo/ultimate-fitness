@@ -584,13 +584,13 @@ function CapabilityPillarsSection() {
   return (
     <section
       className="relative border-y border-lime-400/[0.07] px-6 py-20"
-      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(163,230,53,0.09) 0%, transparent 62%)",
+            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(163,230,53,0.22) 0%, transparent 62%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -905,7 +905,7 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
         style={{
           height: "48%",
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(132,204,22,0.052) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(132,204,22,0.12) 0%, transparent 70%)",
         }}
       />
 
@@ -1020,7 +1020,7 @@ function PasswordGate({ onUnlock }) {
   return (
     <div
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6"
-      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
 
       {/* Background atmosphere */}
@@ -1028,7 +1028,7 @@ function PasswordGate({ onUnlock }) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(132,204,22,0.08) 0%, transparent 68%)",
+            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(132,204,22,0.18) 0%, transparent 68%)",
         }}
       />
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/45 to-transparent" />
@@ -1458,13 +1458,13 @@ function EventStructureSection() {
     <section
       id="format"
       className="relative border-t border-white/[0.06] px-6 py-28"
-      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -2263,13 +2263,13 @@ function YourJourneyHub() {
     <section
       id="journey"
       className="relative border-t border-white/[0.06] px-6 py-24"
-      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -2485,13 +2485,13 @@ function ScoreSection() {
     <section
       id="score"
       className="relative border-t border-lime-400/[0.07] px-6 py-28"
-      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 65% 45% at 50% 0%, rgba(255,255,255,0.016) 0%, transparent 70%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.08) 0%, transparent 65%)",
+            "radial-gradient(ellipse 65% 45% at 50% 0%, rgba(255,255,255,0.016) 0%, transparent 70%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.18) 0%, transparent 65%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -2770,13 +2770,13 @@ function AICoachingSection() {
     <section
       id="coaching"
       className="relative border-t border-lime-400/[0.07] px-6 py-28"
-      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -3099,13 +3099,13 @@ function SubscriptionSection() {
     <section
       id="membership"
       className="relative border-t border-white/[0.06] px-6 py-28"
-      style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 10% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+            "radial-gradient(ellipse 60% 50% at 10% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl">
@@ -3409,13 +3409,13 @@ export default function App() {
         {/* ── WHY UH IS DIFFERENT ── */}
         <section
           className="relative border-t border-white/[0.06] px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
             }}
           />
           <div className="relative mx-auto max-w-7xl">
@@ -3509,13 +3509,13 @@ export default function App() {
         <section
           id="challenge"
           className="relative px-6 pb-0 pt-20"
-          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%)",
+                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%)",
             }}
           />
           <div className="relative mx-auto max-w-7xl">
@@ -3569,13 +3569,13 @@ export default function App() {
         <section
           id="categories"
           className="relative border-t border-white/[0.06] px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+                "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
             }}
           />
           <div className="relative mx-auto max-w-7xl">
@@ -3616,13 +3616,13 @@ export default function App() {
         {/* ── WHY ENTER ── */}
         <section
           className="relative border-t border-white/[0.06]"
-          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
             }}
           />
           {/* Two-column: image left, list right */}
@@ -3676,13 +3676,13 @@ export default function App() {
         {/* ── PRICING ── */}
         <section
           className="relative border-t border-white/[0.06] px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.09) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.06) 0%, transparent 65%)",
+                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
             }}
           />
           <div className="relative mx-auto max-w-7xl">
@@ -3777,13 +3777,13 @@ export default function App() {
         {/* ── FOUNDERS ── */}
         <section
           className="relative border-t border-white/[0.06] px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #0d130a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 65% 55% at 12% 0%, rgba(163,230,53,0.14) 0%, transparent 62%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.1) 0%, transparent 65%)",
+                "radial-gradient(ellipse 65% 55% at 12% 0%, rgba(163,230,53,0.28) 0%, transparent 62%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.1) 0%, transparent 65%)",
             }}
           />
           <div className="relative mx-auto max-w-7xl">
@@ -3802,29 +3802,29 @@ export default function App() {
 
             <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
               <FounderCard
-                photo="/images/founders/andie.jpg"
-                ratio="1023 / 1537"
+                photo="/images/founders/andie.png"
+                ratio="1 / 1"
                 name="Andie Stoneham"
                 role="Founder · Performance Coach · Programme Designer"
                 quote="Most fitness events reward one dominant attribute. We wanted to build something that rewards adaptability, composure and complete human capability."
               />
               <FounderCard
                 photo="/images/founders/laura.png"
-                ratio="1023 / 1537"
+                ratio="1 / 1"
                 name="Laura Hathaway"
                 role="Performance Coach · Qualified Osteopath"
                 quote="Real performance is not just strength or endurance. It is how efficiently and intelligently your body moves under pressure and fatigue."
               />
               <FounderCard
                 photo="/images/founders/john.png"
-                ratio="1023 / 1537"
+                ratio="1 / 1"
                 name="John 'The Hitman' Hathaway"
                 role="Champion UFC Fighter · Coach"
                 quote="The people who stay calm, adaptable and explosive when tired are usually the hardest people to beat. That is what this competition is designed to expose."
               />
               <FounderCard
-                photo="/images/founders/ken.jpg"
-                ratio="1149 / 1369"
+                photo="/images/founders/ken.png"
+                ratio="1 / 1"
                 name="Ken Brotherston"
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
@@ -3837,7 +3837,7 @@ export default function App() {
         <section
           id="signup"
           className="relative border-t border-lime-400/[0.07] px-6 py-24"
-          style={{ background: "linear-gradient(195deg, #0a0d10 0%, #07080a 40%, #0c0a08 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
         >
           {/* Background image placeholder — swap for real asset when ready */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -3854,7 +3854,7 @@ export default function App() {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.07) 0%, transparent 70%)",
+                "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.16) 0%, transparent 70%)",
             }}
           />
 
@@ -3872,7 +3872,7 @@ export default function App() {
                 className="pointer-events-none absolute inset-0"
                 style={{
                   background:
-                    "radial-gradient(ellipse at center top, rgba(132,204,22,0.10) 0%, transparent 52%)",
+                    "radial-gradient(ellipse at center top, rgba(132,204,22,0.20) 0%, transparent 52%)",
                 }}
               />
               <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/55 to-transparent" />
