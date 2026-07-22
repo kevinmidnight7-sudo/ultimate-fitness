@@ -3802,29 +3802,29 @@ export default function App() {
 
             <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
               <FounderCard
-                photo="/images/founders/andie.jpg"
-                ratio="1023 / 1537"
+                photo="/images/founders/andie.png"
+                ratio="1 / 1"
                 name="Andie Stoneham"
                 role="Founder · Performance Coach · Programme Designer"
                 quote="Most fitness events reward one dominant attribute. We wanted to build something that rewards adaptability, composure and complete human capability."
               />
               <FounderCard
                 photo="/images/founders/laura.png"
-                ratio="1023 / 1537"
+                ratio="1 / 1"
                 name="Laura Hathaway"
                 role="Performance Coach · Qualified Osteopath"
                 quote="Real performance is not just strength or endurance. It is how efficiently and intelligently your body moves under pressure and fatigue."
               />
               <FounderCard
                 photo="/images/founders/john.png"
-                ratio="1023 / 1537"
+                ratio="1 / 1"
                 name="John 'The Hitman' Hathaway"
                 role="Champion UFC Fighter · Coach"
                 quote="The people who stay calm, adaptable and explosive when tired are usually the hardest people to beat. That is what this competition is designed to expose."
               />
               <FounderCard
-                photo="/images/founders/ken.jpg"
-                ratio="1149 / 1369"
+                photo="/images/founders/ken.png"
+                ratio="1 / 1"
                 name="Ken Brotherston"
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
