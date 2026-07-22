@@ -578,7 +578,10 @@ function ImageBlock({ id, aspectRatio = "16/9", searchTerms, treatment, classNam
 
 /* Shows the real marketing photo once it exists at /images/marketing/<file>,
    otherwise falls back to the labelled ImageBlock placeholder. Drop a file in
-   and it appears automatically — no code change needed. */
+   and it appears automatically — no code change needed.
+
+   The photo renders in grayscale; moving the cursor over it reveals full
+   colour in a soft spotlight that tracks the mouse. */
 function MarketingImage({
   file,
   aspectRatio,
@@ -587,10 +590,39 @@ function MarketingImage({
   className = "",
   fill = false,
   imgClassName = "",
-  filter,
+  opacity,
   overlay,
+  onResolved,
 }) {
   const [failed, setFailed] = useState(false);
+  const wrapRef = useRef(null);
+  const colorRef = useRef(null);
+
+  /* Track the cursor at the window level so the colour spotlight works even
+     when other layers (hero text/CTAs) sit above the image and swallow events. */
+  useEffect(() => {
+    const onMove = (e) => {
+      const wrap = wrapRef.current;
+      const color = colorRef.current;
+      if (!wrap || !color) return;
+      const r = wrap.getBoundingClientRect();
+      const inside =
+        e.clientX >= r.left &&
+        e.clientX <= r.right &&
+        e.clientY >= r.top &&
+        e.clientY <= r.bottom;
+      if (inside) {
+        color.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        color.style.setProperty("--my", `${e.clientY - r.top}px`);
+        color.style.opacity = "1";
+      } else {
+        color.style.opacity = "0";
+      }
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [failed]);
+
   if (failed) {
     return (
       <ImageBlock
@@ -602,29 +634,56 @@ function MarketingImage({
       />
     );
   }
-  const img = (
-    <img
-      src={`/images/marketing/${file}`}
-      alt=""
-      aria-hidden="true"
-      loading="lazy"
-      onError={() => setFailed(true)}
-      className={`h-full w-full object-cover ${imgClassName}`}
-      style={filter ? { filter } : undefined}
-    />
-  );
-  if (fill) {
-    return (
-      <>
-        {img}
-        {overlay}
-      </>
-    );
-  }
-  return (
-    <div className={`relative overflow-hidden ${className}`} style={{ aspectRatio }}>
-      {img}
+
+  const src = `/images/marketing/${file}`;
+  const spotlight =
+    "radial-gradient(circle 150px at var(--mx, -999px) var(--my, -999px), #000 0%, #000 42%, transparent 78%)";
+
+  const layers = (
+    <>
+      {/* grayscale base */}
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        onLoad={() => onResolved && onResolved(true)}
+        onError={() => {
+          setFailed(true);
+          onResolved && onResolved(false);
+        }}
+        className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
+        style={{ filter: "grayscale(100%) contrast(1.05) brightness(0.9)" }}
+      />
+      {/* full-colour layer, revealed under the cursor */}
+      <img
+        ref={colorRef}
+        src={src}
+        alt=""
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 h-full w-full object-cover ${imgClassName}`}
+        style={{
+          opacity: 0,
+          transition: "opacity 0.25s ease-out",
+          WebkitMaskImage: spotlight,
+          maskImage: spotlight,
+        }}
+      />
       {overlay}
+    </>
+  );
+
+  return (
+    <div
+      ref={wrapRef}
+      className={
+        fill
+          ? "pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
+          : `pointer-events-none relative overflow-hidden ${className}`
+      }
+      style={{ aspectRatio: fill ? undefined : aspectRatio, opacity }}
+    >
+      {layers}
     </div>
   );
 }
@@ -741,7 +800,7 @@ function CapabilityPillarsSection() {
    HERO ARENA BACKGROUND
 ───────────────────────────────────────────────────────────────── */
 
-function HeroArenaBackground({ heroRef, reducedMotion }) {
+function HeroArenaBackground({ heroRef, reducedMotion, bare = false }) {
   const mouseGlowRef = useRef(null);
 
   /* 16 curated particles — fewer, more intentional */
@@ -777,6 +836,32 @@ function HeroArenaBackground({ heroRef, reducedMotion }) {
     hero.addEventListener("mousemove", onMove);
     return () => hero.removeEventListener("mousemove", onMove);
   }, [heroRef, reducedMotion]);
+
+  /* Bare mode — a hero photo is in place, so drop the decorative arena
+     graphics (beams, grid, particles, washes) and keep only the logo watermark. */
+  if (bare) {
+    return (
+      <div
+        className="pointer-events-none absolute inset-0 select-none overflow-hidden"
+        aria-hidden="true"
+      >
+        <div
+          className="absolute"
+          style={{
+            bottom: "6%",
+            right: "4%",
+            width: "clamp(170px, 21vw, 300px)",
+            opacity: 0.06,
+            filter: "grayscale(1) brightness(4) blur(0.5px)",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          <img src="/images/logo.png" alt="" className="w-full" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -3220,6 +3305,103 @@ function SubscriptionSection() {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   SIDE QUICK NAV — hover the right edge to reveal a poppy jump menu
+───────────────────────────────────────────────────────────────── */
+
+const quickNavLinks = [
+  { label: "Top", target: "top" },
+  { label: "Journey", target: "journey" },
+  { label: "Challenge", target: "challenge" },
+  { label: "Event", target: "format" },
+  { label: "Score", target: "score" },
+  { label: "AI Coach", target: "coaching" },
+  { label: "Compete", target: "categories" },
+  { label: "Membership", target: "membership" },
+  { label: "Sign Up", target: "signup" },
+];
+
+function SideQuickNav() {
+  const [open, setOpen] = useState(false);
+
+  const go = (target) => {
+    if (target === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setOpen(false);
+  };
+
+  const listVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.035 } },
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, x: 24 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { type: "spring", stiffness: 520, damping: 26 },
+    },
+  };
+
+  return (
+    <div
+      className="fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 md:flex"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      {/* Collapsed hover target — stacked tick marks */}
+      <div className="flex flex-col items-end justify-center gap-2.5 py-4 pl-10 pr-5">
+        {!open &&
+          quickNavLinks.map((l) => (
+            <span
+              key={l.target}
+              className="block h-px w-5 bg-white/25 transition-colors"
+            />
+          ))}
+      </div>
+
+      {/* Expanded menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 30 }}
+            transition={{ type: "spring", stiffness: 420, damping: 30 }}
+            className="absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-end gap-1 border-r-2 border-lime-400/60 bg-gradient-to-l from-[#080808]/95 to-[#080808]/70 py-4 pl-16 pr-6 backdrop-blur-md"
+          >
+            <motion.ul
+              variants={listVariants}
+              initial="hidden"
+              animate="show"
+              className="flex list-none flex-col items-end gap-1"
+            >
+              {quickNavLinks.map((l) => (
+                <motion.li key={l.target} variants={itemVariants} className="origin-right">
+                  <motion.button
+                    type="button"
+                    onClick={() => go(l.target)}
+                    whileHover={{ scale: 1.18, x: -6, color: "#a3e635" }}
+                    whileTap={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 18 }}
+                    className="block origin-right cursor-pointer whitespace-nowrap py-1 text-right text-[13px] font-bold uppercase tracking-[0.16em] text-neutral-300"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {l.label}
+                  </motion.button>
+                </motion.li>
+              ))}
+            </motion.ul>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
    APP
 ───────────────────────────────────────────────────────────────── */
 
@@ -3230,6 +3412,7 @@ export default function App() {
   });
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
+  const [heroPhotoLoaded, setHeroPhotoLoaded] = useState(false);
   const { scrollY: navScrollY } = useScroll();
   const [navScrolled, setNavScrolled] = useState(false);
   useEffect(() => {
@@ -3262,6 +3445,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white">
+
+      <SideQuickNav />
 
       {/* ── HEADER ── */}
       <header className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-colors duration-300 ${navScrolled ? "border-white/[0.06] bg-[#050505]/95" : "border-transparent bg-[#050505]/40"}`}>
@@ -3321,7 +3506,7 @@ export default function App() {
           className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
           {/* Hero athlete image — drop hero-athlete-primary.jpg into public/images/marketing/ and it appears here automatically */}
-          <div className="pointer-events-none absolute inset-0 z-[1]">
+          <div className="absolute inset-0 z-0">
             <MarketingImage
               file="hero-athlete-primary.jpg"
               aspectRatio="16/9"
@@ -3329,11 +3514,11 @@ export default function App() {
               treatment="Duotone B&W/lime · left-to-right dark gradient overlay · grain"
               className="h-full w-full opacity-30"
               fill
-              imgClassName="absolute inset-0 opacity-[0.35]"
-              filter="grayscale(100%) contrast(1.05) brightness(0.9)"
+              opacity={0.62}
+              onResolved={setHeroPhotoLoaded}
             />
           </div>
-          <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
+          <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} bare={heroPhotoLoaded} />
 
           <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
             <motion.div
