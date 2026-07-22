@@ -576,6 +576,59 @@ function ImageBlock({ id, aspectRatio = "16/9", searchTerms, treatment, classNam
   );
 }
 
+/* Shows the real marketing photo once it exists at /images/marketing/<file>,
+   otherwise falls back to the labelled ImageBlock placeholder. Drop a file in
+   and it appears automatically — no code change needed. */
+function MarketingImage({
+  file,
+  aspectRatio,
+  searchTerms,
+  treatment,
+  className = "",
+  fill = false,
+  imgClassName = "",
+  filter,
+  overlay,
+}) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <ImageBlock
+        id={file}
+        aspectRatio={aspectRatio}
+        searchTerms={searchTerms}
+        treatment={treatment}
+        className={className}
+      />
+    );
+  }
+  const img = (
+    <img
+      src={`/images/marketing/${file}`}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className={`h-full w-full object-cover ${imgClassName}`}
+      style={filter ? { filter } : undefined}
+    />
+  );
+  if (fill) {
+    return (
+      <>
+        {img}
+        {overlay}
+      </>
+    );
+  }
+  return (
+    <div className={`relative overflow-hidden ${className}`} style={{ aspectRatio }}>
+      {img}
+      {overlay}
+    </div>
+  );
+}
+
 /* Radar chart component for 10 Pillars section */
 function CapabilityPillarsSection() {
   const radarRef = useRef(null);
@@ -3267,15 +3320,17 @@ export default function App() {
           ref={heroRef}
           className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
-          {/* Hero athlete image — place file at /images/marketing/hero-athlete-primary.jpg (16:9, 1920×1080 min) */}
-          {/* When image is ready: replace ImageBlock with <img src="/images/marketing/hero-athlete-primary.jpg" className="absolute inset-0 h-full w-full object-cover object-center opacity-35" /> */}
+          {/* Hero athlete image — drop hero-athlete-primary.jpg into public/images/marketing/ and it appears here automatically */}
           <div className="pointer-events-none absolute inset-0 z-[1]">
-            <ImageBlock
-              id="hero-athlete-primary.jpg"
+            <MarketingImage
+              file="hero-athlete-primary.jpg"
               aspectRatio="16/9"
               searchTerms="athlete explosive sled push dark gym dramatic lighting"
               treatment="Duotone B&W/lime · left-to-right dark gradient overlay · grain"
               className="h-full w-full opacity-30"
+              fill
+              imgClassName="absolute inset-0 opacity-[0.35]"
+              filter="grayscale(100%) contrast(1.05) brightness(0.9)"
             />
           </div>
           <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
@@ -3550,12 +3605,22 @@ export default function App() {
             </div>
           </div>
           {/* Full-width image band */}
-          <ImageBlock
-            id="challenge-fatigue-moment.jpg"
+          <MarketingImage
+            file="challenge-fatigue-moment.jpg"
             aspectRatio="21/9"
             searchTerms="athlete exhausted determined mid-workout dramatic shadow"
             treatment="Duotone B&W/lime · dark vignette top + bottom"
             className="w-full"
+            filter="grayscale(100%) contrast(1.06) brightness(0.85)"
+            overlay={
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(10,10,10,0.55) 0%, transparent 28%, transparent 68%, rgba(10,10,10,0.75) 100%)",
+                }}
+              />
+            }
           />
         </section>
 
@@ -3629,12 +3694,22 @@ export default function App() {
           <div className="relative flex flex-col lg:flex-row">
             {/* Left — lifestyle image */}
             <div className="lg:w-[42%] lg:shrink-0">
-              <ImageBlock
-                id="why-enter-lifestyle.jpg"
+              <MarketingImage
+                file="why-enter-lifestyle.jpg"
                 aspectRatio="4/5"
                 searchTerms="person training outdoors early morning determination"
                 treatment="Duotone matching hero · right-edge gradient fade"
                 className="h-full min-h-[360px] w-full"
+                filter="grayscale(100%) contrast(1.05) brightness(0.9)"
+                overlay={
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, transparent 52%, rgba(10,13,16,0.9) 100%)",
+                    }}
+                  />
+                }
               />
             </div>
 
