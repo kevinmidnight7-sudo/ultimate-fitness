@@ -580,8 +580,8 @@ function ImageBlock({ id, aspectRatio = "16/9", searchTerms, treatment, classNam
    otherwise falls back to the labelled ImageBlock placeholder. Drop a file in
    and it appears automatically — no code change needed.
 
-   The photo renders in grayscale; moving the cursor over it reveals full
-   colour in a soft spotlight that tracks the mouse. */
+   The photo renders in full colour; moving the cursor over it reveals a
+   brighter, more vibrant glow in a soft spotlight that tracks the mouse. */
 function MarketingImage({
   file,
   aspectRatio,
@@ -641,7 +641,7 @@ function MarketingImage({
 
   const layers = (
     <>
-      {/* grayscale base */}
+      {/* full-colour base */}
       <img
         src={src}
         alt=""
@@ -653,9 +653,9 @@ function MarketingImage({
           onResolved && onResolved(false);
         }}
         className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
-        style={{ filter: "grayscale(100%) contrast(1.05) brightness(0.9)" }}
+        style={{ filter: "saturate(1.05) contrast(1.02)" }}
       />
-      {/* full-colour layer, revealed under the cursor */}
+      {/* brighter, more vibrant layer revealed in a spotlight under the cursor */}
       <img
         ref={colorRef}
         src={src}
@@ -665,6 +665,7 @@ function MarketingImage({
         style={{
           opacity: 0,
           transition: "opacity 0.25s ease-out",
+          filter: "saturate(1.7) brightness(1.28) contrast(1.08)",
           WebkitMaskImage: spotlight,
           maskImage: spotlight,
         }}
