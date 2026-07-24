@@ -120,6 +120,7 @@ const divisions = [
     runDistance: "400m",
     finalRun: "400m",
     totalRunning: "4.0km",
+    duration: "85–120 min",
   },
   {
     key: "intermediate",
@@ -127,6 +128,7 @@ const divisions = [
     runDistance: "600m",
     finalRun: "600m",
     totalRunning: "6.0km",
+    duration: "80–110 min",
   },
   {
     key: "elite",
@@ -134,6 +136,7 @@ const divisions = [
     runDistance: "800m",
     finalRun: "800m",
     totalRunning: "8.0km",
+    duration: "75–90 min",
   },
 ];
 
@@ -164,7 +167,7 @@ const labours = [
   {
     number: 4,
     name: "Med Ball Toss",
-    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
+    reps: { foundation: "50 throws", intermediate: "80 throws", elite: "120 throws" },
     tests: "Explosive power, hip drive and full-body coordination.",
     coachingNote: "Drive through your legs and hips into every throw — extend fully rather than muscling it with your arms.",
     weightKey: "Med Ball Toss",
@@ -1648,12 +1651,13 @@ function EventStructureSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25 }}
-            className="mb-px grid grid-cols-1 gap-px bg-white/[0.05] sm:grid-cols-3"
+            className="mb-px grid grid-cols-1 gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-4"
           >
             {[
               ["Run Before Each Labour", current.runDistance],
               ["Final Run · Labour 10", current.finalRun],
               ["Total Running Distance", current.totalRunning],
+              ["Estimated Time", current.duration],
             ].map(([label, value]) => (
               <div key={label} className="bg-[#0d0d0d] p-6 text-center">
                 <p
@@ -3764,8 +3768,8 @@ export default function App() {
             {/* Slim three-point strip */}
             <div className="mb-12 flex flex-col divide-y divide-white/[0.06] md:flex-row md:divide-x md:divide-y-0">
               {[
-                { icon: Flame,  title: "Hard, But Not Stupid", sub: "Designed to reveal — not destroy" },
-                { icon: Timer,  title: "45–70 Minutes",         sub: "High energy · Fast transitions · Visible competition" },
+                { icon: Flame,  title: "Built for Every Body",  sub: "Designed for every challenge" },
+                { icon: Timer,  title: "75–120 Minutes",        sub: "Varies by division · High energy, fast transitions" },
                 { icon: Zap,    title: "Adapt Under Fatigue",   sub: "Speed → Control → Strength → Coordination" },
               ].map(({ icon: Icon, title, sub }, i) => (
                 <motion.div
