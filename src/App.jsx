@@ -45,6 +45,9 @@ import { Button } from "@/components/ui/button";
 
 const SITE_PASSWORD = "U00TLHU8MAN";
 
+/* Bump this when you push a notable change so you can see what's deployed. */
+const SITE_VERSION = "v1.0.0.0";
+
 /* ─────────────────────────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────────────────────────── */
@@ -4259,6 +4262,14 @@ export default function App() {
           >
             © 2027 The Ultimate Human · theultimatehuman.fitness
           </p>
+        </div>
+        <div className="mx-auto mt-6 max-w-7xl text-center">
+          <span
+            className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-800"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            {SITE_VERSION}
+          </span>
         </div>
       </footer>
     </div>
