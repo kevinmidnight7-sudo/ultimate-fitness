@@ -3461,9 +3461,9 @@ function ConvergeScene() {
 function ConvergeContent({ progress }) {
   const reduced = useReducedMotion();
 
-  const leftX = useTransform(progress, [0, 0.55], ["-65%", "0%"]);
-  const rightX = useTransform(progress, [0, 0.55], ["65%", "0%"]);
-  const sideOpacity = useTransform(progress, [0, 0.25, 0.85, 1], [0, 1, 1, 0.35]);
+  const leftX = useTransform(progress, [0, 0.55], ["-90%", "40%"]);
+  const rightX = useTransform(progress, [0, 0.55], ["90%", "-40%"]);
+  const sideOpacity = useTransform(progress, [0, 0.25, 0.85, 1], [0, 1, 1, 0.55]);
   const textScale = useTransform(progress, [0, 0.5], [0.85, 1]);
   const textY = useTransform(progress, [0, 0.5], [30, 0]);
   const textOpacity = useTransform(progress, [0.05, 0.3, 0.75, 0.96], [0, 1, 1, 0]);
@@ -3499,13 +3499,13 @@ function ConvergeContent({ progress }) {
     >
       <motion.div
         style={{ x: leftX, opacity: sideOpacity, willChange: "transform" }}
-        className="absolute bottom-0 left-0 z-0 h-[82%]"
+        className="absolute bottom-0 left-0 z-0 h-[96%]"
       >
         <CutoutImage file="converge-left.png" />
       </motion.div>
       <motion.div
         style={{ x: rightX, opacity: sideOpacity, willChange: "transform" }}
-        className="absolute bottom-0 right-0 z-0 flex h-[82%] justify-end"
+        className="absolute bottom-0 right-0 z-0 flex h-[96%] justify-end"
       >
         <CutoutImage file="converge-right.png" />
       </motion.div>
@@ -4005,22 +4005,43 @@ export default function App() {
               ))}
             </div>
           </div>
-          {/* Full-width image band */}
+          {/* Full-width image band with an overlaid statement */}
           <MarketingImage
             file="challenge-fatigue-moment.jpg"
             aspectRatio="21/9"
             searchTerms="athlete exhausted determined mid-workout dramatic shadow"
             treatment="Duotone B&W/lime · dark vignette top + bottom"
             className="w-full"
-            filter="grayscale(100%) contrast(1.06) brightness(0.85)"
             overlay={
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(10,10,10,0.55) 0%, transparent 28%, transparent 68%, rgba(10,10,10,0.75) 100%)",
-                }}
-              />
+              <>
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, rgba(6,6,6,0.9) 0%, rgba(6,6,6,0.45) 38%, transparent 68%), linear-gradient(0deg, rgba(6,6,6,0.7) 0%, transparent 42%)",
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 flex items-end">
+                  <div className="mx-auto w-full max-w-7xl px-6 pb-8 md:pb-14">
+                    <Reveal>
+                      <p
+                        className="mb-3 text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
+                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                      >
+                        The Signature Test
+                      </p>
+                      <h3 className="text-3xl uppercase leading-[0.95] tracking-tight text-white md:text-5xl">
+                        This Is Where
+                        <br />
+                        You Find Out.
+                      </h3>
+                      <p className="mt-4 max-w-md text-sm leading-6 text-neutral-300 md:text-base">
+                        Speed, strength and composure — every capability exposed under fatigue.
+                      </p>
+                    </Reveal>
+                  </div>
+                </div>
+              </>
             }
           />
         </section>
