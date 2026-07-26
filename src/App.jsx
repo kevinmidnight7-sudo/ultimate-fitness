@@ -779,7 +779,7 @@ function CapabilityPillarsSection() {
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
+                transition={{ duration: 0.55, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 className="flex items-center gap-3 border-b border-white/[0.04] py-3.5"
               >
                 <Icon
@@ -1278,7 +1278,7 @@ function FounderCard({ photo, ratio, name, role, quote }) {
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.45 }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
       className="lime-glow-hover group relative overflow-hidden bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
     >
       <div className="absolute left-0 top-0 z-10 h-px w-full bg-gradient-to-r from-lime-400/40 via-white/[0.08] to-transparent" />
@@ -1380,7 +1380,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: index * 0.03 }}
+      transition={{ duration: 0.55, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
       className="bg-[#0d0d0d]"
     >
       <button
@@ -1726,7 +1726,7 @@ function EventStructureSection() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.35 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className="relative mt-px bg-[#0d0d0d] ring-1 ring-lime-400/40"
         >
           <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
@@ -1838,7 +1838,7 @@ function HowItWorksCard({ step, index }) {
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="bg-[#0d0d0d] p-8"
     >
       <div className="mb-5 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04]">
@@ -2471,7 +2471,7 @@ function YourJourneyHub() {
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: i * 0.08 }}
+                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="group flex flex-col items-start px-0 lg:px-5 lg:first:pl-0 lg:last:pr-0"
                 >
                   {/* Step number circle */}
@@ -2605,7 +2605,7 @@ function ScoreSection() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: i * 0.05 }}
+          transition={{ duration: 0.55, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="bg-[#0d0d0d] p-6"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -2636,7 +2636,7 @@ function ScoreSection() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: i * 0.06 }}
+          transition={{ duration: 0.55, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
           className="flex gap-3 bg-[#0d0d0d] p-6"
         >
           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-400" strokeWidth={2} />
@@ -3148,7 +3148,7 @@ function TierCard({ tier, index }) {
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
+      transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className={`group relative flex flex-col bg-[#0d0d0d] p-7 transition-colors ${
         tier.highlighted
           ? "ring-1 ring-lime-400/55 md:-translate-y-2 md:shadow-[0_0_48px_rgba(163,230,53,0.1)]"
@@ -3558,14 +3558,19 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
         <CutoutImage file={file} />
       </motion.div>
 
-      {/* Scrim keeps the text crisp on the opposite side */}
+      {/* Scrim keeps the text crisp on the opposite side (desktop) */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 hidden md:block"
         style={{
           background: figureRight
             ? "linear-gradient(90deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)"
             : "linear-gradient(270deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)",
         }}
+      />
+      {/* Mobile: figure and text share the column, so darken it more so text stays primary */}
+      <div
+        className="pointer-events-none absolute inset-0 md:hidden"
+        style={{ background: "linear-gradient(180deg, rgba(6,7,8,0.72) 0%, rgba(6,7,8,0.55) 45%, rgba(6,7,8,0.82) 100%)" }}
       />
 
       {/* Text stack on the opposite side to the figure */}
@@ -3953,7 +3958,7 @@ export default function App() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-x-auto"
             >
               <table className="w-full border-collapse text-left">
@@ -3990,7 +3995,7 @@ export default function App() {
                       initial={{ opacity: 0, x: -8 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: rowIdx * 0.06 }}
+                      transition={{ duration: 0.55, delay: rowIdx * 0.06, ease: [0.16, 1, 0.3, 1] }}
                       className="border-t border-white/[0.05]"
                     >
                       <td className="py-4 pr-6 text-[13px] text-neutral-400">{dim}</td>
@@ -4047,7 +4052,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: i * 0.08 }}
+                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="flex flex-1 items-center gap-5 px-6 py-7 first:pl-0 last:pr-0 md:px-10"
                 >
                   <Icon className="h-5 w-5 shrink-0 text-lime-400/60" strokeWidth={1.5} />
@@ -4172,9 +4177,9 @@ export default function App() {
         <SplitFeatureScene
           file="converge-left.png"
           side="left"
-          eyebrow="No Expiry Date"
-          title={<>Your Prime<br />Isn't Behind You.</>}
-          body="Capability is trainable at any age. The Ultimate Human is built to unlock what you've still got — whether you're 25 or 55."
+          eyebrow="Every Level of Athlete"
+          title={<>Built for<br />Every Body.</>}
+          body="This is built to test complete capability — not just how long you can suffer on a run."
         />
 
         {/* ── WHY ENTER ── */}
@@ -4228,7 +4233,7 @@ export default function App() {
                     initial={{ opacity: 0, x: 12 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.35, delay: i * 0.08 }}
+                    transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     className="border-t border-white/[0.06] py-6"
                   >
                     <div className="flex items-start gap-4">
@@ -4284,7 +4289,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: i * 0.08 }}
+                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="lime-glow-hover group relative bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
                 >
                   <div className="absolute left-0 top-0 h-px w-2/3 bg-gradient-to-r from-lime-400/70 to-transparent" />
