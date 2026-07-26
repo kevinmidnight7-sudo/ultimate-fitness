@@ -2083,6 +2083,29 @@ function MovementCoachPreview() {
           Movement Coach Preview
         </h3>
       </div>
+      {/* AI movement-analysis still — sells the pose-tracking product */}
+      <MarketingImage
+        file="movement-analysis-still.jpg"
+        aspectRatio="16/9"
+        className="mb-px w-full"
+        overlay={
+          <>
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{ background: "linear-gradient(0deg, rgba(6,6,6,0.72) 0%, transparent 42%)" }}
+            />
+            <div className="pointer-events-none absolute bottom-0 left-0 flex items-center gap-2.5 p-5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
+              <p
+                className="text-[10px] font-bold uppercase tracking-[0.28em] text-lime-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                AI Movement Analysis · Live
+              </p>
+            </div>
+          </>
+        }
+      />
       <div className="grid gap-px bg-white/[0.05] md:grid-cols-3">
         {movementCoachCards.map((card) => {
           const isOpen = openCard === card.title;
@@ -3495,19 +3518,49 @@ function ConvergeContent({ progress }) {
   return (
     <div
       className="relative flex h-full items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #060708 55%, #0c0a08 100%)" }}
+      style={{ background: "radial-gradient(ellipse 100% 85% at 50% 25%, #111609 0%, #08090a 55%, #050505 100%)" }}
     >
+      {/* Floor plane — grounds the figures so they aren't floating on a void */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5"
+        style={{ background: "linear-gradient(0deg, rgba(163,230,53,0.06) 0%, rgba(255,255,255,0.015) 22%, transparent 100%)" }}
+      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/[0.07]" />
+
+      {/* Left figure — spotlight behind + contact shadow at the feet */}
       <motion.div
         style={{ x: leftX, opacity: sideOpacity, willChange: "transform" }}
         className="absolute bottom-0 left-0 z-0 h-[96%]"
       >
-        <CutoutImage file="converge-left.png" />
+        <div className="relative h-full">
+          <div
+            className="pointer-events-none absolute left-1/2 top-[42%] -z-10 h-[85%] w-[150%] -translate-x-1/2 -translate-y-1/2"
+            style={{ background: "radial-gradient(ellipse at center, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.05) 32%, transparent 70%)" }}
+          />
+          <CutoutImage file="converge-left.png" />
+          <div
+            className="pointer-events-none absolute bottom-2 left-1/2 h-5 w-[62%] -translate-x-1/2"
+            style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 72%)", filter: "blur(6px)" }}
+          />
+        </div>
       </motion.div>
+
+      {/* Right figure */}
       <motion.div
         style={{ x: rightX, opacity: sideOpacity, willChange: "transform" }}
         className="absolute bottom-0 right-0 z-0 flex h-[96%] justify-end"
       >
-        <CutoutImage file="converge-right.png" />
+        <div className="relative h-full">
+          <div
+            className="pointer-events-none absolute left-1/2 top-[42%] -z-10 h-[85%] w-[150%] -translate-x-1/2 -translate-y-1/2"
+            style={{ background: "radial-gradient(ellipse at center, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.05) 32%, transparent 70%)" }}
+          />
+          <CutoutImage file="converge-right.png" />
+          <div
+            className="pointer-events-none absolute bottom-2 left-1/2 h-5 w-[62%] -translate-x-1/2"
+            style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 72%)", filter: "blur(6px)" }}
+          />
+        </div>
       </motion.div>
 
       <motion.div
