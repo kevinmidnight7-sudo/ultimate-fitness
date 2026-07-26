@@ -2083,6 +2083,29 @@ function MovementCoachPreview() {
           Movement Coach Preview
         </h3>
       </div>
+      {/* AI movement-analysis still — sells the pose-tracking product */}
+      <MarketingImage
+        file="movement-analysis-still.jpg"
+        aspectRatio="16/9"
+        className="mb-px w-full"
+        overlay={
+          <>
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{ background: "linear-gradient(0deg, rgba(6,6,6,0.72) 0%, transparent 42%)" }}
+            />
+            <div className="pointer-events-none absolute bottom-0 left-0 flex items-center gap-2.5 p-5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
+              <p
+                className="text-[10px] font-bold uppercase tracking-[0.28em] text-lime-400"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                AI Movement Analysis · Live
+              </p>
+            </div>
+          </>
+        }
+      />
       <div className="grid gap-px bg-white/[0.05] md:grid-cols-3">
         {movementCoachCards.map((card) => {
           const isOpen = openCard === card.title;
@@ -3461,60 +3484,78 @@ function ConvergeScene() {
 function ConvergeContent({ progress }) {
   const reduced = useReducedMotion();
 
-  const leftX = useTransform(progress, [0, 0.55], ["-90%", "40%"]);
-  const rightX = useTransform(progress, [0, 0.55], ["90%", "-40%"]);
-  const sideOpacity = useTransform(progress, [0, 0.25, 0.85, 1], [0, 1, 1, 0.55]);
-  const textScale = useTransform(progress, [0, 0.5], [0.85, 1]);
-  const textY = useTransform(progress, [0, 0.5], [30, 0]);
-  const textOpacity = useTransform(progress, [0.05, 0.3, 0.75, 0.96], [0, 1, 1, 0]);
+  const figureY = useTransform(progress, [0, 1], ["6%", "-6%"]);
+  const figureScale = useTransform(progress, [0, 1], [1.03, 1.12]);
+  const figureOpacity = useTransform(progress, [0, 0.22, 0.9, 1], [0, 1, 1, 0.7]);
+  const textX = useTransform(progress, [0, 0.5], [-48, 0]);
+  const textOpacity = useTransform(progress, [0.05, 0.3, 0.78, 0.97], [0, 1, 1, 0]);
 
   const Statement = (
     <>
-      <h2 className="text-metallic text-5xl uppercase leading-[0.95] tracking-tight md:text-7xl">
+      <p
+        className="mb-4 text-[11px] font-bold uppercase tracking-[0.34em] text-lime-400"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        Runners · Lifters · Fighters
+      </p>
+      <h2 className="text-metallic text-5xl uppercase leading-[0.9] tracking-tight md:text-7xl lg:text-8xl">
         The Complete
         <br />
         Athlete Wins.
       </h2>
-      <p
-        className="mt-5 text-[13px] font-bold uppercase tracking-[0.32em] text-lime-400"
-        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-      >
-        Runners. Lifters. Fighters. All exposed.
+      <p className="mt-6 max-w-md text-base leading-7 text-neutral-400">
+        Every discipline gets exposed somewhere. The most complete human — not the
+        most specialised — takes the win.
       </p>
+      <div className="mt-7 h-px w-16 bg-lime-400/70" />
     </>
   );
 
   if (reduced) {
     return (
-      <div className="relative flex h-full items-center justify-center overflow-hidden px-6">
-        <div className="relative z-10 text-center">{Statement}</div>
+      <div className="relative flex h-full items-center overflow-hidden px-6">
+        <div className="relative z-10 mx-auto w-full max-w-7xl">
+          <div className="max-w-xl">{Statement}</div>
+        </div>
       </div>
     );
   }
 
   return (
     <div
-      className="relative flex h-full items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #060708 55%, #0c0a08 100%)" }}
+      className="relative flex h-full items-center overflow-hidden"
+      style={{ background: "linear-gradient(100deg, #060708 0%, #090b0c 45%, #0d1408 100%)" }}
     >
+      {/* Spotlight behind the figure so it emerges from the dark, not pasted on it */}
+      <div
+        className="pointer-events-none absolute right-0 top-0 h-full w-2/3"
+        style={{ background: "radial-gradient(ellipse 55% 70% at 72% 45%, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.045) 35%, transparent 68%)" }}
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
+        style={{ background: "linear-gradient(0deg, rgba(163,230,53,0.05) 0%, transparent 100%)" }}
+      />
+
+      {/* Big figure, right — cropped by the frame at the bottom so it's grounded, not floating */}
       <motion.div
-        style={{ x: leftX, opacity: sideOpacity, willChange: "transform" }}
-        className="absolute bottom-0 left-0 z-0 h-[96%]"
-      >
-        <CutoutImage file="converge-left.png" />
-      </motion.div>
-      <motion.div
-        style={{ x: rightX, opacity: sideOpacity, willChange: "transform" }}
-        className="absolute bottom-0 right-0 z-0 flex h-[96%] justify-end"
+        style={{ y: figureY, scale: figureScale, opacity: figureOpacity, willChange: "transform" }}
+        className="absolute right-[1vw] top-[2%] z-0 h-[126%]"
       >
         <CutoutImage file="converge-right.png" />
       </motion.div>
 
+      {/* Left-to-right scrim keeps the text crisp */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "linear-gradient(90deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)" }}
+      />
+
+      {/* Text stack, left */}
       <motion.div
-        style={{ scale: textScale, y: textY, opacity: textOpacity, willChange: "transform" }}
-        className="relative z-10 px-6 text-center"
+        style={{ x: textX, opacity: textOpacity, willChange: "transform" }}
+        className="relative z-10 mx-auto w-full max-w-7xl px-6"
       >
-        {Statement}
+        <div className="max-w-xl">{Statement}</div>
       </motion.div>
     </div>
   );
