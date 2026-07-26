@@ -2210,12 +2210,41 @@ function MovementCoachPreview() {
 ───────────────────────────────────────────────────────────────── */
 
 function JourneyModal({ title, onClose, children }) {
+  const dialogRef = useRef(null);
+
   useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    const node = dialogRef.current;
+    const focusableSel =
+      'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    // Move focus into the dialog
+    const first = node?.querySelector(focusableSel);
+    (first || node)?.focus();
+
     const onKey = (e) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && node) {
+        const f = node.querySelectorAll(focusableSel);
+        if (!f.length) return;
+        const firstEl = f[0];
+        const lastEl = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        } else if (!e.shiftKey && document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
+    };
   }, [onClose]);
 
   return (
@@ -2228,15 +2257,17 @@ function JourneyModal({ title, onClose, children }) {
       onClick={onClose}
     >
       <motion.div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={title}
+        tabIndex={-1}
         initial={{ opacity: 0, scale: 0.96, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ duration: 0.22 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative max-h-[88vh] w-full max-w-lg overflow-y-auto border border-white/[0.1] bg-[#0b0b0b] p-7"
+        className="relative max-h-[88vh] w-full max-w-lg overflow-y-auto border border-white/[0.1] bg-[#0b0b0b] p-7 outline-none"
       >
         <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/55 to-transparent" />
         <div className="flex items-center justify-between">
@@ -3375,7 +3406,7 @@ function SubscriptionSection() {
 
 function WholeHumanScene() {
   return (
-    <StickyScene heightVh={280} className="relative bg-[#050505]">
+    <StickyScene heightVh={165} className="relative bg-[#050505]">
       {(progress) => <WholeHumanContent progress={progress} />}
     </StickyScene>
   );
@@ -3389,8 +3420,8 @@ function WholeHumanContent({ progress }) {
   const bgOpacity = useTransform(progress, [0, 0.3, 0.8, 1], [0.1, 0.26, 0.26, 0.1]);
   const titleScale = useTransform(progress, [0, 0.5], [0.8, 1]);
   const titleY = useTransform(progress, [0, 0.5], [40, 0]);
-  const titleOpacity = useTransform(progress, [0, 0.22, 0.72, 0.96], [0, 1, 1, 0]);
-  const subOpacity = useTransform(progress, [0.22, 0.42, 0.72, 0.96], [0, 1, 1, 0]);
+  const titleOpacity = useTransform(progress, [0, 0.14, 0.86, 1], [0, 1, 1, 0]);
+  const subOpacity = useTransform(progress, [0.14, 0.32, 0.86, 1], [0, 1, 1, 0]);
   const subY = useTransform(progress, [0.22, 0.52], [22, 0]);
   // AirPods-style side rules that converge on the text as it forms.
   const leftX = useTransform(progress, [0.1, 0.5], [-120, 0]);
@@ -3505,7 +3536,7 @@ function CutoutImage({ file }) {
 
 function SplitFeatureScene({ file, side = "right", eyebrow, title, body }) {
   return (
-    <StickyScene heightVh={280} className="relative bg-[#050505]">
+    <StickyScene heightVh={165} className="relative bg-[#050505]">
       {(progress) => (
         <SplitFeatureContent
           progress={progress}
@@ -3526,9 +3557,9 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
 
   const figureY = useTransform(progress, [0, 1], ["6%", "-6%"]);
   const figureScale = useTransform(progress, [0, 1], [1.03, 1.12]);
-  const figureOpacity = useTransform(progress, [0, 0.22, 0.9, 1], [0, 1, 1, 0.7]);
+  const figureOpacity = useTransform(progress, [0, 0.12, 0.92, 1], [0, 1, 1, 0.85]);
   const textX = useTransform(progress, [0, 0.5], [figureRight ? -48 : 48, 0]);
-  const textOpacity = useTransform(progress, [0.05, 0.3, 0.78, 0.97], [0, 1, 1, 0]);
+  const textOpacity = useTransform(progress, [0.04, 0.2, 0.86, 1], [0, 1, 1, 0]);
 
   const align = figureRight ? "text-left" : "text-right";
   const Statement = (
