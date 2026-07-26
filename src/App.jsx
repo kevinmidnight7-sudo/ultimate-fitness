@@ -38,6 +38,7 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Reveal from "@/components/motion/Reveal";
 
 /* ─────────────────────────────────────────────────────────────────
    PASSWORD — change this to whatever you want
@@ -532,7 +533,7 @@ const workToDo = [
 
 function SectionLabel({ children }) {
   return (
-    <div className="mb-5 flex items-center gap-3">
+    <Reveal className="mb-5 flex items-center gap-3">
       <div className="h-px w-8 shrink-0 bg-lime-400" />
       <p
         className="text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
@@ -540,7 +541,7 @@ function SectionLabel({ children }) {
       >
         {children}
       </p>
-    </div>
+    </Reveal>
   );
 }
 
@@ -715,9 +716,9 @@ function CapabilityPillarsSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 text-center">
           <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
-          <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
+          <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-wide text-white md:text-4xl">
             Every Dimension. Measured.
-          </h2>
+          </Reveal>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-500">
             The Ultimate Human Score spans all 10 axes simultaneously — not just the ones you train.
           </p>
@@ -1616,11 +1617,11 @@ function EventStructureSection() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-8">
           <div className="max-w-2xl">
             <SectionLabel>The UHS Event Structure</SectionLabel>
-            <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
               10 Labours.
               <br />
               One Continuous Test.
-            </h2>
+            </Reveal>
             <p className="mt-5 text-lg leading-7 text-neutral-400">
               A run before every labour. Nine capability tests. One final circuit.
               Choose a division, then open a labour to see exactly what it tests.
@@ -2421,11 +2422,11 @@ function YourJourneyHub() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <SectionLabel>Start Here</SectionLabel>
-          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Your Journey to
             <br />
             The Ultimate Human.
-          </h2>
+          </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Five steps. One profile that gets sharper every time you use it.
           </p>
@@ -2643,11 +2644,11 @@ function ScoreSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <SectionLabel>Your Personal Benchmark</SectionLabel>
-          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Leave with More
             <br />
             Than a Medal.
-          </h2>
+          </Reveal>
           <p className="mt-6 text-lg leading-7 text-neutral-400">
             Every participant receives an Ultimate Human Score showing performance across
             ten capability areas — the whole human, not just the parts that are easy to
@@ -2928,11 +2929,11 @@ function AICoachingSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-10 max-w-3xl">
           <SectionLabel>Built by Coaches. Powered by AI.</SectionLabel>
-          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Improve Your Movement.
             <br />
             Improve Your Score.
-          </h2>
+          </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Most fitness platforms measure effort. Ultimate Human measures
             capability, then shows you how to improve it. Upload a video of your
@@ -3267,11 +3268,11 @@ function SubscriptionSection() {
 
         <div className="mb-14 max-w-2xl">
           <SectionLabel>Membership & Coaching Platform</SectionLabel>
-          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             One Platform.
             <br />
             Every Level of Athlete.
-          </h2>
+          </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             An Ultimate Human subscription is designed to keep you progressing long
             after race day. Members get ongoing AI-powered coaching, personalised
@@ -3669,11 +3670,11 @@ export default function App() {
           <div className="relative mx-auto max-w-7xl">
             <div className="mb-12 max-w-3xl">
               <SectionLabel>Why UH Is Different</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Most Races Test One Thing.
                 <br />
                 UH Tests the Whole Human.
-              </h2>
+              </Reveal>
               <p className="mt-5 text-lg leading-7 text-neutral-400">
                 Most races only measure one or two aspects of capability. They tell
                 you if you can run, lift, endure or suffer.{" "}
@@ -3839,11 +3840,11 @@ export default function App() {
           <div className="relative mx-auto max-w-7xl">
             <div className="mb-12">
               <SectionLabel>Ways to Compete</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Go Solo, Pair Up
                 <br />
                 or Bring a Team.
-              </h2>
+              </Reveal>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 The Ultimate Human is designed for serious competitors, first-time challengers,
                 gym communities and workplace teams.
@@ -3909,11 +3910,11 @@ export default function App() {
             {/* Right — stacked list */}
             <div className="flex flex-1 flex-col justify-center px-8 py-16 lg:px-14 lg:py-24">
               <SectionLabel>Why Enter?</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Because Fitness
                 <br />
                 Should Mean Capability.
-              </h2>
+              </Reveal>
 
               <div className="mt-10 space-y-0">
                 {whyEnter.map((item, i) => (
@@ -3956,9 +3957,9 @@ export default function App() {
           <div className="relative mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>Event Entry Pricing</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Get in Early.
-              </h2>
+              </Reveal>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 Early launch pricing for the first Ultimate Human events. Founding athlete places will
                 be limited and pricing will increase after launch release.
@@ -4057,11 +4058,11 @@ export default function App() {
           <div className="relative mx-auto max-w-7xl">
             <div className="mb-14">
               <SectionLabel>The People Behind The Ultimate Human</SectionLabel>
-              <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Built by People Obsessed
                 <br />
                 with Human Performance.
-              </h2>
+              </Reveal>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
                 The Ultimate Human combines elite coaching, combat sport experience, movement science
                 and a slightly unhealthy enthusiasm for fitness racing.
@@ -4155,14 +4156,16 @@ export default function App() {
 
                 <SectionLabel>Founding Athlete Registration</SectionLabel>
 
-                <h2
+                <Reveal
+                  as="h2"
+                  delay={0.08}
                   className="text-metallic uppercase tracking-tight"
                   style={{ fontSize: "clamp(2rem, 4vw, 3.6rem)", lineHeight: 1.06, fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
                 >
                   Become One of the
                   <br />
                   First Ultimate Humans
-                </h2>
+                </Reveal>
 
                 <p className="mx-auto mt-5 max-w-xl text-lg leading-7 text-neutral-400">
                   Get early access to launch events, training plans, founding athlete pricing, rankings
@@ -4218,9 +4221,9 @@ export default function App() {
                 Pre-Launch Notice
               </span>
             </div>
-            <h2 className="text-3xl uppercase tracking-tight text-white md:text-4xl">
+            <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-tight text-white md:text-4xl">
               What Is Still Being Finalised?
-            </h2>
+            </Reveal>
 
             <div className="mt-8 grid gap-px bg-white/[0.05] md:grid-cols-2">
               {workToDo.map((item) => (
