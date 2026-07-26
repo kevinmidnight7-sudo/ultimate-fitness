@@ -3473,49 +3473,57 @@ function CutoutImage({ file }) {
   );
 }
 
-function ConvergeScene() {
+function SplitFeatureScene({ file, side = "right", eyebrow, title, body }) {
   return (
     <StickyScene heightVh={280} className="relative bg-[#050505]">
-      {(progress) => <ConvergeContent progress={progress} />}
+      {(progress) => (
+        <SplitFeatureContent
+          progress={progress}
+          file={file}
+          side={side}
+          eyebrow={eyebrow}
+          title={title}
+          body={body}
+        />
+      )}
     </StickyScene>
   );
 }
 
-function ConvergeContent({ progress }) {
+function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
   const reduced = useReducedMotion();
+  const figureRight = side === "right";
 
   const figureY = useTransform(progress, [0, 1], ["6%", "-6%"]);
   const figureScale = useTransform(progress, [0, 1], [1.03, 1.12]);
   const figureOpacity = useTransform(progress, [0, 0.22, 0.9, 1], [0, 1, 1, 0.7]);
-  const textX = useTransform(progress, [0, 0.5], [-48, 0]);
+  const textX = useTransform(progress, [0, 0.5], [figureRight ? -48 : 48, 0]);
   const textOpacity = useTransform(progress, [0.05, 0.3, 0.78, 0.97], [0, 1, 1, 0]);
 
+  const align = figureRight ? "text-left" : "text-right";
   const Statement = (
     <>
       <p
         className="mb-4 text-[11px] font-bold uppercase tracking-[0.34em] text-lime-400"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
-        Runners · Lifters · Fighters
+        {eyebrow}
       </p>
       <h2 className="text-metallic text-5xl uppercase leading-[0.9] tracking-tight md:text-7xl lg:text-8xl">
-        The Complete
-        <br />
-        Athlete Wins.
+        {title}
       </h2>
-      <p className="mt-6 max-w-md text-base leading-7 text-neutral-400">
-        Every discipline gets exposed somewhere. The most complete human — not the
-        most specialised — takes the win.
+      <p className={`mt-6 max-w-md text-base leading-7 text-neutral-400 ${figureRight ? "" : "ml-auto"}`}>
+        {body}
       </p>
-      <div className="mt-7 h-px w-16 bg-lime-400/70" />
+      <div className={`mt-7 h-px w-16 bg-lime-400/70 ${figureRight ? "" : "ml-auto"}`} />
     </>
   );
 
   if (reduced) {
     return (
       <div className="relative flex h-full items-center overflow-hidden px-6">
-        <div className="relative z-10 mx-auto w-full max-w-7xl">
-          <div className="max-w-xl">{Statement}</div>
+        <div className={`relative z-10 mx-auto w-full max-w-7xl ${align}`}>
+          <div className={`max-w-xl ${figureRight ? "" : "ml-auto"}`}>{Statement}</div>
         </div>
       </div>
     );
@@ -3524,38 +3532,48 @@ function ConvergeContent({ progress }) {
   return (
     <div
       className="relative flex h-full items-center overflow-hidden"
-      style={{ background: "linear-gradient(100deg, #060708 0%, #090b0c 45%, #0d1408 100%)" }}
+      style={{
+        background: figureRight
+          ? "linear-gradient(100deg, #060708 0%, #090b0c 45%, #0d1408 100%)"
+          : "linear-gradient(260deg, #060708 0%, #090b0c 45%, #0d1408 100%)",
+      }}
     >
       {/* Spotlight behind the figure so it emerges from the dark, not pasted on it */}
       <div
-        className="pointer-events-none absolute right-0 top-0 h-full w-2/3"
-        style={{ background: "radial-gradient(ellipse 55% 70% at 72% 45%, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.045) 35%, transparent 68%)" }}
+        className={`pointer-events-none absolute top-0 h-full w-2/3 ${figureRight ? "right-0" : "left-0"}`}
+        style={{
+          background: `radial-gradient(ellipse 55% 70% at ${figureRight ? "72%" : "28%"} 45%, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.045) 35%, transparent 68%)`,
+        }}
       />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
         style={{ background: "linear-gradient(0deg, rgba(163,230,53,0.05) 0%, transparent 100%)" }}
       />
 
-      {/* Big figure, right — cropped by the frame at the bottom so it's grounded, not floating */}
+      {/* Big figure, cropped by the frame at the bottom so it's grounded, not floating */}
       <motion.div
         style={{ y: figureY, scale: figureScale, opacity: figureOpacity, willChange: "transform" }}
-        className="absolute right-[1vw] top-[2%] z-0 h-[126%]"
+        className={`absolute top-[2%] z-0 h-[126%] ${figureRight ? "right-[1vw]" : "left-[1vw]"}`}
       >
-        <CutoutImage file="converge-right.png" />
+        <CutoutImage file={file} />
       </motion.div>
 
-      {/* Left-to-right scrim keeps the text crisp */}
+      {/* Scrim keeps the text crisp on the opposite side */}
       <div
         className="pointer-events-none absolute inset-0"
-        style={{ background: "linear-gradient(90deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)" }}
+        style={{
+          background: figureRight
+            ? "linear-gradient(90deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)"
+            : "linear-gradient(270deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)",
+        }}
       />
 
-      {/* Text stack, left */}
+      {/* Text stack on the opposite side to the figure */}
       <motion.div
         style={{ x: textX, opacity: textOpacity, willChange: "transform" }}
-        className="relative z-10 mx-auto w-full max-w-7xl px-6"
+        className={`relative z-10 mx-auto w-full max-w-7xl px-6 ${align}`}
       >
-        <div className="max-w-xl">{Statement}</div>
+        <div className={`max-w-xl ${figureRight ? "" : "ml-auto"}`}>{Statement}</div>
       </motion.div>
     </div>
   );
@@ -4095,7 +4113,13 @@ export default function App() {
 
         <AICoachingSection />
 
-        <ConvergeScene />
+        <SplitFeatureScene
+          file="converge-right.png"
+          side="right"
+          eyebrow="Runners · Lifters · Fighters"
+          title={<>The Complete<br />Athlete Wins.</>}
+          body="Every discipline gets exposed somewhere. The most complete human — not the most specialised — takes the win."
+        />
 
         {/* ── CATEGORIES ── */}
         <section
@@ -4144,6 +4168,14 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <SplitFeatureScene
+          file="converge-left.png"
+          side="left"
+          eyebrow="No Expiry Date"
+          title={<>Your Prime<br />Isn't Behind You.</>}
+          body="Capability is trainable at any age. The Ultimate Human is built to unlock what you've still got — whether you're 25 or 55."
+        />
 
         {/* ── WHY ENTER ── */}
         <section
