@@ -40,6 +40,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Reveal from "@/components/motion/Reveal";
 import StickyScene from "@/components/motion/StickyScene";
+import CountUp from "@/components/motion/CountUp";
 
 /* ─────────────────────────────────────────────────────────────────
    PASSWORD — change this to whatever you want
@@ -793,7 +794,7 @@ function CapabilityPillarsSection() {
                     {label}
                   </p>
                   <p className="text-[11px] text-neutral-700">
-                    {pillarRadarData[i].value}/100
+                    <CountUp to={pillarRadarData[i].value} suffix="/100" />
                   </p>
                 </div>
               </motion.div>
@@ -2554,7 +2555,7 @@ function ScoreSection() {
           className="mt-2 text-5xl text-white"
           style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
         >
-          71<span className="ml-1 text-lg font-normal text-neutral-600">/100</span>
+          <CountUp to={71} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-600">/100</span>
         </p>
         <div className="mt-5 h-1.5 w-full max-w-xs bg-white/[0.06]">
           <motion.div
@@ -2586,7 +2587,7 @@ function ScoreSection() {
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="text-base uppercase tracking-wide text-white">{d.title}</h3>
-            <p className="text-[13px] font-bold text-lime-400">{d.value}<span className="text-neutral-600">/100</span></p>
+            <p className="text-[13px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-600">/100</span></p>
           </div>
           <p className="mt-1.5 text-sm leading-6 text-neutral-500">{d.text}</p>
           <div className="mt-3 h-1 w-full bg-white/[0.06]">
@@ -2813,7 +2814,7 @@ function AICoachingSection() {
               >
                 {bar.label}
               </span>
-              <span className="text-[11px] font-bold text-lime-400">{bar.value}</span>
+              <span className="text-[11px] font-bold text-lime-400"><CountUp to={bar.value} /></span>
             </div>
             <div className="h-1.5 w-full bg-white/[0.06]">
               <motion.div
@@ -3413,6 +3414,113 @@ function WholeHumanContent({ progress }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   CONVERGE SCENE — AirPods-style: two cut-out subjects slide in from the
+   sides and converge on centred text as the pinned section is scrolled.
+   Cut-outs are transparent PNGs in /images/marketing/; placeholder until then.
+───────────────────────────────────────────────────────────────── */
+
+function CutoutImage({ file }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div
+        className="flex h-full w-[34vw] max-w-[460px] items-end justify-center"
+        style={{ border: "1.5px dashed rgba(163,230,53,0.2)", background: "rgba(163,230,53,0.02)" }}
+      >
+        <span
+          className="mb-8 px-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-lime-400/40"
+          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+        >
+          Cut-out (transparent PNG)
+          <br />
+          {file}
+        </span>
+      </div>
+    );
+  }
+  return (
+    <img
+      src={`/images/marketing/${file}`}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className="h-full w-auto object-contain"
+    />
+  );
+}
+
+function ConvergeScene() {
+  return (
+    <StickyScene heightVh={280} className="relative bg-[#050505]">
+      {(progress) => <ConvergeContent progress={progress} />}
+    </StickyScene>
+  );
+}
+
+function ConvergeContent({ progress }) {
+  const reduced = useReducedMotion();
+
+  const leftX = useTransform(progress, [0, 0.55], ["-65%", "0%"]);
+  const rightX = useTransform(progress, [0, 0.55], ["65%", "0%"]);
+  const sideOpacity = useTransform(progress, [0, 0.25, 0.85, 1], [0, 1, 1, 0.35]);
+  const textScale = useTransform(progress, [0, 0.5], [0.85, 1]);
+  const textY = useTransform(progress, [0, 0.5], [30, 0]);
+  const textOpacity = useTransform(progress, [0.05, 0.3, 0.75, 0.96], [0, 1, 1, 0]);
+
+  const Statement = (
+    <>
+      <h2 className="text-metallic text-5xl uppercase leading-[0.95] tracking-tight md:text-7xl">
+        The Complete
+        <br />
+        Athlete Wins.
+      </h2>
+      <p
+        className="mt-5 text-[13px] font-bold uppercase tracking-[0.32em] text-lime-400"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        Runners. Lifters. Fighters. All exposed.
+      </p>
+    </>
+  );
+
+  if (reduced) {
+    return (
+      <div className="relative flex h-full items-center justify-center overflow-hidden px-6">
+        <div className="relative z-10 text-center">{Statement}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="relative flex h-full items-center justify-center overflow-hidden"
+      style={{ background: "linear-gradient(195deg, #0a0d10 0%, #060708 55%, #0c0a08 100%)" }}
+    >
+      <motion.div
+        style={{ x: leftX, opacity: sideOpacity, willChange: "transform" }}
+        className="absolute bottom-0 left-0 z-0 h-[82%]"
+      >
+        <CutoutImage file="converge-left.png" />
+      </motion.div>
+      <motion.div
+        style={{ x: rightX, opacity: sideOpacity, willChange: "transform" }}
+        className="absolute bottom-0 right-0 z-0 flex h-[82%] justify-end"
+      >
+        <CutoutImage file="converge-right.png" />
+      </motion.div>
+
+      <motion.div
+        style={{ scale: textScale, y: textY, opacity: textOpacity, willChange: "transform" }}
+        className="relative z-10 px-6 text-center"
+      >
+        {Statement}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
    SIDE QUICK NAV — hover the right edge to reveal a poppy jump menu
 ───────────────────────────────────────────────────────────────── */
 
@@ -3924,6 +4032,8 @@ export default function App() {
         <ScoreSection />
 
         <AICoachingSection />
+
+        <ConvergeScene />
 
         {/* ── CATEGORIES ── */}
         <section
