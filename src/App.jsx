@@ -4172,9 +4172,9 @@ export default function App() {
         <SplitFeatureScene
           file="converge-left.png"
           side="left"
-          eyebrow="No Expiry Date"
-          title={<>Your Prime<br />Isn't Behind You.</>}
-          body="Capability is trainable at any age. The Ultimate Human is built to unlock what you've still got — whether you're 25 or 55."
+          eyebrow="Every Level of Athlete"
+          title={<>Built for<br />Every Body.</>}
+          body="This is built to test complete capability — not just how long you can suffer on a run."
         />
 
         {/* ── WHY ENTER ── */}
