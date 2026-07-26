@@ -3484,90 +3484,78 @@ function ConvergeScene() {
 function ConvergeContent({ progress }) {
   const reduced = useReducedMotion();
 
-  const leftX = useTransform(progress, [0, 0.55], ["-90%", "40%"]);
-  const rightX = useTransform(progress, [0, 0.55], ["90%", "-40%"]);
-  const sideOpacity = useTransform(progress, [0, 0.25, 0.85, 1], [0, 1, 1, 0.55]);
-  const textScale = useTransform(progress, [0, 0.5], [0.85, 1]);
-  const textY = useTransform(progress, [0, 0.5], [30, 0]);
-  const textOpacity = useTransform(progress, [0.05, 0.3, 0.75, 0.96], [0, 1, 1, 0]);
+  const figureY = useTransform(progress, [0, 1], ["6%", "-6%"]);
+  const figureScale = useTransform(progress, [0, 1], [1.03, 1.12]);
+  const figureOpacity = useTransform(progress, [0, 0.22, 0.9, 1], [0, 1, 1, 0.7]);
+  const textX = useTransform(progress, [0, 0.5], [-48, 0]);
+  const textOpacity = useTransform(progress, [0.05, 0.3, 0.78, 0.97], [0, 1, 1, 0]);
 
   const Statement = (
     <>
-      <h2 className="text-metallic text-5xl uppercase leading-[0.95] tracking-tight md:text-7xl">
+      <p
+        className="mb-4 text-[11px] font-bold uppercase tracking-[0.34em] text-lime-400"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        Runners · Lifters · Fighters
+      </p>
+      <h2 className="text-metallic text-5xl uppercase leading-[0.9] tracking-tight md:text-7xl lg:text-8xl">
         The Complete
         <br />
         Athlete Wins.
       </h2>
-      <p
-        className="mt-5 text-[13px] font-bold uppercase tracking-[0.32em] text-lime-400"
-        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-      >
-        Runners. Lifters. Fighters. All exposed.
+      <p className="mt-6 max-w-md text-base leading-7 text-neutral-400">
+        Every discipline gets exposed somewhere. The most complete human — not the
+        most specialised — takes the win.
       </p>
+      <div className="mt-7 h-px w-16 bg-lime-400/70" />
     </>
   );
 
   if (reduced) {
     return (
-      <div className="relative flex h-full items-center justify-center overflow-hidden px-6">
-        <div className="relative z-10 text-center">{Statement}</div>
+      <div className="relative flex h-full items-center overflow-hidden px-6">
+        <div className="relative z-10 mx-auto w-full max-w-7xl">
+          <div className="max-w-xl">{Statement}</div>
+        </div>
       </div>
     );
   }
 
   return (
     <div
-      className="relative flex h-full items-center justify-center overflow-hidden"
-      style={{ background: "radial-gradient(ellipse 100% 85% at 50% 25%, #111609 0%, #08090a 55%, #050505 100%)" }}
+      className="relative flex h-full items-center overflow-hidden"
+      style={{ background: "linear-gradient(100deg, #060708 0%, #090b0c 45%, #0d1408 100%)" }}
     >
-      {/* Floor plane — grounds the figures so they aren't floating on a void */}
+      {/* Spotlight behind the figure so it emerges from the dark, not pasted on it */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5"
-        style={{ background: "linear-gradient(0deg, rgba(163,230,53,0.06) 0%, rgba(255,255,255,0.015) 22%, transparent 100%)" }}
+        className="pointer-events-none absolute right-0 top-0 h-full w-2/3"
+        style={{ background: "radial-gradient(ellipse 55% 70% at 72% 45%, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.045) 35%, transparent 68%)" }}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/[0.07]" />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
+        style={{ background: "linear-gradient(0deg, rgba(163,230,53,0.05) 0%, transparent 100%)" }}
+      />
 
-      {/* Left figure — spotlight behind + contact shadow at the feet */}
+      {/* Big figure, right — cropped by the frame at the bottom so it's grounded, not floating */}
       <motion.div
-        style={{ x: leftX, opacity: sideOpacity, willChange: "transform" }}
-        className="absolute bottom-0 left-0 z-0 h-[96%]"
+        style={{ y: figureY, scale: figureScale, opacity: figureOpacity, willChange: "transform" }}
+        className="absolute right-[1vw] top-[2%] z-0 h-[126%]"
       >
-        <div className="relative h-full">
-          <div
-            className="pointer-events-none absolute left-1/2 top-[42%] -z-10 h-[85%] w-[150%] -translate-x-1/2 -translate-y-1/2"
-            style={{ background: "radial-gradient(ellipse at center, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.05) 32%, transparent 70%)" }}
-          />
-          <CutoutImage file="converge-left.png" />
-          <div
-            className="pointer-events-none absolute bottom-2 left-1/2 h-5 w-[62%] -translate-x-1/2"
-            style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 72%)", filter: "blur(6px)" }}
-          />
-        </div>
+        <CutoutImage file="converge-right.png" />
       </motion.div>
 
-      {/* Right figure */}
-      <motion.div
-        style={{ x: rightX, opacity: sideOpacity, willChange: "transform" }}
-        className="absolute bottom-0 right-0 z-0 flex h-[96%] justify-end"
-      >
-        <div className="relative h-full">
-          <div
-            className="pointer-events-none absolute left-1/2 top-[42%] -z-10 h-[85%] w-[150%] -translate-x-1/2 -translate-y-1/2"
-            style={{ background: "radial-gradient(ellipse at center, rgba(163,230,53,0.14) 0%, rgba(255,255,255,0.05) 32%, transparent 70%)" }}
-          />
-          <CutoutImage file="converge-right.png" />
-          <div
-            className="pointer-events-none absolute bottom-2 left-1/2 h-5 w-[62%] -translate-x-1/2"
-            style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 72%)", filter: "blur(6px)" }}
-          />
-        </div>
-      </motion.div>
+      {/* Left-to-right scrim keeps the text crisp */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "linear-gradient(90deg, rgba(6,7,8,0.92) 0%, rgba(6,7,8,0.6) 35%, transparent 62%)" }}
+      />
 
+      {/* Text stack, left */}
       <motion.div
-        style={{ scale: textScale, y: textY, opacity: textOpacity, willChange: "transform" }}
-        className="relative z-10 px-6 text-center"
+        style={{ x: textX, opacity: textOpacity, willChange: "transform" }}
+        className="relative z-10 mx-auto w-full max-w-7xl px-6"
       >
-        {Statement}
+        <div className="max-w-xl">{Statement}</div>
       </motion.div>
     </div>
   );
