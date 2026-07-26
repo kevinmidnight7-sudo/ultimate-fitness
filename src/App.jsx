@@ -34,6 +34,7 @@ import {
   ClipboardList,
   Calculator,
   Film,
+  Menu,
 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,6 +51,13 @@ const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this when you push a notable change so you can see what's deployed. */
 const SITE_VERSION = "v1.0.0.0";
+
+/* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
+   (opens the visitor's mail client). To collect properly, paste a form
+   endpoint here — e.g. a Formspree URL (https://formspree.io/f/xxxx) or your
+   own API — and the form will POST JSON { name, email, interest } to it. */
+const WAITLIST_ENDPOINT = "";
+const WAITLIST_EMAIL = "hello@theultimatehuman.fitness";
 
 /* ─────────────────────────────────────────────────────────────────
    DATA
@@ -728,7 +736,12 @@ function CapabilityPillarsSection() {
 
         <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-12">
           {/* Radar chart */}
-          <div ref={radarRef} className="w-full shrink-0 lg:w-[520px]">
+          <div
+            ref={radarRef}
+            className="w-full shrink-0 lg:w-[520px]"
+            role="img"
+            aria-label="Radar chart of a sample athlete's Ultimate Human Score across ten capabilities: endurance 82, strength 76, power 73, speed 88, agility 65, balance 64, coordination 70, resilience 67, mobility 58 and mental 72 out of 100."
+          >
             <ResponsiveContainer width="100%" height={460}>
               <RadarChart
                 key={isInView ? "active" : "idle"}
@@ -1236,17 +1249,23 @@ function PasswordGate({ onUnlock }) {
 
         {/* Form */}
         <form onSubmit={attempt} className={`w-full${shake ? " uh-shake" : ""}`}>
+          <label htmlFor="uh-access-code" className="sr-only">Access code</label>
           <input
+            id="uh-access-code"
             type="password"
             value={value}
             autoComplete="off"
             placeholder="Access code"
+            aria-invalid={error}
+            aria-describedby={error ? "uh-access-error" : undefined}
             onChange={(e) => { setValue(e.target.value); setError(false); }}
             className={`uh-code-input${error ? " is-error" : ""} w-full bg-white/[0.03] px-5 py-4 text-center text-[14px] font-semibold uppercase tracking-[0.24em] text-white placeholder-neutral-800`}
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           />
           {error && (
             <p
+              id="uh-access-error"
+              role="alert"
               className="mt-2 text-[11px] font-bold uppercase tracking-[0.22em] text-red-400/75"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
@@ -2191,6 +2210,14 @@ function MovementCoachPreview() {
 ───────────────────────────────────────────────────────────────── */
 
 function JourneyModal({ title, onClose, children }) {
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -2201,6 +2228,9 @@ function JourneyModal({ title, onClose, children }) {
       onClick={onClose}
     >
       <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
         initial={{ opacity: 0, scale: 0.96, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
@@ -3585,8 +3615,161 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   WAITLIST FORM — real capture with validation + states. POSTs to
+   WAITLIST_ENDPOINT if set, otherwise hands off to a pre-filled email.
+───────────────────────────────────────────────────────────────── */
+
+function WaitlistForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [interest, setInterest] = useState("Athlete");
+  const [consent, setConsent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [error, setError] = useState("");
+
+  const inputClass =
+    "w-full border border-white/[0.12] bg-white/[0.03] px-4 py-3 text-[15px] text-white placeholder-neutral-600 outline-none transition-colors focus:border-lime-400/60";
+  const labelClass =
+    "mb-1.5 block text-[12px] font-bold uppercase tracking-[0.16em] text-neutral-400";
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!name.trim()) return setError("Please enter your name.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      return setError("Please enter a valid email address.");
+    if (!consent) return setError("Please agree to be contacted about the launch.");
+    setError("");
+    setStatus("loading");
+    const payload = { name: name.trim(), email: email.trim(), interest };
+    try {
+      if (WAITLIST_ENDPOINT) {
+        const res = await fetch(WAITLIST_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error("request failed");
+      } else {
+        const subject = encodeURIComponent("Founding Athlete Waitlist");
+        const body = encodeURIComponent(
+          `Name: ${payload.name}\nEmail: ${payload.email}\nInterest: ${payload.interest}`
+        );
+        window.location.href = `mailto:${WAITLIST_EMAIL}?subject=${subject}&body=${body}`;
+      }
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div
+        className="mx-auto mt-9 max-w-md border border-lime-400/30 bg-lime-400/[0.05] p-8 text-center"
+        role="status"
+        aria-live="polite"
+      >
+        <CheckCircle2 className="mx-auto h-8 w-8 text-lime-400" strokeWidth={1.5} />
+        <p className="mt-4 text-lg text-white">You're on the list.</p>
+        <p className="mt-2 text-[15px] leading-6 text-neutral-400">
+          We'll be in touch with founding-athlete access before launch.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={submit} noValidate className="mx-auto mt-9 max-w-md text-left">
+      <div className="grid gap-4">
+        <div>
+          <label htmlFor="wl-name" className={labelClass}>Name</label>
+          <input
+            id="wl-name"
+            type="text"
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={inputClass}
+            placeholder="Your name"
+          />
+        </div>
+        <div>
+          <label htmlFor="wl-email" className={labelClass}>Email</label>
+          <input
+            id="wl-email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={inputClass}
+            placeholder="you@email.com"
+          />
+        </div>
+        <div>
+          <label htmlFor="wl-interest" className={labelClass}>I'm interested as</label>
+          <select
+            id="wl-interest"
+            value={interest}
+            onChange={(e) => setInterest(e.target.value)}
+            className={inputClass}
+          >
+            <option>Athlete</option>
+            <option>Gym</option>
+            <option>Corporate Team</option>
+          </select>
+        </div>
+        <label className="flex cursor-pointer items-start gap-3 text-left">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-1 h-4 w-4 shrink-0 accent-lime-400"
+          />
+          <span className="text-[13px] leading-5 text-neutral-400">
+            I agree to be contacted about the Ultimate Human launch. We'll only use your
+            details for this and you can unsubscribe anytime.
+          </span>
+        </label>
+      </div>
+
+      {error && (
+        <p role="alert" className="mt-3 text-[13px] text-red-400">
+          {error}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={status === "loading"}
+        className="btn-lime-glow mt-6 flex w-full items-center justify-center bg-lime-400 px-8 py-4 text-[13px] font-black uppercase tracking-[0.18em] text-black transition-colors hover:bg-lime-300 disabled:opacity-60"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        {status === "loading" ? "Joining…" : "Join the Founding Athlete Waitlist"}
+        {status !== "loading" && <ArrowRight className="ml-2 h-4 w-4" />}
+      </button>
+
+      {status === "error" && (
+        <p role="alert" className="mt-3 text-center text-[13px] text-red-400">
+          Something went wrong. Please try again, or email {WAITLIST_EMAIL}.
+        </p>
+      )}
+      <p className="mt-3 text-center text-[12px] text-neutral-600">No spam — just launch updates.</p>
+    </form>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
    SIDE QUICK NAV — hover the right edge to reveal a poppy jump menu
 ───────────────────────────────────────────────────────────────── */
+
+const navLinks = [
+  { label: "Journey", href: "#journey" },
+  { label: "Event", href: "#format" },
+  { label: "Score", href: "#score" },
+  { label: "AI Coach", href: "#coaching" },
+  { label: "Membership", href: "#membership" },
+  { label: "Sign Up", href: "#signup" },
+];
 
 const quickNavLinks = [
   { label: "Top", target: "top" },
@@ -3695,6 +3878,7 @@ export default function App() {
   const [heroPhotoLoaded, setHeroPhotoLoaded] = useState(false);
   const { scrollY: navScrollY } = useScroll();
   const [navScrolled, setNavScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(() => {
     return navScrollY.on("change", (v) => setNavScrolled(v > 60));
   }, [navScrollY]);
@@ -3749,14 +3933,7 @@ export default function App() {
           </div>
 
           <nav className="hidden gap-8 md:flex">
-            {[
-              { label: "Journey", href: "#journey" },
-              { label: "Event", href: "#format" },
-              { label: "Score", href: "#score" },
-              { label: "AI Coach", href: "#coaching" },
-              { label: "Membership", href: "#membership" },
-              { label: "Sign Up", href: "#signup" },
-            ].map(({ label, href }) => (
+            {navLinks.map(({ label, href }) => (
               <a
                 key={href}
                 href={href}
@@ -3768,14 +3945,52 @@ export default function App() {
             ))}
           </nav>
 
-          <a
-            href="#signup"
-            className="btn-lime-glow border border-lime-400 bg-lime-400 px-5 py-2.5 text-[11.5px] font-black uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            Join the Waitlist
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="#signup"
+              className="btn-lime-glow border border-lime-400 bg-lime-400 px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.16em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300 sm:px-5 sm:text-[11.5px] sm:tracking-[0.18em]"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Join the Waitlist
+            </a>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              className="flex h-10 w-10 items-center justify-center border border-white/[0.12] text-white transition-colors hover:border-white/30 md:hidden"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile menu panel */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.nav
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden border-t border-white/[0.06] bg-[#050505]/98 md:hidden"
+            >
+              <div className="flex flex-col px-6 py-2">
+                {navLinks.map(({ label, href }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="border-b border-white/[0.05] py-4 text-[13px] font-bold uppercase tracking-[0.22em] text-neutral-300 no-underline transition-colors hover:text-lime-400"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </header>
 
       <main>
@@ -4494,23 +4709,17 @@ export default function App() {
                   <div className="h-px w-10 shrink-0 bg-lime-400/35" />
                 </div>
 
-                <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <a
-                    href="https://theultimatehuman.fitness"
-                    className="btn-lime-glow inline-flex items-center bg-lime-400 px-9 py-5 text-[13px] font-black uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    Join at theultimatehuman.fitness
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                <WaitlistForm />
+
+                <p className="mt-6 text-center text-[13px] text-neutral-500">
+                  Bringing a gym or team?{" "}
                   <a
                     href="mailto:hello@theultimatehuman.fitness"
-                    className="inline-flex items-center border border-white/20 bg-white/[0.04] px-8 py-5 text-[13px] font-bold uppercase tracking-[0.18em] text-white no-underline transition-colors hover:border-white/35 hover:bg-white/[0.08]"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    className="font-bold text-lime-400 underline-offset-4 hover:underline"
                   >
-                    Invite Your Gym
+                    Get in touch
                   </a>
-                </div>
+                </p>
               </div>
             </div>
           </div>
