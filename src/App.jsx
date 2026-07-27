@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.1.0.0";
+const SITE_VERSION = "v1.2.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -63,6 +63,29 @@ const WAITLIST_EMAIL = "hello@theultimatehuman.fitness";
    DATA
 ───────────────────────────────────────────────────────────────── */
 
+const uhciPrinciples = [
+  {
+    title: "Objective",
+    text: "Based on measurable performance data rather than subjective opinion.",
+  },
+  {
+    title: "Age-adjusted",
+    text: "Allowing fair comparison across different stages of life.",
+  },
+  {
+    title: "Standardised",
+    text: "Using consistent movement standards and competition rules.",
+  },
+  {
+    title: "Progressive",
+    text: "Enabling athletes to track long-term improvement rather than a single race result.",
+  },
+  {
+    title: "Actionable",
+    text: "Identifying strengths and opportunities for development across multiple areas of human capability.",
+  },
+];
+
 const capabilities = [
   { label: "ENDURANCE", icon: Heart },
   { label: "STRENGTH", icon: Dumbbell },
@@ -71,9 +94,19 @@ const capabilities = [
   { label: "AGILITY", icon: Activity },
   { label: "BALANCE", icon: Target },
   { label: "COORDINATION", icon: Link2 },
-  { label: "RESILIENCE", icon: Shield },
+  {
+    label: "RESILIENCE",
+    icon: Shield,
+    detail: "Ability to recover and perform again after exertion.",
+    example: "How quickly you're ready for the next challenge.",
+  },
   { label: "MOBILITY", icon: RotateCcw },
-  { label: "MENTAL FORTITUDE", icon: Brain },
+  {
+    label: "MENTAL FORTITUDE",
+    icon: Brain,
+    detail: "Ability to maintain performance while under physical or mental stress.",
+    example: "Holding your pace through the final stations.",
+  },
 ];
 
 const pillarRadarData = [
@@ -95,7 +128,7 @@ const differenceTable = {
     "Loaded Strength",
     "Speed & Agility",
     "Coordination & Skill",
-    "10-Capability Human Score",
+    "10-Capability Human Index",
     "Adapts Over Time",
   ],
   brands: [
@@ -154,7 +187,7 @@ const divisions = [
   },
 ];
 
-const labours = [
+const capabilities10 = [
   {
     number: 1,
     name: "Prone Shuttle",
@@ -308,13 +341,14 @@ const finalCircuit = {
   ],
 };
 
+/* Displayed out of 1000; `pct` drives the bar width (value / 10). */
 const aiScoreBars = [
-  { label: "Speed", value: 75 },
-  { label: "Stamina", value: 78 },
-  { label: "Strength", value: 73 },
-  { label: "Coordination", value: 81 },
-  { label: "Balance", value: 69 },
-  { label: "Mobility", value: 77 },
+  { label: "Speed", value: 755, pct: 75.5 },
+  { label: "Stamina", value: 780, pct: 78 },
+  { label: "Strength", value: 730, pct: 73 },
+  { label: "Coordination", value: 815, pct: 81.5 },
+  { label: "Balance", value: 692, pct: 69.2 },
+  { label: "Mobility", value: 771, pct: 77.1 },
 ];
 
 const aiTrainingFocus = [
@@ -324,9 +358,9 @@ const aiTrainingFocus = [
 ];
 
 const aiScoreGains = [
-  { label: "Lunges", from: 72, to: 79 },
-  { label: "Bear Crawl", from: 65, to: 74 },
-  { label: "Wall Balls", from: 68, to: 76 },
+  { label: "Lunges", from: 723, to: 795 },
+  { label: "Bear Crawl", from: 653, to: 742 },
+  { label: "Wall Balls", from: 687, to: 766 },
 ];
 
 const aiAnalysisCategories = [
@@ -426,7 +460,7 @@ const aiImprovementAreas = [
   {
     icon: BarChart3,
     title: "Estimated Score Gain",
-    text: "The likely improvement in your Ultimate Human Score if you implement the recommended changes.",
+    text: "The likely improvement in your Ultimate Human Index if you implement the recommended changes.",
   },
 ];
 
@@ -445,7 +479,7 @@ const subscriptionTiers = [
     summary: "For people starting their Ultimate Human journey.",
     cta: "Join the Waitlist",
     points: [
-      "Ultimate Human Score",
+      "Ultimate Human Index",
       "Wearable integration",
       "Monthly fitness assessment",
       "AI-powered training recommendations",
@@ -464,7 +498,7 @@ const subscriptionTiers = [
     cta: "Join the Waitlist",
     includesNote: "Everything in Explorer, plus:",
     points: [
-      "Weekly Ultimate Human Score updates",
+      "Weekly Ultimate Human Index updates",
       "Personalised AI coaching",
       "Recovery and readiness insights",
       "Goal setting and progress tracking",
@@ -510,8 +544,8 @@ const whyEnter = [
     text: "This is built to test complete capability, not just how long you can suffer on a run.",
   },
   {
-    title: "You get your Ultimate Human Score",
-    text: "A personal performance score across ten capability areas — strength, power, endurance, speed, mobility, coordination, resilience, balance, recovery and control under pressure.",
+    title: "You get your Ultimate Human Index",
+    text: "A personal performance index across ten capability areas — strength, power, endurance, speed, mobility, coordination, resilience, balance, recovery and control under pressure.",
   },
   {
     title: "Train for it anywhere",
@@ -730,7 +764,7 @@ function CapabilityPillarsSection() {
             Every Dimension. Measured.
           </Reveal>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-400">
-            The Ultimate Human Score spans all 10 axes simultaneously — not just the ones you train.
+            The Ultimate Human Index spans all 10 axes simultaneously — not just the ones you train.
           </p>
         </div>
 
@@ -740,7 +774,7 @@ function CapabilityPillarsSection() {
             ref={radarRef}
             className="w-full shrink-0 lg:w-[520px]"
             role="img"
-            aria-label="Radar chart of a sample athlete's Ultimate Human Score across ten capabilities: endurance 82, strength 76, power 73, speed 88, agility 65, balance 64, coordination 70, resilience 67, mobility 58 and mental 72 out of 100."
+            aria-label="Radar chart of a sample athlete's Ultimate Human Index across ten capabilities: endurance 82, strength 76, power 73, speed 88, agility 65, balance 64, coordination 70, resilience 67, mobility 58 and mental 72 out of 100."
           >
             <ResponsiveContainer width="100%" height={460}>
               <RadarChart
@@ -786,17 +820,17 @@ function CapabilityPillarsSection() {
 
           {/* Pillar list */}
           <div className="grid w-full grid-cols-2 gap-x-8 gap-y-0">
-            {capabilities.map(({ label, icon: Icon }, i) => (
+            {capabilities.map(({ label, icon: Icon, detail, example }, i) => (
               <motion.div
                 key={label}
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.55, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 border-b border-white/[0.04] py-3.5"
+                className="flex items-start gap-3 border-b border-white/[0.04] py-3.5"
               >
                 <Icon
-                  className="h-4 w-4 shrink-0 text-lime-400/45"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-lime-400/45"
                   strokeWidth={1.5}
                 />
                 <div>
@@ -809,6 +843,14 @@ function CapabilityPillarsSection() {
                   <p className="text-[11px] text-neutral-700">
                     <CountUp to={pillarRadarData[i].value} suffix="/100" />
                   </p>
+                  {detail && (
+                    <p className="mt-1.5 text-[13px] leading-5 text-neutral-400">
+                      {detail}
+                      {example && (
+                        <span className="block text-neutral-500">e.g. {example}</span>
+                      )}
+                    </p>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -1291,6 +1333,7 @@ function PasswordGate({ onUnlock }) {
 
 function FounderCard({ photo, ratio, name, role, quote }) {
   const [open, setOpen] = useState(false);
+  const [photoFailed, setPhotoFailed] = useState(!photo);
 
   return (
     <motion.div
@@ -1302,12 +1345,28 @@ function FounderCard({ photo, ratio, name, role, quote }) {
     >
       <div className="absolute left-0 top-0 z-10 h-px w-full bg-gradient-to-r from-lime-400/40 via-white/[0.08] to-transparent" />
       <div className="relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
-        <img
-          src={photo}
-          alt={name}
-          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          loading="lazy"
-        />
+        {photoFailed ? (
+          <div
+            className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center"
+            style={{ border: "1.5px dashed rgba(163,230,53,0.18)", background: "rgba(163,230,53,0.025)" }}
+          >
+            <UserCheck className="h-7 w-7 text-lime-400/35" strokeWidth={1.5} />
+            <p
+              className="text-[10px] font-bold uppercase tracking-[0.24em] text-lime-400/40"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Photo to follow
+            </p>
+          </div>
+        ) : (
+          <img
+            src={photo}
+            alt={name}
+            onError={() => setPhotoFailed(true)}
+            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+        )}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0d0d0d] to-transparent" />
       </div>
 
@@ -1391,8 +1450,8 @@ function FlowConnector() {
   return <div className="h-px w-5 shrink-0 bg-lime-400/30" />;
 }
 
-function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
-  const weight = labour.weightKey ? weightsByName[labour.weightKey] : null;
+function CapabilityAccordionItem({ capability, division, isOpen, onToggle, index }) {
+  const weight = capability.weightKey ? weightsByName[capability.weightKey] : null;
 
   return (
     <motion.div
@@ -1417,13 +1476,13 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
             className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400/50"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            Labour {String(labour.number).padStart(2, "0")}
+            Capability {String(capability.number).padStart(2, "0")}
           </p>
           <p
             className="mt-3 truncate text-sm font-bold uppercase tracking-wide text-white"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            {labour.name}
+            {capability.name}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-4">
@@ -1436,7 +1495,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
               className="whitespace-nowrap text-lg"
               style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, color: "#a3e635" }}
             >
-              {labour.reps[division]}
+              {capability.reps[division]}
             </motion.p>
           </AnimatePresence>
           <ChevronDown
@@ -1464,7 +1523,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
               >
                 What It Tests
               </p>
-              <p className="mt-2 text-[14px] leading-6 text-neutral-300">{labour.tests}</p>
+              <p className="mt-2 text-[14px] leading-6 text-neutral-300">{capability.tests}</p>
 
               <div className="mt-5 grid grid-cols-3 gap-px bg-white/[0.05]">
                 {divisions.map((d) => (
@@ -1478,7 +1537,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
                     >
                       {d.label}
                     </p>
-                    <p className="mt-1 text-[12px] font-bold text-neutral-200">{labour.reps[d.key]}</p>
+                    <p className="mt-1 text-[12px] font-bold text-neutral-200">{capability.reps[d.key]}</p>
                   </div>
                 ))}
               </div>
@@ -1509,7 +1568,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
                 >
                   Coaching Note
                 </p>
-                <p className="mt-1.5 text-[14px] leading-5 text-neutral-400">{labour.coachingNote}</p>
+                <p className="mt-1.5 text-[14px] leading-5 text-neutral-400">{capability.coachingNote}</p>
               </div>
             </div>
           </motion.div>
@@ -1566,7 +1625,7 @@ function WorkingWeightsPanel() {
                         className="py-3 pr-4 text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-500"
                         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                       >
-                        Labour
+                        Capability
                       </th>
                       {["Foundation", "Intermediate", "Elite"].map((d) => (
                         <th
@@ -1617,7 +1676,7 @@ function WorkingWeightsPanel() {
 
 function EventStructureSection() {
   const [division, setDivision] = useState("intermediate");
-  const [openLabour, setOpenLabour] = useState(1);
+  const [openCapability, setOpenCapability] = useState(1);
   const [finalOpen, setFinalOpen] = useState(false);
   const current = divisions.find((d) => d.key === division);
 
@@ -1639,13 +1698,13 @@ function EventStructureSection() {
           <div className="max-w-2xl">
             <SectionLabel>The UHS Event Structure</SectionLabel>
             <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-              10 Labours.
+              10 Capabilities.
               <br />
               One Continuous Test.
             </Reveal>
             <p className="mt-5 text-lg leading-7 text-neutral-400">
-              A run before every labour. Nine capability tests. One final circuit.
-              Choose a division, then open a labour to see exactly what it tests.
+              A run before every capability. Nine capability tests. One final circuit.
+              Choose a division, then open a capability to see exactly what it tests.
             </p>
           </div>
 
@@ -1679,8 +1738,8 @@ function EventStructureSection() {
             className="mb-px grid grid-cols-1 gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-4"
           >
             {[
-              ["Run Before Each Labour", current.runDistance],
-              ["Final Run · Labour 10", current.finalRun],
+              ["Run Before Each Capability", current.runDistance],
+              ["Final Run · Capability 10", current.finalRun],
               ["Total Running Distance", current.totalRunning],
               ["Estimated Time", current.duration],
             ].map(([label, value]) => (
@@ -1706,11 +1765,11 @@ function EventStructureSection() {
         <div className="relative mt-10">
           <div className="overflow-x-auto pb-4">
             <div className="flex min-w-max items-center gap-1.5 px-1">
-              {labours.map((labour) => (
-                <React.Fragment key={labour.number}>
+              {capabilities10.map((capability) => (
+                <React.Fragment key={capability.number}>
                   <FlowNode label="Run" sub={current.runDistance} run />
                   <FlowConnector />
-                  <FlowNode label={`L${labour.number}`} sub={labour.name} />
+                  <FlowNode label={`C${capability.number}`} sub={capability.name} />
                   <FlowConnector />
                 </React.Fragment>
               ))}
@@ -1726,21 +1785,21 @@ function EventStructureSection() {
           </p>
         </div>
 
-        {/* Labours 1–9 — accordion, one open at a time */}
+        {/* Capabilities 1–9 — accordion, one open at a time */}
         <div className="mt-12 space-y-px bg-white/[0.05]">
-          {labours.map((labour, index) => (
-            <LabourAccordionItem
-              key={labour.number}
-              labour={labour}
+          {capabilities10.map((capability, index) => (
+            <CapabilityAccordionItem
+              key={capability.number}
+              capability={capability}
               division={division}
               index={index}
-              isOpen={openLabour === labour.number}
-              onToggle={() => setOpenLabour((prev) => (prev === labour.number ? null : labour.number))}
+              isOpen={openCapability === capability.number}
+              onToggle={() => setOpenCapability((prev) => (prev === capability.number ? null : capability.number))}
             />
           ))}
         </div>
 
-        {/* Labour 10 — Final Circuit, highlighted */}
+        {/* Capability 10 — Final Circuit, highlighted */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1763,7 +1822,7 @@ function EventStructureSection() {
                   className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
-                  Labour 10 · The Finisher
+                  Capability 10 · The Finisher
                 </p>
                 <p
                   className="mt-1 text-sm font-bold uppercase tracking-wide text-white"
@@ -1793,7 +1852,7 @@ function EventStructureSection() {
                 <div className="border-t border-lime-400/20 p-6 pt-5">
                   <p className="mb-4 text-[14px] leading-6 text-neutral-400">
                     Five back-to-back elements with no rest. Everything you've tested across
-                    the previous nine labours, compressed into one final push.
+                    the previous nine capabilities, compressed into one final push.
                   </p>
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -2429,7 +2488,7 @@ function FullAssessmentPreview({ onClose }) {
         ))}
       </div>
       <p className="mt-5 text-[13.5px] leading-5 text-neutral-400">
-        This feeds your UHS Score, your Athlete Type and your AI training focus.
+        This feeds your UHS Index, your Athlete Type and your AI training focus.
       </p>
       <a
         href="#coaching"
@@ -2464,7 +2523,7 @@ const journeyCards = [
     key: "score",
     icon: Calculator,
     title: "Score Simulator",
-    text: "See how the Ultimate Human Score is calculated.",
+    text: "See how the Ultimate Human Index is calculated.",
     cta: "Open Score Dashboard",
     action: "scroll",
     href: "#score",
@@ -2473,7 +2532,7 @@ const journeyCards = [
     key: "train",
     icon: Dumbbell,
     title: "Train to Improve",
-    text: "Explore the event structure, labours and working weights.",
+    text: "Explore the event structure, capabilities and working weights.",
     cta: "View Event Structure",
     action: "scroll",
     href: "#format",
@@ -2633,7 +2692,7 @@ function ScoreSection() {
           className="mt-4 text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-500"
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
-          Overall Score
+          Overall Index
         </p>
         <p
           className="mt-2 text-5xl text-white"
@@ -2736,7 +2795,7 @@ function ScoreSection() {
             Than a Medal.
           </Reveal>
           <p className="mt-6 text-lg leading-7 text-neutral-400">
-            Every participant receives an Ultimate Human Score showing performance across
+            Every participant receives an Ultimate Human Index showing performance across
             ten capability areas — the whole human, not just the parts that are easy to
             measure. The aim is simple: come back better.
           </p>
@@ -2849,7 +2908,7 @@ function AICoachingSection() {
           className="text-6xl text-lime-400"
           style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
         >
-          77
+          770
         </p>
         <div className="pb-2">
           <p
@@ -2906,7 +2965,7 @@ function AICoachingSection() {
                 className="h-1.5 bg-lime-400"
                 style={{ boxShadow: "0 0 8px rgba(163,230,53,0.45)" }}
                 initial={{ width: 0 }}
-                whileInView={{ width: `${bar.value}%` }}
+                whileInView={{ width: `${bar.pct}%` }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.8, delay: i * 0.06, ease: "easeOut" }}
               />
@@ -3018,7 +3077,7 @@ function AICoachingSection() {
           <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Improve Your Movement.
             <br />
-            Improve Your Score.
+            Improve Your Index.
           </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Most fitness platforms measure effort. Ultimate Human measures
@@ -3364,7 +3423,7 @@ function SubscriptionSection() {
             after race day. Members get ongoing AI-powered coaching, personalised
             training recommendations, performance tracking and recovery insights —
             plus exclusive event discounts, priority race entries and member-only
-            challenges. Your Ultimate Human Score evolves with you, giving a clear
+            challenges. Your Ultimate Human Index evolves with you, giving a clear
             measure of progress across strength, endurance, mobility and overall
             performance.
           </p>
@@ -4104,23 +4163,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Sub-copy */}
-              <p
-                className="mt-5 max-w-xl text-base leading-7 text-white"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600 }}
-              >
-                Most races only measure one or two aspects of capability.{" "}
-                <span className="text-lime-400">UH goes further.</span>
-              </p>
-              <p
-                className="mt-3 max-w-xl text-base leading-7 text-neutral-400"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 500 }}
-              >
-                We assess your human capability across ten areas, give you a score,
-                then show you how to improve it through coaching, movement analysis
-                and training focus.
-              </p>
-
               {/* CTAs */}
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -4168,6 +4210,98 @@ export default function App() {
           </div>
         </section>
 
+        {/* ── UHS HUMAN CAPABILITY INDEX (UHCI) ── */}
+        <section
+          id="uhci"
+          className="relative border-t border-white/[0.06] px-6 py-24"
+          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0d1d30 75%, #0a0a0a 100%)" }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 12% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
+            <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+              <div>
+                <SectionLabel>UHS Human Capability Index™ (UHCI)</SectionLabel>
+                <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+                  The Cornerstone of
+                  <br />
+                  the Ultimate Human Sport.
+                </Reveal>
+                <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-300">
+                  Rather than simply measuring how quickly an athlete finishes a race, the{" "}
+                  <span className="font-bold text-white">UHCI</span> provides an objective assessment
+                  of overall human capability. It is designed to measure not only performance, but how
+                  efficiently and consistently that performance is achieved.
+                </p>
+                <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-400">
+                  Unlike traditional race results, which only recognise finishing position, the UHCI
+                  rewards complete human performance by combining physical capability with movement
+                  quality and technical execution. It provides athletes with a meaningful benchmark
+                  that evolves as they train, improve and age.
+                </p>
+
+                {/* 0–1000 scale callout */}
+                <div className="mt-8 flex items-center gap-5 border border-lime-400/25 bg-lime-400/[0.05] px-6 py-5">
+                  <p
+                    className="shrink-0 text-3xl text-lime-400 md:text-4xl"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                  >
+                    0–1000
+                  </p>
+                  <p className="text-[14px] leading-6 text-neutral-300">
+                    The Index is calculated on a scale of 0–1000, creating a lifelong benchmark that
+                    athletes can improve over time — regardless of age or competitive level.
+                  </p>
+                </div>
+
+                <p className="mt-6 max-w-2xl text-[14px] leading-6 text-neutral-400">
+                  As UHS evolves, the Human Capability Index will be supported by advanced AI movement
+                  analysis and scientifically validated performance standards. This will enable the
+                  Index to assess not only whether an athlete completed each capability, but how
+                  effectively and consistently it was performed.
+                </p>
+              </div>
+
+              {/* Design principles */}
+              <div>
+                <p
+                  className="mb-5 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  The UHCI has been designed to be
+                </p>
+                <div className="flex flex-col">
+                  {uhciPrinciples.map((p, i) => (
+                    <motion.div
+                      key={p.title}
+                      initial={{ opacity: 0, x: 12 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      className="border-b border-white/[0.07] py-4"
+                    >
+                      <div className="flex items-baseline gap-3">
+                        <span className="h-1.5 w-1.5 shrink-0 translate-y-[-2px] rounded-full bg-lime-400" />
+                        <div>
+                          <p className="text-[15px] font-bold uppercase tracking-wide text-white">
+                            {p.title}
+                          </p>
+                          <p className="mt-1 text-[14px] leading-6 text-neutral-400">{p.text}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <YourJourneyHub />
 
         <CapabilityPillarsSection />
@@ -4193,7 +4327,7 @@ export default function App() {
                 UH Tests the Whole Human.
               </Reveal>
               <p className="mt-5 text-lg leading-7 text-neutral-400">
-                Most races only measure one or two aspects of capability. They tell
+                Most programs only measure one or two aspects of capability. They tell
                 you if you can run, lift, endure or suffer.{" "}
                 <span className="font-bold text-white">UH goes further.</span>
               </p>
@@ -4289,9 +4423,9 @@ export default function App() {
             {/* Slim three-point strip */}
             <div className="mb-12 flex flex-col divide-y divide-white/[0.06] md:flex-row md:divide-x md:divide-y-0">
               {[
-                { icon: Flame,  title: "Built for Every Body",  sub: "Designed for every challenge" },
-                { icon: Timer,  title: "75–120 Minutes",        sub: "Varies by division · High energy, fast transitions" },
-                { icon: Zap,    title: "Adapt Under Fatigue",   sub: "Speed → Control → Strength → Coordination" },
+                { icon: Flame,  title: "Built for every body. Designed for every challenge.", sub: "Designed to reveal, not destroy" },
+                { icon: Timer,  title: "Long enough to test you, fast enough to race", sub: "High energy. Consistent Standards. Visible competition." },
+                { icon: Zap,    title: "Discover how you cope Under Fatigue", sub: "Speed → Control → Strength → Coordination" },
               ].map(({ icon: Icon, title, sub }, i) => (
                 <motion.div
                   key={title}
@@ -4625,7 +4759,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-5">
               <FounderCard
                 photo="/images/founders/andie.png"
                 ratio="1 / 1"
@@ -4653,6 +4787,14 @@ export default function App() {
                 name="Ken Brotherston"
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
+              />
+              {/* Bio + photo still to be supplied — card shows a 'photo to follow' placeholder */}
+              <FounderCard
+                photo=""
+                ratio="1 / 1"
+                name="Dr. Camilla Drew"
+                role="Role to be confirmed"
+                quote="Bio to follow."
               />
             </div>
           </div>
