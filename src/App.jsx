@@ -49,8 +49,8 @@ import CountUp from "@/components/motion/CountUp";
 
 const SITE_PASSWORD = "U00TLHU8MAN";
 
-/* Bump this when you push a notable change so you can see what's deployed. */
-const SITE_VERSION = "v1.0.0.0";
+/* Bump this on every update/push so the footer marker shows what's deployed. */
+const SITE_VERSION = "v1.1.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
