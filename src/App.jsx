@@ -573,7 +573,7 @@ function ImageBlock({ id, aspectRatio = "16/9", searchTerms, treatment, classNam
         >
           Image Placeholder
         </p>
-        <p className="mb-2 text-[13px] font-bold uppercase tracking-wide text-white/40">
+        <p className="mb-2 text-[14px] font-bold uppercase tracking-wide text-white/40">
           {id}
         </p>
         {searchTerms && (
@@ -729,7 +729,7 @@ function CapabilityPillarsSection() {
           <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-wide text-white md:text-4xl">
             Every Dimension. Measured.
           </Reveal>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-500">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-400">
             The Ultimate Human Score spans all 10 axes simultaneously — not just the ones you train.
           </p>
         </div>
@@ -1241,7 +1241,7 @@ function PasswordGate({ onUnlock }) {
 
         {/* Label */}
         <p
-          className="mb-4 text-[11px] font-bold uppercase tracking-[0.32em] text-neutral-600"
+          className="mb-4 text-[11px] font-bold uppercase tracking-[0.32em] text-neutral-500"
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
           Enter access code to preview
@@ -1274,7 +1274,7 @@ function PasswordGate({ onUnlock }) {
           )}
           <button
             type="submit"
-            className="btn-lime-glow mt-3 w-full bg-lime-400 py-4 text-[12.5px] font-black uppercase tracking-[0.22em] text-black transition-colors hover:bg-lime-300"
+            className="btn-lime-glow mt-3 w-full bg-lime-400 py-4 text-[13.5px] font-black uppercase tracking-[0.22em] text-black transition-colors hover:bg-lime-300"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Unlock Preview
@@ -1342,7 +1342,7 @@ function FounderCard({ photo, ratio, name, role, quote }) {
                   {role}
                 </p>
               </div>
-              <p className="mt-4 text-sm leading-7 text-neutral-500">"{quote}"</p>
+              <p className="mt-4 text-sm leading-7 text-neutral-400">"{quote}"</p>
             </div>
           </motion.div>
         )}
@@ -1369,7 +1369,7 @@ function FlowNode({ label, sub, run, final: isFinal }) {
     >
       <span
         className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
-          run ? "text-neutral-500" : isFinal ? "text-lime-300" : "text-lime-400/70"
+          run ? "text-neutral-400" : isFinal ? "text-lime-300" : "text-lime-400/70"
         }`}
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
@@ -1440,7 +1440,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
             </motion.p>
           </AnimatePresence>
           <ChevronDown
-            className={`h-4 w-4 shrink-0 text-neutral-500 transition-transform duration-300 ${
+            className={`h-4 w-4 shrink-0 text-neutral-400 transition-transform duration-300 ${
               isOpen ? "rotate-180 text-lime-400" : ""
             }`}
             strokeWidth={2}
@@ -1459,12 +1459,12 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
           >
             <div className="border-t border-white/[0.06] p-6 pt-5">
               <p
-                className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-600"
+                className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 What It Tests
               </p>
-              <p className="mt-2 text-[13px] leading-6 text-neutral-300">{labour.tests}</p>
+              <p className="mt-2 text-[14px] leading-6 text-neutral-300">{labour.tests}</p>
 
               <div className="mt-5 grid grid-cols-3 gap-px bg-white/[0.05]">
                 {divisions.map((d) => (
@@ -1473,7 +1473,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
                     className={`bg-[#111] p-3 text-center ${d.key === division ? "ring-1 ring-inset ring-lime-400/35" : ""}`}
                   >
                     <p
-                      className="text-[9px] font-bold uppercase tracking-[0.16em] text-neutral-600"
+                      className="text-[9px] font-bold uppercase tracking-[0.16em] text-neutral-500"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {d.label}
@@ -1488,14 +1488,14 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
                   <Weight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-400" strokeWidth={1.5} />
                   <div>
                     <p
-                      className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                      className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       Suggested Working Weight · {divisions.find((d) => d.key === division).label}
                     </p>
-                    <p className="mt-1 text-[13px] text-neutral-300">
+                    <p className="mt-1 text-[14px] text-neutral-300">
                       Women: <span className="font-bold text-white">{weight[division].women}</span>
-                      <span className="px-2 text-neutral-600">·</span>
+                      <span className="px-2 text-neutral-500">·</span>
                       Men: <span className="font-bold text-white">{weight[division].men}</span>
                     </p>
                   </div>
@@ -1509,7 +1509,7 @@ function LabourAccordionItem({ labour, division, isOpen, onToggle, index }) {
                 >
                   Coaching Note
                 </p>
-                <p className="mt-1.5 text-[13px] leading-5 text-neutral-400">{labour.coachingNote}</p>
+                <p className="mt-1.5 text-[14px] leading-5 text-neutral-400">{labour.coachingNote}</p>
               </div>
             </div>
           </motion.div>
@@ -1532,7 +1532,7 @@ function WorkingWeightsPanel() {
         <div className="flex items-center gap-3">
           <Weight className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
           <span
-            className="text-[12.5px] font-bold uppercase tracking-[0.2em] text-white"
+            className="text-[13.5px] font-bold uppercase tracking-[0.2em] text-white"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Suggested Working Weights
@@ -1554,7 +1554,7 @@ function WorkingWeightsPanel() {
             className="overflow-hidden"
           >
             <div className="border-t border-white/[0.06] p-6 pt-5">
-              <p className="mb-4 text-[12.5px] leading-6 text-neutral-500">
+              <p className="mb-4 text-[13.5px] leading-6 text-neutral-400">
                 Indicative loads to guide training. Final event weights will be confirmed
                 closer to launch.
               </p>
@@ -1563,7 +1563,7 @@ function WorkingWeightsPanel() {
                   <thead>
                     <tr className="border-b border-white/[0.08]">
                       <th
-                        className="py-3 pr-4 text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-600"
+                        className="py-3 pr-4 text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-500"
                         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                       >
                         Labour
@@ -1584,7 +1584,7 @@ function WorkingWeightsPanel() {
                       {["Women", "Men", "Women", "Men", "Women", "Men"].map((g, i) => (
                         <th
                           key={i}
-                          className="py-2 pr-4 text-center text-[9.5px] font-bold uppercase tracking-[0.14em] text-neutral-600"
+                          className="py-2 pr-4 text-center text-[9.5px] font-bold uppercase tracking-[0.14em] text-neutral-500"
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                         >
                           {g}
@@ -1595,13 +1595,13 @@ function WorkingWeightsPanel() {
                   <tbody>
                     {workingWeights.map((w) => (
                       <tr key={w.name} className="border-b border-white/[0.05] last:border-0">
-                        <td className="py-3 pr-4 text-[12.5px] font-bold text-white">{w.name}</td>
-                        <td className="py-3 pr-4 text-center text-[12.5px] text-neutral-300">{w.foundation.women}</td>
-                        <td className="py-3 pr-4 text-center text-[12.5px] text-neutral-300">{w.foundation.men}</td>
-                        <td className="py-3 pr-4 text-center text-[12.5px] text-neutral-300">{w.intermediate.women}</td>
-                        <td className="py-3 pr-4 text-center text-[12.5px] text-neutral-300">{w.intermediate.men}</td>
-                        <td className="py-3 pr-4 text-center text-[12.5px] text-neutral-300">{w.elite.women}</td>
-                        <td className="py-3 pr-4 text-center text-[12.5px] text-neutral-300">{w.elite.men}</td>
+                        <td className="py-3 pr-4 text-[13.5px] font-bold text-white">{w.name}</td>
+                        <td className="py-3 pr-4 text-center text-[13.5px] text-neutral-300">{w.foundation.women}</td>
+                        <td className="py-3 pr-4 text-center text-[13.5px] text-neutral-300">{w.foundation.men}</td>
+                        <td className="py-3 pr-4 text-center text-[13.5px] text-neutral-300">{w.intermediate.women}</td>
+                        <td className="py-3 pr-4 text-center text-[13.5px] text-neutral-300">{w.intermediate.men}</td>
+                        <td className="py-3 pr-4 text-center text-[13.5px] text-neutral-300">{w.elite.women}</td>
+                        <td className="py-3 pr-4 text-center text-[13.5px] text-neutral-300">{w.elite.men}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -1686,7 +1686,7 @@ function EventStructureSection() {
             ].map(([label, value]) => (
               <div key={label} className="bg-[#0d0d0d] p-6 text-center">
                 <p
-                  className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                  className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-neutral-500"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   {label}
@@ -1719,7 +1719,7 @@ function EventStructureSection() {
           </div>
           <div className="pointer-events-none absolute bottom-4 right-0 top-0 w-10 bg-gradient-to-l from-[#080808] to-transparent sm:hidden" />
           <p
-            className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600 sm:hidden"
+            className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 sm:hidden"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Swipe to see the full route →
@@ -1791,7 +1791,7 @@ function EventStructureSection() {
                 className="overflow-hidden"
               >
                 <div className="border-t border-lime-400/20 p-6 pt-5">
-                  <p className="mb-4 text-[13px] leading-6 text-neutral-400">
+                  <p className="mb-4 text-[14px] leading-6 text-neutral-400">
                     Five back-to-back elements with no rest. Everything you've tested across
                     the previous nine labours, compressed into one final push.
                   </p>
@@ -1809,13 +1809,13 @@ function EventStructureSection() {
                           className="flex items-center justify-between border-b border-white/[0.06] pb-2 last:border-0 last:pb-0"
                         >
                           <span
-                            className="text-[12.5px] text-neutral-400"
+                            className="text-[13.5px] text-neutral-400"
                             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                           >
                             {name}
                           </span>
                           <span
-                            className="text-[12.5px] font-bold text-lime-400"
+                            className="text-[13.5px] font-bold text-lime-400"
                             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                           >
                             {value}
@@ -1880,13 +1880,13 @@ function HowItWorksCard({ step, index }) {
               className="group relative flex aspect-square flex-col items-center justify-center gap-1.5 border border-white/[0.08] bg-[#111] px-1.5 text-center transition-colors hover:border-lime-400/30"
             >
               <PlayCircle
-                className="h-5 w-5 text-neutral-600 transition-colors group-hover:text-lime-400"
+                className="h-5 w-5 text-neutral-500 transition-colors group-hover:text-lime-400"
                 strokeWidth={1.5}
               />
               <p className="text-[9.5px] font-bold uppercase leading-tight tracking-[0.06em] text-neutral-400">
                 {label}
               </p>
-              <span className="absolute left-1 top-1 text-[8px] font-bold uppercase tracking-[0.1em] text-neutral-600">
+              <span className="absolute left-1 top-1 text-[8px] font-bold uppercase tracking-[0.1em] text-neutral-500">
                 Sample
               </span>
             </div>
@@ -1961,7 +1961,7 @@ function HowItWorksCard({ step, index }) {
                   {step.quotes.map((quote) => (
                     <p
                       key={quote}
-                      className="border-l-2 border-lime-400/40 bg-lime-400/[0.04] py-1.5 pl-3 text-[12.5px] italic leading-5 text-neutral-300"
+                      className="border-l-2 border-lime-400/40 bg-lime-400/[0.04] py-1.5 pl-3 text-[13.5px] italic leading-5 text-neutral-300"
                     >
                       "{quote}"
                     </p>
@@ -1999,7 +1999,7 @@ function ImprovementAreasPanel() {
           </h3>
         </div>
         <ChevronDown
-          className={`h-5 w-5 shrink-0 text-neutral-500 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`h-5 w-5 shrink-0 text-neutral-400 transition-transform ${open ? "rotate-180" : ""}`}
           strokeWidth={1.5}
         />
       </button>
@@ -2016,10 +2016,10 @@ function ImprovementAreasPanel() {
               {aiImprovementAreas.map(({ icon: Icon, title, text }) => (
                 <div key={title} className="bg-[#0d0d0d] p-6">
                   <Icon className="h-5 w-5 text-lime-400" strokeWidth={1.5} />
-                  <h4 className="mt-4 text-[13px] font-bold uppercase leading-tight tracking-[0.06em] text-white">
+                  <h4 className="mt-4 text-[14px] font-bold uppercase leading-tight tracking-[0.06em] text-white">
                     {title}
                   </h4>
-                  <p className="mt-2 text-[12.5px] leading-5 text-neutral-500">{text}</p>
+                  <p className="mt-2 text-[13.5px] leading-5 text-neutral-400">{text}</p>
                 </div>
               ))}
             </div>
@@ -2040,10 +2040,10 @@ function PersonalCapabilityCoach() {
           <Sparkles className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
         </div>
         <div className="flex-1">
-          <h4 className="text-[13px] font-bold uppercase tracking-[0.16em] text-white">
+          <h4 className="text-[14px] font-bold uppercase tracking-[0.16em] text-white">
             Your Personal Capability Coach
           </h4>
-          <p className="mt-2 text-[13px] leading-5 text-neutral-400">
+          <p className="mt-2 text-[14px] leading-5 text-neutral-400">
             As athletes upload more videos and complete more challenges, their UH
             profile evolves over time — revealing strengths, limitations, movement
             improvements and the next best training focus.
@@ -2074,7 +2074,7 @@ function PersonalCapabilityCoach() {
                   {aiProfileEvolution.map((point) => (
                     <div key={point} className="flex items-start gap-2.5">
                       <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-400" strokeWidth={2} />
-                      <p className="text-[12.5px] leading-5 text-neutral-400">{point}</p>
+                      <p className="text-[13.5px] leading-5 text-neutral-400">{point}</p>
                     </div>
                   ))}
                 </div>
@@ -2162,25 +2162,25 @@ function MovementCoachPreview() {
                     <div className="mt-4 space-y-3.5">
                       <div>
                         <p
-                          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500"
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                         >
                           What UH Sees
                         </p>
-                        <p className="mt-1.5 text-[13px] leading-5 text-neutral-300">{card.sees}</p>
+                        <p className="mt-1.5 text-[14px] leading-5 text-neutral-300">{card.sees}</p>
                       </div>
                       <div>
                         <p
-                          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600"
+                          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500"
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                         >
                           Coaching Cue
                         </p>
-                        <p className="mt-1.5 text-[13px] leading-5 text-lime-300">{card.cue}</p>
+                        <p className="mt-1.5 text-[14px] leading-5 text-lime-300">{card.cue}</p>
                       </div>
                       <div className="flex items-center justify-between border border-white/[0.08] bg-[#111] px-3 py-2.5">
                         <span
-                          className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-500"
+                          className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-400"
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                         >
                           Est. Score Gain
@@ -2189,7 +2189,7 @@ function MovementCoachPreview() {
                           className="text-[12px] font-bold text-white"
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                         >
-                          {card.from} <span className="text-neutral-600">→</span>{" "}
+                          {card.from} <span className="text-neutral-500">→</span>{" "}
                           <span className="text-lime-400">{card.to}</span>
                         </span>
                       </div>
@@ -2308,7 +2308,7 @@ function AthleteTypeQuiz({ onClose }) {
       <div>
         <div className="mb-5 h-1 w-full bg-lime-400" />
         <p
-          className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500"
+          className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400"
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
           Your Snapshot Result
@@ -2331,7 +2331,7 @@ function AthleteTypeQuiz({ onClose }) {
             </div>
           ))}
         </div>
-        <p className="mt-5 text-[12.5px] leading-5 text-neutral-500">
+        <p className="mt-5 text-[13.5px] leading-5 text-neutral-400">
           This is a quick preview — your full UHS Report breaks this down across all 10 capability
           pillars.
         </p>
@@ -2368,7 +2368,7 @@ function AthleteTypeQuiz({ onClose }) {
         />
       </div>
       <p
-        className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500"
+        className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
         Question {step + 1} of {total}
@@ -2401,7 +2401,7 @@ function AthleteTypeQuiz({ onClose }) {
 function FullAssessmentPreview({ onClose }) {
   return (
     <div>
-      <p className="text-[13px] leading-5 text-neutral-400">
+      <p className="text-[14px] leading-5 text-neutral-400">
         The full Human Context assessment captures the inputs behind your UHS Report — training
         history, movement confidence and goals.
       </p>
@@ -2428,7 +2428,7 @@ function FullAssessmentPreview({ onClose }) {
           </div>
         ))}
       </div>
-      <p className="mt-5 text-[12.5px] leading-5 text-neutral-500">
+      <p className="mt-5 text-[13.5px] leading-5 text-neutral-400">
         This feeds your UHS Score, your Athlete Type and your AI training focus.
       </p>
       <a
@@ -2538,20 +2538,20 @@ function YourJourneyHub() {
                   {/* Step number circle */}
                   <div className="relative z-10 mb-5 flex h-[2.75rem] w-[2.75rem] shrink-0 items-center justify-center rounded-full border border-white/[0.12] bg-[#0d0d0d] transition-colors group-hover:border-lime-400/50 group-hover:bg-lime-400/[0.07]">
                     <span
-                      className="text-[11px] font-bold tabular-nums text-neutral-600 transition-colors group-hover:text-lime-400"
+                      className="text-[11px] font-bold tabular-nums text-neutral-500 transition-colors group-hover:text-lime-400"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       0{i + 1}
                     </span>
                   </div>
                   <Icon
-                    className="mb-3 h-5 w-5 text-neutral-600 transition-colors group-hover:text-lime-400/70"
+                    className="mb-3 h-5 w-5 text-neutral-500 transition-colors group-hover:text-lime-400/70"
                     strokeWidth={1.5}
                   />
                   <h3 className="text-[15px] font-bold uppercase tracking-wide text-white">
                     {card.title}
                   </h3>
-                  <p className="mt-2 text-[12.5px] leading-5 text-neutral-600">{card.text}</p>
+                  <p className="mt-2 text-[13.5px] leading-5 text-neutral-500">{card.text}</p>
                   <span
                     className="mt-4 flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-[0.18em] text-lime-400/60 transition-colors group-hover:text-lime-400"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -2610,7 +2610,7 @@ function ScoreSection() {
     <div className="grid gap-px bg-white/[0.05] md:grid-cols-[1fr_1.1fr]">
       <div className="bg-[#0d0d0d] p-7 md:p-8">
         <p
-          className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+          className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
           What It Means
@@ -2630,7 +2630,7 @@ function ScoreSection() {
       <div className="flex flex-col items-center justify-center bg-[#0d0d0d] p-9">
         <Gauge className="h-10 w-10 text-neutral-700" strokeWidth={1} />
         <p
-          className="mt-4 text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-600"
+          className="mt-4 text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-500"
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
           Overall Score
@@ -2639,7 +2639,7 @@ function ScoreSection() {
           className="mt-2 text-5xl text-white"
           style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
         >
-          <CountUp to={71} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-600">/100</span>
+          <CountUp to={71} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-500">/100</span>
         </p>
         <div className="mt-5 h-1.5 w-full max-w-xs bg-white/[0.06]">
           <motion.div
@@ -2651,7 +2651,7 @@ function ScoreSection() {
             transition={{ duration: 0.9, ease: "easeOut" }}
           />
         </div>
-        <p className="mt-3 text-[11px] text-neutral-600">
+        <p className="mt-3 text-[11px] text-neutral-500">
           Sample score — your result is generated on event day
         </p>
       </div>
@@ -2671,9 +2671,9 @@ function ScoreSection() {
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="text-base uppercase tracking-wide text-white">{d.title}</h3>
-            <p className="text-[13px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-600">/100</span></p>
+            <p className="text-[14px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-500">/100</span></p>
           </div>
-          <p className="mt-1.5 text-sm leading-6 text-neutral-500">{d.text}</p>
+          <p className="mt-1.5 text-sm leading-6 text-neutral-400">{d.text}</p>
           <div className="mt-3 h-1 w-full bg-white/[0.06]">
             <motion.div
               className="h-1 bg-lime-400"
@@ -2702,10 +2702,10 @@ function ScoreSection() {
         >
           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-400" strokeWidth={2} />
           <div>
-            <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-white">
+            <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-white">
               {item.title}
             </p>
-            <p className="mt-1.5 text-sm leading-6 text-neutral-500">{item.text}</p>
+            <p className="mt-1.5 text-sm leading-6 text-neutral-400">{item.text}</p>
           </div>
         </motion.div>
       ))}
@@ -2783,7 +2783,7 @@ function AICoachingSection() {
   const profilePanel = (
     <div className="bg-[#0d0d0d] p-7">
       <p
-        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
         01 Athlete Inputs
@@ -2800,13 +2800,13 @@ function AICoachingSection() {
         ].map(([label, value]) => (
           <div key={label}>
             <p
-              className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-600"
+              className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               {label}
             </p>
             <div
-              className="mt-1.5 border border-white/[0.08] bg-[#111] px-3 py-2.5 text-[13px] text-neutral-200"
+              className="mt-1.5 border border-white/[0.08] bg-[#111] px-3 py-2.5 text-[14px] text-neutral-200"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               {value}
@@ -2839,7 +2839,7 @@ function AICoachingSection() {
       className="bg-[#0d0d0d] p-7"
     >
       <p
-        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
         02 Predicted UHS
@@ -2853,7 +2853,7 @@ function AICoachingSection() {
         </p>
         <div className="pb-2">
           <p
-            className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-neutral-500"
+            className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-neutral-400"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Athlete Type
@@ -2870,7 +2870,7 @@ function AICoachingSection() {
       <div className="mt-5 grid grid-cols-2 gap-px bg-white/[0.05]">
         <div className="bg-[#111] p-4">
           <p
-            className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+            className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Predicted Completion
@@ -2879,7 +2879,7 @@ function AICoachingSection() {
         </div>
         <div className="bg-[#111] p-4">
           <p
-            className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+            className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Recommended Entry
@@ -2946,7 +2946,7 @@ function AICoachingSection() {
               className="text-[12px] font-bold text-white"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
-              {g.from} <span className="text-neutral-600">→</span>{" "}
+              {g.from} <span className="text-neutral-500">→</span>{" "}
               <span className="text-lime-400">{g.to}</span>
             </span>
           </div>
@@ -2964,7 +2964,7 @@ function AICoachingSection() {
         {aiTrainingFocus.map((point, i) => (
           <div key={point} className="flex gap-3">
             <span className="text-[12px] font-bold text-lime-400">{i + 1}</span>
-            <p className="text-[13px] leading-5 text-neutral-300">{point}</p>
+            <p className="text-[14px] leading-5 text-neutral-300">{point}</p>
           </div>
         ))}
       </div>
@@ -3054,7 +3054,7 @@ function AICoachingSection() {
         </div>
 
         <p
-          className="mb-6 max-w-3xl text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+          className="mb-6 max-w-3xl text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
           Based on your profile, training background and movement confidence,
@@ -3100,7 +3100,7 @@ function AICoachingSection() {
           {movementPanel}
           <div className="space-y-7 bg-[#0d0d0d] p-7">
             <p
-              className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+              className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               03 Coaching Output
@@ -3147,7 +3147,7 @@ function WhyDifferentExplainer() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="mt-5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500 transition-colors hover:text-lime-400"
+        className="mt-5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 transition-colors hover:text-lime-400"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
         {open ? "Hide Full Explanation" : "Show Full Explanation"}
@@ -3248,7 +3248,7 @@ function TierCard({ tier, index }) {
         }`}
       >
         <tier.icon
-          className={`h-5 w-5 ${tier.highlighted ? "text-lime-400" : "text-neutral-500"}`}
+          className={`h-5 w-5 ${tier.highlighted ? "text-lime-400" : "text-neutral-400"}`}
           strokeWidth={1.5}
         />
       </div>
@@ -3261,13 +3261,13 @@ function TierCard({ tier, index }) {
           {tier.price}
         </p>
       )}
-      <p className="mt-2 text-[13px] leading-5 text-neutral-400">{tier.summary}</p>
+      <p className="mt-2 text-[14px] leading-5 text-neutral-400">{tier.summary}</p>
 
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="mt-5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500 transition-colors hover:text-lime-400"
+        className="mt-5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 transition-colors hover:text-lime-400"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
         {open ? "Hide Details" : "View Details"}
@@ -3289,7 +3289,7 @@ function TierCard({ tier, index }) {
             <div className="mt-4 space-y-3 pb-1">
               {tier.includesNote && (
                 <p
-                  className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-600"
+                  className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-500"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   {tier.includesNote}
@@ -3299,11 +3299,11 @@ function TierCard({ tier, index }) {
                 <div key={point} className="flex items-start gap-3">
                   <CheckCircle2
                     className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${
-                      tier.highlighted ? "text-lime-400" : "text-neutral-600"
+                      tier.highlighted ? "text-lime-400" : "text-neutral-500"
                     }`}
                     strokeWidth={2}
                   />
-                  <p className="text-[13px] leading-5 text-neutral-400">{point}</p>
+                  <p className="text-[14px] leading-5 text-neutral-400">{point}</p>
                 </div>
               ))}
             </div>
@@ -3369,7 +3369,7 @@ function SubscriptionSection() {
             performance.
           </p>
           <p
-            className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+            className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             This is your ongoing platform access — separate from event entry.
@@ -3383,7 +3383,7 @@ function SubscriptionSection() {
         </div>
 
         <div className="mt-px flex flex-wrap items-center justify-between gap-4 bg-[#0a0a0a] p-6">
-          <p className="text-[13px] text-neutral-400">
+          <p className="text-[14px] text-neutral-400">
             Questions about subscriptions, scoring or training focus?
           </p>
           <a
@@ -3485,7 +3485,7 @@ function WholeHumanContent({ progress }) {
         <motion.div style={{ opacity: subOpacity, y: subY }} className="mt-7 flex items-center gap-4">
           <motion.div style={{ x: leftX, opacity: ruleOpacity }} className="h-px w-10 bg-lime-400/70" />
           <p
-            className="text-[13px] font-bold uppercase tracking-[0.34em] text-lime-400"
+            className="text-[14px] font-bold uppercase tracking-[0.34em] text-lime-400"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Ten Capabilities. One Score.
@@ -3756,7 +3756,7 @@ function WaitlistForm() {
             onChange={(e) => setConsent(e.target.checked)}
             className="mt-1 h-4 w-4 shrink-0 accent-lime-400"
           />
-          <span className="text-[13px] leading-5 text-neutral-400">
+          <span className="text-[14px] leading-5 text-neutral-400">
             I agree to be contacted about the Ultimate Human launch. We'll only use your
             details for this and you can unsubscribe anytime.
           </span>
@@ -3764,7 +3764,7 @@ function WaitlistForm() {
       </div>
 
       {error && (
-        <p role="alert" className="mt-3 text-[13px] text-red-400">
+        <p role="alert" className="mt-3 text-[14px] text-red-400">
           {error}
         </p>
       )}
@@ -3772,7 +3772,7 @@ function WaitlistForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="btn-lime-glow mt-6 flex w-full items-center justify-center bg-lime-400 px-8 py-4 text-[13px] font-black uppercase tracking-[0.18em] text-black transition-colors hover:bg-lime-300 disabled:opacity-60"
+        className="btn-lime-glow mt-6 flex w-full items-center justify-center bg-lime-400 px-8 py-4 text-[14px] font-black uppercase tracking-[0.18em] text-black transition-colors hover:bg-lime-300 disabled:opacity-60"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
         {status === "loading" ? "Joining…" : "Join the Founding Athlete Waitlist"}
@@ -3780,11 +3780,11 @@ function WaitlistForm() {
       </button>
 
       {status === "error" && (
-        <p role="alert" className="mt-3 text-center text-[13px] text-red-400">
+        <p role="alert" className="mt-3 text-center text-[14px] text-red-400">
           Something went wrong. Please try again, or email {WAITLIST_EMAIL}.
         </p>
       )}
-      <p className="mt-3 text-center text-[12px] text-neutral-600">No spam — just launch updates.</p>
+      <p className="mt-3 text-center text-[12px] text-neutral-500">No spam — just launch updates.</p>
     </form>
   );
 }
@@ -3880,7 +3880,7 @@ function SideQuickNav() {
                     whileHover={{ scale: 1.18, x: -6, color: "#a3e635" }}
                     whileTap={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 500, damping: 18 }}
-                    className="block origin-right cursor-pointer whitespace-nowrap py-1 text-right text-[13px] font-bold uppercase tracking-[0.16em] text-neutral-300"
+                    className="block origin-right cursor-pointer whitespace-nowrap py-1 text-right text-[14px] font-bold uppercase tracking-[0.16em] text-neutral-300"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     {l.label}
@@ -3968,7 +3968,7 @@ export default function App() {
               <a
                 key={href}
                 href={href}
-                className="text-[11.5px] font-bold uppercase tracking-[0.22em] text-neutral-500 no-underline transition-colors hover:text-white"
+                className="text-[11.5px] font-bold uppercase tracking-[0.22em] text-neutral-400 no-underline transition-colors hover:text-white"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 {label}
@@ -4012,7 +4012,7 @@ export default function App() {
                     key={href}
                     href={href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="border-b border-white/[0.05] py-4 text-[13px] font-bold uppercase tracking-[0.22em] text-neutral-300 no-underline transition-colors hover:text-lime-400"
+                    className="border-b border-white/[0.05] py-4 text-[14px] font-bold uppercase tracking-[0.22em] text-neutral-300 no-underline transition-colors hover:text-lime-400"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     {label}
@@ -4125,7 +4125,7 @@ export default function App() {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#signup"
-                  className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[12.5px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
+                  className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[13.5px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Join the Founding Athlete Waitlist
@@ -4133,7 +4133,7 @@ export default function App() {
                 </a>
                 <a
                   href="#challenge"
-                  className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[12.5px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
+                  className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[13.5px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
                   Explore the Challenge
@@ -4156,7 +4156,7 @@ export default function App() {
                       {label}
                     </p>
                     <p
-                      className="mt-0.5 text-[10.5px] uppercase tracking-[0.15em] text-neutral-600"
+                      className="mt-0.5 text-[10.5px] uppercase tracking-[0.15em] text-neutral-500"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {sub}
@@ -4222,7 +4222,7 @@ export default function App() {
                       <th
                         key={brand.name}
                         className={`px-6 py-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] ${
-                          brand.highlighted ? "text-lime-400" : "text-neutral-500"
+                          brand.highlighted ? "text-lime-400" : "text-neutral-400"
                         }`}
                         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                       >
@@ -4244,7 +4244,7 @@ export default function App() {
                       transition={{ duration: 0.55, delay: rowIdx * 0.06, ease: [0.16, 1, 0.3, 1] }}
                       className="border-t border-white/[0.05]"
                     >
-                      <td className="py-4 pr-6 text-[13px] text-neutral-400">{dim}</td>
+                      <td className="py-4 pr-6 text-[14px] text-neutral-400">{dim}</td>
                       {differenceTable.brands.map((brand) => {
                         const rating = brand.ratings[rowIdx];
                         return (
@@ -4305,7 +4305,7 @@ export default function App() {
                   <div>
                     <p className="text-[15px] font-bold uppercase tracking-wide text-white">{title}</p>
                     <p
-                      className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-neutral-600"
+                      className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-neutral-500"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {sub}
@@ -4409,7 +4409,7 @@ export default function App() {
                     <Trophy className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
                   </div>
                   <p
-                    className="text-[13px] font-bold uppercase tracking-[0.18em] text-white"
+                    className="text-[14px] font-bold uppercase tracking-[0.18em] text-white"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     {label}
@@ -4486,7 +4486,7 @@ export default function App() {
                       <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-lime-400/50" />
                       <div>
                         <p className="text-[15px] font-bold uppercase tracking-wide text-white">{item.title}</p>
-                        <p className="mt-1.5 text-[13px] leading-6 text-neutral-500">{item.text}</p>
+                        <p className="mt-1.5 text-[14px] leading-6 text-neutral-400">{item.text}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -4521,7 +4521,7 @@ export default function App() {
                 be limited and pricing will increase after launch release.
               </p>
               <p
-                className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-600"
+                className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 This is your event entry fee — not your platform membership.
@@ -4541,7 +4541,7 @@ export default function App() {
                   <div className="absolute left-0 top-0 h-px w-2/3 bg-gradient-to-r from-lime-400/70 to-transparent" />
                   <div className="p-7">
                     <p
-                      className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-600"
+                      className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {item.category}
@@ -4553,7 +4553,7 @@ export default function App() {
                       {item.price}
                     </p>
                     <p
-                      className="mt-2 text-[13px] text-neutral-500"
+                      className="mt-2 text-[14px] text-neutral-400"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {item.detail}
@@ -4572,7 +4572,7 @@ export default function App() {
 
             <div className="mt-px bg-[#0a0a0a] p-8">
               <p
-                className="mb-6 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
+                className="mb-6 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-400"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 Founding Athlete Benefits Include:
@@ -4587,7 +4587,7 @@ export default function App() {
                   <div key={benefit} className="flex items-center gap-4">
                     <div className="h-px w-6 shrink-0 bg-lime-400" />
                     <p
-                      className="text-[13px] text-neutral-300"
+                      className="text-[14px] text-neutral-300"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
                       {benefit}
@@ -4742,7 +4742,7 @@ export default function App() {
 
                 <WaitlistForm />
 
-                <p className="mt-6 text-center text-[13px] text-neutral-500">
+                <p className="mt-6 text-center text-[14px] text-neutral-400">
                   Bringing a gym or team?{" "}
                   <a
                     href="mailto:hello@theultimatehuman.fitness"
@@ -4782,7 +4782,7 @@ export default function App() {
                     <div className="h-1.5 w-1.5 bg-lime-400" />
                   </div>
                   <p
-                    className="text-[13px] leading-6 text-neutral-300"
+                    className="text-[14px] leading-6 text-neutral-300"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     {item}
