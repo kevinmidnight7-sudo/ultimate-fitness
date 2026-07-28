@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useInView } from "framer-motion";
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
 import {
@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.2.1.0";
+const SITE_VERSION = "v1.3.1.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -865,338 +865,156 @@ function CapabilityPillarsSection() {
    HERO ARENA BACKGROUND
 ───────────────────────────────────────────────────────────────── */
 
-function HeroArenaBackground({ heroRef, reducedMotion, bare = false }) {
-  const mouseGlowRef = useRef(null);
+/* ─────────────────────────────────────────────────────────────────
+   HERO THEME PATTERN — branded "measurement" backdrop. Pure CSS: a fine
+   technical grid, heavier lime measure-lines, a drifting diagonal hatch,
+   corner ticks and the UH watermark. No image assets, no network cost.
+───────────────────────────────────────────────────────────────── */
 
-  /* 16 curated particles — fewer, more intentional */
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 16 }, (_, i) => ({
-        id: i,
-        x: ((i * 53 + 17) % 82) + 12,
-        y: ((i * 31 + 11) % 76) + 8,
-        size: i % 8 === 0 ? 3 : i % 3 === 0 ? 2 : 1,
-        dur: 12 + ((i * 4) % 14),
-        delay: (i * 2.1) % 9,
-        opacity: (3 + ((i * 5) % 16)) / 100,
-        lime: i % 6 === 0,
-        rise: i % 8 === 0 ? 24 : i % 3 === 0 ? 15 : 9,
-      })),
-    []
-  );
+function HeroPatternBackground({ heroRef, reducedMotion }) {
+  const gridRef = useRef(null);
+  const measureRef = useRef(null);
+  const hatchRef = useRef(null);
+  const glowRef = useRef(null);
 
-  /* Direct-DOM mouse glow — zero re-renders */
+  /* Cursor-reactive parallax — layers shift by different amounts for depth.
+     Written straight to the DOM (rAF-throttled) so there are zero re-renders. */
   useEffect(() => {
     if (reducedMotion) return;
-    const hero = heroRef.current;
-    if (!hero) return;
-    const onMove = (e) => {
-      if (!mouseGlowRef.current) return;
-      const r = hero.getBoundingClientRect();
-      if (e.clientY < r.top || e.clientY > r.bottom) return;
-      const x = ((e.clientX - r.left) / r.width) * 100;
-      const y = ((e.clientY - r.top) / r.height) * 100;
-      mouseGlowRef.current.style.background = `radial-gradient(circle 800px at ${x}% ${y}%, rgba(163,230,53,0.03) 0%, transparent 65%)`;
+    let frame = 0;
+    let tx = 0;
+    let ty = 0;
+    const apply = () => {
+      frame = 0;
+      if (gridRef.current) gridRef.current.style.transform = `translate3d(${tx * 8}px, ${ty * 8}px, 0)`;
+      if (measureRef.current) measureRef.current.style.transform = `translate3d(${tx * 20}px, ${ty * 20}px, 0)`;
+      if (hatchRef.current) hatchRef.current.style.transform = `translate3d(${tx * 36}px, ${ty * 36}px, 0)`;
+      if (glowRef.current) {
+        glowRef.current.style.background =
+          `radial-gradient(ellipse 60% 55% at ${78 + tx * 12}% ${18 + ty * 12}%, rgba(163,230,53,0.20) 0%, transparent 62%),` +
+          `radial-gradient(ellipse 50% 45% at ${20 + tx * 8}% ${90 + ty * 8}%, rgba(163,230,53,0.09) 0%, transparent 65%)`;
+      }
     };
-    hero.addEventListener("mousemove", onMove);
-    return () => hero.removeEventListener("mousemove", onMove);
-  }, [heroRef, reducedMotion]);
+    const onMove = (e) => {
+      // -0.5 … 0.5 relative to the viewport
+      tx = e.clientX / window.innerWidth - 0.5;
+      ty = e.clientY / window.innerHeight - 0.5;
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [reducedMotion]);
 
-  /* Bare mode — a hero photo is in place, so drop the decorative arena
-     graphics (beams, grid, particles, washes) and keep only the logo watermark. */
-  if (bare) {
-    return (
-      <div
-        className="pointer-events-none absolute inset-0 select-none overflow-hidden"
-        aria-hidden="true"
-      >
-        <div
-          className="absolute"
-          style={{
-            bottom: "6%",
-            right: "4%",
-            width: "clamp(170px, 21vw, 300px)",
-            opacity: 0.06,
-            filter: "grayscale(1) brightness(4) blur(0.5px)",
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
-        >
-          <img src="/images/logo.png" alt="" className="w-full" />
-        </div>
-      </div>
-    );
-  }
+  /* Scroll-linked drift — the pattern glides as you scroll through the hero. */
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const measureY = useTransform(scrollYProgress, [0, 1], ["0%", "26%"]);
+  const hatchY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const patternFade = useTransform(scrollYProgress, [0, 1], [1, 0.35]);
 
   return (
     <div
       className="pointer-events-none absolute inset-0 select-none overflow-hidden"
       aria-hidden="true"
     >
-      {/* 01 Base */}
-      <div className="absolute inset-0 bg-[#050505]" />
+      {/* Base tone */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(165deg, #0c1207 0%, #07080a 45%, #0a0c10 100%)" }}
+      />
 
-      {/* 02 Overhead ambient — wide stadium ceiling wash */}
+      {/* Fine technical grid */}
+      <motion.div className="absolute inset-0" style={{ y: reducedMotion ? 0 : gridY, opacity: patternFade }}>
+        <div
+          ref={gridRef}
+          className="absolute inset-[-10%] will-change-transform"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)," +
+              "repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)",
+          }}
+        />
+      </motion.div>
+
+      {/* Heavier lime measure-lines every 240px */}
+      <motion.div className="absolute inset-0" style={{ y: reducedMotion ? 0 : measureY, opacity: patternFade }}>
+        <div
+          ref={measureRef}
+          className="absolute inset-[-10%] will-change-transform"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)," +
+              "repeating-linear-gradient(90deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)",
+          }}
+        />
+      </motion.div>
+
+      {/* Drifting diagonal hatch */}
+      <motion.div className="absolute inset-0" style={{ y: reducedMotion ? 0 : hatchY, opacity: patternFade }}>
+        <div
+          ref={hatchRef}
+          className="uh-pattern-hatch absolute inset-[-40%] will-change-transform"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(135deg, rgba(163,230,53,0.05) 0 2px, transparent 2px 16px)",
+          }}
+        />
+      </motion.div>
+
+      {/* Lime glow bloom — follows the cursor */}
+      <div
+        ref={glowRef}
+        className="absolute inset-0 transition-[background] duration-300 ease-out"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 55% at 78% 18%, rgba(163,230,53,0.20) 0%, transparent 62%)," +
+            "radial-gradient(ellipse 50% 45% at 20% 90%, rgba(163,230,53,0.09) 0%, transparent 65%)",
+        }}
+      />
+
+      {/* Vignette so the headline stays crisp */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 90% 60% at 60% -8%, rgba(255,255,255,0.062) 0%, rgba(255,255,255,0.016) 45%, transparent 75%)",
+            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 0%, rgba(5,5,5,0.55) 100%)," +
+            "linear-gradient(90deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.35) 42%, transparent 70%)",
         }}
       />
 
-      {/* 03 Right arena depth glow */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 80% at 92% 28%, rgba(255,255,255,0.03) 0%, transparent 70%)",
-        }}
-      />
+      {/* Corner measure ticks — technical framing */}
+      {[
+        "left-8 top-24 border-l border-t",
+        "right-8 top-24 border-r border-t",
+        "left-8 bottom-10 border-b border-l",
+        "right-8 bottom-10 border-b border-r",
+      ].map((pos) => (
+        <div key={pos} className={`absolute hidden h-10 w-10 border-lime-400/25 md:block ${pos}`} />
+      ))}
 
-      {/* 04 Beam 1 — primary right spotlight */}
-      <div
-        className="uh-beam-1 absolute"
-        style={{
-          top: 0,
-          left: "55%",
-          width: "360px",
-          height: "100%",
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.10) 10%, rgba(255,255,255,0.038) 40%, rgba(255,255,255,0.008) 65%, transparent 85%)",
-          clipPath: "polygon(49% 0%, 51% 0%, 84% 100%, 16% 100%)",
-          transformOrigin: "50% 0%",
-          filter: "blur(8px)",
-          animation: reducedMotion ? "none" : "uh-beam-1 11s ease-in-out infinite",
-        }}
-      />
-
-      {/* 04a Lens source dot — beam 1 */}
-      <div
-        className="uh-lens-1 absolute"
-        style={{
-          top: "0px",
-          left: "calc(55% + 160px - 3px)",
-          width: "5px",
-          height: "5px",
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.88)",
-          boxShadow: "0 0 9px 4px rgba(255,255,255,0.08)",
-          animation: reducedMotion ? "none" : "uh-lens-pulse 11s ease-in-out infinite",
-        }}
-      />
-
-      {/* 05 Beam 2 — secondary centre-left */}
-      <div
-        className="uh-beam-2 absolute"
-        style={{
-          top: 0,
-          left: "33%",
-          width: "240px",
-          height: "82%",
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 12%, rgba(255,255,255,0.015) 48%, transparent 80%)",
-          clipPath: "polygon(49% 0%, 51% 0%, 90% 100%, 10% 100%)",
-          transformOrigin: "50% 0%",
-          filter: "blur(6px)",
-          animation: reducedMotion ? "none" : "uh-beam-2 15s ease-in-out infinite 1.2s",
-        }}
-      />
-
-      {/* 05a Lens source dot — beam 2 */}
-      <div
-        className="uh-lens-2 absolute"
-        style={{
-          top: "0px",
-          left: "calc(33% + 120px - 2px)",
-          width: "4px",
-          height: "4px",
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.7)",
-          boxShadow: "0 0 6px 2px rgba(255,255,255,0.055)",
-          animation: reducedMotion ? "none" : "uh-lens-pulse-2 15s ease-in-out infinite 1.2s",
-        }}
-      />
-
-      {/* 06 Beam 3 — far-right accent */}
-      <div
-        className="uh-beam-3 absolute"
-        style={{
-          top: 0,
-          left: "76%",
-          width: "180px",
-          height: "72%",
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.045) 12%, rgba(255,255,255,0.01) 50%, transparent 80%)",
-          clipPath: "polygon(49% 0%, 51% 0%, 95% 100%, 5% 100%)",
-          transformOrigin: "50% 0%",
-          filter: "blur(5px)",
-          animation: reducedMotion ? "none" : "uh-beam-3 19s ease-in-out infinite 3s",
-        }}
-      />
-
-      {/* 07 Stadium arc rings — seating tiers */}
-      <div
-        className="absolute"
-        style={{
-          top: "2%",
-          right: "-12%",
-          width: "70%",
-          height: "78%",
-          pointerEvents: "none",
-          maskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 22%, black 42%, black 72%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 22%, black 42%, black 72%, transparent 100%)",
-        }}
-      >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 640 720"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Only inner rings — outer ellipses read as horizontal lines at this scale */}
-          <ellipse cx="320" cy="276" rx="280" ry="140" stroke="rgba(163,230,53,0.042)" strokeWidth="0.8" />
-          <motion.ellipse
-            cx="320"
-            cy="288"
-            rx="180"
-            ry="86"
-            stroke="rgba(163,230,53,0.065)"
-            strokeWidth="0.7"
-            fill="none"
-            animate={reducedMotion ? {} : { opacity: [0.45, 1, 0.45] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <ellipse cx="320" cy="296" rx="90" ry="38" stroke="rgba(255,255,255,0.018)" strokeWidth="0.5" />
-          <line
-            x1="320" y1="0" x2="320" y2="290"
-            stroke="rgba(255,255,255,0.016)"
-            strokeWidth="0.5"
-            strokeDasharray="4 6"
-          />
-        </svg>
-      </div>
-
-      {/* 08 Perspective arena floor grid */}
-      <div
-        className="uh-grid absolute"
-        style={{
-          bottom: 0,
-          left: "-60%",
-          right: "-60%",
-          height: "60%",
-          backgroundImage: `
-            linear-gradient(rgba(163,230,53,0.07) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(163,230,53,0.07) 1px, transparent 1px)
-          `,
-          backgroundSize: "90px 90px",
-          transform: "perspective(520px) rotateX(76deg)",
-          transformOrigin: "bottom center",
-          maskImage: "radial-gradient(ellipse 70% 100% at 50% 100%, black 25%, transparent 85%)",
-          WebkitMaskImage: "radial-gradient(ellipse 70% 100% at 50% 100%, black 25%, transparent 85%)",
-          animation: reducedMotion ? "none" : "uh-grid-scroll 5s linear infinite",
-        }}
-      />
-
-      {/* 09 Floor lime ambient glow */}
-      <div
-        className="absolute bottom-0 left-0 right-0"
-        style={{
-          height: "48%",
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(132,204,22,0.12) 0%, transparent 70%)",
-        }}
-      />
-
-
-      {/* 11 Logo watermark — floor right */}
+      {/* UH watermark — floor right */}
       <div
         className="absolute"
         style={{
           bottom: "6%",
           right: "4%",
           width: "clamp(170px, 21vw, 300px)",
-          opacity: 0.06,
+          opacity: 0.05,
           filter: "grayscale(1) brightness(4) blur(0.5px)",
-          pointerEvents: "none",
-          userSelect: "none",
         }}
-        aria-hidden="true"
       >
         <img src="/images/logo.png" alt="" className="w-full" />
       </div>
-
-      {/* 12 Floating particles */}
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          style={{
-            position: "absolute",
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            borderRadius: "50%",
-            background: p.lime
-              ? `rgba(163,230,53,${Math.min(p.opacity * 2.8, 0.42)})`
-              : `rgba(255,255,255,${Math.min(p.opacity * 2.4, 0.36)})`,
-            boxShadow:
-              p.size === 3
-                ? p.lime
-                  ? `0 0 5px 2px rgba(163,230,53,${p.opacity * 1.3})`
-                  : `0 0 5px 2px rgba(255,255,255,${p.opacity * 0.65})`
-                : "none",
-          }}
-          animate={
-            reducedMotion
-              ? {}
-              : {
-                  y: [0, -p.rise, 0],
-                  opacity: [p.opacity, p.opacity * 0.1, p.opacity],
-                }
-          }
-          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-
-      {/* 13 Film grain / noise */}
-      <svg
-        className="absolute inset-0 h-full w-full"
-        style={{ opacity: 0.04 }}
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <filter id="uh-grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="3" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#uh-grain)" />
-      </svg>
-
-      {/* 15 Mouse-reactive lime glow */}
-      <div ref={mouseGlowRef} className="absolute inset-0" />
-
-      {/* 16 Bottom site-bg fade */}
-      <div
-        className="absolute bottom-0 left-0 right-0"
-        style={{ height: "130px", background: "linear-gradient(to top, #050505, transparent)" }}
-      />
-
-      {/* 18 Top accent line */}
-      <div
-        className="absolute left-0 right-0 top-0 h-px"
-        style={{
-          background:
-            "linear-gradient(to right, transparent 0%, rgba(163,230,53,0.28) 25%, rgba(163,230,53,0.5) 50%, rgba(163,230,53,0.28) 75%, transparent 100%)",
-        }}
-      />
     </div>
   );
 }
+
 
 /* ─────────────────────────────────────────────────────────────────
    PASSWORD GATE
@@ -3965,7 +3783,6 @@ export default function App() {
   });
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
-  const [heroPhotoLoaded, setHeroPhotoLoaded] = useState(false);
   const { scrollY: navScrollY } = useScroll();
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -4090,20 +3907,11 @@ export default function App() {
           ref={heroRef}
           className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
-          {/* Hero athlete image — drop hero-athlete-primary.jpg into public/images/marketing/ and it appears here automatically */}
-          <div className="absolute inset-0 z-0">
-            <MarketingImage
-              file="hero-athlete-primary.jpg"
-              aspectRatio="16/9"
-              searchTerms="athlete explosive sled push dark gym dramatic lighting"
-              treatment="Duotone B&W/lime · left-to-right dark gradient overlay · grain"
-              className="h-full w-full opacity-30"
-              fill
-              opacity={0.62}
-              onResolved={setHeroPhotoLoaded}
-            />
-          </div>
-          <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} bare={heroPhotoLoaded} />
+          {/* Hero athlete photo removed at Ken's request (27 Jul) — replaced with a
+              branded theme pattern (technical measurement grid + lime accents).
+              The asset is still at /images/marketing/hero-athlete-primary.jpg if we
+              want to reinstate it. */}
+          <HeroPatternBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
           <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
             <motion.div
