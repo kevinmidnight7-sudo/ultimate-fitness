@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.2.1.0";
+const SITE_VERSION = "v1.2.2.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -3965,7 +3965,6 @@ export default function App() {
   });
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
-  const [heroPhotoLoaded, setHeroPhotoLoaded] = useState(false);
   const { scrollY: navScrollY } = useScroll();
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -4090,20 +4089,11 @@ export default function App() {
           ref={heroRef}
           className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
         >
-          {/* Hero athlete image — drop hero-athlete-primary.jpg into public/images/marketing/ and it appears here automatically */}
-          <div className="absolute inset-0 z-0">
-            <MarketingImage
-              file="hero-athlete-primary.jpg"
-              aspectRatio="16/9"
-              searchTerms="athlete explosive sled push dark gym dramatic lighting"
-              treatment="Duotone B&W/lime · left-to-right dark gradient overlay · grain"
-              className="h-full w-full opacity-30"
-              fill
-              opacity={0.62}
-              onResolved={setHeroPhotoLoaded}
-            />
-          </div>
-          <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} bare={heroPhotoLoaded} />
+          {/* Hero athlete photo removed at Ken's request (27 Jul) — it detracted from
+              the message. The animated arena background carries the hero instead.
+              The asset is still at /images/marketing/hero-athlete-primary.jpg if we
+              want to reinstate it. */}
+          <HeroArenaBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
           <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
             <motion.div
