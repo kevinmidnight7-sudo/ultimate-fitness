@@ -93,6 +93,23 @@ h3 {
   }
 }
 
+/* ── Hero theme pattern ──────────────────────────────────────── */
+/* Slow diagonal drift for the hatch layer — purely decorative. */
+@keyframes uh-pattern-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 280px 280px; }
+}
+
+.uh-pattern-hatch {
+  animation: uh-pattern-drift 60s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uh-pattern-hatch {
+    animation: none !important;
+  }
+}
+
 /* ── Metallic text utilities ─────────────────────────────────── */
 
 .text-metallic {
