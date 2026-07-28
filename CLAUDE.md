@@ -5,7 +5,7 @@ lucide-react, recharts. Almost the entire UI lives in `src/App.jsx` as named
 section components. Shared pieces live in `src/components/`.
 
 - Password gate is client-side (`SITE_PASSWORD` in `App.jsx`) — don't change its behaviour.
-- `SITE_VERSION` in `App.jsx` drives the footer version marker — bump it on notable changes.
+- `SITE_VERSION` in `App.jsx` drives the footer version marker — bump it on EVERY update/push (last segment per change), ideally in the same commit.
 - Design system: near-black backgrounds, `lime-400` accent only, `Oswald` display /
   `Barlow Condensed` UI. Keep lime for CTAs/active states; dim it elsewhere.
 - Lint baseline is 6 pre-existing errors; don't introduce new ones. Build must pass.
