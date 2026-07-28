@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.3.0.0";
+const SITE_VERSION = "v1.3.1.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -871,7 +871,53 @@ function CapabilityPillarsSection() {
    corner ticks and the UH watermark. No image assets, no network cost.
 ───────────────────────────────────────────────────────────────── */
 
-function HeroPatternBackground() {
+function HeroPatternBackground({ heroRef, reducedMotion }) {
+  const gridRef = useRef(null);
+  const measureRef = useRef(null);
+  const hatchRef = useRef(null);
+  const glowRef = useRef(null);
+
+  /* Cursor-reactive parallax — layers shift by different amounts for depth.
+     Written straight to the DOM (rAF-throttled) so there are zero re-renders. */
+  useEffect(() => {
+    if (reducedMotion) return;
+    let frame = 0;
+    let tx = 0;
+    let ty = 0;
+    const apply = () => {
+      frame = 0;
+      if (gridRef.current) gridRef.current.style.transform = `translate3d(${tx * 8}px, ${ty * 8}px, 0)`;
+      if (measureRef.current) measureRef.current.style.transform = `translate3d(${tx * 20}px, ${ty * 20}px, 0)`;
+      if (hatchRef.current) hatchRef.current.style.transform = `translate3d(${tx * 36}px, ${ty * 36}px, 0)`;
+      if (glowRef.current) {
+        glowRef.current.style.background =
+          `radial-gradient(ellipse 60% 55% at ${78 + tx * 12}% ${18 + ty * 12}%, rgba(163,230,53,0.20) 0%, transparent 62%),` +
+          `radial-gradient(ellipse 50% 45% at ${20 + tx * 8}% ${90 + ty * 8}%, rgba(163,230,53,0.09) 0%, transparent 65%)`;
+      }
+    };
+    const onMove = (e) => {
+      // -0.5 … 0.5 relative to the viewport
+      tx = e.clientX / window.innerWidth - 0.5;
+      ty = e.clientY / window.innerHeight - 0.5;
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [reducedMotion]);
+
+  /* Scroll-linked drift — the pattern glides as you scroll through the hero. */
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const measureY = useTransform(scrollYProgress, [0, 1], ["0%", "26%"]);
+  const hatchY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const patternFade = useTransform(scrollYProgress, [0, 1], [1, 0.35]);
+
   return (
     <div
       className="pointer-events-none absolute inset-0 select-none overflow-hidden"
@@ -884,37 +930,47 @@ function HeroPatternBackground() {
       />
 
       {/* Fine technical grid */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)," +
-            "repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)",
-        }}
-      />
+      <motion.div className="absolute inset-0" style={{ y: reducedMotion ? 0 : gridY, opacity: patternFade }}>
+        <div
+          ref={gridRef}
+          className="absolute inset-[-10%] will-change-transform"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)," +
+              "repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)",
+          }}
+        />
+      </motion.div>
 
       {/* Heavier lime measure-lines every 240px */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)," +
-            "repeating-linear-gradient(90deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)",
-        }}
-      />
+      <motion.div className="absolute inset-0" style={{ y: reducedMotion ? 0 : measureY, opacity: patternFade }}>
+        <div
+          ref={measureRef}
+          className="absolute inset-[-10%] will-change-transform"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)," +
+              "repeating-linear-gradient(90deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)",
+          }}
+        />
+      </motion.div>
 
       {/* Drifting diagonal hatch */}
-      <div
-        className="uh-pattern-hatch absolute inset-[-40%]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(135deg, rgba(163,230,53,0.05) 0 2px, transparent 2px 16px)",
-        }}
-      />
+      <motion.div className="absolute inset-0" style={{ y: reducedMotion ? 0 : hatchY, opacity: patternFade }}>
+        <div
+          ref={hatchRef}
+          className="uh-pattern-hatch absolute inset-[-40%] will-change-transform"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(135deg, rgba(163,230,53,0.05) 0 2px, transparent 2px 16px)",
+          }}
+        />
+      </motion.div>
 
-      {/* Lime glow bloom, upper right */}
+      {/* Lime glow bloom — follows the cursor */}
       <div
-        className="absolute inset-0"
+        ref={glowRef}
+        className="absolute inset-0 transition-[background] duration-300 ease-out"
         style={{
           background:
             "radial-gradient(ellipse 60% 55% at 78% 18%, rgba(163,230,53,0.20) 0%, transparent 62%)," +
@@ -3855,7 +3911,7 @@ export default function App() {
               branded theme pattern (technical measurement grid + lime accents).
               The asset is still at /images/marketing/hero-athlete-primary.jpg if we
               want to reinstate it. */}
-          <HeroPatternBackground />
+          <HeroPatternBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
           <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
             <motion.div
