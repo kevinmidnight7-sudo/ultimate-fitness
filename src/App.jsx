@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.4.1.0";
+const SITE_VERSION = "v1.5.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -110,16 +110,16 @@ const capabilities = [
 ];
 
 const pillarRadarData = [
-  { pillar: "ENDURANCE", value: 82 },
-  { pillar: "STRENGTH", value: 76 },
-  { pillar: "POWER", value: 73 },
-  { pillar: "SPEED", value: 88 },
-  { pillar: "AGILITY", value: 65 },
-  { pillar: "BALANCE", value: 64 },
-  { pillar: "COORDINATION", value: 70 },
-  { pillar: "RESILIENCE", value: 67 },
-  { pillar: "MOBILITY", value: 58 },
-  { pillar: "MENTAL", value: 72 },
+  { pillar: "ENDURANCE", value: 820 },
+  { pillar: "STRENGTH", value: 760 },
+  { pillar: "POWER", value: 730 },
+  { pillar: "SPEED", value: 880 },
+  { pillar: "AGILITY", value: 650 },
+  { pillar: "BALANCE", value: 640 },
+  { pillar: "COORDINATION", value: 700 },
+  { pillar: "RESILIENCE", value: 670 },
+  { pillar: "MOBILITY", value: 580 },
+  { pillar: "MENTAL", value: 720 },
 ];
 
 const differenceTable = {
@@ -140,16 +140,16 @@ const differenceTable = {
 };
 
 const domains = [
-  { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 76 },
-  { title: "Power", text: "Convert strength into explosive output when it matters.", value: 73 },
-  { title: "Endurance", text: "Keep going when your lungs and legs want a vote.", value: 82 },
-  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 88 },
-  { title: "Mobility", text: "Move well, not just hard.", value: 58 },
-  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 70 },
-  { title: "Resilience", text: "Absorb fatigue and setbacks without falling apart.", value: 67 },
-  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 64 },
-  { title: "Recovery", text: "Bounce back between efforts and across the whole event.", value: 61 },
-  { title: "Control Under Pressure", text: "Keep technique and decisions sharp when it's hard.", value: 72 },
+  { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 760, pct: 76 },
+  { title: "Power", text: "Convert strength into explosive output when it matters.", value: 730, pct: 73 },
+  { title: "Endurance", text: "Keep going when your lungs and legs want a vote.", value: 820, pct: 82 },
+  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 880, pct: 88 },
+  { title: "Mobility", text: "Move well, not just hard.", value: 580, pct: 58 },
+  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 700, pct: 70 },
+  { title: "Resilience", text: "Absorb fatigue and setbacks without falling apart.", value: 670, pct: 67 },
+  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 640, pct: 64 },
+  { title: "Recovery", text: "Bounce back between efforts and across the whole event.", value: 610, pct: 61 },
+  { title: "Control Under Pressure", text: "Keep technique and decisions sharp when it's hard.", value: 720, pct: 72 },
 ];
 
 const uhsReveals = [
@@ -774,7 +774,7 @@ function CapabilityPillarsSection() {
             ref={radarRef}
             className="w-full shrink-0 lg:w-[520px]"
             role="img"
-            aria-label="Radar chart of a sample athlete's Ultimate Human Index across ten capabilities: endurance 82, strength 76, power 73, speed 88, agility 65, balance 64, coordination 70, resilience 67, mobility 58 and mental 72 out of 100."
+            aria-label="Radar chart of a sample athlete's Ultimate Human Index across ten capabilities: endurance 820, strength 760, power 730, speed 880, agility 650, balance 640, coordination 700, resilience 670, mobility 580 and mental 720 out of 1000."
           >
             <ResponsiveContainer width="100%" height={460}>
               <RadarChart
@@ -841,7 +841,7 @@ function CapabilityPillarsSection() {
                     {label}
                   </p>
                   <p className="text-[13px] text-neutral-700">
-                    <CountUp to={pillarRadarData[i].value} suffix="/100" />
+                    <CountUp to={pillarRadarData[i].value} suffix="/1000" />
                   </p>
                   {detail && (
                     <p className="mt-1.5 text-[15px] leading-5 text-neutral-400">
@@ -2516,7 +2516,7 @@ function ScoreSection() {
           className="mt-2 text-5xl text-white"
           style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
         >
-          <CountUp to={71} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-400">/100</span>
+          <CountUp to={710} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-400">/1000</span>
         </p>
         <div className="mt-5 h-1.5 w-full max-w-xs bg-white/[0.06]">
           <motion.div
@@ -2548,7 +2548,7 @@ function ScoreSection() {
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="text-base uppercase tracking-wide text-white">{d.title}</h3>
-            <p className="text-[16px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-400">/100</span></p>
+            <p className="text-[16px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-400">/1000</span></p>
           </div>
           <p className="mt-1.5 text-base leading-6 text-neutral-400">{d.text}</p>
           <div className="mt-3 h-1 w-full bg-white/[0.06]">
@@ -2556,7 +2556,7 @@ function ScoreSection() {
               className="h-1 bg-lime-400"
               style={{ boxShadow: "0 0 8px rgba(163,230,53,0.45)" }}
               initial={{ width: 0 }}
-              whileInView={{ width: `${d.value}%` }}
+              whileInView={{ width: `${d.pct}%` }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: i * 0.05 + 0.15, ease: "easeOut" }}
             />
