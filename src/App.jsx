@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.6.0.0";
+const SITE_VERSION = "v1.6.1.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -3711,7 +3711,7 @@ function SectionTourButton() {
     const distance = targetY - startY;
     if (!distance) return;
     // Longer trips take a little longer, but stay within a cinematic range.
-    const duration = Math.min(1600, Math.max(900, Math.abs(distance) * 0.55));
+    const duration = Math.min(1900, Math.max(1150, Math.abs(distance) * 0.62));
     const startedAt = performance.now();
     // easeInOutCubic — settles gently rather than stopping dead
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -3728,18 +3728,61 @@ function SectionTourButton() {
     animRef.current = requestAnimationFrame(step);
   };
 
+  /* Build the beat list for the tour.
+     A single stop per section isn't enough: sections taller than the viewport
+     would get skipped past, and a pinned scene would land on its opening
+     (blank) frame and then jump over its whole timeline. So:
+       · pinned scenes get an extra beat where their animation has played in
+       · tall sections are paged through so nothing is missed */
+  const buildStops = () => {
+    const vh = window.innerHeight;
+    const maxY = document.body.scrollHeight - vh;
+    const stops = [];
+
+    for (const el of document.querySelectorAll("main section, main [data-tour-stop]")) {
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      const height = el.offsetHeight;
+      stops.push(top);
+
+      if (el.hasAttribute("data-tour-stop")) {
+        // Pinned scene: scrollYProgress runs 0→1 across (height - vh).
+        // Add the beat where the headline has flown in and is held.
+        const travel = height - vh;
+        if (travel > 80) stops.push(top + travel * 0.58);
+      } else if (height > vh * 1.5) {
+        // Tall section: prefer landing on real sub-headings so each beat shows
+        // something meaningful; fall back to paging a screen at a time.
+        const lastUsable = top + height - vh * 0.55;
+        const anchors = [...el.querySelectorAll("h3, h4, [data-tour-beat]")]
+          .map((h) => h.getBoundingClientRect().top + window.scrollY - 110)
+          .filter((y) => y > top + vh * 0.6 && y < lastUsable)
+          .sort((a, b) => a - b)
+          .filter((y, i, arr) => i === 0 || y - arr[i - 1] > vh * 0.6);
+
+        if (anchors.length) {
+          stops.push(...anchors);
+        } else {
+          const stride = vh * 0.85;
+          for (let y = top + stride; y < lastUsable; y += stride) stops.push(y);
+        }
+      }
+    }
+
+    // Sort, clamp, and drop beats that sit almost on top of each other.
+    const sorted = stops
+      .map(Math.round)
+      .filter((y) => y >= 0 && y <= maxY)
+      .sort((a, b) => a - b);
+    return sorted.filter((y, i) => i === 0 || y - sorted[i - 1] > 140);
+  };
+
   const advance = () => {
     const max = document.body.scrollHeight - window.innerHeight;
     if (atEnd) {
       glideTo(0);
       return;
     }
-    // Every <section> plus the pinned scenes are valid stops.
-    const stops = [...document.querySelectorAll("main section, main [data-tour-stop]")]
-      .map((el) => el.getBoundingClientRect().top + window.scrollY)
-      .sort((a, b) => a - b);
-    // Next stop meaningfully below where we are now
-    const next = stops.find((y) => y > window.scrollY + 24);
+    const next = buildStops().find((y) => y > window.scrollY + 24);
     glideTo(Math.min(next ?? max, max));
   };
 
