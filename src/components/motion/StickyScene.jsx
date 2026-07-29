@@ -28,14 +28,14 @@ export default function StickyScene({ heightVh = 300, className, children }) {
 
   if (reduced) {
     return (
-      <div className={className}>
+      <div className={className} data-tour-stop="">
         <div className="h-[100dvh] overflow-hidden">{children(frozen)}</div>
       </div>
     );
   }
 
   return (
-    <div ref={ref} className={className} style={{ height: `${heightVh}dvh` }}>
+    <div ref={ref} className={className} data-tour-stop="" style={{ height: `${heightVh}dvh` }}>
       <div className="sticky top-0 h-[100dvh] overflow-hidden">
         {children(scrollYProgress)}
       </div>

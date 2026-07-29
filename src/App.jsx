@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.5.0.0";
+const SITE_VERSION = "v1.6.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -3667,6 +3667,115 @@ function WaitlistForm() {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   SECTION TOUR — animated down-arrow that walks the visitor through the
+   page one section at a time with a long, eased "cinematic" scroll, so each
+   section's reveal animations play as it arrives.
+───────────────────────────────────────────────────────────────── */
+
+function SectionTourButton() {
+  const reducedMotion = useReducedMotion();
+  const [atEnd, setAtEnd] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const animRef = useRef(0);
+
+  /* Hide the button while the visitor is scrolling manually, and flag the end
+     of the page so the arrow can flip to "back to top". */
+  useEffect(() => {
+    let idle;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const max = document.body.scrollHeight - window.innerHeight;
+      setAtEnd(y > max - 120);
+      // Only auto-hide on genuine user scrolling, not our own animation
+      if (!animRef.current) {
+        setHidden(true);
+        clearTimeout(idle);
+        idle = setTimeout(() => setHidden(false), 700);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(idle);
+    };
+  }, []);
+
+  /* Long eased scroll — slower than native smooth scrolling so sections
+     arrive with a deliberate, film-like pace. */
+  const glideTo = (targetY) => {
+    if (reducedMotion) {
+      window.scrollTo({ top: targetY, behavior: "auto" });
+      return;
+    }
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    if (!distance) return;
+    // Longer trips take a little longer, but stay within a cinematic range.
+    const duration = Math.min(1600, Math.max(900, Math.abs(distance) * 0.55));
+    const startedAt = performance.now();
+    // easeInOutCubic — settles gently rather than stopping dead
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const step = (now) => {
+      const t = Math.min(1, (now - startedAt) / duration);
+      window.scrollTo(0, startY + distance * ease(t));
+      if (t < 1) {
+        animRef.current = requestAnimationFrame(step);
+      } else {
+        animRef.current = 0;
+      }
+    };
+    cancelAnimationFrame(animRef.current);
+    animRef.current = requestAnimationFrame(step);
+  };
+
+  const advance = () => {
+    const max = document.body.scrollHeight - window.innerHeight;
+    if (atEnd) {
+      glideTo(0);
+      return;
+    }
+    // Every <section> plus the pinned scenes are valid stops.
+    const stops = [...document.querySelectorAll("main section, main [data-tour-stop]")]
+      .map((el) => el.getBoundingClientRect().top + window.scrollY)
+      .sort((a, b) => a - b);
+    // Next stop meaningfully below where we are now
+    const next = stops.find((y) => y > window.scrollY + 24);
+    glideTo(Math.min(next ?? max, max));
+  };
+
+  return (
+    <motion.button
+      type="button"
+      onClick={advance}
+      aria-label={atEnd ? "Back to top" : "Go to next section"}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: hidden ? 0 : 1, y: hidden ? 12 : 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ scale: 1.12 }}
+      whileTap={{ scale: 0.94 }}
+      className="group fixed bottom-7 left-1/2 z-40 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-lime-400/40 bg-[#0a0a0a]/80 text-lime-400 backdrop-blur-md transition-colors hover:border-lime-400 hover:bg-lime-400/10"
+      style={{ boxShadow: "0 0 22px rgba(163,230,53,0.18)" }}
+    >
+      {/* Pulsing halo */}
+      {!reducedMotion && !hidden && (
+        <motion.span
+          className="pointer-events-none absolute inset-0 rounded-full border border-lime-400/50"
+          animate={{ scale: [1, 1.45], opacity: [0.55, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+        />
+      )}
+      <motion.span
+        animate={reducedMotion ? {} : { y: atEnd ? [0, -3, 0] : [0, 4, 0] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        className="flex items-center justify-center"
+      >
+        <ChevronDown className={`h-5 w-5 transition-transform ${atEnd ? "rotate-180" : ""}`} strokeWidth={2} />
+      </motion.span>
+    </motion.button>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
    SIDE QUICK NAV — hover the right edge to reveal a poppy jump menu
 ───────────────────────────────────────────────────────────────── */
 
@@ -3818,6 +3927,7 @@ export default function App() {
     <div className="min-h-screen bg-[#050505] text-white">
 
       <SideQuickNav />
+      <SectionTourButton />
 
       {/* ── HEADER ── */}
       <header className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-colors duration-300 ${navScrolled ? "border-white/[0.06] bg-[#050505]/95" : "border-transparent bg-[#050505]/40"}`}>
