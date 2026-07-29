@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.4.0.0";
+const SITE_VERSION = "v1.4.1.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -279,15 +279,15 @@ const workingWeights = [
   },
   {
     name: "Med Ball Toss",
-    foundation: { women: "4kg", men: "6kg" },
-    intermediate: { women: "6kg", men: "9kg" },
-    elite: { women: "9kg", men: "12kg" },
+    foundation: { women: "10kg", men: "15kg" },
+    intermediate: { women: "10kg", men: "15kg" },
+    elite: { women: "10kg", men: "15kg" },
   },
   {
     name: "Dumbbell End Carry",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "15kg", men: "25kg" },
-    elite: { women: "20kg", men: "35kg" },
+    foundation: { women: "5kg", men: "7.5kg" },
+    intermediate: { women: "5kg", men: "7.5kg" },
+    elite: { women: "5kg", men: "7.5kg" },
   },
   {
     name: "Devil's Advance",
@@ -373,7 +373,7 @@ const aiAnalysisCategories = [
   "Movement Consistency",
 ];
 
-const aiSampleVideos = ["Bear Crawl Push", "Lunges", "Wall Balls / Hoop Shot"];
+const aiSampleVideos = ["Back Squat", "Overhead Press", "Overhead Carry"];
 
 const aiFeedbackQuotes = [
   "Your stride length is reducing glute engagement and increasing quad fatigue.",
@@ -4596,13 +4596,13 @@ export default function App() {
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
               />
-              {/* Bio + photo still to be supplied — card shows a 'photo to follow' placeholder */}
+              {/* Photo still to be supplied — card shows a 'photo to follow' placeholder */}
               <FounderCard
                 photo=""
                 ratio="1 / 1"
                 name="Dr. Camilla Drew"
-                role="Role to be confirmed"
-                quote="Bio to follow."
+                role="Event Adviser · Capabilities Adviser · Fitness Enthusiast"
+                quote="Fitness and good-quality, all-round movement are key to a happier and more productive life, regardless of how old you actually are."
               />
             </div>
           </div>
@@ -4763,7 +4763,7 @@ export default function App() {
             className="text-[13px] text-neutral-700"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            © 2027 Ultimate Human Index · theultimatehuman.fitness
+            © 2026 Ultimate Human Index · theultimatehuman.fitness
           </p>
         </div>
         <div className="mx-auto mt-6 max-w-7xl text-center">
