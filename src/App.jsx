@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.3.1.0";
+const SITE_VERSION = "v1.5.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -110,16 +110,16 @@ const capabilities = [
 ];
 
 const pillarRadarData = [
-  { pillar: "ENDURANCE", value: 82 },
-  { pillar: "STRENGTH", value: 76 },
-  { pillar: "POWER", value: 73 },
-  { pillar: "SPEED", value: 88 },
-  { pillar: "AGILITY", value: 65 },
-  { pillar: "BALANCE", value: 64 },
-  { pillar: "COORDINATION", value: 70 },
-  { pillar: "RESILIENCE", value: 67 },
-  { pillar: "MOBILITY", value: 58 },
-  { pillar: "MENTAL", value: 72 },
+  { pillar: "ENDURANCE", value: 820 },
+  { pillar: "STRENGTH", value: 760 },
+  { pillar: "POWER", value: 730 },
+  { pillar: "SPEED", value: 880 },
+  { pillar: "AGILITY", value: 650 },
+  { pillar: "BALANCE", value: 640 },
+  { pillar: "COORDINATION", value: 700 },
+  { pillar: "RESILIENCE", value: 670 },
+  { pillar: "MOBILITY", value: 580 },
+  { pillar: "MENTAL", value: 720 },
 ];
 
 const differenceTable = {
@@ -140,16 +140,16 @@ const differenceTable = {
 };
 
 const domains = [
-  { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 76 },
-  { title: "Power", text: "Convert strength into explosive output when it matters.", value: 73 },
-  { title: "Endurance", text: "Keep going when your lungs and legs want a vote.", value: 82 },
-  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 88 },
-  { title: "Mobility", text: "Move well, not just hard.", value: 58 },
-  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 70 },
-  { title: "Resilience", text: "Absorb fatigue and setbacks without falling apart.", value: 67 },
-  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 64 },
-  { title: "Recovery", text: "Bounce back between efforts and across the whole event.", value: 61 },
-  { title: "Control Under Pressure", text: "Keep technique and decisions sharp when it's hard.", value: 72 },
+  { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 760, pct: 76 },
+  { title: "Power", text: "Convert strength into explosive output when it matters.", value: 730, pct: 73 },
+  { title: "Endurance", text: "Keep going when your lungs and legs want a vote.", value: 820, pct: 82 },
+  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 880, pct: 88 },
+  { title: "Mobility", text: "Move well, not just hard.", value: 580, pct: 58 },
+  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 700, pct: 70 },
+  { title: "Resilience", text: "Absorb fatigue and setbacks without falling apart.", value: 670, pct: 67 },
+  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 640, pct: 64 },
+  { title: "Recovery", text: "Bounce back between efforts and across the whole event.", value: 610, pct: 61 },
+  { title: "Control Under Pressure", text: "Keep technique and decisions sharp when it's hard.", value: 720, pct: 72 },
 ];
 
 const uhsReveals = [
@@ -279,15 +279,15 @@ const workingWeights = [
   },
   {
     name: "Med Ball Toss",
-    foundation: { women: "4kg", men: "6kg" },
-    intermediate: { women: "6kg", men: "9kg" },
-    elite: { women: "9kg", men: "12kg" },
+    foundation: { women: "10kg", men: "15kg" },
+    intermediate: { women: "10kg", men: "15kg" },
+    elite: { women: "10kg", men: "15kg" },
   },
   {
     name: "Dumbbell End Carry",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "15kg", men: "25kg" },
-    elite: { women: "20kg", men: "35kg" },
+    foundation: { women: "5kg", men: "7.5kg" },
+    intermediate: { women: "5kg", men: "7.5kg" },
+    elite: { women: "5kg", men: "7.5kg" },
   },
   {
     name: "Devil's Advance",
@@ -373,7 +373,7 @@ const aiAnalysisCategories = [
   "Movement Consistency",
 ];
 
-const aiSampleVideos = ["Bear Crawl Push", "Lunges", "Wall Balls / Hoop Shot"];
+const aiSampleVideos = ["Back Squat", "Overhead Press", "Overhead Carry"];
 
 const aiFeedbackQuotes = [
   "Your stride length is reducing glute engagement and increasing quad fatigue.",
@@ -429,8 +429,8 @@ const aiHowItWorks = [
   },
   {
     icon: Activity,
-    title: "UH AI Analysis",
-    text: "The UH AI coaching system is designed to help identify how you move against the Ultimate Human Movement Standard™.",
+    title: "UHI AI Analysis",
+    text: "The UHI AI coaching system is designed to help identify how you move against the UHI Movement Standard™.",
     categories: aiAnalysisCategories,
   },
   {
@@ -476,7 +476,7 @@ const subscriptionTiers = [
     name: "Explorer",
     icon: Activity,
     price: "£14.99/mo",
-    summary: "For people starting their Ultimate Human journey.",
+    summary: "For people starting their Ultimate Human Index journey.",
     cta: "Join the Waitlist",
     points: [
       "Ultimate Human Index",
@@ -485,7 +485,7 @@ const subscriptionTiers = [
       "AI-powered training recommendations",
       "Performance dashboard",
       "Access to community challenges",
-      "10% discount on UH events",
+      "10% discount on UHI events",
       "Monthly member newsletter and insights",
     ],
   },
@@ -504,7 +504,7 @@ const subscriptionTiers = [
       "Goal setting and progress tracking",
       "Exercise technique analysis from uploaded videos",
       "Priority event booking",
-      "20% discount on UH events",
+      "20% discount on UHI events",
       "Access to member-only challenges and leaderboards",
     ],
   },
@@ -523,7 +523,7 @@ const subscriptionTiers = [
       "Quarterly expert coaching review",
       "Exclusive webinars and coaching content",
       "VIP event registration",
-      "30% discount on UH events",
+      "30% discount on UHI events",
       "Founding member rewards and partner benefits",
     ],
   },
@@ -774,7 +774,7 @@ function CapabilityPillarsSection() {
             ref={radarRef}
             className="w-full shrink-0 lg:w-[520px]"
             role="img"
-            aria-label="Radar chart of a sample athlete's Ultimate Human Index across ten capabilities: endurance 82, strength 76, power 73, speed 88, agility 65, balance 64, coordination 70, resilience 67, mobility 58 and mental 72 out of 100."
+            aria-label="Radar chart of a sample athlete's Ultimate Human Index across ten capabilities: endurance 820, strength 760, power 730, speed 880, agility 650, balance 640, coordination 700, resilience 670, mobility 580 and mental 720 out of 1000."
           >
             <ResponsiveContainer width="100%" height={460}>
               <RadarChart
@@ -841,7 +841,7 @@ function CapabilityPillarsSection() {
                     {label}
                   </p>
                   <p className="text-[13px] text-neutral-700">
-                    <CountUp to={pillarRadarData[i].value} suffix="/100" />
+                    <CountUp to={pillarRadarData[i].value} suffix="/1000" />
                   </p>
                   {detail && (
                     <p className="mt-1.5 text-[15px] leading-5 text-neutral-400">
@@ -1060,7 +1060,7 @@ function PasswordGate({ onUnlock }) {
         {/* Logo */}
         <img
           src="/images/logo.png"
-          alt="The Ultimate Human"
+          alt="Ultimate Human Index"
           className="mb-10 h-16 w-auto object-contain md:h-[72px]"
           style={{
             maxWidth: "220px",
@@ -1514,7 +1514,7 @@ function EventStructureSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-8">
           <div className="max-w-2xl">
-            <SectionLabel>The UHS Event Structure</SectionLabel>
+            <SectionLabel>The UHI Event Structure</SectionLabel>
             <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
               10 Capabilities.
               <br />
@@ -1779,7 +1779,7 @@ function HowItWorksCard({ step, index }) {
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             aria-expanded={drawerOpen}
           >
-            What UH Analyses
+            What UHI Analyses
             <ChevronDown
               className={`h-3.5 w-3.5 transition-transform duration-300 ${drawerOpen ? "rotate-180" : ""}`}
               strokeWidth={2}
@@ -2042,7 +2042,7 @@ function MovementCoachPreview() {
                           className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500"
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                         >
-                          What UH Sees
+                          What UHI Sees
                         </p>
                         <p className="mt-1.5 text-[16px] leading-5 text-neutral-300">{card.sees}</p>
                       </div>
@@ -2209,7 +2209,7 @@ function AthleteTypeQuiz({ onClose }) {
           ))}
         </div>
         <p className="mt-5 text-[15px] leading-5 text-neutral-400">
-          This is a quick preview — your full UHS Report breaks this down across all 10 capability
+          This is a quick preview — your full UHI Report breaks this down across all 10 capability
           pillars.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -2279,7 +2279,7 @@ function FullAssessmentPreview({ onClose }) {
   return (
     <div>
       <p className="text-[16px] leading-5 text-neutral-400">
-        The full Human Context assessment captures the inputs behind your UHS Report — training
+        The full Human Context assessment captures the inputs behind your UHI Report — training
         history, movement confidence and goals.
       </p>
       <div className="mt-5 space-y-px bg-white/[0.05]">
@@ -2306,7 +2306,7 @@ function FullAssessmentPreview({ onClose }) {
         ))}
       </div>
       <p className="mt-5 text-[15px] leading-5 text-neutral-400">
-        This feeds your UHS Index, your Athlete Type and your AI training focus.
+        This feeds your UHI, your Athlete Type and your AI training focus.
       </p>
       <a
         href="#coaching"
@@ -2333,7 +2333,7 @@ const journeyCards = [
     key: "assessment",
     icon: ClipboardList,
     title: "Full Assessment",
-    text: "Preview the Human Context inputs behind your UHS Report.",
+    text: "Preview the Human Context inputs behind your UHI Report.",
     cta: "Preview Assessment",
     action: "modal",
   },
@@ -2516,7 +2516,7 @@ function ScoreSection() {
           className="mt-2 text-5xl text-white"
           style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
         >
-          <CountUp to={71} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-400">/100</span>
+          <CountUp to={710} duration={1.6} /><span className="ml-1 text-lg font-normal text-neutral-400">/1000</span>
         </p>
         <div className="mt-5 h-1.5 w-full max-w-xs bg-white/[0.06]">
           <motion.div
@@ -2548,7 +2548,7 @@ function ScoreSection() {
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="text-base uppercase tracking-wide text-white">{d.title}</h3>
-            <p className="text-[16px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-400">/100</span></p>
+            <p className="text-[16px] font-bold text-lime-400"><CountUp to={d.value} /><span className="text-neutral-400">/1000</span></p>
           </div>
           <p className="mt-1.5 text-base leading-6 text-neutral-400">{d.text}</p>
           <div className="mt-3 h-1 w-full bg-white/[0.06]">
@@ -2556,7 +2556,7 @@ function ScoreSection() {
               className="h-1 bg-lime-400"
               style={{ boxShadow: "0 0 8px rgba(163,230,53,0.45)" }}
               initial={{ width: 0 }}
-              whileInView={{ width: `${d.value}%` }}
+              whileInView={{ width: `${d.pct}%` }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: i * 0.05 + 0.15, ease: "easeOut" }}
             />
@@ -2719,7 +2719,7 @@ function AICoachingSection() {
         className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
-        02 Predicted UHS
+        02 Predicted UHI
       </p>
       <div className="mt-6 flex items-end gap-5">
         <p
@@ -2898,10 +2898,10 @@ function AICoachingSection() {
             Improve Your Index.
           </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
-            Most fitness platforms measure effort. Ultimate Human measures
+            Most fitness platforms measure effort. Ultimate Human Index measures
             capability, then shows you how to improve it. Upload a video of your
-            exercise and the UH AI coaching platform is being built to analyse your
-            movement against the Ultimate Human Movement Standard™ — developed by
+            exercise and the UHI AI coaching platform is being built to analyse your
+            movement against the UHI Movement Standard™ — developed by
             coaches, athletes and movement specialists.
           </p>
 
@@ -2935,7 +2935,7 @@ function AICoachingSection() {
           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
         >
           Based on your profile, training background and movement confidence,
-          Ultimate Human estimates your likely event performance and recommends
+          Ultimate Human Index estimates your likely event performance and recommends
           the right entry level.
         </p>
 
@@ -3237,7 +3237,7 @@ function SubscriptionSection() {
             Every Level of Athlete.
           </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
-            An Ultimate Human subscription is designed to keep you progressing long
+            An Ultimate Human Index subscription is designed to keep you progressing long
             after race day. Members get ongoing AI-powered coaching, personalised
             training recommendations, performance tracking and recovery insights —
             plus exclusive event discounts, priority race entries and member-only
@@ -3634,7 +3634,7 @@ function WaitlistForm() {
             className="mt-1 h-4 w-4 shrink-0 accent-lime-400"
           />
           <span className="text-[16px] leading-5 text-neutral-400">
-            I agree to be contacted about the Ultimate Human launch. We'll only use your
+            I agree to be contacted about the Ultimate Human Index launch. We'll only use your
             details for this and you can unsubscribe anytime.
           </span>
         </label>
@@ -3828,7 +3828,7 @@ export default function App() {
             <a href="#" className="shrink-0 no-underline">
               <img
                 src="/images/logo.png"
-                alt="The Ultimate Human"
+                alt="Ultimate Human Index"
                 className="h-10 w-auto object-contain md:h-12"
                 style={{
                   maxWidth: "160px",
@@ -4018,7 +4018,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── UHS HUMAN CAPABILITY INDEX (UHCI) ── */}
+        {/* ── ULTIMATE HUMAN INDEX (UHI) ── */}
         <section
           id="uhci"
           className="relative border-t border-white/[0.06] px-6 py-24"
@@ -4034,20 +4034,20 @@ export default function App() {
           <div className="relative mx-auto max-w-7xl">
             <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr]">
               <div>
-                <SectionLabel>UHS Human Capability Index™ (UHCI)</SectionLabel>
+                <SectionLabel>Ultimate Human Index™ (UHI)</SectionLabel>
                 <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                   The Cornerstone of
                   <br />
-                  the Ultimate Human Sport.
+                  the Ultimate Human Index.
                 </Reveal>
                 <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-300">
                   Rather than simply measuring how quickly an athlete finishes a race, the{" "}
-                  <span className="font-bold text-white">UHCI</span> provides an objective assessment
+                  <span className="font-bold text-white">UHI</span> provides an objective assessment
                   of overall human capability. It is designed to measure not only performance, but how
                   efficiently and consistently that performance is achieved.
                 </p>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-400">
-                  Unlike traditional race results, which only recognise finishing position, the UHCI
+                  Unlike traditional race results, which only recognise finishing position, the UHI
                   rewards complete human performance by combining physical capability with movement
                   quality and technical execution. It provides athletes with a meaningful benchmark
                   that evolves as they train, improve and age.
@@ -4068,7 +4068,7 @@ export default function App() {
                 </div>
 
                 <p className="mt-6 max-w-2xl text-[16px] leading-6 text-neutral-400">
-                  As UHS evolves, the Human Capability Index will be supported by advanced AI movement
+                  As UHI evolves, the Ultimate Human Index will be supported by advanced AI movement
                   analysis and scientifically validated performance standards. This will enable the
                   Index to assess not only whether an athlete completed each capability, but how
                   effectively and consistently it was performed.
@@ -4081,7 +4081,7 @@ export default function App() {
                   className="mb-5 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
-                  The UHCI has been designed to be
+                  The UHI has been designed to be
                 </p>
                 <div className="flex flex-col">
                   {uhciPrinciples.map((p, i) => (
@@ -4114,7 +4114,7 @@ export default function App() {
 
         <CapabilityPillarsSection />
 
-        {/* ── WHY UH IS DIFFERENT ── */}
+        {/* ── WHY UHI IS DIFFERENT ── */}
         <section
           className="relative border-t border-white/[0.06] px-6 py-24"
           style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
@@ -4128,16 +4128,16 @@ export default function App() {
           />
           <div className="relative mx-auto max-w-7xl">
             <div className="mb-12 max-w-3xl">
-              <SectionLabel>Why UH Is Different</SectionLabel>
+              <SectionLabel>Why UHI Is Different</SectionLabel>
               <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Most Races Test One Thing.
                 <br />
-                UH Tests the Whole Human.
+                UHI Tests the Whole Human.
               </Reveal>
               <p className="mt-5 text-lg leading-7 text-neutral-400">
                 Most programs only measure one or two aspects of capability. They tell
                 you if you can run, lift, endure or suffer.{" "}
-                <span className="font-bold text-white">UH goes further.</span>
+                <span className="font-bold text-white">UHI goes further.</span>
               </p>
             </div>
 
@@ -4336,7 +4336,7 @@ export default function App() {
                 or Bring a Team.
               </Reveal>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human is designed for serious competitors, first-time challengers,
+                The Ultimate Human Index is designed for serious competitors, first-time challengers,
                 gym communities and workplace teams.
               </p>
             </div>
@@ -4459,7 +4459,7 @@ export default function App() {
                 Get in Early.
               </Reveal>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                Early launch pricing for the first Ultimate Human events. Founding athlete places will
+                Early launch pricing for the first Ultimate Human Index events. Founding athlete places will
                 be limited and pricing will increase after launch release.
               </p>
               <p
@@ -4555,14 +4555,14 @@ export default function App() {
           />
           <div className="relative mx-auto max-w-7xl">
             <div className="mb-14">
-              <SectionLabel>The People Behind The Ultimate Human</SectionLabel>
+              <SectionLabel>The People Behind The Ultimate Human Index</SectionLabel>
               <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
                 Built by People Obsessed
                 <br />
                 with Human Performance.
               </Reveal>
               <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human combines elite coaching, combat sport experience, movement science
+                The Ultimate Human Index combines elite coaching, combat sport experience, movement science
                 and a slightly unhealthy enthusiasm for fitness racing.
               </p>
             </div>
@@ -4596,13 +4596,13 @@ export default function App() {
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
               />
-              {/* Bio + photo still to be supplied — card shows a 'photo to follow' placeholder */}
+              {/* Photo still to be supplied — card shows a 'photo to follow' placeholder */}
               <FounderCard
                 photo=""
                 ratio="1 / 1"
                 name="Dr. Camilla Drew"
-                role="Role to be confirmed"
-                quote="Bio to follow."
+                role="Event Adviser · Capabilities Adviser · Fitness Enthusiast"
+                quote="Fitness and good-quality, all-round movement are key to a happier and more productive life, regardless of how old you actually are."
               />
             </div>
           </div>
@@ -4749,7 +4749,7 @@ export default function App() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 md:flex-row">
           <img
             src="/images/logo.png"
-            alt="The Ultimate Human"
+            alt="Ultimate Human Index"
             className="h-8 w-auto object-contain"
             style={{ maxWidth: "150px", opacity: 0.32 }}
           />
@@ -4763,7 +4763,7 @@ export default function App() {
             className="text-[13px] text-neutral-700"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            © 2027 The Ultimate Human · theultimatehuman.fitness
+            © 2026 Ultimate Human Index · theultimatehuman.fitness
           </p>
         </div>
         <div className="mx-auto mt-6 max-w-7xl text-center">
