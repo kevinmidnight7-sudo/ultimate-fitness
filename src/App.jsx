@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.6.1.0";
+const SITE_VERSION = "v1.7.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -135,7 +135,7 @@ const differenceTable = {
     { name: "HYROX",          ratings: ["full","partial","none","none","none","none"] },
     { name: "Spartan",        ratings: ["full","full","full","partial","none","none"] },
     { name: "CrossFit",       ratings: ["full","full","full","full","partial","none"] },
-    { name: "ULTIMATE HUMAN", ratings: ["full","full","full","full","full","full"], highlighted: true },
+    { name: "ULTIMATE HUMAN INDEX", ratings: ["full","full","full","full","full","full"], highlighted: true },
   ],
 };
 
@@ -1435,7 +1435,7 @@ function WorkingWeightsPanel() {
                 Indicative loads to guide training. Final event weights will be confirmed
                 closer to launch.
               </p>
-              <div className="overflow-x-auto">
+              <div className="uh-scroll-dark overflow-x-auto">
                 <table className="w-full min-w-[640px] border-collapse text-left">
                   <thead>
                     <tr className="border-b border-white/[0.08]">
@@ -1581,7 +1581,7 @@ function EventStructureSection() {
 
         {/* Event flow map — mission-control route */}
         <div className="relative mt-10">
-          <div className="overflow-x-auto pb-4">
+          <div className="uh-scroll-dark overflow-x-auto pb-4">
             <div className="flex min-w-max items-center gap-1.5 px-1">
               {capabilities10.map((capability) => (
                 <React.Fragment key={capability.number}>
@@ -3594,6 +3594,8 @@ function WaitlistForm() {
           <input
             id="wl-name"
             type="text"
+            required
+            aria-required="true"
             autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -3606,6 +3608,8 @@ function WaitlistForm() {
           <input
             id="wl-email"
             type="email"
+            required
+            aria-required="true"
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -3630,6 +3634,8 @@ function WaitlistForm() {
           <input
             type="checkbox"
             checked={consent}
+            required
+            aria-required="true"
             onChange={(e) => setConsent(e.target.checked)}
             className="mt-1 h-4 w-4 shrink-0 accent-lime-400"
           />
@@ -3676,6 +3682,8 @@ function SectionTourButton() {
   const reducedMotion = useReducedMotion();
   const [atEnd, setAtEnd] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [overForm, setOverForm] = useState(false);
   const animRef = useRef(0);
 
   /* Hide the button while the visitor is scrolling manually, and flag the end
@@ -3700,28 +3708,47 @@ function SectionTourButton() {
     };
   }, []);
 
-  /* Long eased scroll — slower than native smooth scrolling so sections
-     arrive with a deliberate, film-like pace. */
+  /* Step aside when the sign-up form is on screen — the button sits bottom
+     centre and would otherwise cover the submit button. */
+  useEffect(() => {
+    const form = document.querySelector("#signup");
+    if (!form || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setOverForm(entry.isIntersecting),
+      { rootMargin: "0px 0px -35% 0px" }
+    );
+    io.observe(form);
+    return () => io.disconnect();
+  }, []);
+
+  /* Eased scroll — deliberate enough to feel cinematic, but it starts moving
+     immediately. easeInOutQuad is used rather than cubic: cubic's very flat
+     start read as a ~700ms "nothing happening" delay on long jumps. Duration
+     is capped so long jumps travel faster instead of taking longer. */
   const glideTo = (targetY) => {
     if (reducedMotion) {
-      window.scrollTo({ top: targetY, behavior: "auto" });
+      window.scrollTo({ top: targetY, behavior: "instant" });
       return;
     }
     const startY = window.scrollY;
     const distance = targetY - startY;
     if (!distance) return;
-    // Longer trips take a little longer, but stay within a cinematic range.
-    const duration = Math.min(1900, Math.max(1150, Math.abs(distance) * 0.62));
+    const duration = Math.min(1250, Math.max(750, Math.abs(distance) * 0.5));
     const startedAt = performance.now();
-    // easeInOutCubic — settles gently rather than stopping dead
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    setBusy(true);
     const step = (now) => {
       const t = Math.min(1, (now - startedAt) / duration);
-      window.scrollTo(0, startY + distance * ease(t));
+      // "instant" is essential: the global `scroll-behavior: smooth` would
+      // otherwise re-animate every frame of our own easing and lag it badly.
+      window.scrollTo({ top: startY + distance * ease(t), behavior: "instant" });
       if (t < 1) {
         animRef.current = requestAnimationFrame(step);
       } else {
         animRef.current = 0;
+        // Settle before re-enabling so a trailing scroll event can't hide the
+        // button or let a stray press interrupt the landing.
+        setTimeout(() => setBusy(false), 120);
       }
     };
     cancelAnimationFrame(animRef.current);
@@ -3777,12 +3804,15 @@ function SectionTourButton() {
   };
 
   const advance = () => {
+    if (busy) return; // locked while a glide is running
     const max = document.body.scrollHeight - window.innerHeight;
     if (atEnd) {
       glideTo(0);
       return;
     }
-    const next = buildStops().find((y) => y > window.scrollY + 24);
+    // Ignore beats within 120px of where we already are, so the first press
+    // from the very top doesn't just nudge past the sticky header.
+    const next = buildStops().find((y) => y > window.scrollY + 120);
     glideTo(Math.min(next ?? max, max));
   };
 
@@ -3790,14 +3820,17 @@ function SectionTourButton() {
     <motion.button
       type="button"
       onClick={advance}
+      disabled={busy}
       aria-label={atEnd ? "Back to top" : "Go to next section"}
       initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: hidden ? 0 : 1, y: hidden ? 12 : 0 }}
+      animate={{ opacity: hidden && !overForm ? 0.35 : 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ scale: 1.12 }}
       whileTap={{ scale: 0.94 }}
-      className="group fixed bottom-7 left-1/2 z-40 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-lime-400/40 bg-[#0a0a0a]/80 text-lime-400 backdrop-blur-md transition-colors hover:border-lime-400 hover:bg-lime-400/10"
       style={{ boxShadow: "0 0 22px rgba(163,230,53,0.18)" }}
+      /* Steps aside to the right over the sign-up form so it never covers the
+         submit button, instead of disappearing and stranding the tour. */
+      className={`group fixed bottom-7 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-lime-400/40 bg-[#0a0a0a]/80 text-lime-400 backdrop-blur-md transition-all duration-500 hover:border-lime-400 hover:bg-lime-400/10 ${overForm ? "right-6 left-auto translate-x-0" : "left-1/2 -translate-x-1/2"}`}
     >
       {/* Pulsing halo */}
       {!reducedMotion && !hidden && (
@@ -3992,7 +4025,7 @@ export default function App() {
             <div className="hidden md:block h-6 w-px shrink-0 bg-white/[0.09]" />
           </div>
 
-          <nav className="hidden gap-8 md:flex">
+          <nav aria-label="Primary" className="hidden gap-8 md:flex">
             {navLinks.map(({ label, href }) => (
               <a
                 key={href}
@@ -4189,9 +4222,9 @@ export default function App() {
               <div>
                 <SectionLabel>Ultimate Human Index™ (UHI)</SectionLabel>
                 <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                  The Cornerstone of
+                  A New Standard for
                   <br />
-                  the Ultimate Human Index.
+                  Human Capability.
                 </Reveal>
                 <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-300">
                   Rather than simply measuring how quickly an athlete finishes a race, the{" "}
@@ -4300,7 +4333,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-x-auto"
+              className="uh-scroll-dark overflow-x-auto"
             >
               <table className="w-full border-collapse text-left">
                 <thead>

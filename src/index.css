@@ -110,6 +110,25 @@ h3 {
   }
 }
 
+/* ── Dark scrollbars for horizontally scrolling panels ───────── */
+.uh-scroll-dark {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(163, 230, 53, 0.35) rgba(255, 255, 255, 0.05);
+}
+.uh-scroll-dark::-webkit-scrollbar {
+  height: 6px;
+}
+.uh-scroll-dark::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+.uh-scroll-dark::-webkit-scrollbar-thumb {
+  background: rgba(163, 230, 53, 0.35);
+  border-radius: 999px;
+}
+.uh-scroll-dark::-webkit-scrollbar-thumb:hover {
+  background: rgba(163, 230, 53, 0.55);
+}
+
 /* ── Metallic text utilities ─────────────────────────────────── */
 
 .text-metallic {
