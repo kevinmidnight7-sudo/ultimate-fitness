@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.7.0.0";
+const SITE_VERSION = "v1.7.1.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -3434,7 +3434,9 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
 
   const figureY = useTransform(progress, [0, 1], ["6%", "-6%"]);
   const figureScale = useTransform(progress, [0, 1], [1.03, 1.12]);
-  const figureOpacity = useTransform(progress, [0, 0.12, 0.92, 1], [0, 1, 1, 0.85]);
+  // Starts part-visible so arriving on this scene shows the athlete rather
+  // than an empty black frame; the headline is what animates in.
+  const figureOpacity = useTransform(progress, [0, 0.14, 0.92, 1], [0.7, 1, 1, 0.85]);
   const textX = useTransform(progress, [0, 0.5], [figureRight ? -48 : 48, 0]);
   const textOpacity = useTransform(progress, [0.04, 0.2, 0.86, 1], [0, 1, 1, 0]);
 
@@ -4449,7 +4451,7 @@ export default function App() {
             aspectRatio="21/9"
             searchTerms="athlete exhausted determined mid-workout dramatic shadow"
             treatment="Duotone B&W/lime · dark vignette top + bottom"
-            className="w-full"
+            className="max-h-[62vh] w-full"
             overlay={
               <>
                 <div
