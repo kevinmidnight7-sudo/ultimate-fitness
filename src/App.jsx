@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.7.0.0";
+const SITE_VERSION = "v1.8.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -1004,8 +1004,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
         style={{
           bottom: "6%",
           right: "4%",
-          width: "clamp(170px, 21vw, 300px)",
-          opacity: 0.05,
+          width: "clamp(200px, 26vw, 380px)",
+          opacity: 0.06,
           filter: "grayscale(1) brightness(4) blur(0.5px)",
         }}
       >
@@ -1059,11 +1059,11 @@ function PasswordGate({ onUnlock }) {
 
         {/* Logo */}
         <img
-          src="/images/logo.png"
+          src="/images/coloured.png"
           alt="Ultimate Human Index"
-          className="mb-10 h-16 w-auto object-contain md:h-[72px]"
+          className="mb-10 h-20 w-auto object-contain md:h-28"
           style={{
-            maxWidth: "220px",
+            maxWidth: "320px",
             filter: "drop-shadow(0 2px 18px rgba(255,255,255,0.10))",
           }}
         />
@@ -3434,7 +3434,9 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
 
   const figureY = useTransform(progress, [0, 1], ["6%", "-6%"]);
   const figureScale = useTransform(progress, [0, 1], [1.03, 1.12]);
-  const figureOpacity = useTransform(progress, [0, 0.12, 0.92, 1], [0, 1, 1, 0.85]);
+  // Starts part-visible so arriving on this scene shows the athlete rather
+  // than an empty black frame; the headline is what animates in.
+  const figureOpacity = useTransform(progress, [0, 0.14, 0.92, 1], [0.7, 1, 1, 0.85]);
   const textX = useTransform(progress, [0, 0.5], [figureRight ? -48 : 48, 0]);
   const textOpacity = useTransform(progress, [0.04, 0.2, 0.86, 1], [0, 1, 1, 0]);
 
@@ -3577,8 +3579,12 @@ function WaitlistForm() {
         role="status"
         aria-live="polite"
       >
-        <CheckCircle2 className="mx-auto h-8 w-8 text-lime-400" strokeWidth={1.5} />
-        <p className="mt-4 text-lg text-white">You're on the list.</p>
+        <img
+          src="/images/coloured.png"
+          alt="Ultimate Human Index"
+          className="mx-auto h-11 w-auto object-contain"
+        />
+        <p className="mt-5 text-lg text-white">You're on the list.</p>
         <p className="mt-2 text-[16px] leading-6 text-neutral-400">
           We'll be in touch with founding-athlete access before launch.
         </p>
@@ -4015,9 +4021,9 @@ export default function App() {
               <img
                 src="/images/logo.png"
                 alt="Ultimate Human Index"
-                className="h-10 w-auto object-contain md:h-12"
+                className="h-11 w-auto object-contain md:h-14"
                 style={{
-                  maxWidth: "160px",
+                  maxWidth: "200px",
                   filter: "drop-shadow(0 1px 10px rgba(255,255,255,0.08))",
                 }}
               />
@@ -4449,7 +4455,7 @@ export default function App() {
             aspectRatio="21/9"
             searchTerms="athlete exhausted determined mid-workout dramatic shadow"
             treatment="Duotone B&W/lime · dark vignette top + bottom"
-            className="w-full"
+            className="max-h-[62vh] w-full"
             overlay={
               <>
                 <div
@@ -4936,8 +4942,8 @@ export default function App() {
           <img
             src="/images/logo.png"
             alt="Ultimate Human Index"
-            className="h-8 w-auto object-contain"
-            style={{ maxWidth: "150px", opacity: 0.32 }}
+            className="h-10 w-auto object-contain"
+            style={{ maxWidth: "180px", opacity: 0.32 }}
           />
           <p
             className="text-[11px] font-bold uppercase tracking-[0.42em] text-neutral-700"
