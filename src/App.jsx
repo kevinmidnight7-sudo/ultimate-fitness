@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.8.0.0";
+const SITE_VERSION = "v1.10.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -172,9 +172,9 @@ const divisions = [
   {
     key: "intermediate",
     label: "Intermediate",
-    runDistance: "600m",
-    finalRun: "600m",
-    totalRunning: "6.0km",
+    runDistance: "800m",
+    finalRun: "800m",
+    totalRunning: "8.0km",
     duration: "80–110 min",
   },
   {
@@ -330,7 +330,7 @@ const finalCircuit = {
     ["Step-Ups", "20 reps"],
     ["Bear Crawl Push", "20m"],
     ["Hero Load Carry", "40m"],
-    ["Final Run", "600m"],
+    ["Final Run", "800m"],
   ],
   elite: [
     ["Ground-to-Shoulder", "15 reps"],
@@ -730,8 +730,8 @@ function MarketingImage({
       ref={wrapRef}
       className={
         fill
-          ? "pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
-          : `pointer-events-none relative overflow-hidden ${className}`
+          ? "uh-img-glow pointer-events-auto absolute inset-0 h-full w-full overflow-hidden"
+          : `uh-img-glow pointer-events-auto relative overflow-hidden ${className}`
       }
       style={{ aspectRatio: fill ? undefined : aspectRatio, opacity }}
     >
@@ -748,7 +748,7 @@ function CapabilityPillarsSection() {
   return (
     <section
       className="relative border-y border-lime-400/[0.07] px-6 py-20"
-      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -811,7 +811,7 @@ function CapabilityPillarsSection() {
               </RadarChart>
             </ResponsiveContainer>
             <p
-              className="text-center text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-700"
+              className="text-center text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               Sample athlete profile · Intermediate division
@@ -835,13 +835,14 @@ function CapabilityPillarsSection() {
                 />
                 <div>
                   <p
-                    className="text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-400"
+                    className="text-[12px] font-bold uppercase tracking-[0.22em] text-neutral-300"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     {label}
                   </p>
-                  <p className="text-[13px] text-neutral-700">
-                    <CountUp to={pillarRadarData[i].value} suffix="/1000" />
+                  <p className="text-[15px] font-bold text-lime-400">
+                    <CountUp to={pillarRadarData[i].value} />
+                    <span className="text-neutral-400">/1000</span>
                   </p>
                   {detail && (
                     <p className="mt-1.5 text-[15px] leading-5 text-neutral-400">
@@ -1162,7 +1163,7 @@ function FounderCard({ photo, ratio, name, role, quote }) {
       className="lime-glow-hover group relative overflow-hidden bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
     >
       <div className="absolute left-0 top-0 z-10 h-px w-full bg-gradient-to-r from-lime-400/40 via-white/[0.08] to-transparent" />
-      <div className="relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
+      <div className="uh-img-glow-target relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
         {photoFailed ? (
           <div
             className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center"
@@ -2373,7 +2374,7 @@ function YourJourneyHub() {
     <section
       id="journey"
       className="relative border-t border-white/[0.06] px-6 py-24"
-      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -2383,12 +2384,10 @@ function YourJourneyHub() {
         }}
       />
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-12 max-w-2xl">
+        <div className="mb-12 max-w-5xl">
           <SectionLabel>Start Here</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-            Your Journey to
-            <br />
-            The Ultimate Human.
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl lg:whitespace-nowrap">
+            Your Journey to The Ultimate Human.
           </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Five steps. One profile that gets sharper every time you use it.
@@ -2880,7 +2879,7 @@ function AICoachingSection() {
     <section
       id="coaching"
       className="relative border-t border-lime-400/[0.07] px-6 py-28"
-      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -4110,7 +4109,7 @@ export default function App() {
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: "easeOut" }}
-              className="max-w-[640px]"
+              className="mx-auto flex max-w-6xl flex-col items-center text-center"
             >
               {/* Badge */}
               <div className="mb-5 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2.5">
@@ -4123,21 +4122,13 @@ export default function App() {
                 </span>
               </div>
 
-              {/* Headline with vertical left accent */}
-              <div className="relative pl-5 md:pl-6">
-                {/* Vertical lime bar — fades into the arena graphics below */}
-                <div
-                  className="absolute left-0 top-0 w-[2px]"
-                  style={{
-                    height: "115%",
-                    background:
-                      "linear-gradient(to bottom, rgba(163,230,53,0.9) 0%, rgba(163,230,53,0.7) 38%, rgba(163,230,53,0.25) 70%, transparent 100%)",
-                  }}
-                />
+              {/* Headline — centred, with a lime rule instead of the old left bar */}
+              <div className="relative w-full">
+                <div className="mx-auto mb-7 h-px w-24 bg-gradient-to-r from-transparent via-lime-400/70 to-transparent" />
                 <motion.h1
                   className="text-metallic uppercase leading-none tracking-tight"
                   style={{
-                    fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                    fontSize: "clamp(2.4rem, 6vw, 6.2rem)",
                     lineHeight: 1.03,
                     fontFamily: "'Oswald', sans-serif",
                     fontWeight: 700,
@@ -4145,13 +4136,9 @@ export default function App() {
                     filter: reducedMotion ? undefined : headlineFilter,
                   }}
                 >
-                  The AI-Powered
+                  The AI-Powered Operating System
                   <br />
-                  Operating System
-                  <br />
-                  for Human
-                  <br />
-                  Performance
+                  for Human Performance
                 </motion.h1>
 
                 {/* Slogan — indented to sit flush with headline text */}
@@ -4164,7 +4151,7 @@ export default function App() {
               </div>
 
               {/* CTAs */}
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
                   href="#signup"
                   className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[15px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
@@ -4184,13 +4171,13 @@ export default function App() {
               </div>
 
               {/* Stats */}
-              <div className="mt-8 flex flex-wrap gap-7">
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
                 {[
                   ["Live Events", "All Venues"],
                   ["All Abilities", "Every Level"],
                   ["Personal Score", "Your Benchmark"],
                 ].map(([label, sub]) => (
-                  <div key={label} className="border-l-2 border-lime-400/35 pl-4">
+                  <div key={label} className="border-t-2 border-lime-400/35 px-2 pt-3 text-center">
                     <p
                       className="text-[11.5px] font-black uppercase tracking-[0.22em] text-white"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -4346,7 +4333,7 @@ export default function App() {
                   <tr>
                     <th className="w-44 py-4 pr-6 text-left">
                       <span
-                        className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-700"
+                        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
                         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                       >
                         Capability
@@ -4409,7 +4396,7 @@ export default function App() {
         <section
           id="challenge"
           className="relative px-6 pb-0 pt-20"
-          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
@@ -4565,7 +4552,7 @@ export default function App() {
         {/* ── WHY ENTER ── */}
         <section
           className="relative border-t border-white/[0.06]"
-          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
@@ -4804,7 +4791,7 @@ export default function App() {
         <section
           id="signup"
           className="relative border-t border-lime-400/[0.07] px-6 py-24"
-          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           {/* Branded UH arena-floor asset, low opacity behind the form */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -4946,13 +4933,13 @@ export default function App() {
             style={{ maxWidth: "180px", opacity: 0.32 }}
           />
           <p
-            className="text-[11px] font-bold uppercase tracking-[0.42em] text-neutral-700"
+            className="text-[11px] font-bold uppercase tracking-[0.42em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Measure. Train. Compete. Evolve.
           </p>
           <p
-            className="text-[13px] text-neutral-700"
+            className="text-[14px] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             © 2026 Ultimate Human Index · theultimatehuman.fitness
