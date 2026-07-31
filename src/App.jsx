@@ -982,8 +982,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
       if (hatchRef.current) hatchRef.current.style.transform = `translate3d(${tx * 36}px, ${ty * 36}px, 0)`;
       if (glowRef.current) {
         glowRef.current.style.background =
-          `radial-gradient(ellipse 60% 55% at ${78 + tx * 12}% ${18 + ty * 12}%, rgba(163,230,53,0.20) 0%, transparent 62%),` +
-          `radial-gradient(ellipse 50% 45% at ${20 + tx * 8}% ${90 + ty * 8}%, rgba(163,230,53,0.09) 0%, transparent 65%)`;
+          `radial-gradient(ellipse 60% 55% at ${78 + tx * 12}% ${18 + ty * 12}%, rgba(163,230,53,0.30) 0%, transparent 64%),` +
+          `radial-gradient(ellipse 50% 45% at ${20 + tx * 8}% ${90 + ty * 8}%, rgba(163,230,53,0.16) 0%, transparent 66%)`;
       }
     };
     const onMove = (e) => {
@@ -1027,8 +1027,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           className="absolute inset-[-10%] will-change-transform"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)," +
-              "repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 48px)",
+              "repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 48px)," +
+              "repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 48px)",
           }}
         />
       </motion.div>
@@ -1040,8 +1040,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           className="absolute inset-[-10%] will-change-transform"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(0deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)," +
-              "repeating-linear-gradient(90deg, rgba(163,230,53,0.10) 0 1px, transparent 1px 240px)",
+              "repeating-linear-gradient(0deg, rgba(163,230,53,0.20) 0 1px, transparent 1px 240px)," +
+              "repeating-linear-gradient(90deg, rgba(163,230,53,0.20) 0 1px, transparent 1px 240px)",
           }}
         />
       </motion.div>
@@ -1053,7 +1053,7 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           className="uh-pattern-hatch absolute inset-[-40%] will-change-transform"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(135deg, rgba(163,230,53,0.05) 0 2px, transparent 2px 16px)",
+              "repeating-linear-gradient(135deg, rgba(163,230,53,0.085) 0 2px, transparent 2px 16px)",
           }}
         />
       </motion.div>
@@ -1064,8 +1064,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
         className="absolute inset-0 transition-[background] duration-300 ease-out"
         style={{
           background:
-            "radial-gradient(ellipse 60% 55% at 78% 18%, rgba(163,230,53,0.20) 0%, transparent 62%)," +
-            "radial-gradient(ellipse 50% 45% at 20% 90%, rgba(163,230,53,0.09) 0%, transparent 65%)",
+            "radial-gradient(ellipse 60% 55% at 78% 18%, rgba(163,230,53,0.30) 0%, transparent 64%)," +
+            "radial-gradient(ellipse 50% 45% at 20% 90%, rgba(163,230,53,0.16) 0%, transparent 66%)",
         }}
       />
 
