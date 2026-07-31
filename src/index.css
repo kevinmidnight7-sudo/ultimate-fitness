@@ -199,14 +199,14 @@ h3 {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    to right,
-    rgba(5, 5, 5, 0.97) 0%,
-    rgba(5, 5, 5, 0.90) 14%,
-    rgba(5, 5, 5, 0.65) 30%,
-    rgba(5, 5, 5, 0.20) 48%,
-    rgba(5, 5, 5, 0.03) 62%,
-    transparent 72%
+  /* Centred hero (no photo): a symmetric vignette keeps the pattern visible
+     at the edges while holding contrast behind the centred headline. */
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    rgba(5, 5, 5, 0.82) 0%,
+    rgba(5, 5, 5, 0.55) 45%,
+    rgba(5, 5, 5, 0.15) 75%,
+    transparent 100%
   );
 }
 

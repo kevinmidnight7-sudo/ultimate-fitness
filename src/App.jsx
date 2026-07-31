@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.9.0.0";
+const SITE_VERSION = "v1.10.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -172,9 +172,9 @@ const divisions = [
   {
     key: "intermediate",
     label: "Intermediate",
-    runDistance: "600m",
-    finalRun: "600m",
-    totalRunning: "6.0km",
+    runDistance: "800m",
+    finalRun: "800m",
+    totalRunning: "8.0km",
     duration: "80–110 min",
   },
   {
@@ -330,7 +330,7 @@ const finalCircuit = {
     ["Step-Ups", "20 reps"],
     ["Bear Crawl Push", "20m"],
     ["Hero Load Carry", "40m"],
-    ["Final Run", "600m"],
+    ["Final Run", "800m"],
   ],
   elite: [
     ["Ground-to-Shoulder", "15 reps"],
@@ -4109,7 +4109,7 @@ export default function App() {
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: "easeOut" }}
-              className="max-w-[900px]"
+              className="mx-auto flex max-w-6xl flex-col items-center text-center"
             >
               {/* Badge */}
               <div className="mb-5 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2.5">
@@ -4122,17 +4122,9 @@ export default function App() {
                 </span>
               </div>
 
-              {/* Headline with vertical left accent */}
-              <div className="relative pl-5 md:pl-6">
-                {/* Vertical lime bar — fades into the arena graphics below */}
-                <div
-                  className="absolute left-0 top-0 w-[2px]"
-                  style={{
-                    height: "115%",
-                    background:
-                      "linear-gradient(to bottom, rgba(163,230,53,0.9) 0%, rgba(163,230,53,0.7) 38%, rgba(163,230,53,0.25) 70%, transparent 100%)",
-                  }}
-                />
+              {/* Headline — centred, with a lime rule instead of the old left bar */}
+              <div className="relative w-full">
+                <div className="mx-auto mb-7 h-px w-24 bg-gradient-to-r from-transparent via-lime-400/70 to-transparent" />
                 <motion.h1
                   className="text-metallic uppercase leading-none tracking-tight"
                   style={{
@@ -4159,7 +4151,7 @@ export default function App() {
               </div>
 
               {/* CTAs */}
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
                   href="#signup"
                   className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[15px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
@@ -4179,13 +4171,13 @@ export default function App() {
               </div>
 
               {/* Stats */}
-              <div className="mt-8 flex flex-wrap gap-7">
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
                 {[
                   ["Live Events", "All Venues"],
                   ["All Abilities", "Every Level"],
                   ["Personal Score", "Your Benchmark"],
                 ].map(([label, sub]) => (
-                  <div key={label} className="border-l-2 border-lime-400/35 pl-4">
+                  <div key={label} className="border-t-2 border-lime-400/35 px-2 pt-3 text-center">
                     <p
                       className="text-[11.5px] font-black uppercase tracking-[0.22em] text-white"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
