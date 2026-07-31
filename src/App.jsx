@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.10.0.0";
+const SITE_VERSION = "v1.11.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -87,20 +87,60 @@ const uhciPrinciples = [
 ];
 
 const capabilities = [
-  { label: "ENDURANCE", icon: Heart },
-  { label: "STRENGTH", icon: Dumbbell },
-  { label: "POWER", icon: Zap },
-  { label: "SPEED", icon: Gauge },
-  { label: "AGILITY", icon: Activity },
-  { label: "BALANCE", icon: Target },
-  { label: "COORDINATION", icon: Link2 },
+  {
+    label: "ENDURANCE",
+    icon: Heart,
+    detail: "Sustaining physical effort over an extended period without a significant drop in performance.",
+    example: "Maintaining a consistent pace and technique across all ten runs and exercise stations.",
+  },
+  {
+    label: "STRENGTH",
+    icon: Dumbbell,
+    detail: "Generating force to move, lift or control resistance.",
+    example: "Lifting and carrying heavy equipment, such as the dumbbells or sled, efficiently.",
+  },
+  {
+    label: "POWER",
+    icon: Zap,
+    detail: "Producing maximum force quickly and explosively.",
+    example: "Driving a med ball high to the target or accelerating from a standing start.",
+  },
+  {
+    label: "SPEED",
+    icon: Gauge,
+    detail: "Moving the body or a body part as quickly as possible.",
+    example: "Completing the running sections and fast movement exercises in the shortest possible time.",
+  },
+  {
+    label: "AGILITY",
+    icon: Activity,
+    detail: "Changing direction or body position quickly while maintaining control.",
+    example: "Moving efficiently through shuttle runs, bear crawls or any station requiring rapid changes of direction.",
+  },
+  {
+    label: "BALANCE",
+    icon: Target,
+    detail: "Maintaining stability and control while stationary or moving.",
+    example: "Remaining stable during single-leg movements or while carrying uneven loads without losing control.",
+  },
+  {
+    label: "COORDINATION",
+    icon: Link2,
+    detail: "Performing smooth, accurate and efficient movements by working different parts of the body together.",
+    example: "Executing technically demanding movements such as the hoop shot or med ball toss with consistent rhythm and accuracy.",
+  },
   {
     label: "RESILIENCE",
     icon: Shield,
     detail: "Ability to recover and perform again after exertion.",
     example: "How quickly you're ready for the next challenge.",
   },
-  { label: "MOBILITY", icon: RotateCcw },
+  {
+    label: "MOBILITY",
+    icon: RotateCcw,
+    detail: "Moving joints through their full range of motion with control.",
+    example: "Performing deep squats, lunges and overhead movements with good technique and unrestricted movement.",
+  },
   {
     label: "MENTAL FORTITUDE",
     icon: Brain,
