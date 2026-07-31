@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.8.0.0";
+const SITE_VERSION = "v1.8.1.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -748,7 +748,7 @@ function CapabilityPillarsSection() {
   return (
     <section
       className="relative border-y border-lime-400/[0.07] px-6 py-20"
-      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -811,7 +811,7 @@ function CapabilityPillarsSection() {
               </RadarChart>
             </ResponsiveContainer>
             <p
-              className="text-center text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-700"
+              className="text-center text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               Sample athlete profile · Intermediate division
@@ -835,13 +835,14 @@ function CapabilityPillarsSection() {
                 />
                 <div>
                   <p
-                    className="text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-400"
+                    className="text-[12px] font-bold uppercase tracking-[0.22em] text-neutral-300"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                   >
                     {label}
                   </p>
-                  <p className="text-[13px] text-neutral-700">
-                    <CountUp to={pillarRadarData[i].value} suffix="/1000" />
+                  <p className="text-[15px] font-bold text-lime-400">
+                    <CountUp to={pillarRadarData[i].value} />
+                    <span className="text-neutral-400">/1000</span>
                   </p>
                   {detail && (
                     <p className="mt-1.5 text-[15px] leading-5 text-neutral-400">
@@ -2373,7 +2374,7 @@ function YourJourneyHub() {
     <section
       id="journey"
       className="relative border-t border-white/[0.06] px-6 py-24"
-      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -2880,7 +2881,7 @@ function AICoachingSection() {
     <section
       id="coaching"
       className="relative border-t border-lime-400/[0.07] px-6 py-28"
-      style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -4346,7 +4347,7 @@ export default function App() {
                   <tr>
                     <th className="w-44 py-4 pr-6 text-left">
                       <span
-                        className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-700"
+                        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
                         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                       >
                         Capability
@@ -4409,7 +4410,7 @@ export default function App() {
         <section
           id="challenge"
           className="relative px-6 pb-0 pt-20"
-          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
@@ -4565,7 +4566,7 @@ export default function App() {
         {/* ── WHY ENTER ── */}
         <section
           className="relative border-t border-white/[0.06]"
-          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
             className="pointer-events-none absolute inset-0"
@@ -4804,7 +4805,7 @@ export default function App() {
         <section
           id="signup"
           className="relative border-t border-lime-400/[0.07] px-6 py-24"
-          style={{ background: "linear-gradient(195deg, #0d1d30 0%, #07080a 40%, #241508 75%, #0a0a0a 100%)" }}
+          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           {/* Branded UH arena-floor asset, low opacity behind the form */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -4946,13 +4947,13 @@ export default function App() {
             style={{ maxWidth: "180px", opacity: 0.32 }}
           />
           <p
-            className="text-[11px] font-bold uppercase tracking-[0.42em] text-neutral-700"
+            className="text-[11px] font-bold uppercase tracking-[0.42em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             Measure. Train. Compete. Evolve.
           </p>
           <p
-            className="text-[13px] text-neutral-700"
+            className="text-[14px] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
             © 2026 Ultimate Human Index · theultimatehuman.fitness
