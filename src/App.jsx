@@ -50,7 +50,7 @@ import CountUp from "@/components/motion/CountUp";
 const SITE_PASSWORD = "U00TLHU8MAN";
 
 /* Bump this on every update/push so the footer marker shows what's deployed. */
-const SITE_VERSION = "v1.8.1.0";
+const SITE_VERSION = "v1.9.0.0";
 
 /* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
    (opens the visitor's mail client). To collect properly, paste a form
@@ -730,8 +730,8 @@ function MarketingImage({
       ref={wrapRef}
       className={
         fill
-          ? "pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
-          : `pointer-events-none relative overflow-hidden ${className}`
+          ? "uh-img-glow pointer-events-auto absolute inset-0 h-full w-full overflow-hidden"
+          : `uh-img-glow pointer-events-auto relative overflow-hidden ${className}`
       }
       style={{ aspectRatio: fill ? undefined : aspectRatio, opacity }}
     >
@@ -1163,7 +1163,7 @@ function FounderCard({ photo, ratio, name, role, quote }) {
       className="lime-glow-hover group relative overflow-hidden bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
     >
       <div className="absolute left-0 top-0 z-10 h-px w-full bg-gradient-to-r from-lime-400/40 via-white/[0.08] to-transparent" />
-      <div className="relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
+      <div className="uh-img-glow-target relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
         {photoFailed ? (
           <div
             className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center"
@@ -2384,12 +2384,10 @@ function YourJourneyHub() {
         }}
       />
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-12 max-w-2xl">
+        <div className="mb-12 max-w-5xl">
           <SectionLabel>Start Here</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-            Your Journey to
-            <br />
-            The Ultimate Human.
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl lg:whitespace-nowrap">
+            Your Journey to The Ultimate Human.
           </Reveal>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Five steps. One profile that gets sharper every time you use it.
@@ -4111,7 +4109,7 @@ export default function App() {
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: "easeOut" }}
-              className="max-w-[640px]"
+              className="max-w-[900px]"
             >
               {/* Badge */}
               <div className="mb-5 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2.5">
@@ -4138,7 +4136,7 @@ export default function App() {
                 <motion.h1
                   className="text-metallic uppercase leading-none tracking-tight"
                   style={{
-                    fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                    fontSize: "clamp(2.4rem, 6vw, 6.2rem)",
                     lineHeight: 1.03,
                     fontFamily: "'Oswald', sans-serif",
                     fontWeight: 700,
@@ -4146,13 +4144,9 @@ export default function App() {
                     filter: reducedMotion ? undefined : headlineFilter,
                   }}
                 >
-                  The AI-Powered
+                  The AI-Powered Operating System
                   <br />
-                  Operating System
-                  <br />
-                  for Human
-                  <br />
-                  Performance
+                  for Human Performance
                 </motion.h1>
 
                 {/* Slogan — indented to sit flush with headline text */}
