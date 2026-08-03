@@ -139,6 +139,30 @@ h3 {
   }
 }
 
+/* ── Section break ───────────────────────────────────────────── */
+/* A visible horizontal rule between sections (Ken, 1 Aug), tinted lime in
+   the middle so page breaks read as branded rather than as a hairline. */
+.uh-divide {
+  position: relative;
+}
+.uh-divide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(163, 230, 53, 0.45) 25%,
+    rgba(163, 230, 53, 0.45) 75%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+}
+
 /* ── Dark scrollbars for horizontally scrolling panels ───────── */
 .uh-scroll-dark {
   scrollbar-width: thin;
