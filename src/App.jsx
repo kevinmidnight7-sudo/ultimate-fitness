@@ -1017,7 +1017,7 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
       {/* Base tone */}
       <div
         className="absolute inset-0"
-        style={{ background: "linear-gradient(165deg, #0c1207 0%, #07080a 45%, #0a0c10 100%)" }}
+        style={{ background: "linear-gradient(165deg, #16240d 0%, #0b1010 45%, #0d1420 100%)" }}
       />
 
       {/* Fine technical grid */}
@@ -1066,16 +1066,6 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           background:
             "radial-gradient(ellipse 60% 55% at 78% 18%, rgba(163,230,53,0.30) 0%, transparent 64%)," +
             "radial-gradient(ellipse 50% 45% at 20% 90%, rgba(163,230,53,0.16) 0%, transparent 66%)",
-        }}
-      />
-
-      {/* Vignette so the headline stays crisp */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 0%, rgba(5,5,5,0.55) 100%)," +
-            "linear-gradient(90deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.35) 42%, transparent 70%)",
         }}
       />
 
@@ -3582,7 +3572,7 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
       {/* Big figure, cropped by the frame at the bottom so it's grounded, not floating */}
       <motion.div
         style={{ y: figureY, scale: figureScale, opacity: figureOpacity, willChange: "transform" }}
-        className={`absolute top-[2%] z-0 h-[126%] ${figureRight ? "right-[1vw]" : "left-[1vw]"}`}
+        className={`uh-img-glow pointer-events-auto absolute top-[2%] z-0 h-[126%] ${figureRight ? "right-[1vw]" : "left-[1vw]"}`}
       >
         <CutoutImage file={file} />
       </motion.div>
@@ -3805,15 +3795,37 @@ function SectionTourButton() {
 
   /* Step aside when the sign-up form is on screen — the button sits bottom
      centre and would otherwise cover the submit button. */
+  /* Step aside when a primary CTA or the sign-up form would sit under the
+     button. A direct geometric test rather than IntersectionObserver: the
+     button lives in the bottom-centre band, which rootMargin can't express. */
   useEffect(() => {
-    const form = document.querySelector("#signup");
-    if (!form || !("IntersectionObserver" in window)) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setOverForm(entry.isIntersecting),
-      { rootMargin: "0px 0px -35% 0px" }
-    );
-    io.observe(form);
-    return () => io.disconnect();
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      const targets = document.querySelectorAll("#signup, [data-tour-avoid]");
+      const bandTop = window.innerHeight - 110; // button zone height
+      const bandLeft = window.innerWidth / 2 - 130;
+      const bandRight = window.innerWidth / 2 + 130;
+      let clash = false;
+      targets.forEach((t) => {
+        const r = t.getBoundingClientRect();
+        if (r.bottom > bandTop && r.top < window.innerHeight && r.right > bandLeft && r.left < bandRight) {
+          clash = true;
+        }
+      });
+      setOverForm(clash);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   /* Eased scroll — deliberate enough to feel cinematic, but it starts moving
@@ -4194,7 +4206,7 @@ export default function App() {
               want to reinstate it. */}
           <HeroPatternBackground heroRef={heroRef} reducedMotion={reducedMotion} />
 
-          <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
+          <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 pb-28 pt-10 md:pb-32 md:pt-12">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
@@ -4218,7 +4230,7 @@ export default function App() {
                 <motion.h1
                   className="text-metallic uppercase leading-none tracking-tight"
                   style={{
-                    fontSize: "clamp(2.4rem, 6vw, 6.2rem)",
+                    fontSize: "clamp(2.2rem, 5vw, 5.2rem)",
                     lineHeight: 1.03,
                     fontFamily: "'Oswald', sans-serif",
                     fontWeight: 700,
@@ -4231,6 +4243,16 @@ export default function App() {
                   for Human Performance
                 </motion.h1>
 
+                {/* Positioning copy — Ken, 1 Aug */}
+                <p className="mx-auto mt-6 max-w-3xl text-[16px] leading-7 text-neutral-200">
+                  Ultimate Human Index is a complete fitness challenge for every body,
+                  every age and every starting point.
+                </p>
+                <p className="mx-auto mt-2.5 max-w-3xl text-[16px] leading-7 text-neutral-400">
+                  You don't have to be an elite athlete to take part. You simply need to be
+                  ready to test yourself.
+                </p>
+
                 {/* Slogan — indented to sit flush with headline text */}
                 <p
                   className="mt-5 text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/75"
@@ -4241,7 +4263,7 @@ export default function App() {
               </div>
 
               {/* CTAs */}
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div data-tour-avoid className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
                   href="#signup"
                   className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[15px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
@@ -4261,7 +4283,7 @@ export default function App() {
               </div>
 
               {/* Stats */}
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
                 {[
                   ["Live Events", "All Venues"],
                   ["All Abilities", "Every Level"],
@@ -4533,6 +4555,7 @@ export default function App() {
             searchTerms="athlete exhausted determined mid-workout dramatic shadow"
             treatment="Duotone B&W/lime · dark vignette top + bottom"
             className="max-h-[62vh] w-full"
+            imgClassName="object-[center_22%]"
             overlay={
               <>
                 <div
