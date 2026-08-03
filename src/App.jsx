@@ -812,7 +812,7 @@ function CapabilityPillarsSection() {
 
   return (
     <section
-      className="relative border-y border-lime-400/[0.07] px-6 py-20"
+      className="relative uh-divide px-6 py-20"
       style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
@@ -1415,7 +1415,7 @@ function CapabilityAccordionItem({ capability, division, isOpen, onToggle, index
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="border-t border-white/[0.06] p-6 pt-5">
+            <div className="uh-divide p-6 pt-5">
               <p
                 className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -1511,7 +1511,7 @@ function WorkingWeightsPanel() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="border-t border-white/[0.06] p-6 pt-5">
+            <div className="uh-divide p-6 pt-5">
               <p className="mb-4 text-[15px] leading-6 text-neutral-400">
                 Indicative loads to guide training. Final event weights will be confirmed
                 closer to launch.
@@ -1582,7 +1582,7 @@ function EventStructureSection() {
   return (
     <section
       id="format"
-      className="relative border-t border-white/[0.06] px-6 py-28"
+      className="relative uh-divide px-6 py-28"
       style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
@@ -2453,7 +2453,7 @@ function YourJourneyHub() {
   return (
     <section
       id="journey"
-      className="relative border-t border-white/[0.06] px-6 py-24"
+      className="relative uh-divide px-6 py-24"
       style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
@@ -2673,7 +2673,7 @@ function ScoreSection() {
   return (
     <section
       id="score"
-      className="relative border-t border-lime-400/[0.07] px-6 py-28"
+      className="uh-divide relative px-6 py-28"
       style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
@@ -2958,7 +2958,7 @@ function AICoachingSection() {
   return (
     <section
       id="coaching"
-      className="relative border-t border-lime-400/[0.07] px-6 py-28"
+      className="uh-divide relative px-6 py-28"
       style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
@@ -3287,7 +3287,7 @@ function SubscriptionSection() {
   return (
     <section
       id="membership"
-      className="relative border-t border-white/[0.06] px-6 py-28"
+      className="relative uh-divide px-6 py-28"
       style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
@@ -4120,7 +4120,7 @@ export default function App() {
           <div className="flex items-center gap-6 shrink-0">
             <a href="#" className="shrink-0 no-underline">
               <img
-                src="/images/logo.png"
+                src="/images/coloured.png"
                 alt="Ultimate Human Index"
                 className="h-11 w-auto object-contain md:h-14"
                 style={{
@@ -4173,7 +4173,7 @@ export default function App() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden border-t border-white/[0.06] bg-[#050505]/98 md:hidden"
+              className="overflow-hidden uh-divide bg-[#050505]/98 md:hidden"
             >
               <div className="flex flex-col px-6 py-2">
                 {navLinks.map(({ label, href }) => (
@@ -4312,7 +4312,7 @@ export default function App() {
         {/* ── ULTIMATE HUMAN INDEX (UHI) ── */}
         <section
           id="uhci"
-          className="relative border-t border-white/[0.06] px-6 py-24"
+          className="relative uh-divide px-6 py-24"
           style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0d1d30 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -4407,7 +4407,7 @@ export default function App() {
 
         {/* ── WHY UHI IS DIFFERENT ── */}
         <section
-          className="relative border-t border-white/[0.06] px-6 py-24"
+          className="relative uh-divide px-6 py-24"
           style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -4507,7 +4507,7 @@ export default function App() {
         {/* ── CHALLENGE OVERVIEW ── */}
         <section
           id="challenge"
-          className="relative px-6 pb-0 pt-20"
+          className="uh-divide relative px-6 pb-0 pt-20"
           style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
@@ -4609,7 +4609,7 @@ export default function App() {
         {/* ── CATEGORIES ── */}
         <section
           id="categories"
-          className="relative border-t border-white/[0.06] px-6 py-24"
+          className="relative uh-divide px-6 py-24"
           style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -4664,7 +4664,7 @@ export default function App() {
 
         {/* ── WHY ENTER ── */}
         <section
-          className="relative border-t border-white/[0.06]"
+          className="relative uh-divide"
           style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
@@ -4714,7 +4714,7 @@ export default function App() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="border-t border-white/[0.06] py-6"
+                    className="uh-divide py-6"
                   >
                     <div className="flex items-start gap-4">
                       <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-lime-400/50" />
@@ -4734,7 +4734,7 @@ export default function App() {
 
         {/* ── PRICING ── */}
         <section
-          className="relative border-t border-white/[0.06] px-6 py-24"
+          className="relative uh-divide px-6 py-24"
           style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -4835,7 +4835,7 @@ export default function App() {
 
         {/* ── FOUNDERS ── */}
         <section
-          className="relative border-t border-white/[0.06] px-6 py-24"
+          className="relative uh-divide px-6 py-24"
           style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
         >
           <div
@@ -4903,7 +4903,7 @@ export default function App() {
         {/* ── SIGNUP / WAITLIST ── */}
         <section
           id="signup"
-          className="relative border-t border-lime-400/[0.07] px-6 py-24"
+          className="uh-divide relative px-6 py-24"
           style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           {/* Branded UH arena-floor asset, low opacity behind the form */}
@@ -5000,7 +5000,7 @@ export default function App() {
 
         {/* ── PRE-LAUNCH NOTICE ── */}
         <section
-          className="border-t border-white/[0.06] px-6 py-16"
+          className="uh-divide px-6 py-16"
           style={{ background: "linear-gradient(180deg, #09090a 0%, #0a0a0a 100%)" }}
         >
           <div className="mx-auto max-w-5xl">
@@ -5037,10 +5037,10 @@ export default function App() {
       </main>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-white/[0.06] bg-[#050505] px-6 py-10">
+      <footer className="uh-divide bg-[#050505] px-6 py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 md:flex-row">
           <img
-            src="/images/logo.png"
+            src="/images/coloured.png"
             alt="Ultimate Human Index"
             className="h-10 w-auto object-contain"
             style={{ maxWidth: "180px", opacity: 0.32 }}
