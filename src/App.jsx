@@ -4888,9 +4888,9 @@ export default function App() {
                 role="Founder · Entrepreneur · Fitness Race Enthusiast"
                 quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
               />
-              {/* Photo still to be supplied — card shows a 'photo to follow' placeholder */}
+              {/* Falls back to a 'photo to follow' placeholder until the file exists */}
               <FounderCard
-                photo=""
+                photo="/images/founders/camilla.png"
                 ratio="1 / 1"
                 name="Dr. Camilla Drew"
                 role="Event Adviser · Capabilities Adviser · Fitness Enthusiast"
