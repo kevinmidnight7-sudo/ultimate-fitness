@@ -201,12 +201,12 @@ h3 {
   pointer-events: none;
   /* Centred hero (no photo): a symmetric vignette keeps the pattern visible
      at the edges while holding contrast behind the centred headline. */
+  /* Just a light ~10% wash so the green matrix reads through. */
   background: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    rgba(5, 5, 5, 0.5) 0%,
-    rgba(5, 5, 5, 0.28) 45%,
-    rgba(5, 5, 5, 0.06) 75%,
-    transparent 100%
+    ellipse 80% 70% at 50% 50%,
+    rgba(5, 5, 5, 0.12) 0%,
+    rgba(5, 5, 5, 0.08) 55%,
+    rgba(5, 5, 5, 0.04) 100%
   );
 }
 
