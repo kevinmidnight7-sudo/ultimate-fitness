@@ -2673,7 +2673,7 @@ function ScoreSection() {
   return (
     <section
       id="score"
-      className="relative border-t border-lime-400/[0.07] px-6 py-28"
+      className="uh-divide relative px-6 py-28"
       style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
     >
       <div
@@ -2958,7 +2958,7 @@ function AICoachingSection() {
   return (
     <section
       id="coaching"
-      className="relative border-t border-lime-400/[0.07] px-6 py-28"
+      className="uh-divide relative px-6 py-28"
       style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
     >
       <div
@@ -4507,7 +4507,7 @@ export default function App() {
         {/* ── CHALLENGE OVERVIEW ── */}
         <section
           id="challenge"
-          className="relative px-6 pb-0 pt-20"
+          className="uh-divide relative px-6 pb-0 pt-20"
           style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           <div
@@ -4903,7 +4903,7 @@ export default function App() {
         {/* ── SIGNUP / WAITLIST ── */}
         <section
           id="signup"
-          className="relative border-t border-lime-400/[0.07] px-6 py-24"
+          className="uh-divide relative px-6 py-24"
           style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
         >
           {/* Branded UH arena-floor asset, low opacity behind the form */}
