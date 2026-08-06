@@ -101,7 +101,7 @@ const capabilities = [
     label: "POWER",
     icon: Zap,
     detail: "Producing maximum force quickly and explosively.",
-    example: "Driving a med ball high to the target or accelerating from a standing start.",
+    example: "Driving explosively into a hoop shot or accelerating from a standing start.",
   },
   {
     label: "SPEED",
@@ -125,7 +125,7 @@ const capabilities = [
     label: "COORDINATION",
     icon: Link2,
     detail: "Performing smooth, accurate and efficient movements by working different parts of the body together.",
-    example: "Executing technically demanding movements such as the hoop shot or med ball toss with consistent rhythm and accuracy.",
+    example: "Executing technically demanding movements such as the hoop shot with consistent rhythm and accuracy.",
   },
   {
     label: "RESILIENCE",
@@ -251,25 +251,17 @@ const capabilities10 = [
   },
   {
     number: 4,
-    name: "Med Ball Toss",
-    reps: { foundation: "50 throws", intermediate: "80 throws", elite: "120 throws" },
-    tests: "Explosive power, hip drive and full-body coordination.",
-    coachingNote: "Drive through your legs and hips into every throw — extend fully rather than muscling it with your arms.",
-    weightKey: "Med Ball Toss",
-  },
-  {
-    number: 5,
     name: "Hoop Shot",
     reps: {
-      foundation: "50 attempts · 3:00 cap",
-      intermediate: "80 attempts · 4:00 cap",
-      elite: "120 attempts · 5:00 cap",
+      foundation: "50 attempts",
+      intermediate: "80 attempts",
+      elite: "120 attempts",
     },
     tests: "Accuracy, composure and fine motor control under fatigue.",
     coachingNote: "Slow your breathing before each attempt — accuracy beats speed here.",
   },
   {
-    number: 6,
+    number: 5,
     name: "Dumbbell End Carry",
     reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
     tests: "Loaded carry strength, grip and core stability under load.",
@@ -277,7 +269,7 @@ const capabilities10 = [
     weightKey: "Dumbbell End Carry",
   },
   {
-    number: 7,
+    number: 6,
     name: "Devil's Advance",
     reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
     tests: "Loaded carry endurance, grip and postural control.",
@@ -285,7 +277,7 @@ const capabilities10 = [
     weightKey: "Devil's Advance",
   },
   {
-    number: 8,
+    number: 7,
     name: "Step-Ups",
     reps: { foundation: "50 reps", intermediate: "80 reps", elite: "120 reps" },
     tests: "Leg power, muscular endurance and balance.",
@@ -293,7 +285,7 @@ const capabilities10 = [
     weightKey: "Step-Ups",
   },
   {
-    number: 9,
+    number: 8,
     name: "Ground-to-Overhead",
     reps: { foundation: "50 reps", intermediate: "80 reps", elite: "120 reps" },
     tests: "Full-body power, coordination and strength under fatigue.",
@@ -314,12 +306,6 @@ const workingWeights = [
     foundation: { women: "10kg", men: "15kg" },
     intermediate: { women: "15kg", men: "25kg" },
     elite: { women: "20kg", men: "35kg" },
-  },
-  {
-    name: "Med Ball Toss",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "10kg", men: "15kg" },
-    elite: { women: "10kg", men: "15kg" },
   },
   {
     name: "Dumbbell End Carry",
@@ -1082,8 +1068,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           className="absolute inset-[-10%] will-change-transform"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 48px)," +
-              "repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 48px)",
+              "repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 48px)," +
+              "repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 48px)",
           }}
         />
       </motion.div>
@@ -1095,8 +1081,8 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           className="absolute inset-[-10%] will-change-transform"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(0deg, rgba(163,230,53,0.20) 0 1px, transparent 1px 240px)," +
-              "repeating-linear-gradient(90deg, rgba(163,230,53,0.20) 0 1px, transparent 1px 240px)",
+              "repeating-linear-gradient(0deg, rgba(163,230,53,0.05) 0 1px, transparent 1px 240px)," +
+              "repeating-linear-gradient(90deg, rgba(163,230,53,0.05) 0 1px, transparent 1px 240px)",
           }}
         />
       </motion.div>
@@ -1108,7 +1094,7 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
           className="uh-pattern-hatch absolute inset-[-40%] will-change-transform"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(135deg, rgba(163,230,53,0.085) 0 2px, transparent 2px 16px)",
+              "repeating-linear-gradient(135deg, rgba(163,230,53,0.018) 0 2px, transparent 2px 16px)",
           }}
         />
       </motion.div>
@@ -1131,7 +1117,7 @@ function HeroPatternBackground({ heroRef, reducedMotion }) {
         "left-8 bottom-10 border-b border-l",
         "right-8 bottom-10 border-b border-r",
       ].map((pos) => (
-        <div key={pos} className={`absolute hidden h-10 w-10 border-lime-400/25 md:block ${pos}`} />
+        <div key={pos} className={`absolute hidden h-10 w-10 border-lime-400/10 md:block ${pos}`} />
       ))}
 
       {/* UH watermark — floor right */}
@@ -1524,12 +1510,12 @@ function EventStructureSection() {
           <div className="max-w-2xl">
             <SectionLabel>The UHI Event Structure</SectionLabel>
             <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-              10 Capabilities.
+              9 Capabilities.
               <br />
               One Continuous Test.
             </Reveal>
             <p className="mt-5 text-lg leading-7 text-neutral-400">
-              A run before every capability. Nine capability tests. One final circuit.
+              A run before every capability. Eight capability tests. One final circuit.
               Choose a division, then open a capability to see exactly what it tests.
             </p>
           </div>
@@ -1565,7 +1551,7 @@ function EventStructureSection() {
           >
             {[
               ["Run Before Each Capability", current.runDistance],
-              ["Final Run · Capability 10", current.finalRun],
+              ["Final Run · Capability 9", current.finalRun],
               ["Total Running Distance", current.totalRunning],
               ["Estimated Time", current.duration],
             ].map(([label, value]) => (
@@ -1648,7 +1634,7 @@ function EventStructureSection() {
                   className="text-[10px] font-bold uppercase tracking-[0.38em] text-lime-400"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
-                  Capability 10 · The Finisher
+                  Capability 9 · The Finisher
                 </p>
                 <p
                   className="mt-1 text-base font-bold uppercase tracking-wide text-white"
@@ -1678,7 +1664,7 @@ function EventStructureSection() {
                 <div className="border-t border-lime-400/20 p-6 pt-5">
                   <p className="mb-4 text-[16px] leading-6 text-neutral-400">
                     Five back-to-back elements with no rest. Everything you've tested across
-                    the previous nine capabilities, compressed into one final push.
+                    the previous eight capabilities, compressed into one final push.
                   </p>
                   <AnimatePresence mode="wait">
                     <motion.div
