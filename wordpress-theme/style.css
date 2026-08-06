@@ -1,0 +1,13 @@
+/*
+Theme Name: Ultimate Human Index
+Theme URI: https://theultimatehuman.fitness
+Author: UHI
+Description: Serves the Ultimate Human Index React front end from WordPress, so
+             WordPress plugins (analytics, SEO, security, backups, forms on
+             separate WP pages) are available at the hosting layer. The React
+             bundle is built from the ultimate-fitness repo and copied into
+             this theme's /app directory by CI.
+Version: 1.0.0
+*/
+
+/* Intentionally empty — all styling ships with the React bundle. */

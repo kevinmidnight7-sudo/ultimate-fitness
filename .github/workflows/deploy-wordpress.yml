@@ -1,0 +1,44 @@
+name: Build and deploy to WordPress
+
+# Builds the React front end and uploads it into the WordPress theme.
+# Requires these repository secrets (Settings > Secrets and variables > Actions):
+#   WP_SFTP_HOST      e.g. sftp.yourhost.com
+#   WP_SFTP_USER
+#   WP_SFTP_PASSWORD
+#   WP_THEME_PATH     e.g. /public_html/wp-content/themes/ultimate-human-index
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # lets you trigger a deploy by hand
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      # Assemble the theme: PHP files + the built app in /app
+      - name: Assemble theme
+        run: |
+          mkdir -p theme-out/app
+          cp wordpress-theme/*.php wordpress-theme/style.css theme-out/
+          cp -r dist/* theme-out/app/
+
+      - name: Upload to WordPress
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.WP_SFTP_HOST }}
+          username: ${{ secrets.WP_SFTP_USER }}
+          password: ${{ secrets.WP_SFTP_PASSWORD }}
+          protocol: sftp
+          local-dir: ./theme-out/
+          server-dir: ${{ secrets.WP_THEME_PATH }}/
