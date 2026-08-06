@@ -4,7 +4,11 @@ Single-page marketing site. Vite + React 19, Tailwind CSS v4, framer-motion v12,
 lucide-react, recharts. Almost the entire UI lives in `src/App.jsx` as named
 section components. Shared pieces live in `src/components/`.
 
-- Password gate is client-side (`SITE_PASSWORD` in `App.jsx`) — don't change its behaviour.
+- Password gate removed (Aug 2026) — the site is public. The old component is kept at
+  `src/components/archived/PasswordGate.jsx`; it was only ever client-side, so use
+  hosting-level auth if real restriction is ever needed.
+- Primary CTA: every button points at `REGISTER_URL` (Google Form). The on-site
+  `WaitlistForm` is archived alongside the gate, working and ready to switch back on.
 - `SITE_VERSION` in `App.jsx` drives the footer version marker — bump it on EVERY update/push (last segment per change), ideally in the same commit.
 - Design system: near-black backgrounds, `lime-400` accent only, `Oswald` display /
   `Barlow Condensed` UI. Keep lime for CTAs/active states; dim it elsewhere.
