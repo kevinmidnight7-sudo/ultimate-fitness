@@ -139,6 +139,49 @@ h3 {
   }
 }
 
+/* ── Register CTA — the site's single most important button ──── */
+/* A breathing lime glow plus a slow sheen sweep, so it reads as the one
+   thing worth clicking without resorting to garish colour. */
+@keyframes uh-cta-breathe {
+  0%, 100% { box-shadow: 0 0 18px rgba(163,230,53,0.35), 0 0 44px rgba(163,230,53,0.14); }
+  50%      { box-shadow: 0 0 26px rgba(163,230,53,0.55), 0 0 68px rgba(163,230,53,0.26); }
+}
+@keyframes uh-cta-sheen {
+  0%   { transform: translateX(-130%) skewX(-18deg); }
+  55%  { transform: translateX(230%)  skewX(-18deg); }
+  100% { transform: translateX(230%)  skewX(-18deg); }
+}
+
+.uh-cta {
+  position: relative;
+  overflow: hidden;
+  animation: uh-cta-breathe 3.4s ease-in-out infinite;
+  transition: transform 0.25s ease, background-color 0.2s ease;
+}
+.uh-cta:hover {
+  transform: translateY(-2px);
+}
+.uh-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+  animation: uh-cta-sheen 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uh-cta,
+  .uh-cta::after {
+    animation: none !important;
+  }
+  .uh-cta {
+    box-shadow: 0 0 22px rgba(163,230,53,0.4);
+  }
+}
+
 /* ── Section break ───────────────────────────────────────────── */
 /* A visible horizontal rule between sections (Ken, 1 Aug), tinted lime in
    the middle so page breaks read as branded rather than as a hairline. */
