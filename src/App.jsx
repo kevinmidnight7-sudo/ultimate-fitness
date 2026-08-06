@@ -4238,7 +4238,7 @@ export default function App() {
                     filter: reducedMotion ? undefined : headlineFilter,
                   }}
                 >
-                  The AI-Powered Operating System
+                  The Ultimate Operating System
                   <br />
                   for Human Performance
                 </motion.h1>
