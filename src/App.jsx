@@ -52,12 +52,11 @@ const SITE_PASSWORD = "U00TLHU8MAN";
 /* Bump this on every update/push so the footer marker shows what's deployed. */
 const SITE_VERSION = "v1.12.0.0";
 
-/* Waitlist form endpoint. Leave empty to fall back to a pre-filled email
-   (opens the visitor's mail client). To collect properly, paste a form
-   endpoint here — e.g. a Formspree URL (https://formspree.io/f/xxxx) or your
-   own API — and the form will POST JSON { name, email, interest } to it. */
-const WAITLIST_ENDPOINT = "";
-const WAITLIST_EMAIL = "hello@theultimatehuman.fitness";
+
+/* While the on-site form is parked, every call to action points at the Google
+   Form instead. Change this one value to repoint every button on the site. */
+const REGISTER_URL = "https://forms.gle/mL4PZKgog7kbjdQC7";
+const REGISTER_LABEL = "Register Your Interest & Provide Feedback";
 
 /* ─────────────────────────────────────────────────────────────────
    DATA
@@ -614,6 +613,36 @@ const workToDo = [
 /* ─────────────────────────────────────────────────────────────────
    SECTION LABEL
 ───────────────────────────────────────────────────────────────── */
+
+/* The site's primary call to action. Opens the Google Form in a new tab.
+   size="lg" for hero/signup, "sm" for the header and tier cards. */
+function RegisterButton({ size = "lg", className = "", label = REGISTER_LABEL, shortLabel }) {
+  const sizing =
+    size === "sm"
+      ? "px-4 py-2.5 text-[11px] tracking-[0.12em] sm:px-5 sm:text-[12px]"
+      : "px-7 py-4 text-[13px] tracking-[0.14em] sm:px-9 sm:py-5 sm:text-[15px]";
+  return (
+    <a
+      href={REGISTER_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`uh-cta inline-flex max-w-full items-center justify-center gap-2 bg-lime-400 text-center font-black uppercase leading-tight text-black no-underline hover:bg-lime-300 ${sizing} ${className}`}
+      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+    >
+      <span className="relative z-10">
+        {shortLabel ? (
+          <>
+            <span className="sm:hidden">{shortLabel}</span>
+            <span className="hidden sm:inline">{label}</span>
+          </>
+        ) : (
+          label
+        )}
+      </span>
+      <ArrowRight className="relative z-10 h-4 w-4 shrink-0" />
+    </a>
+  );
+}
 
 function SectionLabel({ children }) {
   return (
@@ -2302,7 +2331,9 @@ function AthleteTypeQuiz({ onClose }) {
             See Full Score Breakdown
           </a>
           <a
-            href="#signup"
+            href={REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={onClose}
             className="flex-1 border border-white/20 bg-white/[0.04] px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.16em] text-white no-underline transition-colors hover:border-white/35 hover:bg-white/[0.08]"
           >
@@ -2926,7 +2957,9 @@ function AICoachingSection() {
       </div>
 
       <a
-        href="#signup"
+        href={REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
         className="group mt-7 flex items-center gap-4 border border-lime-400/25 bg-lime-400/[0.05] p-4 no-underline transition-colors hover:border-lime-400/50 hover:bg-lime-400/[0.09]"
       >
         <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-lime-400/30 bg-lime-400/[0.08]">
@@ -3269,7 +3302,9 @@ function TierCard({ tier, index }) {
 
       <div className="flex-1" />
       <a
-        href="#signup"
+        href={REGISTER_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         className={`mt-7 block px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] no-underline transition-colors ${
           tier.highlighted
             ? "btn-lime-glow border border-lime-400 bg-lime-400 text-black hover:bg-lime-300"
@@ -3277,7 +3312,7 @@ function TierCard({ tier, index }) {
         }`}
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
-        {tier.cta}
+        Register Interest
       </a>
     </motion.div>
   );
@@ -3343,7 +3378,9 @@ function SubscriptionSection() {
             Questions about subscriptions, scoring or training focus?
           </p>
           <a
-            href="#signup"
+            href={REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 border border-lime-400/30 bg-lime-400/[0.05] px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.16em] text-lime-400 no-underline transition-colors hover:border-lime-400/55 hover:bg-lime-400/[0.1]"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
@@ -3603,159 +3640,6 @@ function SplitFeatureContent({ progress, file, side, eyebrow, title, body }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────────────
-   WAITLIST FORM — real capture with validation + states. POSTs to
-   WAITLIST_ENDPOINT if set, otherwise hands off to a pre-filled email.
-───────────────────────────────────────────────────────────────── */
-
-function WaitlistForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [interest, setInterest] = useState("Athlete");
-  const [consent, setConsent] = useState(false);
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
-  const [error, setError] = useState("");
-
-  const inputClass =
-    "w-full border border-white/[0.12] bg-white/[0.03] px-4 py-3 text-[16px] text-white placeholder-neutral-600 outline-none transition-colors focus:border-lime-400/60";
-  const labelClass =
-    "mb-1.5 block text-[12px] font-bold uppercase tracking-[0.16em] text-neutral-400";
-
-  const submit = async (e) => {
-    e.preventDefault();
-    if (!name.trim()) return setError("Please enter your name.");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
-      return setError("Please enter a valid email address.");
-    if (!consent) return setError("Please agree to be contacted about the launch.");
-    setError("");
-    setStatus("loading");
-    const payload = { name: name.trim(), email: email.trim(), interest };
-    try {
-      if (WAITLIST_ENDPOINT) {
-        const res = await fetch(WAITLIST_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error("request failed");
-      } else {
-        const subject = encodeURIComponent("Founding Athlete Waitlist");
-        const body = encodeURIComponent(
-          `Name: ${payload.name}\nEmail: ${payload.email}\nInterest: ${payload.interest}`
-        );
-        window.location.href = `mailto:${WAITLIST_EMAIL}?subject=${subject}&body=${body}`;
-      }
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  if (status === "success") {
-    return (
-      <div
-        className="mx-auto mt-9 max-w-md border border-lime-400/30 bg-lime-400/[0.05] p-8 text-center"
-        role="status"
-        aria-live="polite"
-      >
-        <img
-          src="/images/coloured.png"
-          alt="Ultimate Human Index"
-          className="mx-auto h-11 w-auto object-contain"
-        />
-        <p className="mt-5 text-lg text-white">You're on the list.</p>
-        <p className="mt-2 text-[16px] leading-6 text-neutral-400">
-          We'll be in touch with founding-athlete access before launch.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={submit} noValidate className="mx-auto mt-9 max-w-md text-left">
-      <div className="grid gap-4">
-        <div>
-          <label htmlFor="wl-name" className={labelClass}>Name</label>
-          <input
-            id="wl-name"
-            type="text"
-            required
-            aria-required="true"
-            autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={inputClass}
-            placeholder="Your name"
-          />
-        </div>
-        <div>
-          <label htmlFor="wl-email" className={labelClass}>Email</label>
-          <input
-            id="wl-email"
-            type="email"
-            required
-            aria-required="true"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={inputClass}
-            placeholder="you@email.com"
-          />
-        </div>
-        <div>
-          <label htmlFor="wl-interest" className={labelClass}>I'm interested as</label>
-          <select
-            id="wl-interest"
-            value={interest}
-            onChange={(e) => setInterest(e.target.value)}
-            className={inputClass}
-          >
-            <option>Athlete</option>
-            <option>Gym</option>
-            <option>Corporate Team</option>
-          </select>
-        </div>
-        <label className="flex cursor-pointer items-start gap-3 text-left">
-          <input
-            type="checkbox"
-            checked={consent}
-            required
-            aria-required="true"
-            onChange={(e) => setConsent(e.target.checked)}
-            className="mt-1 h-4 w-4 shrink-0 accent-lime-400"
-          />
-          <span className="text-[16px] leading-5 text-neutral-400">
-            I agree to be contacted about the Ultimate Human Index launch. We'll only use your
-            details for this and you can unsubscribe anytime.
-          </span>
-        </label>
-      </div>
-
-      {error && (
-        <p role="alert" className="mt-3 text-[16px] text-red-400">
-          {error}
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="btn-lime-glow mt-6 flex w-full items-center justify-center bg-lime-400 px-8 py-4 text-[16px] font-black uppercase tracking-[0.18em] text-black transition-colors hover:bg-lime-300 disabled:opacity-60"
-        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-      >
-        {status === "loading" ? "Joining…" : "Join the Founding Athlete Waitlist"}
-        {status !== "loading" && <ArrowRight className="ml-2 h-4 w-4" />}
-      </button>
-
-      {status === "error" && (
-        <p role="alert" className="mt-3 text-center text-[16px] text-red-400">
-          Something went wrong. Please try again, or email {WAITLIST_EMAIL}.
-        </p>
-      )}
-      <p className="mt-3 text-center text-[13px] text-neutral-400">No spam — just launch updates.</p>
-    </form>
-  );
-}
 
 /* ─────────────────────────────────────────────────────────────────
    SECTION TOUR — animated down-arrow that walks the visitor through the
@@ -4146,13 +4030,7 @@ export default function App() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a
-              href="#signup"
-              className="btn-lime-glow border border-lime-400 bg-lime-400 px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.16em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300 sm:px-5 sm:text-[11.5px] sm:tracking-[0.18em]"
-              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-            >
-              Join the Waitlist
-            </a>
+            <RegisterButton size="sm" label="Register Interest" shortLabel="Register" className="shrink-0" />
             <button
               type="button"
               onClick={() => setMobileMenuOpen((v) => !v)}
@@ -4264,14 +4142,7 @@ export default function App() {
 
               {/* CTAs */}
               <div data-tour-avoid className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a
-                  href="#signup"
-                  className="btn-lime-glow inline-flex items-center justify-center bg-lime-400 px-7 py-4 text-[15px] font-black uppercase tracking-[0.15em] text-black no-underline hover:bg-lime-300"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  Join the Founding Athlete Waitlist
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                <RegisterButton />
                 <a
                   href="#challenge"
                   className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[15px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
@@ -4793,11 +4664,13 @@ export default function App() {
                       {item.detail}
                     </p>
                     <a
-                      href="#signup"
+                      href={REGISTER_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="btn-lime-glow mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300"
                       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                     >
-                      Join Waitlist
+                      Register Interest
                     </a>
                   </div>
                 </motion.div>
@@ -4982,7 +4855,12 @@ export default function App() {
                   <div className="h-px w-10 shrink-0 bg-lime-400/35" />
                 </div>
 
-                <WaitlistForm />
+                {/* On-site form parked for now — registrations go through the
+                    Google Form instead. WaitlistForm is kept below, working and
+                    tested, ready to switch back on by restoring this line. */}
+                <div className="mt-9 flex justify-center">
+                  <RegisterButton className="w-full max-w-xl" />
+                </div>
 
                 <p className="mt-6 text-center text-[16px] text-neutral-400">
                   Bringing a gym or team?{" "}
