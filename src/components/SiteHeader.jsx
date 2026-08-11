@@ -39,14 +39,14 @@ export default function SiteHeader() {
         navScrolled ? "border-white/[0.06] bg-[#050505]/95" : "border-transparent bg-[#050505]/40"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6">
         {/* Logo + separator */}
-        <div className="flex shrink-0 items-center gap-6">
+        <div className="flex min-w-0 shrink items-center gap-6">
           <Link to="/" className="shrink-0 no-underline">
             <img
               src="/images/coloured.png"
               alt="Ultimate Human Index"
-              className="h-11 w-auto object-contain md:h-14"
+              className="h-9 w-auto object-contain sm:h-11 md:h-14"
               style={{
                 maxWidth: "200px",
                 filter: "drop-shadow(0 1px 10px rgba(255,255,255,0.08))",

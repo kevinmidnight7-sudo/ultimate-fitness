@@ -38,13 +38,17 @@ function ContactBand() {
             </p>
           </div>
 
+          {/* The address is a 30-character unbreakable string, so it sets the
+              floor on how narrow this band can go. Below sm it drops to full
+              width at a smaller size and is allowed to break, rather than
+              pushing the page sideways on a 320px screen. */}
           <a
             href="mailto:hello@theultimatehuman.fitness"
-            className="group inline-flex shrink-0 items-center gap-3 border border-lime-400/45 bg-lime-400/[0.04] px-7 py-5 no-underline transition-colors duration-300 hover:border-lime-400 hover:bg-lime-400/[0.09]"
+            className="group inline-flex w-full min-w-0 items-center gap-3 border border-lime-400/45 bg-lime-400/[0.04] px-5 py-5 no-underline transition-colors duration-300 hover:border-lime-400 hover:bg-lime-400/[0.09] sm:w-auto sm:shrink-0 sm:px-7"
           >
             <Mail className="h-5 w-5 shrink-0 text-lime-400" strokeWidth={1.5} />
             <span
-              className="text-[15px] font-bold tracking-wide text-white transition-colors duration-300 group-hover:text-lime-400"
+              className="break-all text-[13px] font-bold tracking-wide text-white transition-colors duration-300 group-hover:text-lime-400 sm:text-[15px]"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               hello@theultimatehuman.fitness

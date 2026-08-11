@@ -46,7 +46,7 @@ export function RegisterButtonHeader() {
       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
     >
       <span className="uh-cta-sheen-wrap" aria-hidden="true" />
-      <span className="relative z-10 flex items-center justify-center gap-2 px-4 py-2.5 text-[11px] font-black uppercase leading-none tracking-[0.14em] sm:px-5 sm:text-[12px] sm:tracking-[0.16em]">
+      <span className="relative z-10 flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-2.5 text-[11px] font-black uppercase leading-none tracking-[0.08em] sm:gap-2 sm:px-5 sm:text-[12px] sm:tracking-[0.16em]">
         Register Interest
         <ArrowRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" />
       </span>

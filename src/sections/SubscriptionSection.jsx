@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, CheckCircle2, MessageCircle, ChevronDown } from "lucide-react";
 
+import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { subscriptionTiers } from "@/data/content";
 import { REGISTER_URL } from "@/lib/constants";
@@ -10,11 +11,8 @@ function TierCard({ tier, index }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    <Reveal
+      delay={index * 0.08}
       className={`group relative flex flex-col bg-[#0d0d0d] p-7 transition-colors ${
         tier.highlighted
           ? "ring-1 ring-lime-400/55 md:-translate-y-2 md:shadow-[0_0_48px_rgba(163,230,53,0.1)]"
@@ -130,7 +128,7 @@ function TierCard({ tier, index }) {
       >
         Register Interest
       </a>
-    </motion.div>
+    </Reveal>
   );
 }
 

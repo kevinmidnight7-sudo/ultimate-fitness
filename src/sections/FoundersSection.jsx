@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserCheck, ChevronDown } from "lucide-react";
 
+import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 
 function FounderCard({ photo, ratio, name, role, quote }) {
@@ -9,13 +10,7 @@ function FounderCard({ photo, ratio, name, role, quote }) {
   const [photoFailed, setPhotoFailed] = useState(!photo);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      className="lime-glow-hover group relative overflow-hidden bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
-    >
+    <Reveal className="lime-glow-hover group relative overflow-hidden bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]">
       <div className="absolute left-0 top-0 z-10 h-px w-full bg-gradient-to-r from-lime-400/40 via-white/[0.08] to-transparent" />
       <div className="uh-img-glow-target relative overflow-hidden bg-[#050505]" style={{ aspectRatio: ratio }}>
         {photoFailed ? (
@@ -79,7 +74,7 @@ function FounderCard({ photo, ratio, name, role, quote }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </Reveal>
   );
 }
 
