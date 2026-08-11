@@ -3287,15 +3287,9 @@ function SideQuickNav() {
    APP
 ───────────────────────────────────────────────────────────────── */
 
-export default function App() {
+function HeroSection() {
   const heroRef = useRef(null);
   const reducedMotion = useReducedMotion();
-  const { scrollY: navScrollY } = useScroll();
-  const [navScrolled, setNavScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  useEffect(() => {
-    return navScrollY.on("change", (v) => setNavScrolled(v > 60));
-  }, [navScrollY]);
 
   /* Headline glow — grey-to-white metallic gradient brightens as the user scrolls */
   const { scrollY } = useScroll();
@@ -3316,6 +3310,863 @@ export default function App() {
       "drop-shadow(0 0 10px rgba(255,255,255,0.65)) drop-shadow(0 0 26px rgba(163,230,53,0.4))",
     ]
   );
+
+  return (
+    <section
+      ref={heroRef}
+      className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
+    >
+      {/* Hero athlete photo removed at Ken's request (27 Jul) — replaced with a
+          branded theme pattern (technical measurement grid + lime accents).
+          The asset is still at /images/marketing/hero-athlete-primary.jpg if we
+          want to reinstate it. */}
+      <HeroPatternBackground heroRef={heroRef} reducedMotion={reducedMotion} />
+
+      <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 pb-28 pt-10 md:pb-32 md:pt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="mx-auto flex max-w-6xl flex-col items-center text-center"
+        >
+          {/* Badge */}
+          <div className="mb-5 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2.5">
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
+            <span
+              className="text-[11.5px] font-bold uppercase tracking-[0.26em] text-lime-400"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Founding Athlete Waitlist Now Open
+            </span>
+          </div>
+
+          {/* Headline — centred, with a lime rule instead of the old left bar */}
+          <div className="relative w-full">
+            <div className="mx-auto mb-7 h-px w-24 bg-gradient-to-r from-transparent via-lime-400/70 to-transparent" />
+            <motion.h1
+              className="text-metallic uppercase leading-none tracking-tight"
+              style={{
+                fontSize: "clamp(2.2rem, 5vw, 5.2rem)",
+                lineHeight: 1.03,
+                fontFamily: "'Oswald', sans-serif",
+                fontWeight: 700,
+                backgroundImage: reducedMotion ? undefined : headlineBackground,
+                filter: reducedMotion ? undefined : headlineFilter,
+              }}
+            >
+              The Ultimate Operating System
+              <br />
+              for Human Performance
+            </motion.h1>
+
+            {/* Positioning copy — Ken, 1 Aug */}
+            <p className="mx-auto mt-6 max-w-3xl text-[16px] leading-7 text-neutral-200">
+              Ultimate Human Index is a complete fitness challenge for every body,
+              every age and every starting point.
+            </p>
+            <p className="mx-auto mt-2.5 max-w-3xl text-[16px] leading-7 text-neutral-400">
+              You don't have to be an elite athlete to take part. You simply need to be
+              ready to test yourself.
+            </p>
+
+            {/* Slogan — indented to sit flush with headline text */}
+            <p
+              className="mt-5 text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/75"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Measure. Train. Compete. Evolve.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div data-tour-avoid className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <RegisterButton />
+            <a
+              href="#challenge"
+              className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[15px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              Explore the Challenge
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+          {/* Stats */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
+            {[
+              ["Live Events", "All Venues"],
+              ["All Abilities", "Every Level"],
+              ["Personal Score", "Your Benchmark"],
+            ].map(([label, sub]) => (
+              <div key={label} className="border-t-2 border-lime-400/35 px-2 pt-3 text-center">
+                <p
+                  className="text-[11.5px] font-black uppercase tracking-[0.22em] text-white"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {label}
+                </p>
+                <p
+                  className="mt-0.5 text-[10.5px] uppercase tracking-[0.15em] text-neutral-500"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+
+function UhiIndexSection() {
+  return (
+    <section
+      id="uhci"
+      className="relative uh-divide px-6 py-24"
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0d1d30 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 12% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <SectionLabel>Ultimate Human Index™ (UHI)</SectionLabel>
+            <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+              A New Standard for
+              <br />
+              Human Capability.
+            </Reveal>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-300">
+              Rather than simply measuring how quickly an athlete finishes a race, the{" "}
+              <span className="font-bold text-white">UHI</span> provides an objective assessment
+              of overall human capability. It is designed to measure not only performance, but how
+              efficiently and consistently that performance is achieved.
+            </p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-400">
+              Unlike traditional race results, which only recognise finishing position, the UHI
+              rewards complete human performance by combining physical capability with movement
+              quality and technical execution. It provides athletes with a meaningful benchmark
+              that evolves as they train, improve and age.
+            </p>
+
+            {/* 0–1000 scale callout */}
+            <div className="mt-8 flex items-center gap-5 border border-lime-400/25 bg-lime-400/[0.05] px-6 py-5">
+              <p
+                className="shrink-0 text-3xl text-lime-400 md:text-4xl"
+                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+              >
+                0–1000
+              </p>
+              <p className="text-[16px] leading-6 text-neutral-300">
+                The Index is calculated on a scale of 0–1000, creating a lifelong benchmark that
+                athletes can improve over time — regardless of age or competitive level.
+              </p>
+            </div>
+
+            <p className="mt-6 max-w-2xl text-[16px] leading-6 text-neutral-400">
+              As UHI evolves, the Ultimate Human Index will be supported by advanced AI movement
+              analysis and scientifically validated performance standards. This will enable the
+              Index to assess not only whether an athlete completed each capability, but how
+              effectively and consistently it was performed.
+            </p>
+          </div>
+
+          {/* Design principles */}
+          <div>
+            <p
+              className="mb-5 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              The UHI has been designed to be
+            </p>
+            <div className="flex flex-col">
+              {uhciPrinciples.map((p, i) => (
+                <motion.div
+                  key={p.title}
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="border-b border-white/[0.07] py-4"
+                >
+                  <div className="flex items-baseline gap-3">
+                    <span className="h-1.5 w-1.5 shrink-0 translate-y-[-2px] rounded-full bg-lime-400" />
+                    <div>
+                      <p className="text-[16px] font-bold uppercase tracking-wide text-white">
+                        {p.title}
+                      </p>
+                      <p className="mt-1 text-[16px] leading-6 text-neutral-400">{p.text}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function WhyDifferentSection() {
+  return (
+    <section
+      className="relative uh-divide px-6 py-24"
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-12 max-w-3xl">
+          <SectionLabel>Why UHI Is Different</SectionLabel>
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Most Races Test One Thing.
+            <br />
+            UHI Tests the Whole Human.
+          </Reveal>
+          <p className="mt-5 text-lg leading-7 text-neutral-400">
+            Most programs only measure one or two aspects of capability. They tell
+            you if you can run, lift, endure or suffer.{" "}
+            <span className="font-bold text-white">UHI goes further.</span>
+          </p>
+        </div>
+
+        {/* Comparison table */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="uh-scroll-dark overflow-x-auto"
+        >
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr>
+                <th className="w-44 py-4 pr-6 text-left">
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    Capability
+                  </span>
+                </th>
+                {differenceTable.brands.map((brand) => (
+                  <th
+                    key={brand.name}
+                    className={`px-6 py-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] ${
+                      brand.highlighted ? "text-lime-400" : "text-neutral-400"
+                    }`}
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    {brand.name}
+                    {brand.highlighted && (
+                      <div className="mx-auto mt-1 h-px w-8 bg-lime-400/50" />
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {differenceTable.dimensions.map((dim, rowIdx) => (
+                <motion.tr
+                  key={dim}
+                  initial={{ opacity: 0, x: -8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.55, delay: rowIdx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                  className="border-t border-white/[0.05]"
+                >
+                  <td className="py-4 pr-6 text-[16px] text-neutral-400">{dim}</td>
+                  {differenceTable.brands.map((brand) => {
+                    const rating = brand.ratings[rowIdx];
+                    return (
+                      <td key={brand.name} className={`px-6 py-4 text-center ${brand.highlighted ? "bg-lime-400/[0.03]" : ""}`}>
+                        {rating === "full" && (
+                          <CheckCircle2 className="mx-auto h-4 w-4 text-lime-400/80" strokeWidth={2} />
+                        )}
+                        {rating === "partial" && (
+                          <div className="mx-auto h-px w-4 bg-neutral-600" />
+                        )}
+                        {rating === "none" && (
+                          <X className="mx-auto h-4 w-4 text-neutral-800" strokeWidth={2} />
+                        )}
+                      </td>
+                    );
+                  })}
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+
+        <WhyDifferentExplainer />
+      </div>
+    </section>
+  );
+}
+
+
+function ChallengeOverviewSection() {
+  return (
+    <section
+      id="challenge"
+      className="uh-divide relative px-6 pb-0 pt-20"
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <SectionLabel>The Challenge</SectionLabel>
+        {/* Slim three-point strip */}
+        <div className="mb-12 flex flex-col divide-y divide-white/[0.06] md:flex-row md:divide-x md:divide-y-0">
+          {[
+            { icon: Flame,  title: "Built for every body. Designed for every challenge.", sub: "Designed to reveal, not destroy" },
+            { icon: Timer,  title: "Long enough to test you, fast enough to race", sub: "High energy. Consistent Standards. Visible competition." },
+            { icon: Zap,    title: "Discover how you cope Under Fatigue", sub: "Speed → Control → Strength → Coordination" },
+          ].map(({ icon: Icon, title, sub }, i) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-1 items-center gap-5 px-6 py-7 first:pl-0 last:pr-0 md:px-10"
+            >
+              <Icon className="h-5 w-5 shrink-0 text-lime-400/60" strokeWidth={1.5} />
+              <div>
+                <p className="text-[16px] font-bold uppercase tracking-wide text-white">{title}</p>
+                <p
+                  className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-neutral-500"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {sub}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+      {/* Full-width image band with an overlaid statement */}
+      <MarketingImage
+        file="challenge-fatigue-moment.jpg"
+        aspectRatio="21/9"
+        searchTerms="athlete exhausted determined mid-workout dramatic shadow"
+        treatment="Duotone B&W/lime · dark vignette top + bottom"
+        className="max-h-[62vh] w-full"
+        imgClassName="object-[center_22%]"
+        overlay={
+          <>
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(6,6,6,0.9) 0%, rgba(6,6,6,0.45) 38%, transparent 68%), linear-gradient(0deg, rgba(6,6,6,0.7) 0%, transparent 42%)",
+              }}
+            />
+            <div className="pointer-events-none absolute inset-0 flex items-end">
+              <div className="mx-auto w-full max-w-7xl px-6 pb-8 md:pb-14">
+                <Reveal>
+                  <p
+                    className="mb-3 text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
+                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                  >
+                    The Signature Test
+                  </p>
+                  <h3 className="text-3xl uppercase leading-[0.95] tracking-tight text-white md:text-5xl">
+                    This Is Where
+                    <br />
+                    You Find Out.
+                  </h3>
+                  <p className="mt-4 max-w-md text-base leading-6 text-neutral-300 md:text-base">
+                    Speed, strength and composure — every capability exposed under fatigue.
+                  </p>
+                </Reveal>
+              </div>
+            </div>
+          </>
+        }
+      />
+    </section>
+  );
+}
+
+
+function CategoriesSection() {
+  return (
+    <section
+      id="categories"
+      className="relative uh-divide px-6 py-24"
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-12">
+          <SectionLabel>Ways to Compete</SectionLabel>
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Go Solo, Pair Up
+            <br />
+            or Bring a Team.
+          </Reveal>
+          <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
+            The Ultimate Human Index is designed for serious competitors, first-time challengers,
+            gym communities and workplace teams.
+          </p>
+        </div>
+
+        <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((label) => (
+            <div
+              key={label}
+              className="lime-glow-hover group flex items-center gap-5 bg-[#0d0d0d] p-7 transition-colors hover:bg-[#111]"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04] transition-all group-hover:border-lime-400/50 group-hover:bg-lime-400/[0.10]">
+                <Trophy className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
+              </div>
+              <p
+                className="text-[16px] font-bold uppercase tracking-[0.18em] text-white"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function WhyEnterSection() {
+  return (
+    <section
+      className="relative uh-divide"
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
+        }}
+      />
+      {/* Two-column: image left, list right */}
+      <div className="relative flex flex-col lg:flex-row">
+        {/* Left — lifestyle image */}
+        <div className="lg:w-[42%] lg:shrink-0">
+          <MarketingImage
+            file="why-enter-lifestyle.jpg"
+            aspectRatio="4/5"
+            searchTerms="person training outdoors early morning determination"
+            treatment="Duotone matching hero · right-edge gradient fade"
+            className="h-full min-h-[360px] w-full"
+            filter="grayscale(100%) contrast(1.05) brightness(0.9)"
+            overlay={
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent 52%, rgba(10,13,16,0.9) 100%)",
+                }}
+              />
+            }
+          />
+        </div>
+
+        {/* Right — stacked list */}
+        <div className="flex flex-1 flex-col justify-center px-8 py-16 lg:px-14 lg:py-24">
+          <SectionLabel>Why Enter?</SectionLabel>
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Because Fitness
+            <br />
+            Should Mean Capability.
+          </Reveal>
+
+          <div className="mt-10 space-y-0">
+            {whyEnter.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, x: 12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="uh-divide py-6"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-lime-400/50" />
+                  <div>
+                    <p className="text-[16px] font-bold uppercase tracking-wide text-white">{item.title}</p>
+                    <p className="mt-1.5 text-[16px] leading-6 text-neutral-400">{item.text}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function PricingSection() {
+  return (
+    <section
+      className="relative uh-divide px-6 py-24"
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-14">
+          <SectionLabel>Event Entry Pricing</SectionLabel>
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Get in Early.
+          </Reveal>
+          <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
+            Early launch pricing for the first Ultimate Human Index events. Founding athlete places will
+            be limited and pricing will increase after launch release.
+          </p>
+          <p
+            className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            This is your event entry fee — not your platform membership.
+          </p>
+        </div>
+
+        <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
+          {foundingPricing.map((item, i) => (
+            <motion.div
+              key={item.category}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="lime-glow-hover group relative bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
+            >
+              <div className="absolute left-0 top-0 h-px w-2/3 bg-gradient-to-r from-lime-400/70 to-transparent" />
+              <div className="p-7">
+                <p
+                  className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {item.category}
+                </p>
+                <p
+                  className="text-metallic-price mt-5 text-5xl"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                >
+                  {item.price}
+                </p>
+                <p
+                  className="mt-2 text-[16px] text-neutral-400"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {item.detail}
+                </p>
+                <a
+                  href={REGISTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-lime-glow mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  Register Interest
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-px bg-[#0a0a0a] p-8">
+          <p
+            className="mb-6 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Founding Athlete Benefits Include:
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            {[
+              "Priority event access",
+              "Early leaderboard rankings",
+              "Founding athlete digital badge",
+              "Exclusive launch training content",
+            ].map((benefit) => (
+              <div key={benefit} className="flex items-center gap-4">
+                <div className="h-px w-6 shrink-0 bg-lime-400" />
+                <p
+                  className="text-[16px] text-neutral-300"
+                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                >
+                  {benefit}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function FoundersSection() {
+  return (
+    <section
+      className="relative uh-divide px-6 py-24"
+      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 65% 55% at 12% 0%, rgba(163,230,53,0.28) 0%, transparent 62%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.1) 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-14">
+          <SectionLabel>The People Behind The Ultimate Human Index</SectionLabel>
+          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+            Built by People Obsessed
+            <br />
+            with Human Performance.
+          </Reveal>
+          <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
+            The Ultimate Human Index combines elite coaching, combat sport experience, movement science
+            and a slightly unhealthy enthusiasm for fitness racing.
+          </p>
+        </div>
+
+        <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-5">
+          <FounderCard
+            photo="/images/founders/andie.png"
+            ratio="1 / 1"
+            name="Andie Stoneham"
+            role="Founder · Performance Coach · Programme Designer"
+            quote="Most fitness events reward one dominant attribute. We wanted to build something that rewards adaptability, composure and complete human capability."
+          />
+          <FounderCard
+            photo="/images/founders/laura.png"
+            ratio="1 / 1"
+            name="Laura Hathaway"
+            role="Performance Coach · Qualified Osteopath"
+            quote="Real performance is not just strength or endurance. It is how efficiently and intelligently your body moves under pressure and fatigue."
+          />
+          <FounderCard
+            photo="/images/founders/john.png"
+            ratio="1 / 1"
+            name="John 'The Hitman' Hathaway"
+            role="Champion UFC Fighter · Coach"
+            quote="The people who stay calm, adaptable and explosive when tired are usually the hardest people to beat. That is what this competition is designed to expose."
+          />
+          <FounderCard
+            photo="/images/founders/ken.png"
+            ratio="1 / 1"
+            name="Ken Brotherston"
+            role="Founder · Entrepreneur · Fitness Race Enthusiast"
+            quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
+          />
+          {/* Falls back to a 'photo to follow' placeholder until the file exists */}
+          <FounderCard
+            photo="/images/founders/camilla.png"
+            ratio="1 / 1"
+            name="Dr. Camilla Drew"
+            role="Event Adviser · Capabilities Adviser · Fitness Enthusiast"
+            quote="Fitness and good-quality, all-round movement are key to a happier and more productive life, regardless of how old you actually are."
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function SignupSection() {
+  return (
+    <section
+      id="signup"
+      className="uh-divide relative px-6 py-24"
+      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
+    >
+      {/* Branded UH arena-floor asset, low opacity behind the form */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <img
+          src="/images/uh-hero-arena-floor-no-text-2400x1400.jpg"
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center opacity-[0.28]"
+          loading="lazy"
+        />
+      </div>
+      {/* Section ambient glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.16) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-5xl">
+        <div className="relative overflow-hidden border border-white/[0.09] bg-[#070707] p-10 text-center md:p-16">
+
+          {/* Corner accent marks */}
+          <div className="absolute left-0 top-0 h-8 w-8 border-l border-t border-lime-400/40" />
+          <div className="absolute right-0 top-0 h-8 w-8 border-r border-t border-lime-400/40" />
+          <div className="absolute bottom-0 left-0 h-8 w-8 border-b border-l border-lime-400/22" />
+          <div className="absolute bottom-0 right-0 h-8 w-8 border-b border-r border-lime-400/22" />
+
+          {/* Top glow + accent line */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center top, rgba(132,204,22,0.20) 0%, transparent 52%)",
+            }}
+          />
+          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/55 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+
+          <div className="relative">
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-14 w-14 items-center justify-center border border-lime-400/30 bg-lime-400/[0.06]">
+                <Mail className="h-6 w-6 text-lime-400" strokeWidth={1.5} />
+              </div>
+            </div>
+
+            <SectionLabel>Founding Athlete Registration</SectionLabel>
+
+            <Reveal
+              as="h2"
+              delay={0.08}
+              className="text-metallic uppercase tracking-tight"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.6rem)", lineHeight: 1.06, fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+            >
+              Become One of the
+              <br />
+              First Ultimate Humans
+            </Reveal>
+
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-7 text-neutral-400">
+              Get early access to launch events, training plans, founding athlete pricing, rankings
+              and exclusive first-release places.
+            </p>
+
+            {/* Scarcity line */}
+            <div className="mt-5 flex items-center justify-center gap-4">
+              <div className="h-px w-10 shrink-0 bg-lime-400/35" />
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.26em] text-lime-400/65"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                Limited founding places — pricing increases at launch
+              </p>
+              <div className="h-px w-10 shrink-0 bg-lime-400/35" />
+            </div>
+
+            {/* On-site form parked for now — registrations go through the
+                Google Form instead. WaitlistForm is kept below, working and
+                tested, ready to switch back on by restoring this line. */}
+            <div className="mt-9 flex justify-center">
+              <RegisterButton className="w-full max-w-xl" />
+            </div>
+
+            <p className="mt-6 text-center text-[16px] text-neutral-400">
+              Bringing a gym or team?{" "}
+              <a
+                href="mailto:hello@theultimatehuman.fitness"
+                className="font-bold text-lime-400 underline-offset-4 hover:underline"
+              >
+                Get in touch
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function PreLaunchSection() {
+  return (
+    <section
+      className="uh-divide px-6 py-16"
+      style={{ background: "linear-gradient(180deg, #09090a 0%, #0a0a0a 100%)" }}
+    >
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-8 inline-flex items-center gap-3 border border-amber-400/22 bg-amber-400/[0.04] px-4 py-2.5">
+          <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
+          <span
+            className="text-[12px] font-bold uppercase tracking-[0.28em] text-amber-400"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+          >
+            Pre-Launch Notice
+          </span>
+        </div>
+        <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-tight text-white md:text-4xl">
+          What Is Still Being Finalised?
+        </Reveal>
+
+        <div className="mt-8 grid gap-px bg-white/[0.05] md:grid-cols-2">
+          {workToDo.map((item) => (
+            <div key={item} className="flex gap-4 bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]">
+              <div className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center border border-lime-400/30">
+                <div className="h-1.5 w-1.5 bg-lime-400" />
+              </div>
+              <p
+                className="text-[16px] leading-6 text-neutral-300"
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {item}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function App() {
+  const { scrollY: navScrollY } = useScroll();
+  const [navScrolled, setNavScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  useEffect(() => {
+    return navScrollY.on("change", (v) => setNavScrolled(v > 60));
+  }, [navScrollY]);
+
 
   return (
     <div className="min-h-screen bg-[#050505] text-white">
@@ -3400,393 +4251,17 @@ export default function App() {
 
       <main>
 
-        {/* ── HERO ── */}
-        <section
-          ref={heroRef}
-          className="uh-hero-overlay relative flex min-h-[92vh] items-center overflow-hidden bg-[#050505]"
-        >
-          {/* Hero athlete photo removed at Ken's request (27 Jul) — replaced with a
-              branded theme pattern (technical measurement grid + lime accents).
-              The asset is still at /images/marketing/hero-athlete-primary.jpg if we
-              want to reinstate it. */}
-          <HeroPatternBackground heroRef={heroRef} reducedMotion={reducedMotion} />
+        <HeroSection />
 
-          <div className="relative z-[2] mx-auto w-full max-w-7xl px-6 pb-28 pt-10 md:pb-32 md:pt-12">
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              className="mx-auto flex max-w-6xl flex-col items-center text-center"
-            >
-              {/* Badge */}
-              <div className="mb-5 inline-flex items-center gap-3 border border-lime-400/25 bg-lime-400/[0.06] px-4 py-2.5">
-                <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" />
-                <span
-                  className="text-[11.5px] font-bold uppercase tracking-[0.26em] text-lime-400"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  Founding Athlete Waitlist Now Open
-                </span>
-              </div>
-
-              {/* Headline — centred, with a lime rule instead of the old left bar */}
-              <div className="relative w-full">
-                <div className="mx-auto mb-7 h-px w-24 bg-gradient-to-r from-transparent via-lime-400/70 to-transparent" />
-                <motion.h1
-                  className="text-metallic uppercase leading-none tracking-tight"
-                  style={{
-                    fontSize: "clamp(2.2rem, 5vw, 5.2rem)",
-                    lineHeight: 1.03,
-                    fontFamily: "'Oswald', sans-serif",
-                    fontWeight: 700,
-                    backgroundImage: reducedMotion ? undefined : headlineBackground,
-                    filter: reducedMotion ? undefined : headlineFilter,
-                  }}
-                >
-                  The Ultimate Operating System
-                  <br />
-                  for Human Performance
-                </motion.h1>
-
-                {/* Positioning copy — Ken, 1 Aug */}
-                <p className="mx-auto mt-6 max-w-3xl text-[16px] leading-7 text-neutral-200">
-                  Ultimate Human Index is a complete fitness challenge for every body,
-                  every age and every starting point.
-                </p>
-                <p className="mx-auto mt-2.5 max-w-3xl text-[16px] leading-7 text-neutral-400">
-                  You don't have to be an elite athlete to take part. You simply need to be
-                  ready to test yourself.
-                </p>
-
-                {/* Slogan — indented to sit flush with headline text */}
-                <p
-                  className="mt-5 text-[11px] font-bold uppercase tracking-[0.3em] text-lime-400/75"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  Measure. Train. Compete. Evolve.
-                </p>
-              </div>
-
-              {/* CTAs */}
-              <div data-tour-avoid className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <RegisterButton />
-                <a
-                  href="#challenge"
-                  className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[15px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  Explore the Challenge
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </a>
-              </div>
-
-              {/* Stats */}
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
-                {[
-                  ["Live Events", "All Venues"],
-                  ["All Abilities", "Every Level"],
-                  ["Personal Score", "Your Benchmark"],
-                ].map(([label, sub]) => (
-                  <div key={label} className="border-t-2 border-lime-400/35 px-2 pt-3 text-center">
-                    <p
-                      className="text-[11.5px] font-black uppercase tracking-[0.22em] text-white"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      {label}
-                    </p>
-                    <p
-                      className="mt-0.5 text-[10.5px] uppercase tracking-[0.15em] text-neutral-500"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      {sub}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── ULTIMATE HUMAN INDEX (UHI) ── */}
-        <section
-          id="uhci"
-          className="relative uh-divide px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0d1d30 75%, #0a0a0a 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 12% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-              <div>
-                <SectionLabel>Ultimate Human Index™ (UHI)</SectionLabel>
-                <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                  A New Standard for
-                  <br />
-                  Human Capability.
-                </Reveal>
-                <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-300">
-                  Rather than simply measuring how quickly an athlete finishes a race, the{" "}
-                  <span className="font-bold text-white">UHI</span> provides an objective assessment
-                  of overall human capability. It is designed to measure not only performance, but how
-                  efficiently and consistently that performance is achieved.
-                </p>
-                <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-400">
-                  Unlike traditional race results, which only recognise finishing position, the UHI
-                  rewards complete human performance by combining physical capability with movement
-                  quality and technical execution. It provides athletes with a meaningful benchmark
-                  that evolves as they train, improve and age.
-                </p>
-
-                {/* 0–1000 scale callout */}
-                <div className="mt-8 flex items-center gap-5 border border-lime-400/25 bg-lime-400/[0.05] px-6 py-5">
-                  <p
-                    className="shrink-0 text-3xl text-lime-400 md:text-4xl"
-                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
-                  >
-                    0–1000
-                  </p>
-                  <p className="text-[16px] leading-6 text-neutral-300">
-                    The Index is calculated on a scale of 0–1000, creating a lifelong benchmark that
-                    athletes can improve over time — regardless of age or competitive level.
-                  </p>
-                </div>
-
-                <p className="mt-6 max-w-2xl text-[16px] leading-6 text-neutral-400">
-                  As UHI evolves, the Ultimate Human Index will be supported by advanced AI movement
-                  analysis and scientifically validated performance standards. This will enable the
-                  Index to assess not only whether an athlete completed each capability, but how
-                  effectively and consistently it was performed.
-                </p>
-              </div>
-
-              {/* Design principles */}
-              <div>
-                <p
-                  className="mb-5 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  The UHI has been designed to be
-                </p>
-                <div className="flex flex-col">
-                  {uhciPrinciples.map((p, i) => (
-                    <motion.div
-                      key={p.title}
-                      initial={{ opacity: 0, x: 12 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                      className="border-b border-white/[0.07] py-4"
-                    >
-                      <div className="flex items-baseline gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 translate-y-[-2px] rounded-full bg-lime-400" />
-                        <div>
-                          <p className="text-[16px] font-bold uppercase tracking-wide text-white">
-                            {p.title}
-                          </p>
-                          <p className="mt-1 text-[16px] leading-6 text-neutral-400">{p.text}</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <UhiIndexSection />
 
         <YourJourneyHub />
 
         <CapabilityPillarsSection />
 
-        {/* ── WHY UHI IS DIFFERENT ── */}
-        <section
-          className="relative uh-divide px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mb-12 max-w-3xl">
-              <SectionLabel>Why UHI Is Different</SectionLabel>
-              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                Most Races Test One Thing.
-                <br />
-                UHI Tests the Whole Human.
-              </Reveal>
-              <p className="mt-5 text-lg leading-7 text-neutral-400">
-                Most programs only measure one or two aspects of capability. They tell
-                you if you can run, lift, endure or suffer.{" "}
-                <span className="font-bold text-white">UHI goes further.</span>
-              </p>
-            </div>
+        <WhyDifferentSection />
 
-            {/* Comparison table */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="uh-scroll-dark overflow-x-auto"
-            >
-              <table className="w-full border-collapse text-left">
-                <thead>
-                  <tr>
-                    <th className="w-44 py-4 pr-6 text-left">
-                      <span
-                        className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
-                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                      >
-                        Capability
-                      </span>
-                    </th>
-                    {differenceTable.brands.map((brand) => (
-                      <th
-                        key={brand.name}
-                        className={`px-6 py-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] ${
-                          brand.highlighted ? "text-lime-400" : "text-neutral-400"
-                        }`}
-                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                      >
-                        {brand.name}
-                        {brand.highlighted && (
-                          <div className="mx-auto mt-1 h-px w-8 bg-lime-400/50" />
-                        )}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {differenceTable.dimensions.map((dim, rowIdx) => (
-                    <motion.tr
-                      key={dim}
-                      initial={{ opacity: 0, x: -8 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.55, delay: rowIdx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                      className="border-t border-white/[0.05]"
-                    >
-                      <td className="py-4 pr-6 text-[16px] text-neutral-400">{dim}</td>
-                      {differenceTable.brands.map((brand) => {
-                        const rating = brand.ratings[rowIdx];
-                        return (
-                          <td key={brand.name} className={`px-6 py-4 text-center ${brand.highlighted ? "bg-lime-400/[0.03]" : ""}`}>
-                            {rating === "full" && (
-                              <CheckCircle2 className="mx-auto h-4 w-4 text-lime-400/80" strokeWidth={2} />
-                            )}
-                            {rating === "partial" && (
-                              <div className="mx-auto h-px w-4 bg-neutral-600" />
-                            )}
-                            {rating === "none" && (
-                              <X className="mx-auto h-4 w-4 text-neutral-800" strokeWidth={2} />
-                            )}
-                          </td>
-                        );
-                      })}
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </motion.div>
-
-            <WhyDifferentExplainer />
-          </div>
-        </section>
-
-        {/* ── CHALLENGE OVERVIEW ── */}
-        <section
-          id="challenge"
-          className="uh-divide relative px-6 pb-0 pt-20"
-          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <SectionLabel>The Challenge</SectionLabel>
-            {/* Slim three-point strip */}
-            <div className="mb-12 flex flex-col divide-y divide-white/[0.06] md:flex-row md:divide-x md:divide-y-0">
-              {[
-                { icon: Flame,  title: "Built for every body. Designed for every challenge.", sub: "Designed to reveal, not destroy" },
-                { icon: Timer,  title: "Long enough to test you, fast enough to race", sub: "High energy. Consistent Standards. Visible competition." },
-                { icon: Zap,    title: "Discover how you cope Under Fatigue", sub: "Speed → Control → Strength → Coordination" },
-              ].map(({ icon: Icon, title, sub }, i) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-1 items-center gap-5 px-6 py-7 first:pl-0 last:pr-0 md:px-10"
-                >
-                  <Icon className="h-5 w-5 shrink-0 text-lime-400/60" strokeWidth={1.5} />
-                  <div>
-                    <p className="text-[16px] font-bold uppercase tracking-wide text-white">{title}</p>
-                    <p
-                      className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-neutral-500"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      {sub}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          {/* Full-width image band with an overlaid statement */}
-          <MarketingImage
-            file="challenge-fatigue-moment.jpg"
-            aspectRatio="21/9"
-            searchTerms="athlete exhausted determined mid-workout dramatic shadow"
-            treatment="Duotone B&W/lime · dark vignette top + bottom"
-            className="max-h-[62vh] w-full"
-            imgClassName="object-[center_22%]"
-            overlay={
-              <>
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(6,6,6,0.9) 0%, rgba(6,6,6,0.45) 38%, transparent 68%), linear-gradient(0deg, rgba(6,6,6,0.7) 0%, transparent 42%)",
-                  }}
-                />
-                <div className="pointer-events-none absolute inset-0 flex items-end">
-                  <div className="mx-auto w-full max-w-7xl px-6 pb-8 md:pb-14">
-                    <Reveal>
-                      <p
-                        className="mb-3 text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
-                        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                      >
-                        The Signature Test
-                      </p>
-                      <h3 className="text-3xl uppercase leading-[0.95] tracking-tight text-white md:text-5xl">
-                        This Is Where
-                        <br />
-                        You Find Out.
-                      </h3>
-                      <p className="mt-4 max-w-md text-base leading-6 text-neutral-300 md:text-base">
-                        Speed, strength and composure — every capability exposed under fatigue.
-                      </p>
-                    </Reveal>
-                  </div>
-                </div>
-              </>
-            }
-          />
-        </section>
+        <ChallengeOverviewSection />
 
         <EventStructureSection />
 
@@ -3804,53 +4279,7 @@ export default function App() {
           body="Every discipline gets exposed somewhere. The most complete human — not the most specialised — takes the win."
         />
 
-        {/* ── CATEGORIES ── */}
-        <section
-          id="categories"
-          className="relative uh-divide px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 90% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mb-12">
-              <SectionLabel>Ways to Compete</SectionLabel>
-              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                Go Solo, Pair Up
-                <br />
-                or Bring a Team.
-              </Reveal>
-              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human Index is designed for serious competitors, first-time challengers,
-                gym communities and workplace teams.
-              </p>
-            </div>
-
-            <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2 lg:grid-cols-3">
-              {categories.map((label) => (
-                <div
-                  key={label}
-                  className="lime-glow-hover group flex items-center gap-5 bg-[#0d0d0d] p-7 transition-colors hover:bg-[#111]"
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04] transition-all group-hover:border-lime-400/50 group-hover:bg-lime-400/[0.10]">
-                    <Trophy className="h-4 w-4 text-lime-400" strokeWidth={1.5} />
-                  </div>
-                  <p
-                    className="text-[16px] font-bold uppercase tracking-[0.18em] text-white"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CategoriesSection />
 
         <SplitFeatureScene
           file="converge-left.png"
@@ -3860,385 +4289,17 @@ export default function App() {
           body="This is built to test complete capability — not just how long you can suffer on a run."
         />
 
-        {/* ── WHY ENTER ── */}
-        <section
-          className="relative uh-divide"
-          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 8% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
-            }}
-          />
-          {/* Two-column: image left, list right */}
-          <div className="relative flex flex-col lg:flex-row">
-            {/* Left — lifestyle image */}
-            <div className="lg:w-[42%] lg:shrink-0">
-              <MarketingImage
-                file="why-enter-lifestyle.jpg"
-                aspectRatio="4/5"
-                searchTerms="person training outdoors early morning determination"
-                treatment="Duotone matching hero · right-edge gradient fade"
-                className="h-full min-h-[360px] w-full"
-                filter="grayscale(100%) contrast(1.05) brightness(0.9)"
-                overlay={
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent 52%, rgba(10,13,16,0.9) 100%)",
-                    }}
-                  />
-                }
-              />
-            </div>
-
-            {/* Right — stacked list */}
-            <div className="flex flex-1 flex-col justify-center px-8 py-16 lg:px-14 lg:py-24">
-              <SectionLabel>Why Enter?</SectionLabel>
-              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                Because Fitness
-                <br />
-                Should Mean Capability.
-              </Reveal>
-
-              <div className="mt-10 space-y-0">
-                {whyEnter.map((item, i) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, x: 12 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="uh-divide py-6"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-lime-400/50" />
-                      <div>
-                        <p className="text-[16px] font-bold uppercase tracking-wide text-white">{item.title}</p>
-                        <p className="mt-1.5 text-[16px] leading-6 text-neutral-400">{item.text}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <WhyEnterSection />
 
         <SubscriptionSection />
 
-        {/* ── PRICING ── */}
-        <section
-          className="relative uh-divide px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 50% at 92% 0%, rgba(163,230,53,0.22) 0%, transparent 62%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(163,230,53,0.13) 0%, transparent 65%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mb-14">
-              <SectionLabel>Event Entry Pricing</SectionLabel>
-              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                Get in Early.
-              </Reveal>
-              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                Early launch pricing for the first Ultimate Human Index events. Founding athlete places will
-                be limited and pricing will increase after launch release.
-              </p>
-              <p
-                className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                This is your event entry fee — not your platform membership.
-              </p>
-            </div>
+        <PricingSection />
 
-            <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
-              {foundingPricing.map((item, i) => (
-                <motion.div
-                  key={item.category}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="lime-glow-hover group relative bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
-                >
-                  <div className="absolute left-0 top-0 h-px w-2/3 bg-gradient-to-r from-lime-400/70 to-transparent" />
-                  <div className="p-7">
-                    <p
-                      className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-500"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      {item.category}
-                    </p>
-                    <p
-                      className="text-metallic-price mt-5 text-5xl"
-                      style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
-                    >
-                      {item.price}
-                    </p>
-                    <p
-                      className="mt-2 text-[16px] text-neutral-400"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      {item.detail}
-                    </p>
-                    <a
-                      href={REGISTER_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-lime-glow mt-8 block border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-bold uppercase tracking-[0.18em] text-black no-underline transition-colors hover:bg-lime-300 hover:border-lime-300"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      Register Interest
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+        <FoundersSection />
 
-            <div className="mt-px bg-[#0a0a0a] p-8">
-              <p
-                className="mb-6 text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-400"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                Founding Athlete Benefits Include:
-              </p>
-              <div className="grid gap-4 md:grid-cols-2">
-                {[
-                  "Priority event access",
-                  "Early leaderboard rankings",
-                  "Founding athlete digital badge",
-                  "Exclusive launch training content",
-                ].map((benefit) => (
-                  <div key={benefit} className="flex items-center gap-4">
-                    <div className="h-px w-6 shrink-0 bg-lime-400" />
-                    <p
-                      className="text-[16px] text-neutral-300"
-                      style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                    >
-                      {benefit}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <SignupSection />
 
-        {/* ── FOUNDERS ── */}
-        <section
-          className="relative uh-divide px-6 py-24"
-          style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 65% 55% at 12% 0%, rgba(163,230,53,0.28) 0%, transparent 62%), radial-gradient(ellipse 55% 45% at 100% 100%, rgba(163,230,53,0.1) 0%, transparent 65%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mb-14">
-              <SectionLabel>The People Behind The Ultimate Human Index</SectionLabel>
-              <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-                Built by People Obsessed
-                <br />
-                with Human Performance.
-              </Reveal>
-              <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
-                The Ultimate Human Index combines elite coaching, combat sport experience, movement science
-                and a slightly unhealthy enthusiasm for fitness racing.
-              </p>
-            </div>
-
-            <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-5">
-              <FounderCard
-                photo="/images/founders/andie.png"
-                ratio="1 / 1"
-                name="Andie Stoneham"
-                role="Founder · Performance Coach · Programme Designer"
-                quote="Most fitness events reward one dominant attribute. We wanted to build something that rewards adaptability, composure and complete human capability."
-              />
-              <FounderCard
-                photo="/images/founders/laura.png"
-                ratio="1 / 1"
-                name="Laura Hathaway"
-                role="Performance Coach · Qualified Osteopath"
-                quote="Real performance is not just strength or endurance. It is how efficiently and intelligently your body moves under pressure and fatigue."
-              />
-              <FounderCard
-                photo="/images/founders/john.png"
-                ratio="1 / 1"
-                name="John 'The Hitman' Hathaway"
-                role="Champion UFC Fighter · Coach"
-                quote="The people who stay calm, adaptable and explosive when tired are usually the hardest people to beat. That is what this competition is designed to expose."
-              />
-              <FounderCard
-                photo="/images/founders/ken.png"
-                ratio="1 / 1"
-                name="Ken Brotherston"
-                role="Founder · Entrepreneur · Fitness Race Enthusiast"
-                quote="I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better."
-              />
-              {/* Falls back to a 'photo to follow' placeholder until the file exists */}
-              <FounderCard
-                photo="/images/founders/camilla.png"
-                ratio="1 / 1"
-                name="Dr. Camilla Drew"
-                role="Event Adviser · Capabilities Adviser · Fitness Enthusiast"
-                quote="Fitness and good-quality, all-round movement are key to a happier and more productive life, regardless of how old you actually are."
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* ── SIGNUP / WAITLIST ── */}
-        <section
-          id="signup"
-          className="uh-divide relative px-6 py-24"
-          style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
-        >
-          {/* Branded UH arena-floor asset, low opacity behind the form */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <img
-              src="/images/uh-hero-arena-floor-no-text-2400x1400.jpg"
-              alt=""
-              aria-hidden="true"
-              className="h-full w-full object-cover object-center opacity-[0.28]"
-              loading="lazy"
-            />
-          </div>
-          {/* Section ambient glow */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(132,204,22,0.16) 0%, transparent 70%)",
-            }}
-          />
-
-          <div className="relative mx-auto max-w-5xl">
-            <div className="relative overflow-hidden border border-white/[0.09] bg-[#070707] p-10 text-center md:p-16">
-
-              {/* Corner accent marks */}
-              <div className="absolute left-0 top-0 h-8 w-8 border-l border-t border-lime-400/40" />
-              <div className="absolute right-0 top-0 h-8 w-8 border-r border-t border-lime-400/40" />
-              <div className="absolute bottom-0 left-0 h-8 w-8 border-b border-l border-lime-400/22" />
-              <div className="absolute bottom-0 right-0 h-8 w-8 border-b border-r border-lime-400/22" />
-
-              {/* Top glow + accent line */}
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at center top, rgba(132,204,22,0.20) 0%, transparent 52%)",
-                }}
-              />
-              <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-400/55 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
-
-              <div className="relative">
-                <div className="mb-6 flex justify-center">
-                  <div className="flex h-14 w-14 items-center justify-center border border-lime-400/30 bg-lime-400/[0.06]">
-                    <Mail className="h-6 w-6 text-lime-400" strokeWidth={1.5} />
-                  </div>
-                </div>
-
-                <SectionLabel>Founding Athlete Registration</SectionLabel>
-
-                <Reveal
-                  as="h2"
-                  delay={0.08}
-                  className="text-metallic uppercase tracking-tight"
-                  style={{ fontSize: "clamp(2rem, 4vw, 3.6rem)", lineHeight: 1.06, fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
-                >
-                  Become One of the
-                  <br />
-                  First Ultimate Humans
-                </Reveal>
-
-                <p className="mx-auto mt-5 max-w-xl text-lg leading-7 text-neutral-400">
-                  Get early access to launch events, training plans, founding athlete pricing, rankings
-                  and exclusive first-release places.
-                </p>
-
-                {/* Scarcity line */}
-                <div className="mt-5 flex items-center justify-center gap-4">
-                  <div className="h-px w-10 shrink-0 bg-lime-400/35" />
-                  <p
-                    className="text-[11px] font-bold uppercase tracking-[0.26em] text-lime-400/65"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    Limited founding places — pricing increases at launch
-                  </p>
-                  <div className="h-px w-10 shrink-0 bg-lime-400/35" />
-                </div>
-
-                {/* On-site form parked for now — registrations go through the
-                    Google Form instead. WaitlistForm is kept below, working and
-                    tested, ready to switch back on by restoring this line. */}
-                <div className="mt-9 flex justify-center">
-                  <RegisterButton className="w-full max-w-xl" />
-                </div>
-
-                <p className="mt-6 text-center text-[16px] text-neutral-400">
-                  Bringing a gym or team?{" "}
-                  <a
-                    href="mailto:hello@theultimatehuman.fitness"
-                    className="font-bold text-lime-400 underline-offset-4 hover:underline"
-                  >
-                    Get in touch
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── PRE-LAUNCH NOTICE ── */}
-        <section
-          className="uh-divide px-6 py-16"
-          style={{ background: "linear-gradient(180deg, #09090a 0%, #0a0a0a 100%)" }}
-        >
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-8 inline-flex items-center gap-3 border border-amber-400/22 bg-amber-400/[0.04] px-4 py-2.5">
-              <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
-              <span
-                className="text-[12px] font-bold uppercase tracking-[0.28em] text-amber-400"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                Pre-Launch Notice
-              </span>
-            </div>
-            <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-tight text-white md:text-4xl">
-              What Is Still Being Finalised?
-            </Reveal>
-
-            <div className="mt-8 grid gap-px bg-white/[0.05] md:grid-cols-2">
-              {workToDo.map((item) => (
-                <div key={item} className="flex gap-4 bg-[#0d0d0d] p-6 transition-colors hover:bg-[#111]">
-                  <div className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center border border-lime-400/30">
-                    <div className="h-1.5 w-1.5 bg-lime-400" />
-                  </div>
-                  <p
-                    className="text-[16px] leading-6 text-neutral-300"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  >
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <PreLaunchSection />
       </main>
 
       {/* ── FOOTER ── */}
