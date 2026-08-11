@@ -1,7 +1,5 @@
-import { motion } from "framer-motion";
 import { Flame, Timer, Zap } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { MarketingImage } from "@/components/shared/MarketingImage";
 
@@ -27,13 +25,9 @@ export default function ChallengeOverviewSection() {
             { icon: Flame,  title: "Built for every body. Designed for every challenge.", sub: "Designed to reveal, not destroy" },
             { icon: Timer,  title: "Long enough to test you, fast enough to race", sub: "High energy. Consistent Standards. Visible competition." },
             { icon: Zap,    title: "Discover how you cope Under Fatigue", sub: "Speed → Control → Strength → Coordination" },
-          ].map(({ icon: Icon, title, sub }, i) => (
-            <motion.div
+          ].map(({ icon: Icon, title, sub }) => (
+            <div
               key={title}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-1 items-center gap-5 px-6 py-7 first:pl-0 last:pr-0 md:px-10"
             >
               <Icon className="h-5 w-5 shrink-0 text-lime-400/60" strokeWidth={1.5} />
@@ -46,7 +40,7 @@ export default function ChallengeOverviewSection() {
                   {sub}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -69,7 +63,7 @@ export default function ChallengeOverviewSection() {
             />
             <div className="pointer-events-none absolute inset-0 flex items-end">
               <div className="mx-auto w-full max-w-7xl px-6 pb-8 md:pb-14">
-                <Reveal>
+                <div>
                   <p
                     className="mb-3 text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
                     style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -84,7 +78,7 @@ export default function ChallengeOverviewSection() {
                   <p className="mt-4 max-w-md text-base leading-6 text-neutral-300 md:text-base">
                     Speed, strength and composure — every capability exposed under fatigue.
                   </p>
-                </Reveal>
+                </div>
               </div>
             </div>
           </>

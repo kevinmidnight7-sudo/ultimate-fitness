@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gauge, CheckCircle2 } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import { GRADIENT_LIME } from "@/lib/gradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
@@ -68,12 +67,8 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
   const breakdownPanel = (
     <div className="space-y-px bg-white/[0.05]">
       {domains.map((d, i) => (
-        <motion.div
+        <div
           key={d.title}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="bg-[#0d0d0d] p-6"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -91,20 +86,16 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
               transition={{ duration: 0.8, delay: i * 0.05 + 0.15, ease: "easeOut" }}
             />
           </div>
-        </motion.div>
+        </div>
       ))}
     </div>
   );
 
   const pathPanel = (
     <div className="grid gap-px bg-white/[0.05] sm:grid-cols-2">
-      {uhsReveals.map((item, i) => (
-        <motion.div
+      {uhsReveals.map((item) => (
+        <div
           key={item.title}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
           className="flex gap-3 bg-[#0d0d0d] p-6"
         >
           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-400" strokeWidth={2} />
@@ -114,7 +105,7 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
             </p>
             <p className="mt-1.5 text-base leading-6 text-neutral-400">{item.text}</p>
           </div>
-        </motion.div>
+        </div>
       ))}
     </div>
   );
@@ -137,11 +128,11 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <SectionLabel>Your Personal Benchmark</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Leave with More
             <br />
             Than a Medal.
-          </Reveal>
+          </h2>
           <p className="mt-6 text-lg leading-7 text-neutral-400">
             Every participant receives an Ultimate Human Index showing performance across
             ten capability areas — the whole human, not just the parts that are easy to

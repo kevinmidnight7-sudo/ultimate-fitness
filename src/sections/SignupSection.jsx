@@ -1,6 +1,5 @@
 import { Mail } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { RegisterButton } from "@/components/shared/RegisterButton";
 
@@ -59,16 +58,14 @@ export default function SignupSection() {
 
             <SectionLabel>Founding Athlete Registration</SectionLabel>
 
-            <Reveal
-              as="h2"
-              delay={0.08}
+            <h2
               className="text-metallic uppercase tracking-tight"
               style={{ fontSize: "clamp(2rem, 4vw, 3.6rem)", lineHeight: 1.06, fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
             >
               Become One of the
               <br />
               First Ultimate Humans
-            </Reveal>
+            </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-lg leading-7 text-neutral-400">
               Get early access to launch events, training plans, founding athlete pricing, rankings

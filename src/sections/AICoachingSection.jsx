@@ -32,11 +32,7 @@ function HowItWorksCard({ step, index }) {
   const [quotesOpen, setQuotesOpen] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="bg-[#0d0d0d] p-8"
     >
       <div className="mb-5 flex h-12 w-12 items-center justify-center border border-lime-400/20 bg-lime-400/[0.04]">
@@ -151,7 +147,7 @@ function HowItWorksCard({ step, index }) {
           </AnimatePresence>
         </>
       )}
-    </motion.div>
+    </div>
   );
 }
 

@@ -102,11 +102,7 @@ export default function WhyDifferentSection() {
         </div>
 
         {/* Comparison table */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        <div
           className="uh-scroll-dark overflow-x-auto"
         >
           <table className="w-full border-collapse text-left">
@@ -138,12 +134,8 @@ export default function WhyDifferentSection() {
             </thead>
             <tbody>
               {differenceTable.dimensions.map((dim, rowIdx) => (
-                <motion.tr
+                <tr
                   key={dim}
-                  initial={{ opacity: 0, x: -8 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: rowIdx * 0.06, ease: [0.16, 1, 0.3, 1] }}
                   className="border-t border-white/[0.05]"
                 >
                   <td className="py-4 pr-6 text-[16px] text-neutral-400">{dim}</td>
@@ -163,11 +155,11 @@ export default function WhyDifferentSection() {
                       </td>
                     );
                   })}
-                </motion.tr>
+                </tr>
               ))}
             </tbody>
           </table>
-        </motion.div>
+        </div>
 
         <WhyDifferentExplainer />
       </div>

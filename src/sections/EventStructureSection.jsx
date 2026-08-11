@@ -49,15 +49,11 @@ function FlowConnector() {
   return <div className="h-px w-5 shrink-0 bg-lime-400/30" />;
 }
 
-function CapabilityAccordionItem({ capability, division, isOpen, onToggle, index }) {
+function CapabilityAccordionItem({ capability, division, isOpen, onToggle }) {
   const weight = capability.weightKey ? weightsByName[capability.weightKey] : null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="bg-[#0d0d0d]"
     >
       <button
@@ -173,7 +169,7 @@ function CapabilityAccordionItem({ capability, division, isOpen, onToggle, index
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
@@ -388,12 +384,11 @@ export default function EventStructureSection({ gradient = GRADIENT_LIME }) {
 
         {/* Capabilities 1–9 — accordion, one open at a time */}
         <div className="mt-12 space-y-px bg-white/[0.05]">
-          {capabilities10.map((capability, index) => (
+          {capabilities10.map((capability) => (
             <CapabilityAccordionItem
               key={capability.number}
               capability={capability}
               division={division}
-              index={index}
               isOpen={openCapability === capability.number}
               onToggle={() => setOpenCapability((prev) => (prev === capability.number ? null : capability.number))}
             />
@@ -401,11 +396,7 @@ export default function EventStructureSection({ gradient = GRADIENT_LIME }) {
         </div>
 
         {/* Capability 10 — Final Circuit, highlighted */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        <div
           className="relative mt-px bg-[#0d0d0d] ring-1 ring-lime-400/40"
         >
           <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-lime-400 to-transparent" />
@@ -488,7 +479,7 @@ export default function EventStructureSection({ gradient = GRADIENT_LIME }) {
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Suggested Working Weights — collapsed by default */}
         <WorkingWeightsPanel />

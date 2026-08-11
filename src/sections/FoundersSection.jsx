@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserCheck, ChevronDown } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 
 function FounderCard({ photo, ratio, name, role, quote }) {
@@ -100,11 +99,11 @@ export default function FoundersSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-14">
           <SectionLabel>The People Behind The Ultimate Human Index</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Built by People Obsessed
             <br />
             with Human Performance.
-          </Reveal>
+          </h2>
           <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
             The Ultimate Human Index combines elite coaching, combat sport experience, movement science
             and a slightly unhealthy enthusiasm for fitness racing.

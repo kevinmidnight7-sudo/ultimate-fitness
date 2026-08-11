@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, CheckCircle2, MessageCircle, ChevronDown } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { subscriptionTiers } from "@/data/content";
 import { REGISTER_URL } from "@/lib/constants";
@@ -162,11 +161,11 @@ export default function SubscriptionSection() {
 
         <div className="mb-14 max-w-2xl">
           <SectionLabel>Membership & Coaching Platform</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             One Platform.
             <br />
             Every Level of Athlete.
-          </Reveal>
+          </h2>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             An Ultimate Human Index subscription is designed to keep you progressing long
             after race day. Members get ongoing AI-powered coaching, personalised

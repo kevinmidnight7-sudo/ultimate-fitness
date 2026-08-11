@@ -1,6 +1,5 @@
 import { AlertTriangle } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import { workToDo } from "@/data/content";
 
 export default function PreLaunchSection() {
@@ -19,9 +18,9 @@ export default function PreLaunchSection() {
             Pre-Launch Notice
           </span>
         </div>
-        <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-tight text-white md:text-4xl">
+        <h2 className="text-3xl uppercase tracking-tight text-white md:text-4xl">
           What Is Still Being Finalised?
-        </Reveal>
+        </h2>
 
         <div className="mt-8 grid gap-px bg-white/[0.05] md:grid-cols-2">
           {workToDo.map((item) => (

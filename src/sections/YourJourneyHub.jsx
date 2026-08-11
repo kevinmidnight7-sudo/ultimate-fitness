@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
-import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { journeyCards, journeyQuizQuestions } from "@/data/content";
 import { REGISTER_URL } from "@/lib/constants";
@@ -263,9 +262,9 @@ export default function YourJourneyHub() {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 max-w-5xl">
           <SectionLabel>Start Here</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl lg:whitespace-nowrap">
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl lg:whitespace-nowrap">
             Your Journey to The Ultimate Human.
-          </Reveal>
+          </h2>
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Five steps. One profile that gets sharper every time you use it.
           </p>
@@ -280,12 +279,8 @@ export default function YourJourneyHub() {
             {journeyCards.map((card, i) => {
               const Icon = card.icon;
               const inner = (
-                <motion.div
+                <div
                   key={card.key}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="group flex flex-col items-start px-0"
                 >
                   {/* Step number circle */}
@@ -312,7 +307,7 @@ export default function YourJourneyHub() {
                     {card.cta}
                     <ChevronRight className="h-3 w-3" />
                   </span>
-                </motion.div>
+                </div>
               );
 
               return card.action === "scroll" ? (

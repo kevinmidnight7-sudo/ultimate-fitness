@@ -1,6 +1,4 @@
-import { motion } from "framer-motion";
 
-import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { MarketingImage } from "@/components/shared/MarketingImage";
 import { whyEnter } from "@/data/content";
@@ -44,20 +42,16 @@ export default function WhyEnterSection() {
         {/* Right — stacked list */}
         <div className="flex flex-1 flex-col justify-center px-8 py-16 lg:px-14 lg:py-24">
           <SectionLabel>Why Enter?</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Because Fitness
             <br />
             Should Mean Capability.
-          </Reveal>
+          </h2>
 
           <div className="mt-10 space-y-0">
-            {whyEnter.map((item, i) => (
-              <motion.div
+            {whyEnter.map((item) => (
+              <div
                 key={item.title}
-                initial={{ opacity: 0, x: 12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="uh-divide py-6"
               >
                 <div className="flex items-start gap-4">
@@ -67,7 +61,7 @@ export default function WhyEnterSection() {
                     <p className="mt-1.5 text-[16px] leading-6 text-neutral-400">{item.text}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

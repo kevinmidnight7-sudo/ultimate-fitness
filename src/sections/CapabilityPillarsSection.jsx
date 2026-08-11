@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
 
-import Reveal from "@/components/motion/Reveal";
 import { GRADIENT_EMBER } from "@/lib/gradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
@@ -55,9 +54,9 @@ export default function CapabilityPillarsSection({ gradient = GRADIENT_EMBER }) 
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 text-center">
           <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-3xl uppercase tracking-wide text-white md:text-4xl">
+          <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
             Every Dimension. Measured.
-          </Reveal>
+          </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-400">
             The Ultimate Human Index spans all 10 axes simultaneously — not just the ones you train.
             <span className="mt-1 block text-[14px] text-neutral-500">

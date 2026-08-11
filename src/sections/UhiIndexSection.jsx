@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
@@ -71,13 +70,9 @@ export default function UhiIndexSection() {
               The UHI has been designed to be
             </p>
             <div className="flex flex-col">
-              {uhciPrinciples.map((p, i) => (
-                <motion.div
+              {uhciPrinciples.map((p) => (
+                <div
                   key={p.title}
-                  initial={{ opacity: 0, x: 12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="border-b border-white/[0.07] py-4"
                 >
                   <div className="flex items-baseline gap-3">
@@ -89,7 +84,7 @@ export default function UhiIndexSection() {
                       <p className="mt-1 text-[16px] leading-6 text-neutral-400">{p.text}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

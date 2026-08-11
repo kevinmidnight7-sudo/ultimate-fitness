@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
-import Reveal from "@/components/motion/Reveal";
 import { GRADIENT_LIME } from "@/lib/gradients";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { foundingPricing } from "@/data/content";
@@ -25,9 +23,9 @@ export default function PricingSection({ gradient = GRADIENT_LIME }) {
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-14">
           <SectionLabel>Event Entry Pricing</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
+          <h2 className="text-4xl uppercase tracking-tight text-white md:text-5xl">
             Get in Early.
-          </Reveal>
+          </h2>
           <p className="mt-5 max-w-2xl text-lg leading-7 text-neutral-400">
             Early launch pricing for the first Ultimate Human Index events. Founding athlete places will
             be limited and pricing will increase after launch release.
@@ -47,13 +45,9 @@ export default function PricingSection({ gradient = GRADIENT_LIME }) {
         </div>
 
         <div className="grid gap-px bg-white/[0.05] md:grid-cols-2 lg:grid-cols-4">
-          {foundingPricing.map((item, i) => (
-            <motion.div
+          {foundingPricing.map((item) => (
+            <div
               key={item.category}
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="lime-glow-hover group relative bg-[#0d0d0d] transition-colors hover:bg-[#0f0f0f]"
             >
               <div className="absolute left-0 top-0 h-px w-2/3 bg-gradient-to-r from-lime-400/70 to-transparent" />
@@ -86,7 +80,7 @@ export default function PricingSection({ gradient = GRADIENT_LIME }) {
                   Register Interest
                 </a>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
