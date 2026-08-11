@@ -14,6 +14,35 @@ GitHub (main)  →  GitHub Action builds the React app
 `index.php` reads the built `index.html`, rewrites asset paths, and injects
 `wp_head()` / `wp_footer()` — which is what makes plugins work.
 
+## Deep links and the 404 status header
+
+The front end is a multi-page site using `BrowserRouter`, so `/challenge`,
+`/compete` and the rest are real URLs someone can land on directly, share, or
+have indexed.
+
+WordPress has no page at any of them. Its template hierarchy falls through to
+this theme's `index.php`, which serves the app correctly — but it sends a
+**404 status header** with it. Nothing looks wrong in a browser, because the
+app renders normally and the status code is invisible. But that header is what
+machines read:
+
+- Search engines drop the page from the index.
+- Caching plugins and CDNs refuse to cache it, so every visit hits PHP.
+
+`functions.php` fixes this with an allowlist. `uhi_app_routes()` holds the
+seven paths the router owns; on `template_redirect` a request for one of them
+has `is_404` cleared and `status_header( 200 )` sent, before the template
+loader picks a template. `index.php` is still what runs.
+
+**When you add or rename a route in the app, add it to `uhi_app_routes()` in
+`functions.php` too.** The list is the same as `src/lib/routes.js`, minus the
+leading slashes, with the front page as `''`. Miss one and the page still
+works in a browser while quietly going un-indexed and un-cached.
+
+Anything not on the list still 404s properly — WordPress sends the 404 header
+and the app renders its own branded 404 page. That is the behaviour you want:
+a genuinely wrong URL should say so.
+
 ## One-time setup
 
 1. **Get WordPress hosting** and install WordPress (any host — SiteGround,

@@ -1,18 +1,39 @@
 # The Ultimate Human — project notes
 
-Single-page marketing site. Vite + React 19, Tailwind CSS v4, framer-motion v12,
-lucide-react, recharts. Almost the entire UI lives in `src/App.jsx` as named
-section components. Shared pieces live in `src/components/`.
+Seven-page marketing site. Vite + React 19, react-router-dom v7, Tailwind CSS v4,
+framer-motion v12, lucide-react, recharts.
+
+## Layout of the code
+
+- `src/App.jsx` — routes only.
+- `src/components/Layout.jsx` — header, `<Outlet />`, footer. Mounts once.
+- `src/pages/` — one file per route. A page composes sections; it does not
+  contain markup of its own beyond page-level framing.
+- `src/sections/` — one file per section, sub-components co-located with their parent.
+- `src/components/shared/` — helpers used across sections (`SectionLabel`,
+  `RegisterButton`, `MarketingImage`).
+- `src/data/content.js` — every copy/data array. `src/lib/` — constants, routes, gradients.
+
+`src/lib/routes.js` is the single source of truth for the seven pages: the header
+nav, the Overview hub grid, the next-page bands and each page's title and meta
+description all read from it. Add a route there — and to `uhi_app_routes()` in
+`wordpress-theme/functions.php`, or the page will be served with a 404 header.
+
+## Rules
 
 - Password gate removed (Aug 2026) — the site is public. The old component is kept at
   `src/components/archived/PasswordGate.jsx`; it was only ever client-side, so use
   hosting-level auth if real restriction is ever needed.
 - Primary CTA: every button points at `REGISTER_URL` (Google Form). The on-site
   `WaitlistForm` is archived alongside the gate, working and ready to switch back on.
-- `SITE_VERSION` in `App.jsx` drives the footer version marker — bump it on EVERY update/push (last segment per change), ideally in the same commit.
+- `SITE_VERSION` in `src/lib/constants.js` drives the footer version marker — bump it
+  on EVERY update/push (last segment per change), ideally in the same commit.
 - Design system: near-black backgrounds, `lime-400` accent only, `Oswald` display /
   `Barlow Condensed` UI. Keep lime for CTAs/active states; dim it elsewhere.
-- Lint baseline is 6 pre-existing errors; don't introduce new ones. Build must pass.
+- Lint baseline is 3 pre-existing errors; don't introduce new ones. Build must pass.
+- Sections carry a default gradient and accept a `gradient` prop so a page can rotate
+  between the recipes in `src/lib/gradients.js`. No two consecutive sections on a page
+  should share one. Don't invent new gradients.
 
 ## Motion system
 
@@ -34,7 +55,14 @@ Rules (follow these exactly so motion stays coherent across files):
 - **Always honour `prefers-reduced-motion`** — every motion primitive must no-op to a
   static render (`useReducedMotion()`).
 - **Restraint:** long stretches with nothing moving are what make the motion land.
-  Don't reveal every section. Reserve image aspect ratios so reveals don't fade in empty boxes.
+  **At most three reveal moments per page** — in practice the page header on mount, one
+  in the body, and the next-page band. Everything else renders static. Reserve image
+  aspect ratios so reveals don't fade in empty boxes.
+- **Use the `Reveal` primitive, not raw `whileInView`.** framer-motion does not consult
+  `prefers-reduced-motion` for you; `Reveal` does. A bare `whileInView` leaves its
+  content at opacity 0 for anyone who has asked for no motion.
+- Bar-fill and count-up animations draw a value rather than announce a block arriving.
+  They are not reveals and don't count against the budget.
 - **Mobile:** pinned/tall scenes use `dvh`, not `vh`. Consider dropping pinning below `md`
   in favour of plain reveals.
 
