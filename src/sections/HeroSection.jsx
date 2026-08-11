@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
@@ -230,16 +231,16 @@ export default function HeroSection() {
           </div>
 
           {/* CTAs */}
-          <div data-tour-avoid className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <RegisterButton />
-            <a
-              href="#challenge"
+            <Link
+              to="/challenge"
               className="inline-flex items-center justify-center border border-white/22 bg-black/35 px-7 py-4 text-[15px] font-bold uppercase tracking-[0.15em] text-white no-underline backdrop-blur-sm transition-colors hover:bg-white/[0.07] hover:border-white/38"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               Explore the Challenge
               <ChevronRight className="ml-2 h-4 w-4" />
-            </a>
+            </Link>
           </div>
 
           {/* Stats */}

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ChevronDown, Weight } from "lucide-react";
 
 import Reveal from "@/components/motion/Reveal";
+import { GRADIENT_LIME } from "@/lib/gradients";
 import SectionLabel from "@/components/shared/SectionLabel";
 import {
   capabilities10,
@@ -272,7 +273,9 @@ function WorkingWeightsPanel() {
   );
 }
 
-export default function EventStructureSection() {
+/* `gradient` lets the page it sits on override the default band, so two
+   sections that never used to meet do not now stack the same recipe. */
+export default function EventStructureSection({ gradient = GRADIENT_LIME }) {
   const [division, setDivision] = useState("intermediate");
   const [openCapability, setOpenCapability] = useState(1);
   const [finalOpen, setFinalOpen] = useState(false);
@@ -282,7 +285,7 @@ export default function EventStructureSection() {
     <section
       id="format"
       className="relative uh-divide px-6 py-28"
-      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+      style={{ background: gradient }}
     >
       <div
         className="pointer-events-none absolute inset-0"

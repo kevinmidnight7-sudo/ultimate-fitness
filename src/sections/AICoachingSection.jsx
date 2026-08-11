@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import Reveal from "@/components/motion/Reveal";
+import { GRADIENT_EMBER } from "@/lib/gradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { MarketingImage } from "@/components/shared/MarketingImage";
@@ -379,7 +380,9 @@ function MovementCoachPreview() {
   );
 }
 
-export default function AICoachingSection() {
+/* `gradient` lets the page it sits on override the default band, so two
+   sections that never used to meet do not now stack the same recipe. */
+export default function AICoachingSection({ gradient = GRADIENT_EMBER }) {
   const [tick, setTick] = useState(0);
   const [activeTab, setActiveTab] = useState("profile");
 
@@ -608,7 +611,7 @@ export default function AICoachingSection() {
     <section
       id="coaching"
       className="uh-divide relative px-6 py-28"
-      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
+      style={{ background: gradient }}
     >
       <div
         className="pointer-events-none absolute inset-0"

@@ -1,15 +1,19 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Reveal from "@/components/motion/Reveal";
+import { GRADIENT_LIME } from "@/lib/gradients";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { foundingPricing } from "@/data/content";
 import { REGISTER_URL } from "@/lib/constants";
 
-export default function PricingSection() {
+/* `gradient` lets the page it sits on override the default band, so two
+   sections that never used to meet do not now stack the same recipe. */
+export default function PricingSection({ gradient = GRADIENT_LIME }) {
   return (
     <section
       className="relative uh-divide px-6 py-24"
-      style={{ background: "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)" }}
+      style={{ background: gradient }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -28,11 +32,17 @@ export default function PricingSection() {
             Early launch pricing for the first Ultimate Human Index events. Founding athlete places will
             be limited and pricing will increase after launch release.
           </p>
+          {/* The membership tiers now live on their own page, so the
+              distinction has to carry a link rather than rely on the reader
+              having scrolled past them a moment ago. */}
           <p
             className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            This is your event entry fee — not your platform membership.
+            This is your event entry fee — not your platform membership.{" "}
+            <Link to="/subscribe" className="text-lime-400 underline-offset-4 hover:underline">
+              See membership
+            </Link>
           </p>
         </div>
 

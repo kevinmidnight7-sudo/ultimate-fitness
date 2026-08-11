@@ -3,12 +3,15 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
 
 import Reveal from "@/components/motion/Reveal";
+import { GRADIENT_EMBER } from "@/lib/gradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { capabilities, pillarRadarData } from "@/data/content";
 
 /* Radar chart component for 10 Pillars section */
-export default function CapabilityPillarsSection() {
+/* `gradient` lets the page it sits on override the default band, so two
+   sections that never used to meet do not now stack the same recipe. */
+export default function CapabilityPillarsSection({ gradient = GRADIENT_EMBER }) {
   const radarRef = useRef(null);
   const isInView = useInView(radarRef, { once: true, margin: "-80px" });
   const [active, setActive] = useState(0);
@@ -40,7 +43,7 @@ export default function CapabilityPillarsSection() {
   return (
     <section
       className="relative uh-divide px-6 py-20"
-      style={{ background: "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)" }}
+      style={{ background: gradient }}
     >
       <div
         className="pointer-events-none absolute inset-0"

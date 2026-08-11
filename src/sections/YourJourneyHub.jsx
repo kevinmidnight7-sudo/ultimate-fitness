@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
@@ -134,13 +135,13 @@ function AthleteTypeQuiz({ onClose }) {
           pillars.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <a
-            href="#score"
+          <Link
+            to="/personal-index"
             onClick={onClose}
             className="btn-lime-glow flex-1 border border-lime-400 bg-lime-400 px-5 py-3 text-center text-[12px] font-black uppercase tracking-[0.16em] text-black no-underline transition-colors hover:bg-lime-300"
           >
             See Full Score Breakdown
-          </a>
+          </Link>
           <a
             href={REGISTER_URL}
             target="_blank"
