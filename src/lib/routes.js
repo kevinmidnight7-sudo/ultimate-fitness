@@ -52,24 +52,24 @@ export const routes = [
   {
     path: "/compete",
     label: "Compete",
-    blurb: "Divisions, entry pricing and how to secure your place.",
+    blurb: "Divisions, and how to secure your place.",
     eyebrow: "Take Part",
     heading: "Compete",
     lead: "Pick the way you want to be tested, then claim a place in the first wave of events.",
     title: "Compete — Ultimate Human Index",
     description:
-      "Ways to compete at the Ultimate Human Index, event entry pricing, founding athlete benefits, and how to secure your place.",
+      "Ways to compete at the Ultimate Human Index — individual, doubles, relay and corporate divisions — and how to secure your place in the first wave of events.",
   },
   {
     path: "/subscribe",
     label: "Subscribe",
-    blurb: "Platform membership — the training side, all year round.",
-    eyebrow: "Membership",
+    blurb: "What it costs — membership, and event entry pricing.",
+    eyebrow: "Membership & Pricing",
     heading: "Subscribe",
-    lead: "The platform side of the Index: your score, your coaching and your progress between events.",
+    lead: "Everything the Index costs in one place: monthly membership for the platform, and a one-off entry fee per event.",
     title: "Subscribe — Ultimate Human Index",
     description:
-      "Platform membership for the Ultimate Human Index: track your score, train with AI coaching and follow your progress between events.",
+      "What the Ultimate Human Index costs: monthly platform membership for scoring and AI coaching, plus founding athlete event entry pricing for every division.",
   },
   {
     path: "/about",
