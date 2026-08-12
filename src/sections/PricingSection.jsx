@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { GRADIENT_LIME } from "@/lib/gradients";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { foundingPricing } from "@/data/content";
@@ -30,17 +28,14 @@ export default function PricingSection({ gradient = GRADIENT_LIME }) {
             Early launch pricing for the first Ultimate Human Index events. Founding athlete places will
             be limited and pricing will increase after launch release.
           </p>
-          {/* The membership tiers now live on their own page, so the
-              distinction has to carry a link rather than rely on the reader
-              having scrolled past them a moment ago. */}
+          {/* The membership tiers sit directly above this section, so proximity
+              carries the distinction again and the line no longer needs a link
+              out to find them. */}
           <p
             className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-neutral-500"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            This is your event entry fee — not your platform membership.{" "}
-            <Link to="/subscribe" className="text-lime-400 underline-offset-4 hover:underline">
-              See membership
-            </Link>
+            A one-off fee per event — not the monthly membership above.
           </p>
         </div>
 
