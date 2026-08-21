@@ -3,7 +3,9 @@ import { Mail } from "lucide-react";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { RegisterButton } from "@/components/shared/RegisterButton";
 
-export default function SignupSection() {
+/* `showLabel` exists so the Overview page can drop the eyebrow without it
+   disappearing from /compete, where the section also runs. */
+export default function SignupSection({ showLabel = true }) {
   return (
     <section
       id="signup"
@@ -56,7 +58,7 @@ export default function SignupSection() {
               </div>
             </div>
 
-            <SectionLabel>Founding Athlete Registration</SectionLabel>
+            {showLabel && <SectionLabel>Founding Athlete Registration</SectionLabel>}
 
             <h2
               className="text-metallic uppercase tracking-tight"

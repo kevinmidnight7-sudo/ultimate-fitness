@@ -195,28 +195,26 @@ export default function HeroSection() {
           {/* Headline — centred, with a lime rule instead of the old left bar */}
           <div className="relative w-full">
             <div className="mx-auto mb-7 h-px w-24 bg-gradient-to-r from-transparent via-lime-400/70 to-transparent" />
+            {/* No hard break: at this length a fixed one leaves a ragged edge at
+                most widths, so the line count is left to `text-wrap: balance`. */}
             <motion.h1
-              className="text-metallic uppercase leading-none tracking-tight"
+              className="mx-auto max-w-5xl text-metallic uppercase leading-none tracking-tight"
               style={{
-                fontSize: "clamp(2.2rem, 5vw, 5.2rem)",
-                lineHeight: 1.03,
+                fontSize: "clamp(1.7rem, 3.2vw, 3.4rem)",
+                lineHeight: 1.08,
+                textWrap: "balance",
                 fontFamily: "'Oswald', sans-serif",
                 fontWeight: 700,
                 backgroundImage: reducedMotion ? undefined : headlineBackground,
                 filter: reducedMotion ? undefined : headlineFilter,
               }}
             >
-              The Ultimate Operating System
-              <br />
-              for Human Performance
+              Ultimate Human Index is a complete fitness challenge for every body,
+              every age and every starting point.
             </motion.h1>
 
             {/* Positioning copy — Ken, 1 Aug */}
-            <p className="mx-auto mt-6 max-w-3xl text-[16px] leading-7 text-neutral-200">
-              Ultimate Human Index is a complete fitness challenge for every body,
-              every age and every starting point.
-            </p>
-            <p className="mx-auto mt-2.5 max-w-3xl text-[16px] leading-7 text-neutral-400">
+            <p className="mx-auto mt-7 max-w-2xl text-[18px] leading-8 text-neutral-300">
               You don't have to be an elite athlete to take part. You simply need to be
               ready to challenge yourself.
             </p>
@@ -243,29 +241,6 @@ export default function HeroSection() {
             </Link>
           </div>
 
-          {/* Stats */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
-            {[
-              ["Live Events", "All Venues"],
-              ["All Abilities", "Every Level"],
-              ["Personal Score", "Your Benchmark"],
-            ].map(([label, sub]) => (
-              <div key={label} className="border-t-2 border-lime-400/35 px-2 pt-3 text-center">
-                <p
-                  className="text-[11.5px] font-black uppercase tracking-[0.22em] text-white"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  {label}
-                </p>
-                <p
-                  className="mt-0.5 text-[10.5px] uppercase tracking-[0.15em] text-neutral-500"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                >
-                  {sub}
-                </p>
-              </div>
-            ))}
-          </div>
         </motion.div>
       </div>
     </section>

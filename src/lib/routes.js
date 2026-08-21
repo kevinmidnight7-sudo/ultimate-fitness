@@ -14,20 +14,20 @@ export const routes = [
     blurb: "What the Ultimate Human Index is, and why it exists.",
     title: "Ultimate Human Index — The Fitness Challenge That Measures the Complete Athlete",
     description:
-      "The Ultimate Human Index (UHI) is a fitness challenge that measures your complete capability across ten areas and gives you one personal score — with AI coaching to show you exactly where to improve.",
+      "The Ultimate Human Index (UHI) is a fitness challenge that measures ten capabilities and gives you one personal score — with AI coaching to show you exactly where to improve.",
   },
   {
     path: "/personal-index",
     label: "Personal Index",
-    blurb: "The ten pillars, and the single score they produce.",
+    blurb: "The ten capabilities, and the single score they produce.",
     eyebrow: "Your Score",
     /* Heading is deliberately not the nav label: the page speaks to the reader,
        the menu stays short. */
     heading: "Your Personal Index",
-    lead: "Ten pillars, measured the same way for everyone, resolved into one number you can actually train against.",
+    lead: "Ten capabilities, measured the same way for everyone, resolved into one number you can actually train against.",
     title: "Personal Index — Ultimate Human Index",
     description:
-      "Ten pillars of human capability, measured the same way for everyone and resolved into a single Ultimate Human Index score you can train against.",
+      "Ten capabilities, measured the same way for everyone and resolved into a single Ultimate Human Index score you can train against.",
   },
   {
     path: "/personal-coach",

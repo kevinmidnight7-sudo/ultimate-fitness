@@ -110,17 +110,17 @@ export const capabilities = [
   },
 ];
 
-export const pillarRadarData = [
-  { pillar: "ENDURANCE", value: 820 },
-  { pillar: "STRENGTH", value: 760 },
-  { pillar: "POWER", value: 730 },
-  { pillar: "SPEED", value: 880 },
-  { pillar: "AGILITY", value: 650 },
-  { pillar: "BALANCE", value: 640 },
-  { pillar: "COORDINATION", value: 700 },
-  { pillar: "RESILIENCE", value: 670 },
-  { pillar: "MOBILITY", value: 580 },
-  { pillar: "MENTAL", value: 720 },
+export const capabilityScores = [
+  { capability: "ENDURANCE", value: 820 },
+  { capability: "STRENGTH", value: 760 },
+  { capability: "POWER", value: 730 },
+  { capability: "SPEED", value: 880 },
+  { capability: "AGILITY", value: 650 },
+  { capability: "BALANCE", value: 640 },
+  { capability: "COORDINATION", value: 700 },
+  { capability: "RESILIENCE", value: 670 },
+  { capability: "MOBILITY", value: 580 },
+  { capability: "MENTAL", value: 720 },
 ];
 
 export const differenceTable = {
@@ -531,7 +531,7 @@ export const whyEnter = [
   },
   {
     title: "You get your Ultimate Human Index",
-    text: "A personal performance index across ten capability areas — strength, power, endurance, speed, mobility, coordination, resilience, balance, recovery and control under pressure.",
+    text: "A personal performance index across ten capabilities — strength, power, endurance, speed, mobility, coordination, resilience, balance, recovery and control under pressure.",
   },
   {
     title: "Train for it anywhere",

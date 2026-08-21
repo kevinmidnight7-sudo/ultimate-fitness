@@ -54,10 +54,10 @@ export default function UhiIndexSection() {
             </div>
 
             <p className="mt-6 max-w-2xl text-[16px] leading-6 text-neutral-400">
-              As UHI evolves, the Ultimate Human Index will be supported by advanced AI movement
-              analysis and scientifically validated performance standards. This will enable the
-              Index to assess not only whether an athlete completed each capability, but how
-              effectively and consistently it was performed.
+              The Ultimate Human Index is supported by advanced AI movement analysis and
+              validated performance standards, so it assesses not only whether an athlete
+              completed each capability, but how effectively and consistently it was
+              performed.
             </p>
           </div>
 

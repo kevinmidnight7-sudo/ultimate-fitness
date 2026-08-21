@@ -23,7 +23,7 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
         </p>
         <p className="mt-4 text-base leading-7 text-neutral-400">
           Your score is calculated using our proprietary algorithm, which weighs your
-          performance across ten capability areas: strength, power, endurance, speed,
+          performance across ten capabilities: strength, power, endurance, speed,
           mobility, coordination, resilience, balance, recovery and control under
           pressure.
         </p>
@@ -135,7 +135,7 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
           </h2>
           <p className="mt-6 text-lg leading-7 text-neutral-400">
             Every participant receives an Ultimate Human Index showing performance across
-            ten capability areas — the whole human, not just the parts that are easy to
+            ten capabilities — the whole human, not just the parts that are easy to
             measure. The aim is simple: come back better.
           </p>
         </div>
