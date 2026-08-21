@@ -22,7 +22,7 @@ export default function ScoreSection({ gradient = GRADIENT_LIME }) {
           What It Means
         </p>
         <p className="mt-4 text-base leading-7 text-neutral-400">
-          Your score is calculated using our proprietary algorithm, which weights your
+          Your score is calculated using our proprietary algorithm, which weighs your
           performance across ten capability areas: strength, power, endurance, speed,
           mobility, coordination, resilience, balance, recovery and control under
           pressure.

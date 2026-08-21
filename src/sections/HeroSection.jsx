@@ -218,7 +218,7 @@ export default function HeroSection() {
             </p>
             <p className="mx-auto mt-2.5 max-w-3xl text-[16px] leading-7 text-neutral-400">
               You don't have to be an elite athlete to take part. You simply need to be
-              ready to test yourself.
+              ready to challenge yourself.
             </p>
 
             {/* Slogan — indented to sit flush with headline text */}

@@ -17,22 +17,13 @@ export const routes = [
       "The Ultimate Human Index (UHI) is a fitness challenge that measures your complete capability across ten areas and gives you one personal score — with AI coaching to show you exactly where to improve.",
   },
   {
-    path: "/challenge",
-    label: "The Challenge",
-    blurb: "The event itself — how a day of competition actually runs.",
-    eyebrow: "The Event",
-    heading: "The Challenge",
-    lead: "Nine capabilities, a run between every one of them, and a final circuit to finish. Here is how the day actually runs.",
-    title: "The Challenge — Ultimate Human Index",
-    description:
-      "How a day at the Ultimate Human Index runs: nine capabilities, a run between each, and a final circuit. Every discipline gets exposed somewhere.",
-  },
-  {
     path: "/personal-index",
     label: "Personal Index",
     blurb: "The ten pillars, and the single score they produce.",
     eyebrow: "Your Score",
-    heading: "Personal Index",
+    /* Heading is deliberately not the nav label: the page speaks to the reader,
+       the menu stays short. */
+    heading: "Your Personal Index",
     lead: "Ten pillars, measured the same way for everyone, resolved into one number you can actually train against.",
     title: "Personal Index — Ultimate Human Index",
     description:
@@ -48,6 +39,17 @@ export const routes = [
     title: "Personal Coach — Ultimate Human Index",
     description:
       "Start where you are: find your athlete type, preview a full assessment, and see how AI movement coaching turns your score into a training plan.",
+  },
+  {
+    path: "/challenge",
+    label: "The Challenge",
+    blurb: "The event itself — how a day of competition actually runs.",
+    eyebrow: "The Event",
+    heading: "The Challenge",
+    lead: "Nine capabilities, a run between every one of them, and a final circuit to finish. Here is how the day actually runs.",
+    title: "The Challenge — Ultimate Human Index",
+    description:
+      "How a day at the Ultimate Human Index runs: nine capabilities, a run between each, and a final circuit. Every discipline gets exposed somewhere.",
   },
   {
     path: "/compete",
