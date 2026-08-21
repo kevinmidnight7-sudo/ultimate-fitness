@@ -13,8 +13,8 @@ function WhyDifferentExplainer() {
 
   return (
     <div className="mt-px bg-[#0a0a0a] p-9 md:p-11">
-      <p className="max-w-3xl text-lg leading-8 text-neutral-300">
-        One score. Ten capabilities. The complete picture of how capable you really are.
+      <p className="max-w-3xl text-xl leading-8 text-neutral-300">
+        One score. The complete picture of how capable you really are.
       </p>
 
       <button
@@ -89,18 +89,17 @@ export default function WhyDifferentSection() {
         }}
       />
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-12 max-w-3xl">
+        <div className="mb-12 max-w-4xl">
           <SectionLabel>Why UHI Is Different</SectionLabel>
-          <Reveal as="h2" delay={0.08} className="text-4xl uppercase tracking-tight text-white md:text-5xl">
-            Most Races Test One Thing.
-            <br />
-            UHI Tests the Whole Human.
-          </Reveal>
-          <p className="mt-5 text-lg leading-7 text-neutral-400">
+          <Reveal
+            as="p"
+            delay={0.08}
+            className="mt-4 text-[22px] leading-9 text-neutral-300 md:text-[28px] md:leading-[1.35]"
+          >
             Most programs only measure one or two aspects of capability. They tell
             you if you can run, lift, endure or suffer.{" "}
             <span className="font-bold text-white">UHI tests the whole human.</span>
-          </p>
+          </Reveal>
         </div>
 
         {/* Comparison table */}

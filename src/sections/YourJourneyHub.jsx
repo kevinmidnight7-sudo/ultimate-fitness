@@ -130,8 +130,8 @@ function AthleteTypeQuiz({ onClose }) {
           ))}
         </div>
         <p className="mt-5 text-[15px] leading-5 text-neutral-400">
-          This is a quick preview — your full UHI Report breaks this down across all 10 capability
-          pillars.
+          This is a quick preview — your full UHI Report breaks this down across all 10
+          capabilities.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link

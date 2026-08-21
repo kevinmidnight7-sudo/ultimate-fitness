@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GRADIENT_EMBER } from "@/lib/gradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { capabilities, pillarRadarData } from "@/data/content";
+import { capabilities, capabilityScores } from "@/data/content";
 
 /* `gradient` lets the page it sits on override the default band, so two
    sections that never used to meet do not now stack the same recipe. */
@@ -26,9 +26,9 @@ export default function CapabilityPillarsSection({ gradient = GRADIENT_EMBER }) 
       />
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <SectionLabel>The 10 Pillars of Human Performance</SectionLabel>
+          <SectionLabel>The 10 Capabilities of Human Performance</SectionLabel>
           <h2 className="text-3xl uppercase tracking-wide text-white md:text-4xl">
-            Every Dimension. Measured.
+            Every Capability. Measured.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-neutral-400">
             The Ultimate Human Index spans 10 capabilities — not just the ones you train.
@@ -68,7 +68,7 @@ export default function CapabilityPillarsSection({ gradient = GRADIENT_EMBER }) 
                       {label}
                     </span>
                     <span className={`block text-[13px] font-bold ${on ? "text-lime-400" : "text-neutral-500"}`}>
-                      {pillarRadarData[i].value}
+                      {capabilityScores[i].value}
                       <span className="text-neutral-600">/1000</span>
                     </span>
                   </span>
@@ -90,7 +90,7 @@ export default function CapabilityPillarsSection({ gradient = GRADIENT_EMBER }) 
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="text-xl uppercase tracking-wide text-white">{current.label}</h3>
                   <p className="shrink-0 text-2xl text-lime-400" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}>
-                    <CountUp key={current.label} to={pillarRadarData[active].value} duration={0.9} />
+                    <CountUp key={current.label} to={capabilityScores[active].value} duration={0.9} />
                     <span className="text-[15px] text-neutral-400">/1000</span>
                   </p>
                 </div>

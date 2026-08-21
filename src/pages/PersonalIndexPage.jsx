@@ -10,7 +10,7 @@ import ScoreSection from "@/sections/ScoreSection";
 import NextPageBand from "@/components/NextPageBand";
 
 /* The pinned "Measure the Whole Human" scene sits between the principles and
-   the pillars, which is also what keeps two dense explanatory sections from
+   the capabilities, which is also what keeps two dense explanatory sections from
    running straight into each other. */
 export default function PersonalIndexPage() {
   const page = routesByPath["/personal-index"];
