@@ -7,12 +7,14 @@ import SectionLabel from "@/components/shared/SectionLabel";
 import { differenceTable } from "@/data/content";
 
 function WhyDifferentExplainer() {
-  const [open, setOpen] = useState(false);
+  /* Open on load — the full explanation is the point of the section, not an
+     optional extra, so it should not need a click to be read. */
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="mt-px bg-[#0a0a0a] p-9 md:p-11">
       <p className="max-w-3xl text-lg leading-8 text-neutral-300">
-        One score. Ten capabilities. The complete picture of how human you really are.
+        One score. Ten capabilities. The complete picture of how capable you really are.
       </p>
 
       <button
@@ -97,7 +99,7 @@ export default function WhyDifferentSection() {
           <p className="mt-5 text-lg leading-7 text-neutral-400">
             Most programs only measure one or two aspects of capability. They tell
             you if you can run, lift, endure or suffer.{" "}
-            <span className="font-bold text-white">UHI goes further.</span>
+            <span className="font-bold text-white">UHI tests the whole human.</span>
           </p>
         </div>
 
