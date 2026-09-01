@@ -14,7 +14,7 @@ import Reveal from "@/components/motion/Reveal";
 import { GRADIENT_EMBER } from "@/sections/archived/legacyGradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { MarketingImage } from "@/components/shared/MarketingImage";
+import { MarketingImage } from "@/components/archived/MarketingImage";
 import {
   aiHowItWorks,
   aiImprovementAreas,

@@ -1,5 +1,14 @@
 import { useRef, useEffect, useState } from "react";
 
+/* Archived with the event-first site (Sep 2026). Only the sections in
+   src/sections/archived/ use it.
+
+   It stays out of the live site for two reasons: it is styled in the old lime,
+   and its fallback renders a visible "Image Placeholder" block naming a missing
+   file — internal scaffolding a visitor should never see. If image support is
+   wanted back, restyle it against the tokens in src/index.css and make the
+   fallback render nothing rather than a labelled box. */
+
 /* Placeholder block for images not yet sourced — dashed border, labelled */
 export function ImageBlock({ id, aspectRatio = "16/9", searchTerms, treatment, className = "" }) {
   return (

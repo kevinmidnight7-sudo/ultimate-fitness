@@ -1,7 +1,7 @@
 import { Flame, Timer, Zap } from "lucide-react";
 
 import SectionLabel from "@/components/shared/SectionLabel";
-import { MarketingImage } from "@/components/shared/MarketingImage";
+import { MarketingImage } from "@/components/archived/MarketingImage";
 
 export default function ChallengeOverviewSection() {
   return (
