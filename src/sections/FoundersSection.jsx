@@ -14,7 +14,7 @@ function FounderCard({ photo, name, role, quote }) {
   const [photoFailed, setPhotoFailed] = useState(!photo);
 
   return (
-    <article className="flex flex-col bg-cream">
+    <article className="flex flex-col border border-line bg-cream">
       <div className="relative overflow-hidden bg-sand" style={{ aspectRatio: "1 / 1" }}>
         {photoFailed ? (
           <div className="flex h-full w-full items-center justify-center px-4 text-center">
@@ -55,7 +55,7 @@ export default function FoundersSection({ surface = SURFACE_BONE }) {
           lead="Elite coaching, combat sport, movement science and a slightly unhealthy enthusiasm for finding out what a body can do."
         />
 
-        <div className="mt-16 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {founders.map((founder) => (
             <FounderCard key={founder.name} {...founder} />
           ))}

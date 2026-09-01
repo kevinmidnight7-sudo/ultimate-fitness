@@ -496,6 +496,40 @@ export const challengePosition = {
   ],
 };
 
+/* What a UHI Challenge actually is, and the ways people can take part.
+
+   Carried over from the pre-rebrand site rather than invented: the divisions
+   are the ones already published, and the format description is deliberately
+   general because the detailed station-by-station structure is being reworked
+   alongside the Index. No prices — the founding-athlete entry pricing belonged
+   to a waitlist that no longer exists, and re-publishing it would state a
+   commitment nobody has made. */
+export const challengeFormat = {
+  lead: "A UHI Challenge is a supervised session built from recognised exercises, with running between them, performed to the UHI Movement Standards. One session, several results, all of them comparable.",
+  facts: [
+    {
+      title: "Recognised movements",
+      text: "Carries, lifts, presses, crawls and machine work — the same exercises that are already in the Capability Framework.",
+    },
+    {
+      title: "Run to a standard",
+      text: "Movements are judged against the published UHI Movement Standard, which is what makes an event result worth more than a number you typed in yourself.",
+    },
+    {
+      title: "Scaled by division",
+      text: "Distances and loads change by division, so the same challenge works for a first-timer and for someone who competes.",
+    },
+  ],
+  divisions: [
+    "Individual",
+    "Doubles",
+    "Mixed Doubles",
+    "Relay Team",
+    "Corporate Team",
+    "Age Group Rankings",
+  ],
+};
+
 /* ── About ──────────────────────────────────────────────────────────── */
 
 export const founders = [

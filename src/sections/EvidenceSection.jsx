@@ -17,9 +17,13 @@ export default function EvidenceSection({ surface = SURFACE_SAND }) {
           lead="You don't have to do everything. Start with what you know, and build your Index over time — the more relevant evidence you add, the more reliable it becomes."
         />
 
-        <div className="mt-16 grid gap-px border border-ink/12 bg-ink/12 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Five items never divide evenly into two or three columns, so this is
+            a grid of separately bordered cards rather than the hairline-gap
+            pattern used elsewhere — an empty cell in that pattern renders as a
+            stray coloured tile. */}
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {evidenceSources.map(({ title, icon: Icon, text, future }) => (
-            <article key={title} className="flex flex-col gap-5 bg-bone p-8">
+            <article key={title} className="flex flex-col gap-5 border border-ink/15 bg-bone p-8">
               <div className="flex items-start justify-between gap-4">
                 <Icon className="h-7 w-7 shrink-0 text-ember" strokeWidth={1.5} />
                 {future && <FutureTag />}

@@ -20,7 +20,7 @@ export default function NotFoundPage() {
           Everything the site has is below.
         </p>
 
-        <div className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {routes.map((page) => (
             <Link
               key={page.path}

@@ -11,7 +11,11 @@ import NextPageBand from "@/components/NextPageBand";
 
 /* Reading the profile, then acting on it. The profile is shown again here
    rather than linked to: this page is about interpreting it, and asking a
-   reader to hold eight numbers in their head from two pages ago doesn't work. */
+   reader to hold eight numbers in their head from two pages ago doesn't work.
+
+   The three-questions band sits above the profile rather than below it because
+   it and the closing CTA are both ink, and stacked they read as one very long
+   dark block. */
 export default function ImprovePage() {
   const page = routesByPath["/improve"];
   usePageMeta({ ...page, path: page.path });
@@ -20,6 +24,11 @@ export default function ImprovePage() {
     <>
       <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
       <CoachingSection surface={SURFACE_CREAM} />
+      <ThreeQuestionsSection
+        label="What it's for"
+        heading="Your Index becomes your roadmap"
+        lead="Not a score to admire. A structure for deciding what to do next, that updates every time you add a result."
+      />
       <IndexSnapshotSection
         surface={SURFACE_BONE}
         label="Reading a profile"
@@ -27,11 +36,6 @@ export default function ImprovePage() {
         lead="Strong endurance, weakest mobility. That gap is the most useful thing on the page — it's a specific, trainable target rather than a vague instruction to do more."
         closer="Improve one area and the overall Index moves. Then you test again."
         link={{ to: "/membership", label: "See membership" }}
-      />
-      <ThreeQuestionsSection
-        label="What it's for"
-        heading="Your Index becomes your roadmap"
-        lead="Not a score to admire. A structure for deciding what to do next, that updates every time you add a result."
       />
       <CtaBand
         heading="Find out what to work on"

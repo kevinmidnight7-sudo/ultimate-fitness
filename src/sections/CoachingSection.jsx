@@ -18,9 +18,11 @@ export default function CoachingSection({ surface = SURFACE_CREAM }) {
           lead={coachingIntro.lead}
         />
 
-        <ol className="mt-16 grid list-none gap-px border border-line bg-line p-0 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Separately bordered cards: five stages leave an empty cell in a
+            two- or three-column hairline grid. */}
+        <ol className="mt-16 grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3">
           {coachingStages.map(({ title, icon: Icon, text, future }) => (
-            <li key={title} className="flex flex-col gap-5 bg-cream p-8 sm:p-9">
+            <li key={title} className="flex flex-col gap-5 border border-line bg-cream p-8 sm:p-9">
               <div className="flex items-start justify-between gap-4">
                 <Icon className="h-7 w-7 shrink-0 text-ember" strokeWidth={1.5} />
                 {future && <FutureTag />}
