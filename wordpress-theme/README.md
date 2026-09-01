@@ -16,9 +16,9 @@ GitHub (main)  →  GitHub Action builds the React app
 
 ## Deep links and the 404 status header
 
-The front end is a multi-page site using `BrowserRouter`, so `/challenge`,
-`/compete` and the rest are real URLs someone can land on directly, share, or
-have indexed.
+The front end is a multi-page site using `BrowserRouter`, so `/the-index`,
+`/how-it-works` and the rest are real URLs someone can land on directly, share,
+or have indexed.
 
 WordPress has no page at any of them. Its template hierarchy falls through to
 this theme's `index.php`, which serves the app correctly — but it sends a
@@ -30,14 +30,21 @@ machines read:
 - Caching plugins and CDNs refuse to cache it, so every visit hits PHP.
 
 `functions.php` fixes this with an allowlist. `uhi_app_routes()` holds the
-seven paths the router owns; on `template_redirect` a request for one of them
-has `is_404` cleared and `status_header( 200 )` sent, before the template
-loader picks a template. `index.php` is still what runs.
+paths the router owns; on `template_redirect` a request for one of them has
+`is_404` cleared and `status_header( 200 )` sent, before the template loader
+picks a template. `index.php` is still what runs.
 
 **When you add or rename a route in the app, add it to `uhi_app_routes()` in
-`functions.php` too.** The list is the same as `src/lib/routes.js`, minus the
+`functions.php` too.** The list is `routes` from `src/lib/routes.js` minus the
 leading slashes, with the front page as `''`. Miss one and the page still
 works in a browser while quietly going un-indexed and un-cached.
+
+The allowlist also carries the **pre-rebrand URLs** — `personal-index`,
+`personal-coach`, `subscribe`, `challenge` and `compete` — which the app
+redirects to their new homes (see `legacyPathRedirects` in the same file).
+Those need the 200 for the same reason: WordPress has to serve the page before
+the React router gets a chance to redirect it. Remove one here and every old
+link to it dies.
 
 Anything not on the list still 404s properly — WordPress sends the 404 header
 and the app renders its own branded 404 page. That is the behaviour you want:
