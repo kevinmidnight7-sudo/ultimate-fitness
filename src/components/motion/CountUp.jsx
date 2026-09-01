@@ -26,13 +26,20 @@ export default function CountUp({
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const reduced = useReducedMotion();
+
   const [display, setDisplay] = useState(from);
 
+  /* Under prefers-reduced-motion the final value IS the value: it is read
+     straight off `to` rather than counted up to. Waiting for the element to
+     scroll into view would otherwise leave the number sitting at its starting
+     figure — reading "0" where the score should be, including for anything
+     walking the page linearly rather than scrolling it. */
+  const value = reduced ? to : display;
+
   useEffect(() => {
-    if (!inView) return;
-    // duration 0 for reduced motion snaps straight to the final value.
+    if (reduced || !inView) return;
     const controls = animate(from, to, {
-      duration: reduced ? 0 : duration,
+      duration,
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => setDisplay(v),
     });
@@ -42,7 +49,7 @@ export default function CountUp({
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {display.toFixed(decimals)}
+      {value.toFixed(decimals)}
       {suffix}
     </span>
   );

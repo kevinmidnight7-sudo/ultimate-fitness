@@ -22,17 +22,30 @@ add_action( 'wp_enqueue_scripts', function () {
  * The paths the React router owns, without leading or trailing slashes.
  * '' is the front page. Keep this in step with src/lib/routes.js — a route
  * added there and not here will still render, but it will be served with a
- * 404 status header.
+ * 404 status header. Legacy paths belong here too: the app redirects them,
+ * but only if WordPress serves them in the first place.
  */
 function uhi_app_routes() {
     return array(
+        // Current pages — keep in step with `routes` in src/lib/routes.js.
         '',
-        'challenge',
+        'the-index',
+        'how-it-works',
+        'improve',
+        'membership',
+        'for-gyms',
+        'challenges',
+        'about',
+
+        // Pre-rebrand URLs. Still served with a 200 so the React app can run
+        // its own redirect to the page that now carries the subject — see
+        // `legacyPathRedirects` in src/lib/routes.js. Removing one here breaks
+        // every old link to it.
         'personal-index',
         'personal-coach',
-        'compete',
         'subscribe',
-        'about',
+        'challenge',
+        'compete',
     );
 }
 

@@ -1,617 +1,641 @@
-/* All site copy and data. Kept apart from the components so content can be
-   edited without touching layout. */
+/* All site copy and data, kept apart from the components so content can be
+   edited without touching layout.
+
+   Written from Ken's "UHI website based on Index model" document (Sep 2026),
+   which repositions UHI as an ongoing fitness measurement and improvement
+   platform rather than as an event. British English throughout.
+
+   Two standing rules for anyone editing this file:
+
+   1. Nothing here states a price, a launch date, a scoring formula, a named
+      gym partner or a confirmed integration. None of those has been decided,
+      and inventing one on a public page is worse than saying less.
+   2. Anything not yet built stays in future tense — "is being designed to",
+      "as the platform develops". The `future` flag on a list item is what the
+      sections use to render that distinction visibly.
+
+   The pre-rebrand, event-first copy is in src/data/archived/eventContent.js. */
 
 import {
   Activity,
+  Award,
   BarChart3,
-  Brain,
-  Calculator,
-  CheckCircle2,
-  ClipboardList,
+  Building2,
+  ClipboardCheck,
   Compass,
   Dumbbell,
-  Film,
   Gauge,
   Heart,
   Link2,
+  ListChecks,
+  MapPin,
+  Repeat,
   RotateCcw,
-  Shield,
+  Ruler,
+  ScanLine,
   Sparkles,
   Target,
   TrendingUp,
-  Upload,
-  UserCheck,
+  Trophy,
+  Users,
+  Video,
+  Watch,
   Zap,
 } from "lucide-react";
 
-export const uhciPrinciples = [
-  {
-    title: "Objective",
-    text: "Based on measurable performance data rather than subjective opinion.",
-  },
-  {
-    title: "Age-adjusted",
-    text: "Allowing fair comparison across different stages of life.",
-  },
-  {
-    title: "Standardised",
-    text: "Using consistent movement standards and competition rules.",
-  },
-  {
-    title: "Progressive",
-    text: "Enabling athletes to track long-term improvement rather than a single race result.",
-  },
-  {
-    title: "Actionable",
-    text: "Identifying strengths and opportunities for development across multiple areas of human capability.",
-  },
-];
+/* ── The eight areas of fitness ─────────────────────────────────────────
+   The core framework. Resilience and Mental Fortitude were part of the old
+   ten-capability model and are deliberately not here.
 
-export const capabilities = [
+   `evidence` is illustrative, not a scoring rule: the document defines the
+   eight areas and gives worked examples for a 5K run, a deadlift and a
+   farmers carry, but the full exercise-to-area mapping sits in the Capability
+   Framework and has not been published. Sections that render `evidence` say
+   so alongside it. */
+export const fitnessAreas = [
   {
-    label: "ENDURANCE",
+    name: "Endurance",
     icon: Heart,
-    detail: "Sustaining physical effort over an extended period without a significant drop in performance.",
-    example: "Maintaining a consistent pace and technique across all ten runs and exercise stations.",
+    detail: "Sustaining effort over time without a significant drop in performance.",
+    evidence: "Runs, rows, rides and longer efforts on the machines.",
   },
   {
-    label: "STRENGTH",
+    name: "Strength",
     icon: Dumbbell,
     detail: "Generating force to move, lift or control resistance.",
-    example: "Lifting and carrying heavy equipment, such as the dumbbells or sled, efficiently.",
+    evidence: "Deadlifts, squats, presses and heavy carries.",
   },
   {
-    label: "POWER",
+    name: "Power",
     icon: Zap,
-    detail: "Producing maximum force quickly and explosively.",
-    example: "Driving explosively into a hoop shot or accelerating from a standing start.",
+    detail: "Producing force quickly and explosively.",
+    evidence: "Jumps, throws and fast lifts from the ground.",
   },
   {
-    label: "SPEED",
+    name: "Speed",
     icon: Gauge,
-    detail: "Moving the body or a body part as quickly as possible.",
-    example: "Completing the running sections and fast movement exercises in the shortest possible time.",
+    detail: "Moving your body, or part of it, as quickly as possible.",
+    evidence: "Short runs, sprints and fast repeated movements.",
   },
   {
-    label: "AGILITY",
+    name: "Agility",
     icon: Activity,
-    detail: "Changing direction or body position quickly while maintaining control.",
-    example: "Moving efficiently through shuttle runs, bear crawls or any station requiring rapid changes of direction.",
+    detail: "Changing direction or body position quickly while staying in control.",
+    evidence: "Shuttles, crawls and anything that makes you turn and reset.",
   },
   {
-    label: "BALANCE",
+    name: "Balance",
     icon: Target,
-    detail: "Maintaining stability and control while stationary or moving.",
-    example: "Remaining stable during single-leg movements or while carrying uneven loads without losing control.",
+    detail: "Staying stable and in control, whether still or moving.",
+    evidence: "Balance tests, single-leg work and uneven loads.",
   },
   {
-    label: "COORDINATION",
+    name: "Coordination",
     icon: Link2,
-    detail: "Performing smooth, accurate and efficient movements by working different parts of the body together.",
-    example: "Executing technically demanding movements such as the hoop shot with consistent rhythm and accuracy.",
+    detail: "Working different parts of the body together smoothly and accurately.",
+    evidence: "Loaded carries, complex lifts and skill-based movements.",
   },
   {
-    label: "RESILIENCE",
-    icon: Shield,
-    detail: "Ability to recover and perform again after exertion.",
-    example: "How quickly you're ready for the next challenge.",
-  },
-  {
-    label: "MOBILITY",
+    name: "Mobility",
     icon: RotateCcw,
-    detail: "Moving joints through their full range of motion with control.",
-    example: "Performing deep squats, lunges and overhead movements with good technique and unrestricted movement.",
-  },
-  {
-    label: "MENTAL FORTITUDE",
-    icon: Brain,
-    detail: "Ability to maintain performance while under physical or mental stress.",
-    example: "Holding your pace through the final stations.",
+    detail: "Moving your joints through their full range with control.",
+    evidence: "Mobility tests, deep squats and overhead positions.",
   },
 ];
 
-export const capabilityScores = [
-  { capability: "ENDURANCE", value: 820 },
-  { capability: "STRENGTH", value: 760 },
-  { capability: "POWER", value: 730 },
-  { capability: "SPEED", value: 880 },
-  { capability: "AGILITY", value: 650 },
-  { capability: "BALANCE", value: 640 },
-  { capability: "COORDINATION", value: 700 },
-  { capability: "RESILIENCE", value: 670 },
-  { capability: "MOBILITY", value: 580 },
-  { capability: "MENTAL", value: 720 },
-];
-
-export const differenceTable = {
-  dimensions: [
-    "Endurance & Running",
-    "Loaded Strength",
-    "Speed & Agility",
-    "Coordination & Skill",
-    "10-Capability Human Index",
-    "Adapts Over Time",
+/* The worked example from Ken's document, used wherever the site shows what a
+   profile actually looks like. Ordered to match `fitnessAreas`. Every section
+   that renders it labels it as an example. */
+export const sampleProfile = {
+  overall: 684,
+  areas: [
+    { name: "Endurance", value: 782 },
+    { name: "Strength", value: 716 },
+    { name: "Power", value: 695 },
+    { name: "Speed", value: 672 },
+    { name: "Agility", value: 648 },
+    { name: "Balance", value: 612 },
+    { name: "Coordination", value: 701 },
+    { name: "Mobility", value: 548 },
   ],
-  brands: [
-    { name: "HYROX",          ratings: ["full","partial","none","none","none","none"] },
-    { name: "Spartan",        ratings: ["full","full","full","partial","none","none"] },
-    { name: "CrossFit",       ratings: ["full","full","full","full","partial","none"] },
-    { name: "ULTIMATE HUMAN INDEX", ratings: ["full","full","full","full","full","full"], highlighted: true },
-  ],
+  strongest: "Endurance",
+  opportunity: "Mobility",
 };
 
-export const domains = [
-  { title: "Strength", text: "Carry, lift, crawl and move with real-world power.", value: 760, pct: 76 },
-  { title: "Power", text: "Convert strength into explosive output when it matters.", value: 730, pct: 73 },
-  { title: "Endurance", text: "Keep going when your lungs and legs want a vote.", value: 820, pct: 82 },
-  { title: "Speed", text: "React fast. Move sharply. Change direction under pressure.", value: 880, pct: 88 },
-  { title: "Mobility", text: "Move well, not just hard.", value: 580, pct: 58 },
-  { title: "Coordination", text: "Stay composed when fatigue makes simple things hard.", value: 700, pct: 70 },
-  { title: "Resilience", text: "Absorb fatigue and setbacks without falling apart.", value: 670, pct: 67 },
-  { title: "Balance", text: "Control your body when everyone else starts falling apart.", value: 640, pct: 64 },
-  { title: "Recovery", text: "Bounce back between efforts and across the whole event.", value: 610, pct: 61 },
-  { title: "Control Under Pressure", text: "Keep technique and decisions sharp when it's hard.", value: 720, pct: 72 },
-];
+/* ── Home ──────────────────────────────────────────────────────────── */
 
-export const uhsReveals = [
-  { title: "What You're Strongest At", text: "The capabilities carrying your score today." },
-  { title: "What's Limiting You", text: "The weak link holding your overall result back." },
-  { title: "Where You Can Improve", text: "Specific, trainable targets — not vague advice." },
-  { title: "How You Evolve Over Time", text: "A profile that updates every time you compete." },
-];
-
-export const divisions = [
-  {
-    key: "foundation",
-    label: "Foundation",
-    runDistance: "400m",
-    finalRun: "400m",
-    totalRunning: "4.0km",
-    duration: "85–120 min",
-  },
-  {
-    key: "intermediate",
-    label: "Intermediate",
-    runDistance: "800m",
-    finalRun: "800m",
-    totalRunning: "8.0km",
-    duration: "80–110 min",
-  },
-  {
-    key: "elite",
-    label: "Elite",
-    runDistance: "800m",
-    finalRun: "800m",
-    totalRunning: "8.0km",
-    duration: "75–90 min",
-  },
-];
-
-export const capabilities10 = [
-  {
-    number: 1,
-    name: "Prone Shuttle",
-    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
-    tests: "Speed, agility and ground-to-feet transitions.",
-    coachingNote: "Keep your chest up and drive with short, sharp steps — don't lunge into the ground.",
-  },
-  {
-    number: 2,
-    name: "Bear Crawl Push",
-    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
-    tests: "Upper-body strength, core stability and coordination.",
-    coachingNote: "Keep your hips low and braced — let your legs drive the push, not just your arms.",
-    weightKey: "Bear Crawl Push",
-  },
-  {
-    number: 3,
-    name: "Carry + Lunge",
-    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
-    tests: "Loaded strength, balance and control under fatigue.",
-    coachingNote: "Keep the load close to your centre of mass and control the lunge depth.",
-    weightKey: "Carry + Lunge",
-  },
-  {
-    number: 4,
-    name: "Hoop Shot",
-    reps: {
-      foundation: "50 attempts",
-      intermediate: "80 attempts",
-      elite: "120 attempts",
-    },
-    tests: "Accuracy, composure and fine motor control under fatigue.",
-    coachingNote: "Slow your breathing before each attempt — accuracy beats speed here.",
-  },
-  {
-    number: 5,
-    name: "Dumbbell End Carry",
-    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
-    tests: "Loaded carry strength, grip and core stability under load.",
-    coachingNote: "Stand tall and brace your core — take controlled steps and don't let the load pull you off balance.",
-    weightKey: "Dumbbell End Carry",
-  },
-  {
-    number: 6,
-    name: "Devil's Advance",
-    reps: { foundation: "50m", intermediate: "80m", elite: "120m" },
-    tests: "Loaded carry endurance, grip and postural control.",
-    coachingNote: "Keep your shoulders back and core braced — don't let the load round your spine.",
-    weightKey: "Devil's Advance",
-  },
-  {
-    number: 7,
-    name: "Step-Ups",
-    reps: { foundation: "50 reps", intermediate: "80 reps", elite: "120 reps" },
-    tests: "Leg power, muscular endurance and balance.",
-    coachingNote: "Drive through the full foot, not just your toes, and control the descent.",
-    weightKey: "Step-Ups",
-  },
-  {
-    number: 8,
-    name: "Ground-to-Overhead",
-    reps: { foundation: "50 reps", intermediate: "80 reps", elite: "120 reps" },
-    tests: "Full-body power, coordination and strength under fatigue.",
-    coachingNote: "Use your legs and hips to generate power — don't rely on your shoulders alone.",
-    weightKey: "Ground-to-Overhead",
-  },
-];
-
-export const workingWeights = [
-  {
-    name: "Bear Crawl Push",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "15kg", men: "25kg" },
-    elite: { women: "20kg", men: "35kg" },
-  },
-  {
-    name: "Carry + Lunge",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "15kg", men: "25kg" },
-    elite: { women: "20kg", men: "35kg" },
-  },
-  {
-    name: "Dumbbell End Carry",
-    foundation: { women: "5kg", men: "7.5kg" },
-    intermediate: { women: "5kg", men: "7.5kg" },
-    elite: { women: "5kg", men: "7.5kg" },
-  },
-  {
-    name: "Devil's Advance",
-    foundation: { women: "10kg dumbbells", men: "15kg dumbbells" },
-    intermediate: { women: "15kg dumbbells", men: "25kg dumbbells" },
-    elite: { women: "20kg dumbbells", men: "35kg dumbbells" },
-  },
-  {
-    name: "Step-Ups",
-    foundation: { women: "Bodyweight", men: "Bodyweight" },
-    intermediate: { women: "10kg", men: "15kg" },
-    elite: { women: "15kg", men: "25kg" },
-  },
-  {
-    name: "Ground-to-Overhead",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "15kg", men: "25kg" },
-    elite: { women: "20kg", men: "35kg" },
-  },
-  {
-    name: "Hero Load Carry",
-    foundation: { women: "10kg", men: "15kg" },
-    intermediate: { women: "20kg", men: "30kg" },
-    elite: { women: "30kg", men: "45kg" },
-  },
-];
-
-export const weightsByName = Object.fromEntries(workingWeights.map((w) => [w.name, w]));
-
-export const finalCircuit = {
-  foundation: [
-    ["Ground-to-Shoulder", "6 reps"],
-    ["Step-Ups", "12 reps"],
-    ["Bear Crawl Push", "10m"],
-    ["Hero Load Carry", "20m"],
-    ["Final Run", "400m"],
-  ],
-  intermediate: [
-    ["Ground-to-Shoulder", "10 reps"],
-    ["Step-Ups", "20 reps"],
-    ["Bear Crawl Push", "20m"],
-    ["Hero Load Carry", "40m"],
-    ["Final Run", "800m"],
-  ],
-  elite: [
-    ["Ground-to-Shoulder", "15 reps"],
-    ["Step-Ups", "30 reps"],
-    ["Bear Crawl Push", "30m"],
-    ["Hero Load Carry", "60m"],
-    ["Final Run", "800m"],
-  ],
+export const homeHero = {
+  eyebrow: "The Ultimate Human Index",
+  headline: "How fit are you — really?",
+  standfirst:
+    "One number. Every aspect of your fitness. The Ultimate Human Index brings together strength, endurance, speed, power, mobility, balance, agility and coordination, and turns them into a single score out of 1,000.",
+  cta: "Discover Your Index",
+  secondary: "See how it works",
+  benchmark:
+    "Think of it a little like a golf handicap for your fitness: a number that benchmarks you today, and moves as you improve.",
 };
 
-export /* Displayed out of 1000; `pct` drives the bar width (value / 10). */
-const aiScoreBars = [
-  { label: "Speed", value: 755, pct: 75.5 },
-  { label: "Stamina", value: 780, pct: 78 },
-  { label: "Strength", value: 730, pct: 73 },
-  { label: "Coordination", value: 815, pct: 81.5 },
-  { label: "Balance", value: 692, pct: 69.2 },
-  { label: "Mobility", value: 771, pct: 77.1 },
+/* The "fitness is more than how fast you run" argument, verbatim in spirit
+   from the document's three examples. */
+export const fitnessGaps = [
+  "You might run 10K comfortably but struggle with strength.",
+  "You might be incredibly strong but lack mobility.",
+  "You might train four times a week and still not know whether you are getting fitter overall.",
 ];
 
-export const aiTrainingFocus = [
-  "Improve bear crawl hip control under fatigue.",
-  "Build rope drag power endurance.",
-  "Improve hoop shot accuracy after running.",
-];
+/* "You don't need to change how you train." */
+export const trainYourWay = {
+  heading: "You don't need to change how you train",
+  lead: "Already run? Great. Lift weights? Great. Do CrossFit, HYROX or other fitness events? Great. It all helps us understand your performance.",
+  examples: [
+    "Run a 5K",
+    "Hit a new strength PB",
+    "Complete a balance test",
+    "Improve your mobility",
+    "Enter a fitness event",
+  ],
+  closer: "Everything you do helps build the picture.",
+};
 
-export const aiScoreGains = [
-  { label: "Lunges", from: 723, to: 795 },
-  { label: "Bear Crawl", from: 653, to: 742 },
-  { label: "Wall Balls", from: 687, to: 766 },
-];
-
-export const aiAnalysisCategories = [
-  "Movement Efficiency",
-  "Body Position",
-  "Stability",
-  "Coordination",
-  "Rhythm",
-  "Fatigue Breakdown",
-  "Movement Consistency",
-];
-
-export const aiSampleVideos = ["Back Squat", "Overhead Press", "Overhead Carry"];
-
-export const aiFeedbackQuotes = [
-  "Your stride length is reducing glute engagement and increasing quad fatigue.",
-  "Your hips rise under fatigue, making your bear crawl less efficient.",
-  "You're initiating the throw too early with your arms, reducing power from the legs.",
-];
-
-export const movementCoachCards = [
+/* Test → Score → Understand → Improve. The spine of the whole product, so it
+   appears on both the home page and How It Works. */
+export const journeySteps = [
   {
-    title: "Bear Crawl Push",
-    sees: "Your hips rise under fatigue, making your bear crawl less efficient.",
-    cue: "Brace your core and keep your hips low through the full rep.",
-    from: 65,
-    to: 74,
+    step: "Test",
+    icon: ClipboardCheck,
+    text: "Add results from the exercises, workouts and challenges you already do.",
   },
   {
-    title: "Lunges",
-    sees: "Your stride length is reducing glute engagement and increasing quad fatigue.",
-    cue: "Shorten your stride slightly and drive through the full foot.",
-    from: 72,
-    to: 79,
-  },
-  {
-    title: "Hoop Shot",
-    sees: "You're initiating the throw too early with your arms, reducing power from the legs.",
-    cue: "Load through your legs first, then release with your arms.",
-    from: 68,
-    to: 76,
-  },
-];
-
-export const journeyQuizQuestions = [
-  {
-    q: "Where are you in your training journey?",
-    options: ["Just starting out", "Training consistently", "Competing or racing", "Highly experienced"],
-  },
-  {
-    q: "What do you most want to improve?",
-    options: ["Strength", "Endurance & stamina", "Mobility & coordination", "Mental resilience"],
-  },
-  {
-    q: "What limits your performance most?",
-    options: ["Fatigue under pressure", "Technique breakdown", "Lack of structured training", "Recovery & consistency"],
-  },
-];
-
-export const aiHowItWorks = [
-  {
-    icon: Upload,
-    title: "Upload Your Video",
-    text: "Record or upload a short clip of the movement you want analysed.",
-    videos: aiSampleVideos,
-  },
-  {
-    icon: Activity,
-    title: "UHI AI Analysis",
-    text: "The UHI AI coaching system is designed to help identify how you move against the UHI Movement Standard™.",
-    categories: aiAnalysisCategories,
-  },
-  {
-    icon: UserCheck,
-    title: "Receive Expert Coaching",
-    text: "The system will support athletes with clear, practical feedback and a training focus designed to move your score.",
-    quotes: aiFeedbackQuotes,
-  },
-];
-
-export const aiImprovementAreas = [
-  {
-    icon: CheckCircle2,
-    title: "What You're Doing Well",
-    text: "The strengths you should continue to develop.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Biggest Improvement Opportunities",
-    text: "The one or two changes that will have the greatest impact on performance.",
-  },
-  {
-    icon: Target,
-    title: "Personalised Coaching Drills",
-    text: "Simple exercises and movement cues designed to improve technique.",
-  },
-  {
+    step: "Score",
     icon: BarChart3,
-    title: "Estimated Score Gain",
-    text: "The likely improvement in your Ultimate Human Index if you implement the recommended changes.",
-  },
-];
-
-export const aiProfileEvolution = [
-  "Where you're strongest",
-  "What is limiting your performance",
-  "How your movement is improving",
-  "Where your next gains will come from",
-];
-
-export const subscriptionTiers = [
-  {
-    name: "Explorer",
-    icon: Activity,
-    price: "£14.99/mo",
-    summary: "For people starting their Ultimate Human Index journey.",
-    cta: "Join the Waitlist",
-    points: [
-      "Ultimate Human Index",
-      "Wearable integration",
-      "Monthly fitness assessment",
-      "AI-powered training recommendations",
-      "Performance dashboard",
-      "Access to community challenges",
-      "10% discount on UHI events",
-      "Monthly member newsletter and insights",
-    ],
+    text: "We translate your performance into your Ultimate Human Index.",
   },
   {
-    name: "Adventurer",
-    icon: TrendingUp,
-    highlighted: true,
-    price: "£24.99/mo",
-    summary: "For people committed to improving their performance.",
-    cta: "Join the Waitlist",
-    includesNote: "Everything in Explorer, plus:",
-    points: [
-      "Weekly Ultimate Human Index updates",
-      "Personalised AI coaching",
-      "Recovery and readiness insights",
-      "Goal setting and progress tracking",
-      "Exercise technique analysis from uploaded videos",
-      "Priority event booking",
-      "20% discount on UHI events",
-      "Access to member-only challenges and leaderboards",
-    ],
-  },
-  {
-    name: "Ultimate",
-    icon: Sparkles,
-    price: "£39.99/mo",
-    summary: "For those serious about maximising performance and longevity.",
-    cta: "Join the Waitlist",
-    includesNote: "Everything in Adventurer, plus:",
-    points: [
-      "Advanced AI Performance Coach",
-      "Detailed movement and form analysis",
-      "Personalised training and recovery plans",
-      "Longevity and healthspan insights",
-      "Quarterly expert coaching review",
-      "Exclusive webinars and coaching content",
-      "VIP event registration",
-      "30% discount on UHI events",
-      "Founding member rewards and partner benefits",
-    ],
-  },
-];
-
-export const categories = [
-  "Individual",
-  "Doubles",
-  "Mixed Doubles",
-  "Relay Team",
-  "Corporate Team",
-  "Age Group Rankings",
-];
-
-export const whyEnter = [
-  {
-    title: "Not just another fitness race",
-    text: "This is built to test complete capability, not just how long you can suffer on a run.",
-  },
-  {
-    title: "You get your Ultimate Human Index",
-    text: "A personal performance index across ten capabilities — strength, power, endurance, speed, mobility, coordination, resilience, balance, recovery and control under pressure.",
-  },
-  {
-    title: "Train for it anywhere",
-    text: "Minimal equipment, simple movement patterns and clear progressions.",
-  },
-  {
-    title: "It rewards the adaptable",
-    text: "Runners, lifters and gym athletes all get exposed somewhere. The most complete athlete wins.",
-  },
-];
-
-export const foundingPricing = [
-  { category: "Individual", price: "£79", detail: "Founding athlete launch price" },
-  { category: "Doubles", price: "£129", detail: "Per team" },
-  { category: "Relay Team", price: "£189", detail: "Team entry" },
-  { category: "Corporate Team", price: "From £599", detail: "Includes rankings + team scoring" },
-];
-
-export const workToDo = [
-  "First UK event dates and venues will be confirmed soon.",
-  "Final scoring standards are being tested before launch.",
-  "Founding athlete places will be limited for the first events.",
-  "Training plans and gym partner locations are in development.",
-];
-
-export const aiTabs = [
-  { key: "profile", label: "Profile" },
-  { key: "movement", label: "Movement Analysis" },
-  { key: "gains", label: "Score Gains" },
-  { key: "coaching", label: "Coaching Output" },
-];
-
-export const journeyCards = [
-  {
-    key: "quiz",
+    step: "Understand",
     icon: Compass,
-    title: "Discover Your Type",
-    text: "Answer 3 quick questions to preview your Athlete Type.",
-    cta: "Take the Snapshot",
-    action: "modal",
+    text: "See your strengths, your gaps, and how your overall fitness is changing.",
   },
   {
-    key: "assessment",
-    icon: ClipboardList,
-    title: "Full Assessment",
-    text: "Preview the Human Context inputs behind your UHI Report.",
-    cta: "Preview Assessment",
-    action: "modal",
-  },
-  {
-    key: "score",
-    icon: Calculator,
-    title: "Score Simulator",
-    text: "See how the Ultimate Human Index is calculated.",
-    cta: "Open Score Dashboard",
-    action: "scroll",
-    href: "#score",
-  },
-  {
-    key: "train",
-    icon: Dumbbell,
-    title: "Train to Improve",
-    text: "Explore the event structure, capabilities and working weights.",
-    cta: "View Event Structure",
-    action: "scroll",
-    href: "#format",
-  },
-  {
-    key: "coach",
-    icon: Film,
-    title: "Movement Coach",
-    text: "Get AI movement analysis and personalised coaching cues.",
-    cta: "See AI Coaching",
-    action: "scroll",
-    href: "#coaching",
+    step: "Improve",
+    icon: TrendingUp,
+    text: "Get guidance on the areas that could make the biggest difference — then test again.",
   },
 ];
 
-export const scoreTabs = [
-  { key: "overview", label: "Overview" },
-  { key: "breakdown", label: "Capability Breakdown" },
-  { key: "path", label: "Improvement Path" },
+export const benchmark = {
+  heading: "Your fitness. Your benchmark.",
+  body: [
+    "Ultimate Human isn't about being the fittest person in the room, and you don't need to think of yourself as an athlete.",
+    "Your Index gives you a starting point from which to understand and improve your own physical capability. Starting out, coming back after a break, training regularly or competing at a high level — the principle is the same.",
+  ],
+  refrain: ["Find your number.", "Understand it.", "Improve it."],
+};
+
+/* ── What feeds the Index ───────────────────────────────────────────── */
+
+export const evidenceSources = [
+  {
+    title: "Exercise results",
+    icon: Ruler,
+    text: "Running, strength, power, balance and mobility tests.",
+  },
+  {
+    title: "Training performance",
+    icon: Dumbbell,
+    text: "The things you already do in the gym or outside it.",
+  },
+  {
+    title: "Fitness events",
+    icon: Trophy,
+    text: "Results from recognised fitness challenges and competitions.",
+  },
+  {
+    title: "Wearable data",
+    icon: Watch,
+    text: "As the platform develops, relevant fitness and recovery data can add further insight.",
+    future: true,
+  },
+  {
+    title: "Movement analysis",
+    icon: Video,
+    text: "Video and AI-assisted analysis can help us understand not only what you can do, but how you move.",
+    future: true,
+  },
+];
+
+export const indexLevels = [
+  {
+    name: "UHI Estimated",
+    icon: Compass,
+    summary: "Built from the results and fitness information you provide.",
+    text: "The easiest way to establish your starting point and begin tracking progress. You tell us what you have done; we turn it into a score.",
+  },
+  {
+    name: "UHI Verified",
+    icon: Award,
+    summary: "Built from standardised assessments and validated results.",
+    text: "We are developing standardised Ultimate Human assessments, to be offered through UHI assessment partners, alongside officially validated scores from other fitness challenges.",
+    future: true,
+  },
+];
+
+/* ── Capability Framework ───────────────────────────────────────────── */
+
+export const frameworkIntro = {
+  lead: "There isn't one exercise that tells you how fit you are. So we've built the UHI Capability Framework — a growing library of recognised exercises, tests and fitness challenges that each tell us something different about what you can do.",
+  mapping:
+    "Every recognised activity is mapped against the eight areas of all-round fitness. Add a result and it contributes to the areas it genuinely informs — often more than one.",
+};
+
+/* Each of these is stated explicitly in Ken's document. Anything beyond them
+   would be inventing a mapping, so this list stays short on purpose. */
+export const multiAreaExamples = [
+  { activity: "A 5K run", areas: ["Endurance", "Speed"], note: "Tells us a lot about how long you can hold a pace, and how quick that pace is." },
+  { activity: "A deadlift", areas: ["Strength"], note: "A clean read on how much force you can produce against a load." },
+  { activity: "A farmers carry", areas: ["Strength", "Endurance", "Coordination"], note: "Three areas at once — load, distance and staying organised while you move." },
+  { activity: "A balance test", areas: ["Balance"], note: "Something none of the above touches, which is exactly why it is in the library." },
+];
+
+/* The exercises currently in the Capability Framework, from the document.
+
+   Grouped by movement family for readability. The groups are ours: the source
+   table's area columns arrived empty, so this deliberately does not claim
+   which areas each exercise feeds — that mapping belongs to the framework and
+   has not been supplied. */
+export const exerciseLibrary = [
+  {
+    group: "Running and machines",
+    icon: Gauge,
+    exercises: ["Running", "SkiErg", "RowErg", "BikeErg"],
+  },
+  {
+    group: "Sleds and carries",
+    icon: Activity,
+    exercises: ["Sled Push", "Sled Pull", "Farmers Carry", "Front Carry", "Overhead Carry"],
+  },
+  {
+    group: "Lifts and presses",
+    icon: Dumbbell,
+    exercises: [
+      "Deadlift",
+      "Goblet Squat",
+      "Push Press",
+      "Clean & Press",
+      "Dumbbell Snatch",
+      "Ground-to-Overhead",
+    ],
+  },
+  {
+    group: "Bodyweight and mixed",
+    icon: Zap,
+    exercises: ["Lunges", "Burpee Broad Jump", "Wall Balls", "Bear Crawl", "Devil Press"],
+  },
+];
+
+export const movementStandard = {
+  heading: "Every exercise. One consistent standard.",
+  lead: "For your Index to mean anything, how you perform an exercise matters as much as what you achieve. Every exercise in the library has a defined UHI Movement Standard, developed with experienced fitness, coaching and performance experts.",
+  includes: [
+    "The correct starting and finishing position",
+    "The required range of movement",
+    "What counts as a successful repetition",
+    "The equipment, weight and distance where relevant",
+    "How the exercise should be timed or measured",
+    "Common technique mistakes to avoid",
+    "How to adapt the movement for different ability levels",
+    "The safety and movement considerations that matter",
+  ],
+  support:
+    "Written instructions are supported by demonstration videos, so you can see what good movement looks like before you attempt it.",
+  why: [
+    {
+      title: "Consistency makes comparison meaningful",
+      text: "At home, in your local gym, with a coach or at an event, the standard gives everyone the same reference point for how a movement should be performed.",
+    },
+    {
+      title: "We're interested in how well you move",
+      text: "As UHI develops, video analysis can add another layer of validation — assessing whether a movement meets the standard and giving feedback on technique.",
+      future: true,
+    },
+    {
+      title: "Improving shouldn't only mean doing more",
+      text: "UHI isn't only measuring how fast, how far or how heavy. Performing better counts too.",
+    },
+  ],
+};
+
+/* ── Improve ────────────────────────────────────────────────────────── */
+
+export const coachingIntro = {
+  lead: "Your overall Index tells you where you are. Your eight area scores tell you why. That is where UHI becomes more than a fitness score — it becomes a roadmap.",
+  refrain: "Measure what you do. Understand what it means. Improve what matters.",
+};
+
+export const coachingStages = [
+  {
+    title: "Understand your profile",
+    icon: ListChecks,
+    text: "See which areas are carrying your score, and which are holding it back. No jargon, no ranking against strangers — just your own picture.",
+  },
+  {
+    title: "Find your biggest opportunity",
+    icon: Target,
+    text: "The area with the most room in it is usually the one that moves your overall Index most. UHI is being designed to point straight at it.",
+    future: true,
+  },
+  {
+    title: "Get personalised guidance",
+    icon: Sparkles,
+    text: "AI-powered analysis is being designed to read your performance and suggest what to work on next, based on your profile rather than a generic plan.",
+    future: true,
+  },
+  {
+    title: "Look at how you move",
+    icon: ScanLine,
+    text: "Video and movement analysis is in development, to assess technique against the UHI Movement Standard and feed that back as practical cues.",
+    future: true,
+  },
+  {
+    title: "Test again, and watch it change",
+    icon: Repeat,
+    text: "Add new results and your Index updates. Progress you can see is progress worth chasing.",
+  },
+];
+
+export const improveQuestions = ["How fit am I?", "Where can I improve?", "What should I do next?"];
+
+/* ── Membership ─────────────────────────────────────────────────────── */
+
+export const accessRoutes = [
+  {
+    name: "Subscribe directly",
+    icon: Users,
+    lead: "Train at home, outdoors, at your own gym, or compete in fitness events.",
+    text: "Subscribe to UHI and use recognised exercises, workouts and event results to build your Index, discover your strengths and see where you could improve.",
+    refrain: "Your training. Your results. Your UHI.",
+  },
+  {
+    name: "Join through your gym",
+    icon: Building2,
+    lead: "If your gym becomes a UHI Partner, you can access UHI as part of your gym experience.",
+    text: "Participating gyms will be able to help you complete UHI assessments, learn the movement standards, validate your performance and coach you towards the areas you want to improve.",
+    refrain: "Ask your gym if they offer UHI — or tell us where you train.",
+    future: true,
+  },
+];
+
+/* Three levels. No prices: none has been set, and putting a placeholder on a
+   public page would be worse than leaving it out. */
+export const membershipTiers = [
+  {
+    name: "UHI Start",
+    tagline: "Discover where you are.",
+    summary:
+      "The easiest way to begin. Create your first Index, add recognised exercise and fitness results, and see what your overall fitness profile actually looks like.",
+    cta: "Start my UHI",
+    points: [
+      "Your starting Ultimate Human Index",
+      "Scores across the eight areas of fitness",
+      "Add recognised exercise and workout results",
+      "Add results from supported fitness events",
+      "UHI exercise standards and demonstration videos",
+      "Track changes in your Index",
+      "Strengths and improvement insights",
+    ],
+    bestFor: "Anyone curious to find their number and start measuring fitness differently.",
+  },
+  {
+    name: "UHI Improve",
+    tagline: "Understand what to work on next.",
+    highlighted: true,
+    summary:
+      "Everything in UHI Start, plus personalised insight designed to help you move your Index. The more performance data you add, the sharper the picture of where your next gain is.",
+    cta: "Help me improve",
+    includesNote: "Everything in UHI Start, plus:",
+    points: [
+      "More detailed performance analysis",
+      "Personalised improvement priorities",
+      "AI-powered coaching recommendations",
+      "Training suggestions based on your UHI profile",
+      "Progress goals and regular reassessment",
+      "Video movement and technique feedback where available",
+      "Deeper analysis of your performance over time",
+      "UHI challenges and community features",
+    ],
+    bestFor: "People who want UHI to become part of how they train and improve.",
+  },
+  {
+    name: "UHI Pro",
+    tagline: "Turn your Index into your performance coach.",
+    summary:
+      "Our most comprehensive experience, for people who want to understand and optimise their physical performance. Deeper analysis, advanced coaching and more performance data behind the score.",
+    cta: "Optimise my UHI",
+    includesNote: "Everything in UHI Improve, plus:",
+    points: [
+      "Advanced AI performance coaching",
+      "Detailed movement and technique analysis",
+      "More frequent video assessments",
+      "Advanced performance trends and insights",
+      "Integration with supported wearable data as available",
+      "Personalised training and recovery recommendations",
+      "Priority access to new UHI assessments and features",
+      "Preferential access to UHI Challenges and experiences",
+      "Access to expert-led UHI content and sessions",
+    ],
+    bestFor: "Committed exercisers and athletes who want the most from their performance.",
+  },
+];
+
+/* ── For gyms ───────────────────────────────────────────────────────── */
+
+export const gymBenefits = [
+  "Complete supported UHI assessments",
+  "Have results validated by trained staff",
+  "Learn the correct UHI movement standards",
+  "Get help interpreting an Index",
+  "Receive coaching based on strengths and development areas",
+  "Take part in gym UHI challenges and leaderboards",
+  "Work towards a UHI Verified score",
+];
+
+export const gymPitch = {
+  lead: "A gym is where movement standards are taught, effort is supervised and results can be trusted. That makes it the natural place for a UHI to become a verified one.",
+  forMembers:
+    "Depending on the UHI membership a gym offers, members may be able to complete supported assessments, have results validated, and get coaching built around their own profile rather than a generic programme.",
+  forGyms:
+    "For a gym, UHI is being designed as a shared language for progress: a measure members can see moving, a reason to come back and re-test, and a structure for coaching conversations that goes beyond weight on the bar.",
+};
+
+/* ── Challenges and events ──────────────────────────────────────────── */
+
+export const challengePosition = {
+  lead: "Fitness events and UHI Challenges are one way to test yourself, add evidence to your Index and enjoy the competition. They are not what UHI is, and you never have to enter one to have an Index.",
+  points: [
+    {
+      title: "A test, not a requirement",
+      icon: ClipboardCheck,
+      text: "An event is a controlled, supervised way to produce several results at once. Useful — but a 5K on a Tuesday counts too.",
+    },
+    {
+      title: "Results that can be validated",
+      icon: Award,
+      text: "Because events are run to a standard and officiated, they are one of the routes we are developing towards a UHI Verified score.",
+      future: true,
+    },
+    {
+      title: "Recognised events count",
+      icon: Trophy,
+      text: "Results from recognised fitness challenges and competitions can be added to your Index alongside your own training.",
+    },
+    {
+      title: "Compete only if you want to",
+      icon: MapPin,
+      text: "Plenty of members will never enter an event. The Index works exactly the same way either way.",
+      future: false,
+    },
+  ],
+};
+
+/* What a UHI Challenge actually is, and the ways people can take part.
+
+   Carried over from the pre-rebrand site rather than invented: the divisions
+   are the ones already published, and the format description is deliberately
+   general because the detailed station-by-station structure is being reworked
+   alongside the Index. No prices — the founding-athlete entry pricing belonged
+   to a waitlist that no longer exists, and re-publishing it would state a
+   commitment nobody has made. */
+export const challengeFormat = {
+  lead: "A UHI Challenge is a supervised session built from recognised exercises, with running between them, performed to the UHI Movement Standards. One session, several results, all of them comparable.",
+  facts: [
+    {
+      title: "Recognised movements",
+      text: "Carries, lifts, presses, crawls and machine work — the same exercises that are already in the Capability Framework.",
+    },
+    {
+      title: "Run to a standard",
+      text: "Movements are judged against the published UHI Movement Standard, which is what makes an event result worth more than a number you typed in yourself.",
+    },
+    {
+      title: "Scaled by division",
+      text: "Distances and loads change by division, so the same challenge works for a first-timer and for someone who competes.",
+    },
+  ],
+  divisions: [
+    "Individual",
+    "Doubles",
+    "Mixed Doubles",
+    "Relay Team",
+    "Corporate Team",
+    "Age Group Rankings",
+  ],
+};
+
+/* ── About ──────────────────────────────────────────────────────────── */
+
+export const founders = [
+  {
+    photo: "/images/founders/andie.png",
+    name: "Andie Stoneham",
+    role: "Founder · Performance Coach · Programme Designer",
+    quote:
+      "Most fitness measures reward one dominant attribute. We wanted to build something that shows you the whole picture — including the parts you have been quietly avoiding.",
+  },
+  {
+    photo: "/images/founders/laura.png",
+    name: "Laura Hathaway",
+    role: "Performance Coach · Qualified Osteopath",
+    quote:
+      "Real fitness is not just strength or endurance. It is how efficiently and intelligently your body moves — which is why how you perform a movement matters as much as the number you post.",
+  },
+  {
+    photo: "/images/founders/john.png",
+    name: "John 'The Hitman' Hathaway",
+    role: "Champion UFC Fighter · Coach",
+    quote:
+      "The people who stay calm, adaptable and explosive when tired are usually the hardest to beat. A single score across eight areas shows you how close you are to that.",
+  },
+  {
+    photo: "/images/founders/ken.png",
+    name: "Ken Brotherston",
+    role: "Founder · Entrepreneur · Fitness Enthusiast",
+    quote:
+      "I am probably old enough to know better, but not quite sensible enough to stop chasing the idea that becoming fitter, stronger and more adaptable makes every part of life better.",
+  },
+  {
+    photo: "/images/founders/camilla.png",
+    name: "Dr. Camilla Drew",
+    role: "Capabilities Adviser · Fitness Enthusiast",
+    quote:
+      "Fitness and good-quality, all-round movement are key to a happier and more productive life, regardless of how old you actually are.",
+  },
+];
+
+export const aboutStory = [
+  "Most of us have no reliable answer to a simple question: how fit am I? We have a parkrun time, or a squat number, or a rough sense that we should probably stretch more. What we don't have is one measure that covers all of it.",
+  "The Ultimate Human Index exists to give people that measure — and, more importantly, to make it useful. A number on its own is trivia. A number with eight areas underneath it, and clear guidance on which one to work on next, is a plan.",
+  "It is being built to be inclusive by design. Whatever your age, whatever your ability, wherever you're starting from: find out what you're capable of today, then find out what you could become.",
+];
+
+/* What is genuinely still being built. Kept honest and specific — no dates, no
+   commitments we cannot stand behind. */
+export const inDevelopment = [
+  "Standardised UHI assessments, and the partner network that will deliver them.",
+  "Validation routes for UHI Verified, including officially validated scores from other fitness challenges.",
+  "AI-powered coaching, and video analysis of movement against the UHI Movement Standard.",
+  "Integration with wearable fitness and recovery data.",
+  "The partner gym programme, including supported assessments and gym leaderboards.",
+  "The Capability Framework continues to grow as more exercises and tests are added.",
+];
+
+/* ── FAQs ───────────────────────────────────────────────────────────
+   Short answers to the questions the pages above obviously provoke. Each page
+   picks the set relevant to it. */
+
+export const faqIndex = [
+  {
+    q: "Do I need to complete a particular UHI event to get a score?",
+    a: "No. Your Index is built from results you already produce — runs, lifts, workouts, tests and any recognised fitness events you happen to enter. There is no single test you have to pass.",
+  },
+  {
+    q: "What is the score out of?",
+    a: "1,000. Behind that single number sit eight area scores, on the same scale, which is where the useful detail lives.",
+  },
+  {
+    q: "Do I need to do all eight areas straight away?",
+    a: "No. Start with what you know. The Index becomes richer and more reliable as you add more relevant results, so most people's first Index is a starting point rather than a finished picture.",
+  },
+  {
+    q: "What happened to resilience and mental fortitude?",
+    a: "They are not part of the core framework. UHI measures eight areas of physical fitness — endurance, strength, power, speed, agility, balance, coordination and mobility.",
+  },
+];
+
+export const faqFramework = [
+  {
+    q: "Can one exercise count towards more than one area?",
+    a: "Yes, and most do. A farmers carry, for example, says something about strength, endurance and coordination at the same time.",
+  },
+  {
+    q: "What if the exercise I do isn't in the library?",
+    a: "The Capability Framework is a growing library. Start with the recognised activities closest to what you do, and expect the list to keep expanding.",
+  },
+  {
+    q: "Why do the movement standards matter?",
+    a: "Because a repetition only means something if everyone is doing the same repetition. The standard is the common reference point that makes your score comparable — to other people, and to your own result six months from now.",
+  },
+];
+
+export const faqMembership = [
+  {
+    q: "How much does it cost?",
+    a: "Pricing has not been set yet. Register your interest and we will tell you as soon as it is.",
+  },
+  {
+    q: "Do I need a gym membership as well?",
+    a: "No. You can subscribe directly and build your Index wherever and however you train. A participating gym adds supported assessments and coaching on top — it is not a requirement.",
+  },
+  {
+    q: "Do I have to enter events?",
+    a: "No. Events and challenges are one way to add results to your Index. They are optional, and the Index works the same way without them.",
+  },
 ];

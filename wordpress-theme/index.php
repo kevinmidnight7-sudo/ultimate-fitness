@@ -18,7 +18,9 @@ if ( ! file_exists( $index ) ) {
 $html = file_get_contents( $index );
 
 // Point root-relative asset and image URLs at the theme's app directory.
-$html = preg_replace( '#(src|href)="/(assets|images|icons)#', '$1="' . $app_uri . '/$2', $html );
+// `favicon` is in the list because the built index.html links /favicon.svg,
+// which lives in the theme's /app directory rather than at the site root.
+$html = preg_replace( '#(src|href)="/(assets|images|icons|favicon)#', '$1="' . $app_uri . '/$2', $html );
 
 // Let WordPress inject plugin output (analytics, SEO tags, verification, etc.)
 ob_start();

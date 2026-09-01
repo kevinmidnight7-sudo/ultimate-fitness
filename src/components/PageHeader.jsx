@@ -1,11 +1,13 @@
 import { motion, useReducedMotion } from "framer-motion";
 
-/* The opening construct on every inner page: eyebrow, page title, one or two
-   lines of orientation copy, thin lime rule.
+import SectionLabel from "@/components/shared/SectionLabel";
 
-   Sized deliberately below the home hero — the hero runs to 5.2rem, this tops
-   out at 3.6rem — so arriving on an inner page still reads as arriving one
-   level down rather than at a second front door.
+/* The opening construct on every inner page: eyebrow, page title, a line or
+   two of orientation copy.
+
+   Sized below the home hero — the hero runs to 5.25rem, this tops out at
+   3.25rem — so arriving on an inner page still reads as arriving one level
+   down rather than at a second front door.
 
    This is the page's one guaranteed reveal, so it is written directly rather
    than wrapped in <Reveal>: it fires on mount instead of on intersection,
@@ -23,42 +25,12 @@ export default function PageHeader({ eyebrow, heading, lead }) {
       };
 
   return (
-    <section
-      className="uh-divide relative px-6 pb-14 pt-16 sm:pt-20"
-      style={{ background: "linear-gradient(180deg, #070707 0%, #0a0a0a 100%)" }}
-    >
+    <section className="bg-bone px-6 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-24">
       <div className="mx-auto max-w-7xl">
         <motion.div {...rise}>
-          {eyebrow && (
-            <div className="mb-5 flex items-center gap-3">
-              <div className="h-px w-8 shrink-0 bg-lime-400" />
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                {eyebrow}
-              </p>
-            </div>
-          )}
-
-          <h1
-            className="uppercase text-white"
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3.6rem)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.01em",
-              fontFamily: "'Oswald', sans-serif",
-              fontWeight: 700,
-            }}
-          >
-            {heading}
-          </h1>
-
-          {lead && (
-            <p className="mt-5 max-w-2xl text-[17px] leading-7 text-neutral-400">{lead}</p>
-          )}
-
-          <div className="mt-8 h-px w-full max-w-xs bg-gradient-to-r from-lime-400/70 to-transparent" />
+          {eyebrow && <SectionLabel>{eyebrow}</SectionLabel>}
+          <h1 className="type-h2 mt-7 max-w-4xl text-ink">{heading}</h1>
+          {lead && <p className="type-lead mt-7 max-w-2xl text-ink-70">{lead}</p>}
         </motion.div>
       </div>
     </section>

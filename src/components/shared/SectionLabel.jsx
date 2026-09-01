@@ -1,15 +1,16 @@
-import Reveal from "@/components/motion/Reveal";
+/* The small ember eyebrow that opens most sections: a short rule, then a
+   tracked-out label. `tone="ink"` lightens it for the dark contrast bands.
 
-export default function SectionLabel({ children }) {
+   No longer wrapped in <Reveal>. With at most three reveal moments per page,
+   an eyebrow is never one of them — the section it introduces is. */
+export default function SectionLabel({ children, tone = "light", className = "" }) {
+  const colour = tone === "ink" ? "text-ember-light" : "text-ember";
+  const rule = tone === "ink" ? "bg-ember-light" : "bg-ember";
+
   return (
-    <Reveal className="mb-5 flex items-center gap-3">
-      <div className="h-px w-8 shrink-0 bg-lime-400" />
-      <p
-        className="text-[11px] font-bold uppercase tracking-[0.32em] text-lime-400"
-        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-      >
-        {children}
-      </p>
-    </Reveal>
+    <div className={`flex items-center gap-3 ${className}`}>
+      <div className={`h-px w-8 shrink-0 ${rule}`} />
+      <p className={`type-label ${colour}`}>{children}</p>
+    </div>
   );
 }

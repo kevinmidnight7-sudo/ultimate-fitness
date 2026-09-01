@@ -2,59 +2,50 @@ import { Mail } from "lucide-react";
 
 import usePageMeta from "@/hooks/usePageMeta";
 import { routesByPath } from "@/lib/routes";
-import { GRADIENT_TIDE } from "@/lib/gradients";
+import { SURFACE_BONE, SURFACE_CREAM, SURFACE_SAND } from "@/lib/gradients";
+import { CONTACT_EMAIL } from "@/lib/constants";
 
-import Reveal from "@/components/motion/Reveal";
-import SectionLabel from "@/components/shared/SectionLabel";
 import PageHeader from "@/components/PageHeader";
+import SectionHeading from "@/components/shared/SectionHeading";
+import AboutStorySection from "@/sections/AboutStorySection";
 import FoundersSection from "@/sections/FoundersSection";
-import WhyEnterSection from "@/sections/WhyEnterSection";
-import PreLaunchSection from "@/sections/PreLaunchSection";
+import InDevelopmentSection from "@/sections/InDevelopmentSection";
 
 /* Last page in the running order, so there is no next-page band to close on.
    This does that job instead — and an address is the right way to end the page
    that introduces the people building it. */
 function ContactBand() {
   return (
-    <section className="uh-divide px-6 py-24" style={{ background: GRADIENT_TIDE }}>
+    <section
+      className="on-ink uh-rule uh-rule-ink px-6 py-24 sm:px-8 sm:py-28"
+      style={{ background: "var(--color-ink)" }}
+    >
       <div className="mx-auto max-w-7xl">
-        <SectionLabel>Get in Touch</SectionLabel>
-
-        <Reveal className="mt-2 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2
-              className="uppercase leading-none text-white"
-              style={{
-                fontFamily: "'Oswald', sans-serif",
-                fontWeight: 700,
-                fontSize: "clamp(1.9rem, 3.6vw, 3rem)",
-              }}
-            >
-              Talk to Us.
-            </h2>
-            <p className="mt-5 max-w-xl text-[17px] leading-7 text-neutral-400">
-              Questions about the Index, bringing a gym or team, or partnering on an
-              event — the same address reaches all of us.
-            </p>
-          </div>
+        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <SectionHeading
+            tone="ink"
+            label="Get in touch"
+            heading="Talk to us"
+            lead="Questions about the Index, bringing a gym or team, or partnering on an event — the same address reaches all of us."
+          />
 
           {/* The address is a 30-character unbreakable string, so it sets the
               floor on how narrow this band can go. Below sm it drops to full
-              width at a smaller size and is allowed to break, rather than
-              pushing the page sideways on a 320px screen. */}
+              width and is allowed to break, rather than pushing the page
+              sideways on a 320px screen. */}
           <a
-            href="mailto:hello@theultimatehuman.fitness"
-            className="group inline-flex w-full min-w-0 items-center gap-3 border border-lime-400/45 bg-lime-400/[0.04] px-5 py-5 no-underline transition-colors duration-300 hover:border-lime-400 hover:bg-lime-400/[0.09] sm:w-auto sm:shrink-0 sm:px-7"
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="group inline-flex w-full min-w-0 items-center gap-3.5 border border-bone/25 px-6 py-5 no-underline transition-colors duration-300 hover:border-ember-light hover:bg-bone/[0.04] sm:w-auto sm:shrink-0 sm:px-8"
           >
-            <Mail className="h-5 w-5 shrink-0 text-lime-400" strokeWidth={1.5} />
+            <Mail className="h-5 w-5 shrink-0 text-ember-light" strokeWidth={1.5} />
             <span
-              className="break-all text-[13px] font-bold tracking-wide text-white transition-colors duration-300 group-hover:text-lime-400 sm:text-[15px]"
+              className="break-all text-[14px] font-bold tracking-wide text-bone transition-colors duration-300 group-hover:text-ember-light sm:text-[16px]"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
-              hello@theultimatehuman.fitness
+              {CONTACT_EMAIL}
             </span>
           </a>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -67,9 +58,9 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
-      <FoundersSection />
-      <WhyEnterSection />
-      <PreLaunchSection />
+      <AboutStorySection surface={SURFACE_CREAM} />
+      <FoundersSection surface={SURFACE_BONE} />
+      <InDevelopmentSection surface={SURFACE_SAND} />
       <ContactBand />
     </>
   );
