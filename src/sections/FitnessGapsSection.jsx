@@ -5,7 +5,8 @@ import { fitnessGaps } from "@/data/content";
 /* "Fitness is more than how fast you run."
 
    The three examples do the persuading, so they are set as large statements
-   rather than as bullet points in a card. Nothing here moves. */
+   rather than as bullet points in a card, and the section closes on them — the
+   paragraph that used to follow just restated the hero. Nothing here moves. */
 export default function FitnessGapsSection({ surface = SURFACE_CREAM }) {
   return (
     <section className="uh-rule px-6 py-24 sm:px-8 sm:py-32" style={{ background: surface }}>
@@ -22,12 +23,6 @@ export default function FitnessGapsSection({ surface = SURFACE_CREAM }) {
             </li>
           ))}
         </ul>
-
-        <p className="type-lead mt-14 max-w-3xl text-ink-70">
-          That's why we created the Ultimate Human Index. It looks beyond individual
-          sports and exercises to build a much broader picture of what your body can
-          actually do — and turns it into one score out of 1,000.
-        </p>
       </div>
     </section>
   );

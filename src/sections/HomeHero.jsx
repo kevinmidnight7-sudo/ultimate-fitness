@@ -42,7 +42,10 @@ export default function HomeHero() {
 
           <h1 className="type-hero mt-8 max-w-[16ch] text-ink">{homeHero.headline}</h1>
 
-          <p className="type-lead mt-9 max-w-2xl text-ink-70">{homeHero.standfirst}</p>
+          <p className="type-h3 mt-9 max-w-2xl text-ink" style={{ fontWeight: 400 }}>
+            {homeHero.standfirst}{" "}
+            <span className="text-ink-50">{homeHero.abbreviation}</span>
+          </p>
 
           <div className="mt-11 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <RegisterButton />
@@ -60,19 +63,23 @@ export default function HomeHero() {
         </motion.div>
       </div>
 
-      {/* The eight areas, stated once at the top of the site. */}
+      {/* The eight areas, stated once at the top of the site, plus the one
+          sentence that explains what kind of number this is. Everything else
+          about the benchmark now lives on The Index. */}
       <div className="mx-auto mt-20 max-w-7xl border-t border-line pt-8 sm:mt-24">
-        <ul className="flex list-none flex-wrap gap-x-7 gap-y-3 p-0">
+        <p className="type-label text-ink-50">{homeHero.areasIntro}</p>
+        <ul className="mt-5 flex list-none flex-wrap gap-x-7 gap-y-3 p-0">
           {fitnessAreas.map((area) => (
             <li
               key={area.name}
-              className="text-[12.5px] font-bold uppercase tracking-[0.2em] text-ink-70"
+              className="text-[13px] font-bold uppercase tracking-[0.2em] text-ink"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               {area.name}
             </li>
           ))}
         </ul>
+        <p className="type-body mt-8 max-w-2xl text-ink-70">{homeHero.benchmark}</p>
       </div>
     </section>
   );

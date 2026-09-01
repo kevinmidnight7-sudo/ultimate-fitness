@@ -127,8 +127,13 @@ export const sampleProfile = {
 export const homeHero = {
   eyebrow: "The Ultimate Human Index",
   headline: "How fit are you — really?",
-  standfirst:
-    "One number. Every aspect of your fitness. The Ultimate Human Index brings together strength, endurance, speed, power, mobility, balance, agility and coordination, and turns them into a single score out of 1,000.",
+  /* Short on purpose. The home page's job is to be understood in ten seconds;
+     the detail belongs on the pages the menu leads to. */
+  standfirst: "One number. Every aspect of your fitness, out of 1,000.",
+  /* The abbreviation is used everywhere on the site and on a first visit it
+     means nothing, so it is expanded once, in the open. */
+  abbreviation: "UHI, for short.",
+  areasIntro: "Measured across eight areas of fitness",
   cta: "Discover Your Index",
   secondary: "See how it works",
   benchmark:
@@ -146,7 +151,7 @@ export const fitnessGaps = [
 /* "You don't need to change how you train." */
 export const trainYourWay = {
   heading: "You don't need to change how you train",
-  lead: "Already run? Great. Lift weights? Great. Do CrossFit, HYROX or other fitness events? Great. It all helps us understand your performance.",
+  lead: "Run? Lift? CrossFit, HYROX, or something else entirely? It all helps build the picture.",
   examples: [
     "Run a 5K",
     "Hit a new strength PB",
@@ -603,10 +608,6 @@ export const faqIndex = [
   {
     q: "Do I need to do all eight areas straight away?",
     a: "No. Start with what you know. The Index becomes richer and more reliable as you add more relevant results, so most people's first Index is a starting point rather than a finished picture.",
-  },
-  {
-    q: "What happened to resilience and mental fortitude?",
-    a: "They are not part of the core framework. UHI measures eight areas of physical fitness — endurance, strength, power, speed, agility, balance, coordination and mobility.",
   },
 ];
 

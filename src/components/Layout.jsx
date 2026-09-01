@@ -14,7 +14,7 @@ export default function Layout() {
       <ScrollToTop />
       <LegacyHashRedirect />
       <SiteHeader />
-      <main>
+      <main id="main">
         <Outlet />
       </main>
       <SiteFooter />

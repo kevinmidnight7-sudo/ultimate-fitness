@@ -7,7 +7,6 @@ import CoachingSection from "@/sections/CoachingSection";
 import IndexSnapshotSection from "@/sections/IndexSnapshotSection";
 import ThreeQuestionsSection from "@/sections/ThreeQuestionsSection";
 import CtaBand from "@/components/shared/CtaBand";
-import NextPageBand from "@/components/NextPageBand";
 
 /* Reading the profile, then acting on it. The profile is shown again here
    rather than linked to: this page is about interpreting it, and asking a
@@ -35,13 +34,12 @@ export default function ImprovePage() {
         heading="Where would you start with this one?"
         lead="Strong endurance, weakest mobility. That gap is the most useful thing on the page — it's a specific, trainable target rather than a vague instruction to do more."
         closer="Improve one area and the overall Index moves. Then you test again."
-        link={{ to: "/membership", label: "See membership" }}
+        link={null}
       />
       <CtaBand
         heading="Find out what to work on"
         lead="Build your Index, see where the room is, and get guidance built around your own profile."
       />
-      <NextPageBand from="/improve" />
     </>
   );
 }
