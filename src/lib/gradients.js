@@ -1,22 +1,35 @@
-/* The three section gradient recipes already in use across the site, named so
-   pages can rotate between them.
+/* The surface recipes a section can sit on.
 
-   These were tuned when the site was one long document, where a section only
-   ever had to differ from its two neighbours in the scroll. Now that sections
-   are grouped onto short pages, two that never used to meet can end up stacked.
-   Pages pass one of these to a section to break a repeat — no new gradients. */
+   The old set was four near-black gradients with lime bleeding into them. The
+   rebrand inverts that: bone and cream do the work, sand and a soft ember wash
+   break up long runs, and ink is reserved for the one or two moments per page
+   that should feel like a change of gear.
 
-/* Lime rising out of near-black. The most common band on the site. */
-export const GRADIENT_LIME =
-  "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0a0c10 75%, #0a0a0a 100%)";
+   Every recipe reads the tokens in `src/index.css` through `var(--color-…)`,
+   so re-skinning the site is a change to that one @theme block.
 
-/* Cold blue into a warm ember. Used for the more editorial sections. */
-export const GRADIENT_EMBER =
-  "linear-gradient(195deg, #12243a 0%, #0d0f13 42%, #2b1a0a 76%, #101010 100%)";
+   Sections take a `surface` prop so a page can rotate between them. Two
+   consecutive sections on a page should never share one. Don't invent new
+   recipes — add one here if a page genuinely needs it. */
 
-/* Lime opening that resolves into blue rather than black. */
-export const GRADIENT_TIDE =
-  "linear-gradient(165deg, #1a2d0a 0%, #08090a 40%, #0d1d30 75%, #0a0a0a 100%)";
+/* The default. Flat bone: most of the site is this. */
+export const SURFACE_BONE = "var(--color-bone)";
 
-/* Near-flat, for quiet closing bands. */
-export const GRADIENT_FLAT = "linear-gradient(180deg, #09090a 0%, #0a0a0a 100%)";
+/* A half-tone lighter, for panels of detail that want to feel lifted. */
+export const SURFACE_CREAM =
+  "linear-gradient(180deg, var(--color-cream) 0%, var(--color-bone) 100%)";
+
+/* Warmer and heavier — good under grids and tables. */
+export const SURFACE_SAND =
+  "linear-gradient(180deg, var(--color-bone) 0%, var(--color-sand) 55%, var(--color-sand) 100%)";
+
+/* The lightest possible touch of the accent, for a section that carries an
+   idea rather than a list. */
+export const SURFACE_EMBER =
+  "linear-gradient(170deg, var(--color-ember-tint) 0%, var(--color-cream) 62%, var(--color-bone) 100%)";
+
+/* The contrast section. Text on this must come from the bone-* tokens and the
+   accent from ember-light — see the contrast table in src/index.css. Wrap it
+   in `on-ink` so focus rings switch to the light variant. */
+export const SURFACE_INK =
+  "linear-gradient(170deg, var(--color-ink-2) 0%, var(--color-ink) 55%, var(--color-ink) 100%)";

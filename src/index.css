@@ -1,8 +1,57 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────
+   UHI design tokens
+   ─────────────────────────────────────────────────────────────
+   The single source of truth for brand colour. Tailwind v4 turns every
+   `--color-*` entry below into a utility (`bg-bone`, `text-ember`,
+   `border-line`, and the `/opacity` modifiers) AND emits it as a CSS custom
+   property on :root, so gradients in `src/lib/gradients.js` can reference
+   `var(--color-…)` rather than repeating hexes.
+
+   These values are PROVISIONAL. Ken's brand hexes have not been supplied, so
+   this is a professional stand-in tuned for accessibility. To reskin the whole
+   site, change the hexes here and nothing else — no component hard-codes a
+   brand colour.
+
+   Contrast, measured against WCAG 2.1 (all text pairings clear AA):
+     ink        on bone        16.5:1      bone        on ink        16.5:1
+     ink-70     on bone         8.0:1      bone-70     on ink         8.7:1
+     ink-50     on bone         5.3:1      bone-50     on ink         5.2:1
+     ember      on bone         4.6:1      ember-light on ink         6.9:1
+     ember-deep on bone         6.6:1      cream       on ember       4.9:1
+     ink        on sand        14.3:1      ember-deep  on sand        5.7:1
+
+   Rule of thumb: on light grounds use `ember` / `ember-deep`; on `ink` grounds
+   use `ember-light`. `line` is a decorative hairline only — never rely on it
+   alone to separate two interactive regions.
+   ───────────────────────────────────────────────────────────── */
+
 @theme {
   --font-oswald: 'Oswald', sans-serif;
   --font-barlow: 'Barlow Condensed', sans-serif;
+
+  /* Light grounds — bone is the dominant page background. */
+  --color-bone: #f6f1e9;
+  --color-cream: #fcfaf6;
+  --color-sand: #e9e1d4;
+  --color-line: #d8cdbb;
+
+  /* Near-black, for text and for the contrast sections. */
+  --color-ink: #16130f;
+  --color-ink-2: #241f19;
+  --color-ink-70: #4f4841;
+  --color-ink-50: #6b635b;
+
+  /* Text on ink grounds. */
+  --color-bone-70: #b9b1a6;
+  --color-bone-50: #8e877e;
+
+  /* Burnt orange — the one accent. */
+  --color-ember: #b4501c;
+  --color-ember-deep: #8e3d14;
+  --color-ember-light: #e8834a;
+  --color-ember-tint: #f1e0d3;
 }
 
 html {
@@ -11,236 +60,103 @@ html {
 
 /* Sticky header offset so anchored sections aren't hidden under the nav */
 :where([id]) {
-  scroll-margin-top: 84px;
+  scroll-margin-top: 88px;
 }
 
-/* Visible keyboard focus for accessibility (mouse users unaffected) */
 :focus-visible {
-  outline: 2px solid rgba(163, 230, 53, 0.9);
-  outline-offset: 2px;
-  border-radius: 1px;
+  outline: 2px solid var(--color-ember);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* On ink grounds the ember outline is too dark to see — go light. */
+.on-ink :focus-visible,
+.on-ink:focus-visible {
+  outline-color: var(--color-ember-light);
 }
 
 body {
-  background-color: #050505;
-  color: #ffffff;
+  background-color: var(--color-bone);
+  color: var(--color-ink);
   font-family: 'Barlow Condensed', system-ui, sans-serif;
   font-weight: 500;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3 {
   font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+}
+
+/* ── Type scale ──────────────────────────────────────────────
+   Bigger than the old dark site across the board, and expressed once here
+   rather than as a clamp() repeated in every section. */
+
+.type-hero {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 6.4vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.type-h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.type-h3 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.004em;
+}
+
+.type-lead {
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.type-body {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.type-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
 }
 
-/* ── Hero arena animations ───────────────────────────────────── */
-
-@keyframes uh-beam-1 {
-  0%, 100% { transform: rotate(-14deg); opacity: 1; }
-  50%       { transform: rotate(0deg);  opacity: 0.55; }
+/* The Index score itself — the one place numerals get to be enormous. */
+.type-score {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
 }
 
-@keyframes uh-beam-2 {
-  0%, 100% { transform: rotate(22deg); opacity: 0.8; }
-  50%       { transform: rotate(10deg); opacity: 0.4; }
-}
-
-@keyframes uh-beam-3 {
-  0%, 100% { transform: rotate(-36deg); opacity: 0.55; }
-  50%       { transform: rotate(-24deg); opacity: 0.25; }
-}
-
-@keyframes uh-grid-scroll {
-  0%   { background-position: 50% 0px; }
-  100% { background-position: 50% 90px; }
-}
-
-@keyframes uh-scanline {
-  0%   { top: -1%;   opacity: 0;    }
-  4%   { opacity: 0.85; }
-  96%  { opacity: 0.25;  }
-  100% { top: 101%;  opacity: 0;    }
-}
-
-@keyframes uh-lens-pulse {
-  0%, 100% { opacity: 0.85; transform: scale(1);    box-shadow: 0 0 12px 4px rgba(255,255,255,0.12); }
-  50%       { opacity: 0.4;  transform: scale(0.65); box-shadow: 0 0 6px  2px rgba(255,255,255,0.06); }
-}
-
-@keyframes uh-lens-pulse-2 {
-  0%, 100% { opacity: 0.6;  transform: scale(1);    box-shadow: 0 0 10px 3px rgba(255,255,255,0.08); }
-  50%       { opacity: 0.25; transform: scale(0.6);  box-shadow: 0 0 5px  1px rgba(255,255,255,0.04); }
-}
-
-@keyframes uh-arc-breathe {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
-}
-
-/* Disable all custom animations for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .uh-beam-1,
-  .uh-beam-2,
-  .uh-beam-3,
-  .uh-grid,
-  .uh-scanline,
-  .uh-lens-1,
-  .uh-lens-2 {
-    animation: none !important;
-  }
-}
-
-/* ── Hero theme pattern ──────────────────────────────────────── */
-/* Slow diagonal drift for the hatch layer — purely decorative. */
-@keyframes uh-pattern-drift {
-  0%   { background-position: 0 0; }
-  100% { background-position: 280px 280px; }
-}
-
-.uh-pattern-hatch {
-  animation: uh-pattern-drift 60s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .uh-pattern-hatch {
-    animation: none !important;
-  }
-}
-
-/* ── Image hover glow ────────────────────────────────────────── */
-/* Applied to image containers so every photo lifts consistently on hover. */
-.uh-img-glow {
-  transition: box-shadow 0.4s ease, filter 0.4s ease;
-}
-.uh-img-glow:hover {
-  box-shadow:
-    inset 0 0 0 1px rgba(163, 230, 53, 0.35),
-    0 0 42px rgba(163, 230, 53, 0.2);
-  filter: brightness(1.06) saturate(1.08);
-}
-/* The group variant lets a parent card trigger the glow on its image. */
-.group:hover .uh-img-glow-target {
-  box-shadow:
-    inset 0 0 0 1px rgba(163, 230, 53, 0.35),
-    0 0 42px rgba(163, 230, 53, 0.2);
-  filter: brightness(1.06) saturate(1.08);
-}
-.uh-img-glow-target {
-  transition: box-shadow 0.4s ease, filter 0.4s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .uh-img-glow,
-  .uh-img-glow-target {
-    transition: none;
-  }
-}
-
-/* ── Register CTA — the site's single most important button ──── */
-/* A breathing lime glow plus a slow sheen sweep, so it reads as the one
-   thing worth clicking without resorting to garish colour. */
-@keyframes uh-cta-breathe {
-  0%, 100% { box-shadow: 0 0 18px rgba(163,230,53,0.35), 0 0 44px rgba(163,230,53,0.14); }
-  50%      { box-shadow: 0 0 26px rgba(163,230,53,0.55), 0 0 68px rgba(163,230,53,0.26); }
-}
-@keyframes uh-cta-sheen {
-  0%   { transform: translateX(-130%) skewX(-18deg); }
-  55%  { transform: translateX(230%)  skewX(-18deg); }
-  100% { transform: translateX(230%)  skewX(-18deg); }
-}
-
-.uh-cta {
-  position: relative;
-  overflow: hidden;
-  animation: uh-cta-breathe 3.4s ease-in-out infinite;
-  transition: transform 0.25s ease, background-color 0.2s ease;
-}
-.uh-cta:hover {
-  transform: translateY(-2px);
-}
-.uh-cta::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 45%;
-  pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
-  animation: uh-cta-sheen 4.5s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .uh-cta,
-  .uh-cta::after {
-    animation: none !important;
-  }
-  .uh-cta {
-    box-shadow: 0 0 22px rgba(163,230,53,0.4);
-  }
-}
-
-/* ── Header CTA that expands on hover ────────────────────────── */
-/* Collapsed it reads "Register Interest"; on hover the panel below drops
-   open to reveal "& Provide Feedback". Kept separate from .uh-cta because
-   that one clips its sheen with overflow:hidden, which would cut the drop. */
-.uh-cta-header {
-  position: relative;
-  animation: uh-cta-breathe 3.4s ease-in-out infinite;
-  transition: background-color 0.2s ease;
-}
-.uh-cta-header .uh-cta-sheen-wrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.uh-cta-header .uh-cta-sheen-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 45%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
-  animation: uh-cta-sheen 4.5s ease-in-out infinite;
-}
-/* Absolutely positioned so opening it never changes the header's height. */
-.uh-cta-drop {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  background-color: inherit;
-  transition: max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.22s ease;
-}
-.uh-cta-header:hover .uh-cta-drop,
-.uh-cta-header:focus-visible .uh-cta-drop {
-  max-height: 3rem;
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .uh-cta-header,
-  .uh-cta-header .uh-cta-sheen-wrap::after {
-    animation: none !important;
-  }
-  .uh-cta-header { box-shadow: 0 0 22px rgba(163,230,53,0.4); }
-  .uh-cta-drop { transition: none; }
-}
-
-/* ── Section break ───────────────────────────────────────────── */
-/* A visible horizontal rule between sections (Ken, 1 Aug), tinted lime in
-   the middle so page breaks read as branded rather than as a hairline. */
-.uh-divide {
+/* ── Section rule ────────────────────────────────────────────
+   Replaces the old lime-tinted `.uh-divide`. A hairline, not a statement:
+   whitespace is doing most of the separating now. */
+.uh-rule {
   position: relative;
 }
-.uh-divide::before {
+.uh-rule::before {
   content: '';
   position: absolute;
   top: 0;
@@ -249,88 +165,74 @@ h3 {
   height: 1px;
   z-index: 3;
   pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(163, 230, 53, 0.45) 25%,
-    rgba(163, 230, 53, 0.45) 75%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
+  background: var(--color-line);
+}
+/* On ink grounds the hairline has to lighten instead. */
+.uh-rule-ink::before {
+  background: rgba(246, 241, 233, 0.14);
 }
 
-/* ── Dark scrollbars for horizontally scrolling panels ───────── */
-.uh-scroll-dark {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(163, 230, 53, 0.35) rgba(255, 255, 255, 0.05);
+/* ── Primary call to action ──────────────────────────────────
+   Solid ember, cream text (4.9:1). Deliberately calmer than the old lime
+   button: a lift and a colour shift, no breathing glow or sheen sweep. */
+.uh-cta {
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease;
+  box-shadow: 0 1px 2px rgba(22, 19, 15, 0.14);
 }
-.uh-scroll-dark::-webkit-scrollbar {
+.uh-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(142, 61, 20, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uh-cta {
+    transition: background-color 0.3s ease;
+  }
+  .uh-cta:hover {
+    transform: none;
+  }
+}
+
+/* ── Card lift ───────────────────────────────────────────────── */
+.uh-card {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.uh-card:hover {
+  border-color: var(--color-ember);
+  box-shadow: 0 10px 30px rgba(22, 19, 15, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uh-card {
+    transition: border-color 0.3s ease;
+  }
+}
+
+/* ── Horizontally scrolling panels ───────────────────────────── */
+.uh-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+.uh-scroll::-webkit-scrollbar {
   height: 6px;
 }
-.uh-scroll-dark::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.04);
+.uh-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }
-.uh-scroll-dark::-webkit-scrollbar-thumb {
-  background: rgba(163, 230, 53, 0.35);
+.uh-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-line);
   border-radius: 999px;
 }
-.uh-scroll-dark::-webkit-scrollbar-thumb:hover {
-  background: rgba(163, 230, 53, 0.55);
-}
 
-/* ── Metallic text utilities ─────────────────────────────────── */
-
-.text-metallic {
-  background: linear-gradient(170deg, #ffffff 0%, #e0e0e0 30%, #a0a0a0 65%, #707070 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-metallic-price {
-  background: linear-gradient(180deg, #ffffff 0%, #c8c8c8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Card / interactive element glows ───────────────────────── */
-
-.lime-glow-hover {
-  transition: box-shadow 0.3s ease;
-}
-.lime-glow-hover:hover {
-  box-shadow: 0 0 0 1px rgba(163, 230, 53, 0.15), 0 0 24px rgba(163, 230, 53, 0.06);
-}
-
-.btn-lime-glow {
-  box-shadow: 0 0 14px rgba(163, 230, 53, 0.28);
-  transition: box-shadow 0.25s ease, background-color 0.2s ease;
-}
-.btn-lime-glow:hover {
-  box-shadow: 0 0 24px rgba(163, 230, 53, 0.5);
-}
-
-/* ── Hero left text overlay — single clean gradient, no box ─── */
-
-.uh-hero-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  /* Centred hero (no photo): a symmetric vignette keeps the pattern visible
-     at the edges while holding contrast behind the centred headline. */
-  /* Just a light ~10% wash so the green matrix reads through. */
-  background: radial-gradient(
-    ellipse 80% 70% at 50% 50%,
-    rgba(5, 5, 5, 0.12) 0%,
-    rgba(5, 5, 5, 0.08) 55%,
-    rgba(5, 5, 5, 0.04) 100%
-  );
-}
-
-/* ── Global grain / noise texture ───────────────────────────── */
-/* Fixed pseudo-element — sits on top of everything, pointer-events off */
+/* ── Paper grain ─────────────────────────────────────────────
+   Barely-there texture so the large cream fields read as stock rather than
+   flat #fff. Fixed, on top, pointer-events off. */
 body::before {
   content: '';
   position: fixed;
@@ -340,10 +242,14 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px;
-  opacity: 0.028;
+  opacity: 0.022;
+  mix-blend-mode: multiply;
 }
 
-/* ── Password gate ───────────────────────────────────────────── */
+/* ── Archived password gate ──────────────────────────────────
+   The gate itself was removed in Aug 2026 and the component lives in
+   src/components/archived/. These rules stay so it still renders correctly
+   if it is ever switched back on. */
 
 @keyframes uh-shake {
   0%, 100% { transform: translateX(0); }
@@ -356,15 +262,15 @@ body::before {
 }
 
 .uh-code-input {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-line);
   transition: border-color 0.2s ease;
   outline: none;
 }
 
 .uh-code-input:focus {
-  border-color: rgba(163, 230, 53, 0.55);
+  border-color: var(--color-ember);
 }
 
 .uh-code-input.is-error {
-  border-color: rgba(239, 68, 68, 0.55);
+  border-color: #b42318;
 }
