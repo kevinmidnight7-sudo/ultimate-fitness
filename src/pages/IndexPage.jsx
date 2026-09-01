@@ -28,7 +28,6 @@ export default function IndexPage() {
       <EightAreasSection surface={SURFACE_CREAM} />
       <IndexSnapshotSection
         surface={SURFACE_BONE}
-        showDetail
         label="An example profile"
         heading="The score, and the eight scores behind it"
         lead="Your overall Index is one number. Underneath it, each area has its own score on the same scale — which is where you find out why the headline reads the way it does."

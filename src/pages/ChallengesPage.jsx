@@ -4,6 +4,7 @@ import { SURFACE_CREAM, SURFACE_SAND } from "@/lib/gradients";
 
 import PageHeader from "@/components/PageHeader";
 import ChallengesSection from "@/sections/ChallengesSection";
+import ChallengeBreakSection from "@/sections/ChallengeBreakSection";
 import ChallengeFormatSection from "@/sections/ChallengeFormatSection";
 import CtaBand from "@/components/shared/CtaBand";
 
@@ -15,6 +16,7 @@ export default function ChallengesPage() {
     <>
       <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
       <ChallengesSection surface={SURFACE_SAND} />
+      <ChallengeBreakSection />
       <ChallengeFormatSection surface={SURFACE_CREAM} />
       <CtaBand
         heading="You don't need an event to have an Index"

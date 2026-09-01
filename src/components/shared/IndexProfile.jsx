@@ -2,17 +2,25 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
 import CountUp from "@/components/motion/CountUp";
-import { sampleProfile, fitnessAreas } from "@/data/content";
+import { sampleProfile } from "@/data/content";
 
-/* One bar per area of fitness. The fill draws from 0 to its value the first
-   time it scrolls into view — that is a value being measured, not a block
-   arriving, so it doesn't count against the page's reveal budget. Under
-   prefers-reduced-motion it renders at its final width immediately. */
-function AreaBar({ name, value, detail, index, inView, reduced }) {
+/* One area of fitness: its name, its score, and a bar drawing that score.
+
+   The fill draws from 0 the first time it scrolls into view — a value being
+   measured, not a block arriving, so it doesn't count against the page's
+   reveal budget. Under prefers-reduced-motion it renders at its final width
+   immediately.
+
+   The top rule is suppressed on the first item of each row rather than only on
+   the very first item, because the areas are laid out in two columns from `sm`
+   up: `first:` alone would leave column two with a stray rule above its top
+   entry. The stagger cycles every four so it never runs past the four-step
+   maximum in CLAUDE.md, whatever the column count is at that width. */
+function AreaBar({ name, value, index, inView, reduced }) {
   return (
-    <div className="border-t border-line py-5 first:border-t-0 sm:py-6">
+    <div className="border-t border-line pt-5 pb-6 first:border-t-0 sm:[&:nth-child(-n+2)]:border-t-0">
       <div className="flex items-baseline justify-between gap-4">
-        <p className="type-h3 text-ink">{name}</p>
+        <h3 className="type-h3 min-w-0 text-ink">{name}</h3>
         <p
           className="shrink-0 text-[19px] font-semibold tabular-nums text-ember-deep"
           style={{ fontFamily: "'Oswald', sans-serif" }}
@@ -24,89 +32,156 @@ function AreaBar({ name, value, detail, index, inView, reduced }) {
 
       <div className="mt-3 h-[6px] w-full bg-sand">
         {reduced ? (
-          <div className="h-[6px] bg-ember" style={{ width: `${value / 10}%` }} />
+          <div
+            className="h-[6px] bg-ember"
+            style={{ width: `${value / 10}%` }}
+          />
         ) : (
           <motion.div
             className="h-[6px] bg-ember"
             initial={{ width: 0 }}
             animate={{ width: inView ? `${value / 10}%` : 0 }}
-            transition={{ duration: 0.9, delay: 0.06 * index, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.9,
+              delay: 0.07 * (index % 4),
+              ease: [0.16, 1, 0.3, 1],
+            }}
           />
         )}
       </div>
 
-      {detail && <p className="mt-3 text-[15px] leading-6 text-ink-70">{detail}</p>}
     </div>
   );
 }
 
 /* The Index and the eight scores that produce it.
 
-   The brief asks for clear visual separation between the two, so they are not
-   one list with a total on the end: the overall score sits in its own ink
-   panel, and the eight areas sit on the page's own ground beside it. One is a
-   headline, the others are the explanation.
+   Two things are being balanced here. The brief asks for clear visual
+   separation between the overall score and its components — so the score sits
+   in its own ink panel and the eight sit on the page's own ground beside it,
+   one a headline and the others the explanation. But the first version stacked
+   all eight in a single column, which ran to roughly twice the height of the
+   score panel and left a long drop of empty bone beside it.
 
-   `showDetail` adds each area's one-line definition under its bar — right for
-   the Index page, too much for the home page. */
-export default function IndexProfile({ showDetail = false, className = "" }) {
+   So from `sm` the areas are a two-column grid of four. Four rows come out
+   close to the panel's natural height, and the panel then stretches to match
+   with `justify-between` — the extra height goes into the gaps between three
+   meaningful blocks rather than into one pool of empty black. Below `sm`
+   everything returns to a single readable column.
+
+   There used to be a `showDetail` variant that printed each area's one-line
+   definition under its bar, used on The Index. It has gone, for two reasons.
+   The first is content: on that page `EightAreasSection` renders exactly those
+   eight sentences one section further up, so the variant was repeating itself
+   half a screen later. The second is layout: the descriptions made the right
+   column roughly 200px taller than the panel could fill, and the panel has
+   nothing meaningful to put in 200px of black. Removing the duplication fixes
+   both, and leaves one balanced component used identically in all three
+   places. */
+export default function IndexProfile({ className = "" }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const inView = useInView(ref, { once: true, amount: 0.15 });
 
-  const detailByName = Object.fromEntries(fitnessAreas.map((a) => [a.name, a.detail]));
-
   return (
-    <div ref={ref} className={`grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16 ${className}`}>
-      {/* The number */}
-      <div className="on-ink self-start bg-ink p-8 text-bone sm:p-10">
-        <p className="type-label text-ember-light">Ultimate Human Index</p>
-
-        <p className="type-score mt-7 text-bone" style={{ fontSize: "clamp(4.5rem, 13vw, 7.5rem)" }}>
-          <CountUp to={sampleProfile.overall} duration={1.4} />
-        </p>
-        <p className="mt-3 text-[17px] text-bone-70">out of 1,000</p>
-
-        <div className="mt-8 h-px w-full bg-bone/15" />
-
-        <dl className="mt-8 space-y-5">
+    <div ref={ref} className={className}>
+      <div className="grid items-stretch gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.1fr)] lg:gap-14">
+        {/* The number */}
+        <div className="on-ink flex flex-col justify-between gap-10 bg-ink p-8 text-bone sm:p-10">
           <div>
-            <dt className="text-[12px] font-bold uppercase tracking-[0.2em] text-bone-50">
-              Strongest area
-            </dt>
-            <dd className="type-h3 mt-1.5 text-ember-light">{sampleProfile.strongest}</dd>
-          </div>
-          <div>
-            <dt className="text-[12px] font-bold uppercase tracking-[0.2em] text-bone-50">
-              Biggest opportunity
-            </dt>
-            <dd className="type-h3 mt-1.5 text-bone">{sampleProfile.opportunity}</dd>
-          </div>
-        </dl>
+            <p className="type-label text-ember-light">Ultimate Human Index</p>
+            <p
+              className="type-score mt-6 text-bone"
+              style={{ fontSize: "clamp(4rem, 10vw, 6.25rem)" }}
+            >
+              <CountUp to={sampleProfile.overall} duration={1.4} />
+            </p>
+            <p className="mt-3 text-[17px] text-bone-70">out of 1,000</p>
 
-        <p className="mt-8 text-[14px] leading-6 text-bone-50">
-          An example profile, to show what the Index looks like. Yours is built from
-          your own results.
-        </p>
-      </div>
+            {/* Where that number sits on the scale. This is the same figure again
+              rather than anything new, and it earns its place twice over: the
+              scale is half of what "684" means, and it gives the panel a third
+              block so the height it gains from the taller areas column is
+              absorbed by spacing between things rather than by a pool of empty
+              black. */}
+            <div className="mt-7">
+              <div className="h-[6px] w-full bg-bone/15">
+                {reduced ? (
+                  <div
+                    className="h-[6px] bg-ember-light"
+                    style={{ width: `${sampleProfile.overall / 10}%` }}
+                  />
+                ) : (
+                  <motion.div
+                    className="h-[6px] bg-ember-light"
+                    initial={{ width: 0 }}
+                    animate={{
+                      width: inView ? `${sampleProfile.overall / 10}%` : 0,
+                    }}
+                    transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                )}
+              </div>
+              <div className="mt-2.5 flex justify-between text-[12px] font-bold uppercase tracking-[0.18em] text-bone-50">
+                <span>0</span>
+                <span>1,000</span>
+              </div>
+            </div>
+          </div>
 
-      {/* The eight it comes from */}
-      <div>
-        <p className="type-label text-ink-50">The eight areas behind it</p>
-        <div className="mt-6">
-          {sampleProfile.areas.map((area, i) => (
-            <AreaBar
-              key={area.name}
-              name={area.name}
-              value={area.value}
-              detail={showDetail ? detailByName[area.name] : null}
-              index={i}
-              inView={inView}
-              reduced={reduced}
-            />
-          ))}
+          {/* Side by side rather than stacked: it halves the height this block
+            needs, which is most of what keeps the panel close to the natural
+            height of the four rows of areas beside it. */}
+          <dl className="m-0 grid grid-cols-2 gap-6 border-t border-bone/15 pt-7">
+            <div>
+              <dt className="text-[12px] font-bold uppercase tracking-[0.2em] text-bone-50">
+                Strongest
+              </dt>
+              <dd className="type-h3 m-0 mt-2 text-ember-light">
+                {sampleProfile.strongest}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[12px] font-bold uppercase tracking-[0.2em] text-bone-50">
+                Biggest opportunity
+              </dt>
+              <dd className="type-h3 m-0 mt-2 text-bone">
+                {sampleProfile.opportunity}
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        {/* The eight it comes from.
+
+          `content-between` on the grid lets the four rows share whatever height
+          the panel beside them has that they don't — so neither side is ever
+          padded out with dead space, and the two always finish level. Below
+          `lg` the two are stacked and there is nothing to match, so it has no
+          effect there. */}
+        <div className="flex flex-col">
+          <p className="type-label text-ink-50">The eight areas behind it</p>
+          <div className="mt-6 grid flex-1 gap-x-10 sm:grid-cols-2 lg:content-between lg:gap-x-14">
+            {sampleProfile.areas.map((area, i) => (
+              <AreaBar
+                key={area.name}
+                name={area.name}
+                value={area.value}
+                  index={i}
+                inView={inView}
+                reduced={reduced}
+              />
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Caption for the whole example, not just the score, so it reads under
+          both halves rather than as the last line of the ink panel. */}
+      <p className="mt-7 text-[14px] leading-6 text-ink-50">
+        An example profile, to show what the Index looks like. Yours is built
+        from your own results.
+      </p>
     </div>
   );
 }

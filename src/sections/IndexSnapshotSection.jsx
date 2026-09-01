@@ -14,7 +14,6 @@ import IndexProfile from "@/components/shared/IndexProfile";
    arriving, so they don't count against it. */
 export default function IndexSnapshotSection({
   surface = SURFACE_BONE,
-  showDetail = false,
   label = "Your profile",
   heading = "One number. A much bigger picture.",
   lead = "Your overall Index is only the beginning. Behind it sits your fitness profile: where you're performing strongly, and where you have the most to gain.",
@@ -27,7 +26,7 @@ export default function IndexSnapshotSection({
         <SectionHeading label={label} heading={heading} lead={lead} />
 
         <Reveal className="mt-16">
-          <IndexProfile showDetail={showDetail} />
+          <IndexProfile />
         </Reveal>
 
         {(closer || link) && (
