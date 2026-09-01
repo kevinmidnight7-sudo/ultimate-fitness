@@ -2,10 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gauge, CheckCircle2 } from "lucide-react";
 
-import { GRADIENT_LIME } from "@/lib/gradients";
+import { GRADIENT_LIME } from "@/sections/archived/legacyGradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { domains, scoreTabs, uhsReveals } from "@/data/content";
+import { domains, scoreTabs, uhsReveals } from "@/data/archived/eventContent";
 
 /* `gradient` lets the page it sits on override the default band, so two
    sections that never used to meet do not now stack the same recipe. */

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import Reveal from "@/components/motion/Reveal";
-import { GRADIENT_EMBER } from "@/lib/gradients";
+import { GRADIENT_EMBER } from "@/sections/archived/legacyGradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
 import { MarketingImage } from "@/components/shared/MarketingImage";
@@ -24,7 +24,7 @@ import {
   aiTabs,
   aiTrainingFocus,
   movementCoachCards,
-} from "@/data/content";
+} from "@/data/archived/eventContent";
 import { REGISTER_URL } from "@/lib/constants";
 
 function HowItWorksCard({ step, index }) {

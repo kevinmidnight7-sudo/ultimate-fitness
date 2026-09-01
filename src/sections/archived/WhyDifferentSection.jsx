@@ -4,7 +4,7 @@ import { CheckCircle2, ChevronDown, X } from "lucide-react";
 
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { differenceTable } from "@/data/content";
+import { differenceTable } from "@/data/archived/eventContent";
 
 function WhyDifferentExplainer() {
   /* Open on load — the full explanation is the point of the section, not an

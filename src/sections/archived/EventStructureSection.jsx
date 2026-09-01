@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ChevronDown, Weight } from "lucide-react";
 
 import Reveal from "@/components/motion/Reveal";
-import { GRADIENT_LIME } from "@/lib/gradients";
+import { GRADIENT_LIME } from "@/sections/archived/legacyGradients";
 import SectionLabel from "@/components/shared/SectionLabel";
 import {
   capabilities10,
@@ -11,7 +11,7 @@ import {
   finalCircuit,
   weightsByName,
   workingWeights,
-} from "@/data/content";
+} from "@/data/archived/eventContent";
 
 function FlowNode({ label, sub, run, final: isFinal }) {
   return (

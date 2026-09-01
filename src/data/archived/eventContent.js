@@ -1,5 +1,13 @@
-/* All site copy and data. Kept apart from the components so content can be
-   edited without touching layout. */
+/* Copy and data for the pre-rebrand, event-first site (to Sep 2026).
+
+   UHI is now positioned as an ongoing fitness measurement and improvement
+   platform rather than as a race, so none of this is rendered: the live copy
+   is in src/data/content.js. It is kept intact — alongside the sections that
+   consumed it in src/sections/archived/ — so the ten-capability model, the
+   event structure, the working weights and the founding-athlete pricing can
+   all be restored if events are ever brought back to the front.
+
+   Nothing outside src/sections/archived/ should import from this file. */
 
 import {
   Activity,

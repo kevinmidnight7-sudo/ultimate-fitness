@@ -1,7 +1,7 @@
 
 import SectionLabel from "@/components/shared/SectionLabel";
 import { MarketingImage } from "@/components/shared/MarketingImage";
-import { whyEnter } from "@/data/content";
+import { whyEnter } from "@/data/archived/eventContent";
 
 export default function WhyEnterSection() {
   return (

@@ -1,7 +1,7 @@
 
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { uhciPrinciples } from "@/data/content";
+import { uhciPrinciples } from "@/data/archived/eventContent";
 
 export default function UhiIndexSection() {
   return (

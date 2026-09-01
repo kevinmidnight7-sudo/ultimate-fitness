@@ -1,6 +1,6 @@
-import { GRADIENT_LIME } from "@/lib/gradients";
+import { GRADIENT_LIME } from "@/sections/archived/legacyGradients";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { foundingPricing } from "@/data/content";
+import { foundingPricing } from "@/data/archived/eventContent";
 import { REGISTER_URL } from "@/lib/constants";
 
 /* `gradient` lets the page it sits on override the default band, so two

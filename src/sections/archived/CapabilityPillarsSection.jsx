@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { GRADIENT_EMBER } from "@/lib/gradients";
+import { GRADIENT_EMBER } from "@/sections/archived/legacyGradients";
 import CountUp from "@/components/motion/CountUp";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { capabilities, capabilityScores } from "@/data/content";
+import { capabilities, capabilityScores } from "@/data/archived/eventContent";
 
 /* `gradient` lets the page it sits on override the default band, so two
    sections that never used to meet do not now stack the same recipe. */

@@ -1,6 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 
-import { workToDo } from "@/data/content";
+import { workToDo } from "@/data/archived/eventContent";
 
 export default function PreLaunchSection() {
   return (

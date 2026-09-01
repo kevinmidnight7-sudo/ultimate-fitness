@@ -4,7 +4,7 @@ import { AlertTriangle, CheckCircle2, MessageCircle, ChevronDown } from "lucide-
 
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { subscriptionTiers } from "@/data/content";
+import { subscriptionTiers } from "@/data/archived/eventContent";
 import { REGISTER_URL } from "@/lib/constants";
 
 function TierCard({ tier, index }) {

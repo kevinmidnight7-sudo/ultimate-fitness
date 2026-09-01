@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
 import SectionLabel from "@/components/shared/SectionLabel";
-import { journeyCards, journeyQuizQuestions } from "@/data/content";
+import { journeyCards, journeyQuizQuestions } from "@/data/archived/eventContent";
 import { REGISTER_URL } from "@/lib/constants";
 
 function JourneyModal({ title, onClose, children }) {

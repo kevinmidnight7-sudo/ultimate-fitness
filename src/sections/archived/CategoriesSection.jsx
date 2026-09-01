@@ -2,7 +2,7 @@ import { Trophy } from "lucide-react";
 
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/shared/SectionLabel";
-import { categories } from "@/data/content";
+import { categories } from "@/data/archived/eventContent";
 
 export default function CategoriesSection() {
   return (
