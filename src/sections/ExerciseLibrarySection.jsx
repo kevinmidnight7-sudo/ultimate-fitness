@@ -1,5 +1,6 @@
 import { SURFACE_SAND } from "@/lib/gradients";
 import SectionHeading from "@/components/shared/SectionHeading";
+import Photograph from "@/components/shared/Photograph";
 import { exerciseLibrary } from "@/data/content";
 
 /* The exercises currently in the Capability Framework.
@@ -10,7 +11,12 @@ import { exerciseLibrary } from "@/data/content";
    them by movement family into a responsive list instead.
 
    The groups are editorial. Deliberately, no exercise here claims which areas
-   it feeds: that mapping is framework detail we were not given. */
+   it feeds: that mapping is framework detail we were not given.
+
+   The photograph is a sled push, which is one of the twenty movements listed
+   directly beneath it — that is the whole reason it is here rather than a
+   generic gym shot. It illustrates the library; it does not claim anything the
+   copy doesn't. */
 export default function ExerciseLibrarySection({ surface = SURFACE_SAND }) {
   const total = exerciseLibrary.reduce((n, g) => n + g.exercises.length, 0);
 
@@ -23,7 +29,17 @@ export default function ExerciseLibrarySection({ surface = SURFACE_SAND }) {
           lead={`${total} exercises are in the framework now, alongside recognised fitness events and workouts. It's a growing library — running, rowing, cycling, lifting, carrying, crawling, and balance and mobility tests.`}
         />
 
-        <div className="mt-16 grid gap-px border border-ink/12 bg-ink/12 sm:grid-cols-2 lg:grid-cols-4">
+        <Photograph
+          file="hero-athlete-primary.jpg"
+          alt="An athlete driving a loaded sled forward across a gym floor — one of the movements in the UHI exercise library."
+          ratio="aspect-[3/2] sm:aspect-[2/1] lg:aspect-[21/9]"
+          position="62% 50%"
+          width={1600}
+          height={711}
+          className="mt-14"
+        />
+
+        <div className="mt-14 grid gap-px border border-ink/12 bg-ink/12 sm:grid-cols-2 lg:grid-cols-4">
           {exerciseLibrary.map(({ group, icon: Icon, exercises }) => (
             <section key={group} className="bg-bone p-8">
               <Icon className="h-7 w-7 text-ember" strokeWidth={1.5} />

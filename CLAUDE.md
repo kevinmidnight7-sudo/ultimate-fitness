@@ -16,8 +16,8 @@ to test and validate an Index.
   contain markup of its own beyond page-level framing.
 - `src/sections/` — one file per section, sub-components co-located with their parent.
 - `src/components/shared/` — helpers used across sections (`SectionHeading`,
-  `SectionLabel`, `RegisterButton`, `IndexProfile`, `FaqList`, `CtaBand`,
-  `FutureTag`, `SiteLogo`).
+  `SectionLabel`, `RegisterButton`, `IndexProfile`, `Photograph`, `FaqList`,
+  `CtaBand`, `FutureTag`, `SiteLogo`).
 - `src/data/content.js` — every copy/data array. `src/lib/` — constants, routes, surfaces.
 
 `src/lib/routes.js` is the single source of truth for the eight pages: the header
@@ -135,6 +135,30 @@ Reskinning the site is a change to that one block.
   count divides evenly into the columns at **every** breakpoint — otherwise the
   empty cell renders as a stray tile. For odd counts use separately bordered
   cards with a real gap.
+
+## Photography
+
+Use `<Photograph>` — it handles the reserved box, lazy loading, the crop anchor
+and the warm grade in one place, and it requires `alt`.
+
+- **Three images, chosen to carry an argument.** A woman in her fifties
+  training outdoors on the home page (answers "is this for people like me?"), a
+  sled push above the exercise library (a movement that is actually in the
+  list), and a full-bleed break on Challenges. Not one per page, and not
+  decoration.
+- **`movement-analysis-still.jpg` is deliberately unused.** It is saturated
+  with the old lime, and it is a picture of joint tracking — the exact feature
+  that is still in development. Retinting would fix the first problem and not
+  the second.
+- `converge-left.png` / `converge-right.png` are cut-outs built for the
+  archived pinned scene. Leave them there.
+- Neither OG card is page content.
+- Photographs live in `public/images/marketing/` and must be real JPEGs at a
+  sensible width. Three of them arrived as 1.5MB PNGs with a .jpg extension;
+  check the format before adding another.
+- Wide images need a taller `ratio` on small screens — a 21:9 banner is 160px
+  tall on a phone, which crops a person to a torso.
+- Never set text over the busy part of a photograph.
 
 ## Motion system
 
