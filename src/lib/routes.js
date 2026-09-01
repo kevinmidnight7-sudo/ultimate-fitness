@@ -1,88 +1,104 @@
-/* The site's seven pages, in the order the menu shows them and in the order the
+/* The site's eight pages, in the order the menu shows them and in the order the
    "next page" band walks a visitor through them.
 
-   Everything page-level reads from here: the header nav, the Overview hub grid,
-   the closing next-page bands, each page's <PageHeader> and each page's
+   Everything page-level reads from here: the header nav, the closing next-page
+   bands, each page's <PageHeader>, the 404 page's index, and each page's
    document title and meta description. Adding or reordering a page is a change
-   to this file alone. */
+   to this file alone — plus `uhi_app_routes()` in
+   wordpress-theme/functions.php, or the page is served with a 404 header.
+
+   The running order is the argument the site makes, in sequence: what the
+   Index is, what feeds it, how you improve it, how you get it, where you can
+   get it validated, what else the ecosystem offers, and who is building it. */
 
 export const routes = [
   {
     path: "/",
-    label: "Overview",
-    /* One-liner, used on the Overview hub cards and the next-page bands. */
-    blurb: "What the Ultimate Human Index is, and why it exists.",
-    title: "Ultimate Human Index — The Fitness Challenge That Measures the Complete Athlete",
+    label: "Home",
+    /* One-liner, used on the next-page bands and the 404 index. */
+    blurb: "One score out of 1,000 for your all-round fitness.",
+    title: "Ultimate Human Index — How Fit Are You, Really?",
     description:
-      "The Ultimate Human Index (UHI) is a fitness challenge that measures ten capabilities and gives you one personal score — with AI coaching to show you exactly where to improve.",
+      "The Ultimate Human Index measures your all-round physical fitness as one score out of 1,000, built from the exercise, training and events you already do.",
   },
   {
-    path: "/personal-index",
-    label: "Personal Index",
-    blurb: "The ten capabilities, and the single score they produce.",
+    path: "/the-index",
+    label: "The Index",
+    blurb: "The eight areas of fitness, and the score they add up to.",
     eyebrow: "Your Score",
     /* Heading is deliberately not the nav label: the page speaks to the reader,
        the menu stays short. */
-    heading: "Your Personal Index",
-    lead: "Ten capabilities, measured the same way for everyone, resolved into one number you can actually train against.",
-    title: "Personal Index — Ultimate Human Index",
+    heading: "Your Ultimate Human Index",
+    lead: "One score out of 1,000, and the eight-part profile underneath it that tells you where it comes from.",
+    title: "The Index — Eight Areas of Fitness, One Score | Ultimate Human Index",
     description:
-      "Ten capabilities, measured the same way for everyone and resolved into a single Ultimate Human Index score you can train against.",
+      "How the Ultimate Human Index works: eight areas of fitness, one score out of 1,000, a personal profile of strengths and opportunities, and the difference between UHI Estimated and UHI Verified.",
   },
   {
-    path: "/personal-coach",
-    label: "Personal Coach",
-    blurb: "Where to start, and the AI coaching that reads your movement.",
-    eyebrow: "Your Path",
-    heading: "Personal Coach",
-    lead: "Find your starting point, then let the coaching show you exactly what to work on next.",
-    title: "Personal Coach — Ultimate Human Index",
+    path: "/how-it-works",
+    label: "How It Works",
+    blurb: "The Capability Framework, the exercise library and the movement standards.",
+    eyebrow: "Capability Framework",
+    heading: "However You Train, It Counts",
+    lead: "The recognised exercises, tests and events that build your Index — and the movement standards that keep them comparable.",
+    title: "How It Works — The UHI Capability Framework | Ultimate Human Index",
     description:
-      "Start where you are: find your athlete type, preview a full assessment, and see how AI movement coaching turns your score into a training plan.",
+      "The UHI Capability Framework maps recognised exercises, tests and fitness events to eight areas of fitness, each with a consistent UHI Movement Standard.",
   },
   {
-    path: "/challenge",
-    label: "The Challenge",
-    blurb: "The event itself — how a day of competition actually runs.",
-    eyebrow: "The Event",
-    heading: "The Challenge",
-    lead: "Nine capabilities, a run between every one of them, and a final circuit to finish. Here is how the day actually runs.",
-    title: "The Challenge — Ultimate Human Index",
+    path: "/improve",
+    label: "Improve",
+    blurb: "Turning the score into a plan for what to do next.",
+    eyebrow: "Coaching",
+    heading: "Your Index Becomes Your Coach",
+    lead: "Knowing your score is interesting. Knowing how to improve it is what changes your training.",
+    title: "Improve — Personalised Coaching and Insight | Ultimate Human Index",
     description:
-      "How a day at the Ultimate Human Index runs: nine capabilities, a run between each, and a final circuit. Every discipline gets exposed somewhere.",
+      "Read your fitness profile, find your biggest improvement opportunities and get personalised guidance on what to work on next, with movement and technique analysis in development.",
   },
   {
-    path: "/compete",
-    label: "Compete",
-    blurb: "Divisions, and how to secure your place.",
-    eyebrow: "Take Part",
-    heading: "Compete",
-    lead: "Pick the way you want to be tested, then claim a place in the first wave of events.",
-    title: "Compete — Ultimate Human Index",
+    path: "/membership",
+    label: "Membership",
+    blurb: "UHI Start, UHI Improve and UHI Pro — and the two ways in.",
+    eyebrow: "Membership",
+    heading: "Build Your Index. Then Keep Improving It.",
+    lead: "Subscribe directly, or access UHI through a participating gym. Three levels, so you choose how far you want to take it.",
+    title: "Membership — UHI Start, Improve and Pro | Ultimate Human Index",
     description:
-      "Ways to compete at the Ultimate Human Index — individual, doubles, relay and corporate divisions — and how to secure your place in the first wave of events.",
+      "Three membership levels — UHI Start, UHI Improve and UHI Pro — plus the two ways to access the Ultimate Human Index: subscribe directly, or join through a participating gym.",
   },
   {
-    path: "/subscribe",
-    label: "Subscribe",
-    blurb: "What it costs — membership, and event entry pricing.",
-    eyebrow: "Membership & Pricing",
-    heading: "Subscribe",
-    lead: "Everything the Index costs in one place: monthly membership for the platform, and a one-off entry fee per event.",
-    title: "Subscribe — Ultimate Human Index",
+    path: "/for-gyms",
+    label: "For Gyms",
+    blurb: "Supported assessments, validated results and coaching, in your gym.",
+    eyebrow: "Partner Gyms",
+    heading: "UHI in Your Gym",
+    lead: "A shared measure of fitness your members can build, understand and improve — with your coaches alongside them.",
+    title: "For Gyms — Become a UHI Partner Gym | Ultimate Human Index",
     description:
-      "What the Ultimate Human Index costs: monthly platform membership for scoring and AI coaching, plus founding athlete event entry pricing for every division.",
+      "How the Ultimate Human Index is being designed to work in partner gyms: supported assessments, validated results, shared movement standards and coaching built around each member's profile.",
+  },
+  {
+    path: "/challenges",
+    label: "Challenges",
+    blurb: "Events and challenges — one way to test your Index, not the only way.",
+    eyebrow: "Challenges & Events",
+    heading: "Challenges and Events",
+    lead: "A way to test yourself, add evidence to your Index and compete if you want to. Never a requirement.",
+    title: "Challenges and Events — Test Your Index | Ultimate Human Index",
+    description:
+      "UHI Challenges and fitness events are one way to test yourself and add verified results to your Ultimate Human Index. You never have to enter one to have an Index.",
   },
   {
     path: "/about",
-    label: "About Us",
-    blurb: "Who is building this, and what is still being finalised.",
+    label: "About",
+    blurb: "Who is building this, and what is still being developed.",
     eyebrow: "The Team",
-    heading: "About Us",
-    lead: "The people building the Index, why it exists, and what is still being finalised.",
-    title: "About Us — Ultimate Human Index",
+    heading: "About Ultimate Human",
+    lead: "The people building the Index, why it exists, and what is still in development.",
+    title: "About — The People Building UHI | Ultimate Human Index",
     description:
-      "The founders behind the Ultimate Human Index, why capability is the measure that matters, and what is still being finalised before launch.",
+      "The team behind the Ultimate Human Index, why one measure of all-round fitness matters, and an honest account of what is still being developed.",
   },
 ];
 
@@ -94,16 +110,31 @@ export function nextRoute(path) {
   return i >= 0 && i < routes.length - 1 ? routes[i + 1] : null;
 }
 
-/* Old single-page anchors kept working, so links already shared into the wild
-   still land somewhere sensible. Read once on first load. */
+/* The pre-rebrand URLs, every one of which is out in the wild — shared, linked
+   and indexed. Each maps to the page that now carries its subject, and App.jsx
+   turns each into a permanent client-side redirect.
+
+   The event-first pages (/challenge, /compete) both land on /challenges, which
+   is where that material now lives. Keep these entries and their counterparts
+   in `uhi_app_routes()` for as long as the old links are worth catching. */
+export const legacyPathRedirects = {
+  "/personal-index": "/the-index",
+  "/personal-coach": "/improve",
+  "/subscribe": "/membership",
+  "/challenge": "/challenges",
+  "/compete": "/challenges",
+};
+
+/* Older still: anchors from the days when the whole site was one document.
+   Read once, on first load at the root. */
 export const legacyHashTargets = {
-  "#journey": "/personal-coach",
-  "#format": "/challenge",
-  "#score": "/personal-index",
-  "#coaching": "/personal-coach",
-  "#membership": "/subscribe",
-  "#signup": "/compete#signup",
-  "#challenge": "/challenge",
-  "#uhci": "/personal-index",
-  "#categories": "/compete",
+  "#journey": "/improve",
+  "#format": "/how-it-works",
+  "#score": "/the-index",
+  "#coaching": "/improve",
+  "#membership": "/membership",
+  "#signup": "/membership",
+  "#challenge": "/challenges",
+  "#uhci": "/the-index",
+  "#categories": "/challenges",
 };

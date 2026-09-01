@@ -10,7 +10,7 @@ import LegacyHashRedirect from "@/components/LegacyHashRedirect";
    its scroll state. */
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
+    <div className="min-h-screen bg-bone text-ink">
       <ScrollToTop />
       <LegacyHashRedirect />
       <SiteHeader />
