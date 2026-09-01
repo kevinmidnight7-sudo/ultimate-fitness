@@ -49,7 +49,9 @@ export default function SiteFooter() {
           <p className="text-[14px] text-bone-50" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
             © 2026 Ultimate Human Index · theultimatehuman.fitness
           </p>
-          <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-bone-50/60">
+          {/* Quiet, but not invisible: at bone-50/60 this sat at 1.13:1 on the
+              ink ground, which is below AA and effectively unreadable. */}
+          <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-bone-50">
             {SITE_VERSION}
           </span>
         </div>

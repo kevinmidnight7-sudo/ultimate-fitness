@@ -21,13 +21,39 @@ to test and validate an Index.
 - `src/data/content.js` — every copy/data array. `src/lib/` — constants, routes, surfaces.
 
 `src/lib/routes.js` is the single source of truth for the eight pages: the header
-nav, the footer nav, the next-page bands, the 404 index and each page's title and
-meta description all read from it. Add a route there — and to `uhi_app_routes()`
-in `wordpress-theme/functions.php`, or the page is served with a 404 header.
+menu (via the `nav` tree), the footer's full page list, the 404 index and each
+page's title and meta description all read from it. Add a route there — and to
+`uhi_app_routes()` in `wordpress-theme/functions.php`, and to `vercel.json` if a
+legacy URL points at it.
 
-`legacyPathRedirects` in the same file maps every pre-rebrand URL to its new home.
-Those paths must stay on the WordPress allowlist too: the app can only redirect a
-URL WordPress agrees to serve with a 200.
+`legacyPathRedirects` in the same file maps every pre-rebrand URL to its new home
+for the WordPress path. On Vercel the same five URLs are real 308s in
+`vercel.json`, which fires first. Both are needed; see `DEPLOYMENT.md`.
+
+## Navigation — Ken's rules, not preferences
+
+The top menu does the navigating. Five choices, two with submenus:
+
+    Home | The Index ▾ | Membership ▾ | Challenges | About | Discover Your Index
+
+Do **not** reintroduce any of these, all removed on Ken's instruction after he
+compared UHI with Deadly Dozen, HYROX and Flat Out:
+
+- Next/previous page controls, or a "next page" band at the foot of a page.
+- Anything that walks a visitor through the eight pages in a fixed order.
+- Sideways-scrolling page controls.
+- A closing CTA that is really page navigation. A page may end with a genuine
+  action — "Discover Your Index", "Talk to us" — but "continue to the next
+  section" is navigation and belongs in the menu.
+
+In-page anchors are fine. Contextual cross-links are fine where they answer the
+question the section just raised; they are not fine as a disguised running order.
+
+Submenus must work by keyboard and by touch. Hover may open them, but hover must
+never be the only way in — the trigger is a real `<button>` with `aria-expanded`.
+
+The footer carries all eight pages as a flat list. That is the only place a
+complete index is needed.
 
 ## Archived, not deleted
 
@@ -50,6 +76,9 @@ plus a restyle against the current tokens.
 - `SITE_VERSION` in `src/lib/constants.js` drives the footer version marker — bump it
   on EVERY update/push (last segment per change), ideally in the same commit.
 - Lint baseline is 3 pre-existing errors; don't introduce new ones. Build must pass.
+- Home page copy stays short. Ken wants it understood in ten seconds: big type,
+  few words, depth on the pages the menu leads to. If a section is growing into
+  an explanation, it belongs on a page, not on the home page.
 - Sections carry a default surface and accept a `surface` prop so a page can rotate
   between the recipes in `src/lib/gradients.js`. No two consecutive sections on a
   page should share one — the ink recipe especially, since `CtaBand` is always ink.
@@ -71,8 +100,13 @@ Not because they are secret, but because they have not been decided. Do not add:
 
 Removed from the positioning and not to be reintroduced without Ken: UHI as a
 race, "the complete athlete wins", the founding athlete waitlist, the resilience
-and mental fortitude capabilities, and event entry pricing in the membership
-journey.
+and mental fortitude capabilities, "human operating system", and event entry
+pricing in the membership journey. Resilience and mental fortitude must not
+appear even to be corrected — an FAQ explaining that they are no longer areas
+was removed for putting both terms back on the page.
+
+`CONTENT-REQUIREMENTS.md` records what is still needed from Ken, including the
+exercise-to-area mapping, with a fillable table.
 
 Use British English.
 
