@@ -9,7 +9,6 @@ import MembershipSection from "@/sections/MembershipSection";
 import ThreeQuestionsSection from "@/sections/ThreeQuestionsSection";
 import FaqSection from "@/sections/FaqSection";
 import CtaBand from "@/components/shared/CtaBand";
-import NextPageBand from "@/components/NextPageBand";
 
 /* How you get in, then how far you can go.
 
@@ -35,7 +34,6 @@ export default function MembershipPage() {
         heading="Ready to find your Index?"
         lead="Register your interest and we'll be in touch as membership opens."
       />
-      <NextPageBand from="/membership" />
     </>
   );
 }

@@ -10,7 +10,6 @@ import MovementStandardSection from "@/sections/MovementStandardSection";
 import JourneySection from "@/sections/JourneySection";
 import FaqSection from "@/sections/FaqSection";
 import CtaBand from "@/components/shared/CtaBand";
-import NextPageBand from "@/components/NextPageBand";
 
 /* The mechanics: what counts, how it is recognised, and to what standard. The
    Test → Score → Understand → Improve loop closes the page, because by this
@@ -31,7 +30,6 @@ export default function HowItWorksPage() {
         heading="Start with what you already do"
         lead="Run, lift, row, ride, move, compete. Every result you add makes the picture more complete."
       />
-      <NextPageBand from="/how-it-works" />
     </>
   );
 }

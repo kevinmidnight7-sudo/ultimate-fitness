@@ -1,63 +1,158 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { motion, AnimatePresence, useReducedMotion, useScroll } from "framer-motion";
-import { X, Menu } from "lucide-react";
+import { ChevronDown, X, Menu } from "lucide-react";
 
 import { RegisterButtonHeader } from "@/components/shared/RegisterButton";
 import SiteLogo from "@/components/shared/SiteLogo";
-import { routes } from "@/lib/routes";
+import { nav, routesByPath } from "@/lib/routes";
 
-/* The site's only navigation.
+/* The site's only navigation, and the only way a visitor is expected to move
+   around it.
 
-   Eight pages is one more than the bar used to carry, and the rebrand asks for
-   larger, more open typography — so the full row appears at xl and everything
-   below that gets the panel. That trade is deliberate: a cramped eight-item
-   row at 1024px would undo the whitespace the rest of the design is built on. */
+   It used to be eight items in a flat row, plus a "next page" band at the foot
+   of every page that walked people through those eight in a fixed order. Ken
+   asked for the opposite after looking at Deadly Dozen, HYROX and Flat Out: a
+   short top menu with submenus, and no sideways or sequential controls
+   anywhere. The band is gone (archived) and this is what replaced it.
+
+   Five top-level choices. Two of them open a submenu whose first entry is the
+   group's own landing page, so nothing is reachable only by guessing that a
+   group heading is also a link. */
+
+/* A group in the desktop bar: a button that toggles its submenu.
+
+   Deliberately a <button>, not a hover target. Hover opens it as a
+   convenience, but the button is what makes it work with a keyboard and on
+   touch — where there is no hover at all and a hover-only menu is simply a
+   dead item. */
+function NavGroup({ group, open, onOpen, onClose, isCurrent }) {
+  const ref = useRef(null);
+
+  /* Close when focus leaves the group entirely. relatedTarget is the element
+     focus is moving TO, so this fires on Tab out but not on Tab between the
+     button and its own items. */
+  const handleBlur = (e) => {
+    if (!ref.current?.contains(e.relatedTarget)) onClose();
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      onMouseEnter={onOpen}
+      onMouseLeave={onClose}
+      onBlur={handleBlur}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={`nav-${group.label.replace(/\s+/g, "-").toLowerCase()}`}
+        onClick={() => (open ? onClose() : onOpen())}
+        className={`flex items-center gap-1.5 py-2 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors ${
+          isCurrent ? "text-ember" : "text-ink-70 hover:text-ink"
+        }`}
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        {group.label}
+        <ChevronDown
+          className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      <div
+        id={`nav-${group.label.replace(/\s+/g, "-").toLowerCase()}`}
+        hidden={!open}
+        className="absolute left-0 top-full z-50 min-w-[15rem] border border-line bg-cream shadow-[0_16px_40px_rgba(22,19,15,0.10)]"
+      >
+        <ul className="m-0 list-none p-0">
+          {group.items.map((path) => (
+            <li key={path}>
+              <NavLink
+                to={path}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `block border-b border-line px-5 py-3.5 text-[14px] font-bold uppercase tracking-[0.12em] no-underline transition-colors last:border-b-0 ${
+                    isActive ? "text-ember" : "text-ink hover:bg-ember-tint hover:text-ember"
+                  }`
+                }
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {routesByPath[path].label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 export default function SiteHeader() {
-  const { scrollY: navScrollY } = useScroll();
-  const [navScrolled, setNavScrolled] = useState(false);
   const { pathname } = useLocation();
-  const reduced = useReducedMotion();
 
-  /* The panel remembers which page it was opened on rather than tracking a
-     bare boolean, so it closes itself the moment the route changes — a tap on
-     a menu item and a press of the browser Back button both land here, and
+  /* Both menus remember the page they were opened on rather than tracking a
+     bare boolean, so they close themselves the moment the route changes — a
+     tap on an item and a press of the browser Back button both land here, and
      neither needs an effect to sync anything. */
-  const [openedAt, setOpenedAt] = useState(null);
-  const mobileMenuOpen = openedAt === pathname;
+  const [panelOpenedAt, setPanelOpenedAt] = useState(null);
+  const panelOpen = panelOpenedAt === pathname;
+  /* Same trick for the submenu: it stores the page it was opened on, so a
+     route change closes it without an effect that fights React. */
+  const [openGroup, setOpenGroup] = useState(null);
+  const activeGroup = openGroup?.path === pathname ? openGroup.label : null;
 
+  /* Escape closes an open submenu wherever focus happens to be. */
   useEffect(() => {
-    return navScrollY.on("change", (v) => setNavScrolled(v > 40));
-  }, [navScrollY]);
+    if (!activeGroup) return;
+    const onKey = (e) => e.key === "Escape" && setOpenGroup(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeGroup]);
 
-  const linkClass = ({ isActive }) =>
-    `text-[12px] font-bold uppercase tracking-[0.16em] no-underline transition-colors ${
+  const topLinkClass = ({ isActive }) =>
+    `py-2 text-[13px] font-bold uppercase tracking-[0.14em] no-underline transition-colors ${
       isActive ? "text-ember" : "text-ink-70 hover:text-ink"
     }`;
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-        navScrolled ? "border-line bg-bone/95 backdrop-blur-md" : "border-transparent bg-bone"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-3.5 sm:px-8">
-        <Link to="/" className="shrink-0 no-underline">
+    <header className="sticky top-0 z-50 border-b border-line bg-bone">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:bg-ember focus:px-4 focus:py-2 focus:text-[13px] focus:font-bold focus:uppercase focus:tracking-[0.14em] focus:text-cream focus:no-underline"
+        style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+      >
+        Skip to content
+      </a>
+
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
+        <Link to="/" className="shrink-0 no-underline" aria-label="Ultimate Human Index — home">
           <SiteLogo tone="ink" className="h-8 sm:h-10" />
         </Link>
 
-        <nav aria-label="Primary" className="hidden gap-7 xl:flex">
-          {routes.map(({ path, label }) => (
-            <NavLink
-              key={path}
-              to={path}
-              end={path === "/"}
-              className={linkClass}
-              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-            >
-              {label}
-            </NavLink>
-          ))}
+        <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+          {nav.map((item) =>
+            item.items ? (
+              <NavGroup
+                key={item.label}
+                group={item}
+                open={activeGroup === item.label}
+                onOpen={() => setOpenGroup({ label: item.label, path: pathname })}
+                onClose={() => setOpenGroup(null)}
+                isCurrent={item.items.includes(pathname)}
+              />
+            ) : (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === "/"}
+                className={topLinkClass}
+                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              >
+                {item.label}
+              </NavLink>
+            )
+          )}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -66,50 +161,74 @@ export default function SiteHeader() {
           </div>
           <button
             type="button"
-            onClick={() => setOpenedAt(mobileMenuOpen ? null : pathname)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileMenuOpen}
-            className="flex h-10 w-10 shrink-0 items-center justify-center border border-line text-ink transition-colors hover:border-ember hover:text-ember xl:hidden"
+            onClick={() => setPanelOpenedAt(panelOpen ? null : pathname)}
+            aria-label={panelOpen ? "Close menu" : "Open menu"}
+            aria-expanded={panelOpen}
+            aria-controls="menu-panel"
+            className="flex h-10 w-10 shrink-0 items-center justify-center border border-line text-ink transition-colors hover:border-ember hover:text-ember lg:hidden"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {panelOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Menu panel */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.nav
-            aria-label="Primary"
-            initial={reduced ? false : { opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
-            transition={{ duration: reduced ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-line bg-bone xl:hidden"
-          >
-            <div className="flex flex-col px-5 py-1 sm:px-8">
-              {routes.map(({ path, label }) => (
+      {/* Small-screen panel.
+
+          Every page is listed, grouped under its heading, with nothing to
+          expand. Nested accordions on a menu of eight links would be more
+          taps to reach the same place, and on a phone a wrong guess costs a
+          page load. */}
+      <div
+        id="menu-panel"
+        hidden={!panelOpen}
+        className="border-t border-line bg-bone lg:hidden"
+      >
+        <nav aria-label="All pages" className="px-5 py-6 sm:px-8">
+          {nav.map((item) => (
+            <div key={item.label} className="mb-6 last:mb-0">
+              {item.items ? (
+                <>
+                  <p className="type-label mb-1 text-ink-50">{item.label}</p>
+                  <ul className="m-0 list-none p-0">
+                    {item.items.map((path) => (
+                      <li key={path}>
+                        <NavLink
+                          to={path}
+                          className={({ isActive }) =>
+                            `block py-2.5 text-[19px] font-bold uppercase tracking-[0.12em] no-underline transition-colors ${
+                              isActive ? "text-ember" : "text-ink"
+                            }`
+                          }
+                          style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                        >
+                          {routesByPath[path].label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
                 <NavLink
-                  key={path}
-                  to={path}
-                  end={path === "/"}
+                  to={item.path}
+                  end={item.path === "/"}
                   className={({ isActive }) =>
-                    `border-b border-line py-4 text-[17px] font-bold uppercase tracking-[0.16em] no-underline transition-colors last:border-b-0 ${
-                      isActive ? "text-ember" : "text-ink hover:text-ember"
+                    `block py-2.5 text-[19px] font-bold uppercase tracking-[0.12em] no-underline transition-colors ${
+                      isActive ? "text-ember" : "text-ink"
                     }`
                   }
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
                 >
-                  {label}
+                  {item.label}
                 </NavLink>
-              ))}
-              <div className="py-5 sm:hidden">
-                <RegisterButtonHeader />
-              </div>
+              )}
             </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+          ))}
+
+          <div className="mt-8 sm:hidden">
+            <RegisterButtonHeader />
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }

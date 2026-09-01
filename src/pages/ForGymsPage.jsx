@@ -6,7 +6,6 @@ import PageHeader from "@/components/PageHeader";
 import GymPitchSection from "@/sections/GymPitchSection";
 import GymBenefitsSection from "@/sections/GymBenefitsSection";
 import CtaBand from "@/components/shared/CtaBand";
-import NextPageBand from "@/components/NextPageBand";
 
 export default function ForGymsPage() {
   const page = routesByPath["/for-gyms"];
@@ -22,7 +21,6 @@ export default function ForGymsPage() {
         lead="We're talking to gyms now about how the partner programme should work. Tell us where you train, or get in touch if you run the place."
         label="Talk to us about UHI"
       />
-      <NextPageBand from="/for-gyms" />
     </>
   );
 }

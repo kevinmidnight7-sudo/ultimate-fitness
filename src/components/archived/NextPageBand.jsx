@@ -4,7 +4,21 @@ import { ArrowRight } from "lucide-react";
 import Reveal from "@/components/motion/Reveal";
 import { nextRoute } from "@/lib/routes";
 
-/* The closing band on every page: one forward link to the next page in the
+/* ARCHIVED (Sep 2026). Not rendered anywhere.
+
+   This was the closing band on every page: one forward link to the next page
+   in a fixed running order. Ken asked for it to go — it pushed people through
+   the site as a sequence when the top menu should be doing the navigating, and
+   it meant the foot of every page was a navigation control rather than
+   something worth doing. Kept here rather than deleted, with the rest of the
+   replaced work.
+
+   It depends on `nextRoute()`, which was removed from src/lib/routes.js along
+   with the idea of a running order, so restoring it means restoring that too.
+
+   The original note follows.
+
+   The closing band on every page: one forward link to the next page in the
    running order.
 
    Splitting a site into pages removes the sense of a path that a single long

@@ -104,11 +104,33 @@ export const routes = [
 
 export const routesByPath = Object.fromEntries(routes.map((r) => [r.path, r]));
 
-/* The page that follows `path` in the running order, or null at the end of it. */
-export function nextRoute(path) {
-  const i = routes.findIndex((r) => r.path === path);
-  return i >= 0 && i < routes.length - 1 ? routes[i + 1] : null;
-}
+/* The top menu.
+
+   Eight items in one flat row was too many to read at a glance, and it also
+   implied that all eight are equally important. This groups them into five
+   choices, each group opening a short submenu that includes its own landing
+   page — the structure Ken asked for after comparing UHI with Deadly Dozen,
+   HYROX and Flat Out.
+
+   `paths` on a group is the set of routes that should light the group up as
+   current. A group's own page is the first entry in `items`, so a visitor can
+   always reach it from the menu rather than having to guess that the group
+   heading is itself a link. */
+export const nav = [
+  { label: "Home", path: "/" },
+  {
+    label: "The Index",
+    path: "/the-index",
+    items: ["/the-index", "/how-it-works", "/improve"],
+  },
+  {
+    label: "Membership",
+    path: "/membership",
+    items: ["/membership", "/for-gyms"],
+  },
+  { label: "Challenges", path: "/challenges" },
+  { label: "About", path: "/about" },
+];
 
 /* The pre-rebrand URLs, every one of which is out in the wild — shared, linked
    and indexed. Each maps to the page that now carries its subject, and App.jsx

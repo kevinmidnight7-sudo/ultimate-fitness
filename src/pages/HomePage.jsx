@@ -9,7 +9,6 @@ import TrainYourWaySection from "@/sections/TrainYourWaySection";
 import JourneySection from "@/sections/JourneySection";
 import BenchmarkSection from "@/sections/BenchmarkSection";
 import CtaBand from "@/components/shared/CtaBand";
-import NextPageBand from "@/components/NextPageBand";
 
 /* The home page makes the argument in order and then stops: what the Index is,
    why one number is worth having, what it looks like, that you don't have to
@@ -32,7 +31,6 @@ export default function HomePage() {
         heading="What's your Ultimate Human Index?"
         lead="You don't have to be an ultimate human to start. Whatever your age, whatever your ability, wherever you're starting from."
       />
-      <NextPageBand from="/" />
     </>
   );
 }

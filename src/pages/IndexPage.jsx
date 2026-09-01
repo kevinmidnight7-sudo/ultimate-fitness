@@ -10,7 +10,6 @@ import EvidenceSection from "@/sections/EvidenceSection";
 import EstimatedVerifiedSection from "@/sections/EstimatedVerifiedSection";
 import FaqSection from "@/sections/FaqSection";
 import CtaBand from "@/components/shared/CtaBand";
-import NextPageBand from "@/components/NextPageBand";
 
 /* The Index explained end to end: the eight areas, the profile they produce,
    what feeds it, and the difference between an estimated and a verified score. */
@@ -38,7 +37,6 @@ export default function IndexPage() {
         heading="Find your number"
         lead="Your first Index isn't a judgement. It's your starting point."
       />
-      <NextPageBand from="/the-index" />
     </>
   );
 }
