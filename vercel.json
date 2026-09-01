@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/personal-index", "destination": "/the-index", "permanent": true },
+    { "source": "/personal-coach", "destination": "/improve", "permanent": true },
+    { "source": "/subscribe", "destination": "/membership", "permanent": true },
+    { "source": "/challenge", "destination": "/challenges", "permanent": true },
+    { "source": "/compete", "destination": "/challenges", "permanent": true }
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
