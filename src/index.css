@@ -14,17 +14,41 @@
    site, change the hexes here and nothing else — no component hard-codes a
    brand colour.
 
-   Contrast, measured against WCAG 2.1 (all text pairings clear AA):
-     ink        on bone        16.5:1      bone        on ink        16.5:1
-     ink-70     on bone         8.0:1      bone-70     on ink         8.7:1
-     ink-50     on bone         5.3:1      bone-50     on ink         5.2:1
-     ember      on bone         4.6:1      ember-light on ink         6.9:1
-     ember-deep on bone         6.6:1      cream       on ember       4.9:1
-     ink        on sand        14.3:1      ember-deep  on sand        5.7:1
+   Contrast, measured against WCAG 2.1. Text pairings need 4.5:1; non-text UI
+   (rules, bar fills, icons, focus rings, borders) needs 3:1.
 
-   Rule of thumb: on light grounds use `ember` / `ember-deep`; on `ink` grounds
-   use `ember-light`. `line` is a decorative hairline only — never rely on it
-   alone to separate two interactive regions.
+     TEXT                                  NON-TEXT
+     ink        on bone       16.5:1       ember       on bone      3.6:1
+     ink-70     on bone        8.0:1       ember       on cream     3.9:1
+     ink-50     on bone        5.3:1       ember       on sand      3.1:1
+     ember-deep on bone        5.5:1       ember-light on ink       7.8:1
+     ember-deep on cream       5.9:1
+     ember-deep on sand        4.8:1
+     ember-deep on ember-tint  4.8:1
+     bone       on ink        16.5:1
+     bone-70    on ink         8.7:1
+     bone-50    on ink         5.2:1
+     ember-light on ink        7.8:1
+     ink        on ember       4.6:1   <- the primary button label
+     cream      on ember-deep  5.8:1   <- the primary button on hover
+     ink        on ember-tint 14.4:1
+     ink-70     on ember-tint  7.0:1
+
+   Rule of thumb, and the one that changed when the orange was brightened:
+
+     `ember` is now a GRAPHIC colour, not a text colour on light grounds. It
+     clears 3:1 for rules, bar fills, icons, borders and focus rings, but at
+     3.6:1 on bone it is below AA for body-size text. Small text on a light
+     ground uses `ember-deep`. On `ink` grounds use `ember-light`.
+
+   Every figure above is measured against the DARKEST stop of the surface the
+   element sits on, not against bone. That matters: the previous accent,
+   #b4501c, was used directly for the 12px section eyebrows and measured
+   4.6:1 — but only against bone. On a `sand` surface it was 3.9:1, i.e.
+   already below AA. The split above fixes that as well as brightening.
+
+   `line` is a decorative hairline only — never rely on it alone to separate
+   two interactive regions.
    ───────────────────────────────────────────────────────────── */
 
 @theme {
@@ -47,11 +71,26 @@
   --color-bone-70: #b9b1a6;
   --color-bone-50: #8e877e;
 
-  /* Burnt orange — the one accent. */
-  --color-ember: #b4501c;
-  --color-ember-deep: #8e3d14;
-  --color-ember-light: #e8834a;
-  --color-ember-tint: #f1e0d3;
+  /* Burnt orange — the one accent.
+
+     Brightened Sep 2026 on Ken's note that the orange needed more energy. The
+     ramp is one hue (OKLCh ~46 deg) at four lightness steps, so the four read
+     as one colour rather than four:
+
+       ember-deep   L .512  C .129    text and hover
+       ember        L .609  C .152    the primary
+       ember-light  L .744  C .145    everything on an ink ground
+       ember-tint   L .918  C .031    the pale card wash
+
+     The primary moved from L .552 to L .609 while chroma barely moved
+     (.144 -> .152): this is a brightness change, not a saturation grab. It
+     stays well short of a pure digital orange — EasyJet's #ff6600 is L .696
+     C .204, so this sits 0.086 lower and 0.052 less chromatic on the same
+     hue, which is what keeps it warm and slightly earthy rather than shouty. */
+  --color-ember: #ca6025;
+  --color-ember-deep: #a04a19;
+  --color-ember-light: #f68c58;
+  --color-ember-tint: #f7ded3;
 }
 
 html {
@@ -173,18 +212,28 @@ h3 {
 }
 
 /* ── Primary call to action ──────────────────────────────────
-   Solid ember, cream text (4.9:1). Deliberately calmer than the old lime
-   button: a lift and a colour shift, no breathing glow or sheen sweep. */
+   Solid ember with an INK label (4.6:1), which is the change the brighter
+   orange forced: cream on the old darker ember cleared AA at 4.9:1, and on
+   the new one it drops to 3.9:1. Rather than dim the primary back down to
+   keep white text, the label went dark — the button is more legible for it.
+
+   Hover darkens to ember-deep and the label flips to cream (5.9:1), so both
+   states are comfortably readable and the press has a real change of state.
+   Deliberately calmer than the old lime button: a lift and a colour shift,
+   no breathing glow or sheen sweep. */
 .uh-cta {
   transition:
     background-color 0.3s ease,
+    color 0.3s ease,
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.3s ease;
   box-shadow: 0 1px 2px rgba(22, 19, 15, 0.14);
 }
 .uh-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(142, 61, 20, 0.22);
+  /* Tinted from the accent rather than a neutral drop shadow, so the lift
+     reads as the button's own colour. Kept in step with --color-ember-deep. */
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--color-ember-deep) 26%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

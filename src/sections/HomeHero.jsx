@@ -51,7 +51,7 @@ export default function HomeHero() {
             <RegisterButton />
             <Link
               to="/the-index"
-              className="group inline-flex items-center gap-2.5 border-b border-line pb-1 text-[15px] font-bold uppercase tracking-[0.14em] text-ink no-underline transition-colors hover:border-ember hover:text-ember"
+              className="group inline-flex items-center gap-2.5 border-b border-line pb-1 text-[15px] font-bold uppercase tracking-[0.14em] text-ink no-underline transition-colors hover:border-ember hover:text-ember-deep"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
               {homeHero.secondary}

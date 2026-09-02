@@ -4,7 +4,10 @@ import { REGISTER_URL, REGISTER_LABEL } from "@/lib/constants";
 
 /* The site's primary call to action. Opens the Google Form in a new tab.
 
-   Solid ember with cream text (4.9:1). The old lime version breathed, glowed
+   Solid ember with an INK label (4.6:1), flipping to cream on the darker
+   ember-deep hover (5.9:1). Cream on the brightened primary only reaches
+   3.9:1, and dimming the primary back down to keep white text would have
+   undone the point of brightening it. The old lime version breathed, glowed
    and swept a sheen across itself on a loop; the rebrand asks for a calmer,
    more premium feel, so this lifts on hover and does nothing otherwise.
 
@@ -24,7 +27,7 @@ export function RegisterButton({
   const colours =
     tone === "ink"
       ? "bg-bone text-ink hover:bg-cream"
-      : "bg-ember text-cream hover:bg-ember-deep";
+      : "bg-ember text-ink hover:bg-ember-deep hover:text-cream";
 
   return (
     <a
@@ -48,7 +51,7 @@ export function RegisterButtonHeader() {
       href={REGISTER_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="uh-cta inline-flex shrink-0 items-center gap-2 whitespace-nowrap bg-ember px-4 py-2.5 text-[11.5px] font-bold uppercase leading-none tracking-[0.12em] text-cream no-underline hover:bg-ember-deep sm:px-5 sm:text-[12.5px] sm:tracking-[0.14em]"
+      className="uh-cta inline-flex shrink-0 items-center gap-2 whitespace-nowrap bg-ember px-4 py-2.5 text-[11.5px] font-bold uppercase leading-none tracking-[0.12em] text-ink no-underline hover:bg-ember-deep hover:text-cream sm:px-5 sm:text-[12.5px] sm:tracking-[0.14em]"
       style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
     >
       {REGISTER_LABEL}

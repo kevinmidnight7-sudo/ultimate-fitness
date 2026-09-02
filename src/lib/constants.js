@@ -1,6 +1,6 @@
 /* Bump this on every update/push so the footer marker shows what's deployed.
    The Sep 2026 Index-first rebrand opens the v3 line. */
-export const SITE_VERSION = "v3.1.2.0";
+export const SITE_VERSION = "v3.2.0.0";
 
 /* Every call to action on the site points at the Google Form. Change this one
    value to repoint all of them. */

@@ -28,7 +28,7 @@ export default function NotFoundPage() {
               className="group flex flex-col justify-between gap-6 bg-cream p-8 no-underline transition-colors duration-300 hover:bg-ember-tint"
             >
               <div>
-                <p className="type-h3 text-ink transition-colors duration-300 group-hover:text-ember">
+                <p className="type-h3 text-ink transition-colors duration-300 group-hover:text-ember-deep">
                   {page.label}
                 </p>
                 <p className="mt-3 text-[16px] leading-6 text-ink-70">{page.blurb}</p>
