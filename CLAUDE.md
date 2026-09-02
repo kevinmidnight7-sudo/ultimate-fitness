@@ -120,11 +120,21 @@ Reskinning the site is a change to that one block.
 - `bone` is the dominant background, `cream` for lifted panels, `sand` for
   heavier bands, `ember` (burnt orange) is the single accent, `ink` is text and
   the one or two contrast sections per page.
-- On light grounds use `ember` / `ember-deep`; on `ink` grounds use `ember-light`
-  and the `bone-*` text tokens. Wrap ink sections in `on-ink` so focus rings
-  switch to the light variant.
+- **`ember` is a graphic colour, not a text colour.** Since it was brightened
+  (Sep 2026) it sits at 3.6:1 on bone: fine for rules, bar fills, icons,
+  borders, focus rings and button grounds, below AA for body-size text. Small
+  text on a light ground uses `ember-deep`; on `ink` grounds use `ember-light`
+  and the `bone-*` tokens. Wrap ink sections in `on-ink` so focus rings switch
+  to the light variant.
+- The primary button is `bg-ember text-ink`, flipping to `bg-ember-deep
+  text-cream` on hover. Cream on the brightened ember is only 3.9:1 — do not
+  put white text back on it.
 - Every text pairing clears WCAG AA. The measured ratios are in `src/index.css`
   — check them before changing a hex.
+- **Measure contrast against the darkest stop of the surface, not the body.**
+  Most sections sit on a bone→sand gradient, and resolving the background by
+  walking up for a background-*color* skips the gradient entirely and lands on
+  bone. That is how seven eyebrows sat below AA unnoticed for a release.
 - No lime anywhere: it reads as a competitor's colour. `SiteLogo` masks the
   existing white lockup and paints it with a token colour, so the real artwork
   works on bone until new brand assets arrive.
@@ -141,11 +151,22 @@ Reskinning the site is a change to that one block.
 Use `<Photograph>` — it handles the reserved box, lazy loading, the crop anchor
 and the warm grade in one place, and it requires `alt`.
 
-- **Three images, chosen to carry an argument.** A woman in her fifties
+- **Three images today, chosen to carry an argument.** A woman in her fifties
   training outdoors on the home page (answers "is this for people like me?"), a
   sled push above the exercise library (a movement that is actually in the
   list), and a full-bleed break on Challenges. Not one per page, and not
   decoration.
+- **They are temporary.** Ken asked for photography that feels more
+  egalitarian; the current three are the same lean, able-bodied, solo, cool-lit
+  photograph three times over. `IMAGE-GENERATION-BRIEF.md` specifies the six
+  that replace and extend them, with measured crops for every breakpoint. Do
+  not add more archive photography in the meantime, and do not build empty
+  slots for images that have not arrived.
+- `<Photograph grade="none">` for the new set — they are shot warm, and the
+  built-in grade exists to rescue the cool stock currently in place. Warming an
+  already-warm image twice makes it muddy.
+- `priority` sets both `loading="eager"` and `fetchpriority="high"`. Nothing
+  above the fold uses an image today.
 - **`movement-analysis-still.jpg` is deliberately unused.** It is saturated
   with the old lime, and it is a picture of joint tracking — the exact feature
   that is still in development. Retinting would fix the first problem and not
