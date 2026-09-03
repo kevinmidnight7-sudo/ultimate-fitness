@@ -3,9 +3,78 @@
 For ChatGPT Work. Six photographs to replace and extend the site's current
 imagery.
 
-**Nothing here has been generated.** No AI images have been produced in this
-repository, and the three photographs currently on the site are untouched and
-stay in place until these arrive.
+---
+
+## 0. Status — what has landed (Sep 2026)
+
+**Four of the six are live. They are the production set; the rest are
+deferred, not outstanding work.**
+
+Ken supplied nine generated frames and chose four of them. They were re-encoded
+here, placed, and cropped against the real frames at every breakpoint. Nothing
+is waiting on anything to ship.
+
+| Page | File base | Source | Shipped renditions | Slot |
+| --- | --- | --- | --- | --- |
+| Home | `uhi-home-train-your-way` | 1122x1402 PNG, 2.08 MB | 560w, 1120w — AVIF / WebP / JPEG | `TrainYourWaySection`, right column, native 4:5, uncropped |
+| How It Works | `uhi-how-it-works-farmers-carry` | 1915x821 PNG, 1.66 MB | 1600w — AVIF / WebP / JPEG | `ExerciseLibrarySection`, right column beside the introduction |
+| Improve | `uhi-improve-balance` | 1122x1402 PNG, 1.72 MB | 480w, 960w — AVIF / WebP / JPEG | `CoachingSection`, left column, native 4:5, uncropped |
+| For Gyms | `uhi-for-gyms-community` | 1824x862 PNG, 1.81 MB | 760w, 1824w — AVIF / WebP / JPEG | `GymCommunitySection` (new), a contained band between the pitch and the benefits |
+
+All four use `grade="none"` — they are shot warm and the CSS grade is off.
+All four sit in a box that reserves its own space, so nothing moves when they
+arrive; measured CLS is 0.03 or lower on each page with the images held back
+past first paint.
+
+The nine supplied PNGs totalled 16.4 MB and are not in `public/` — shipping
+them would have put all of it on the wire on every deploy. They remain in the
+repository's history and on `main`.
+
+### Encoder settings
+
+`sharp` (libvips), Lanczos 3 down-scale, `withoutEnlargement`, from the
+supplied PNG each time rather than from another encode:
+
+| Format | Settings | Typical result |
+| --- | --- | --- |
+| AVIF | `quality: 52, effort: 6, chromaSubsampling: '4:2:0'` | 10–63 KB |
+| WebP | `quality: 80, effort: 6` | 17–102 KB |
+| JPEG | `quality: 82, mozjpeg, progressive, '4:2:0'` | 28–152 KB |
+
+A browser downloads one file per image, so a page costs one AVIF: 63 KB on
+Home, 28 KB on How It Works, 27 KB on Improve, 48 KB on For Gyms. All 21 files
+together are 1.1 MB in the repository, against 7.7 MB for the four PNGs they
+came from.
+
+### Deferred
+
+Both of these have a specification below that still stands. Neither is a gap in
+the current site.
+
+- **02 "The long way round" (The Index)** — The Index page carries the profile
+  component, which is the densest thing on the site. It does not need an image
+  to stop it feeling empty, and the empty-page problem this phase was solving
+  was on the longer prose pages.
+- **06 "Somewhere in the middle" (Challenges)** — Challenges keeps
+  `challenge-fatigue-moment.jpg`, which already makes the argument that section
+  needs (an athlete recovering, alone, not on a start line). Replacing a working
+  image was not worth a fifth generation round.
+
+### Coverage the delivered four do not carry
+
+Stated plainly rather than quietly dropped, because this was the point of the
+brief:
+
+- **No adaptive athlete anywhere in the set.** The brief put a wheelchair user
+  in 02 and an amputee in 05; the frames Ken chose have neither. Disability is
+  not represented in the site's photography at all today.
+- **The Index and Challenges** keep the coverage they had.
+
+What the four do carry between them: two people over sixty, two women, a
+larger-bodied person, four ethnicities, outdoor / studio / gym settings, and one
+group of three against three solo frames. That is a long way from "the same lean
+twenty-five-year-old three times". It is not the whole of what section 6 asked
+for.
 
 ---
 
@@ -152,7 +221,7 @@ stacks there and the image goes full width.
 
 ---
 
-### 01 — "Kitchen-table start"
+### 01 — "Kitchen-table start" — DELIVERED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -196,7 +265,7 @@ required, no particular body required.
 
 ---
 
-### 02 — "The long way round"
+### 02 — "The long way round" — DEFERRED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -240,7 +309,7 @@ a Tuesday counts.
 
 ---
 
-### 03 — "The carry"
+### 03 — "The carry" — DELIVERED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -284,7 +353,7 @@ standard, and they are the raw material of your Index.
 
 ---
 
-### 04 — "Finding the range"
+### 04 — "Finding the range" — DELIVERED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -327,7 +396,7 @@ will actually move it. Coaching is a person, not an interface.
 
 ---
 
-### 05 — "The Saturday group"
+### 05 — "The Saturday group" — DELIVERED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -370,7 +439,7 @@ score — supervised, supported, and open to whoever walks in.
 
 ---
 
-### 06 — "Somewhere in the middle"
+### 06 — "Somewhere in the middle" — DEFERRED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -468,8 +537,12 @@ that disability reads as ordinary in this set rather than as a single gesture.
 
 ## 8. Still open
 
-- **`hero-athlete-primary.jpg` and `why-enter-lifestyle.jpg`** are replaced by
-  03 and 01. They stay in the repository until the replacements land.
+- **An adaptive athlete.** Nothing in the delivered four shows one. If only one
+  more frame is ever generated, this is the one.
+- **`hero-athlete-primary.jpg` and `why-enter-lifestyle.jpg`** are no longer on
+  any live page — 03 and 01 replaced them. They stay in the repository because
+  the archived event-first sections still reference them, and those sections are
+  meant to remain restorable.
 - **`movement-analysis-still.jpg`** stays unused. It is lime-saturated and it
   depicts live joint tracking, which is not a shipped feature. Nothing in this
   brief replaces it, because nothing should.
