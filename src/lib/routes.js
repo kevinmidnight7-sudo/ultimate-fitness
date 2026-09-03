@@ -11,6 +11,9 @@
    Index is, what feeds it, how you improve it, how you get it, where you can
    get it validated, what else the ecosystem offers, and who is building it. */
 
+/* `pattern` names an IndexPattern variant for the page's introduction — one
+   instrument drawn seven slightly different ways. See
+   src/components/shared/IndexPattern.jsx. */
 export const routes = [
   {
     path: "/",
@@ -26,6 +29,7 @@ export const routes = [
     label: "The Index",
     blurb: "The eight areas of fitness, and the score they add up to.",
     eyebrow: "Your Score",
+    pattern: "index",
     /* Heading is deliberately not the nav label: the page speaks to the reader,
        the menu stays short. */
     heading: "Your Ultimate Human Index",
@@ -39,6 +43,7 @@ export const routes = [
     label: "How It Works",
     blurb: "The Capability Framework, the exercise library and the movement standards.",
     eyebrow: "Capability Framework",
+    pattern: "framework",
     heading: "However You Train, It Counts",
     lead: "The recognised exercises, tests and events that build your Index — and the movement standards that keep them comparable.",
     title: "How It Works — The UHI Capability Framework | Ultimate Human Index",
@@ -50,6 +55,7 @@ export const routes = [
     label: "Improve",
     blurb: "Turning the score into a plan for what to do next.",
     eyebrow: "Coaching",
+    pattern: "improve",
     heading: "Your Index Becomes Your Coach",
     lead: "Knowing your score is interesting. Knowing how to improve it is what changes your training.",
     title: "Improve — Personalised Coaching and Insight | Ultimate Human Index",
@@ -61,6 +67,7 @@ export const routes = [
     label: "Membership",
     blurb: "UHI Start, UHI Improve and UHI Pro — and the two ways in.",
     eyebrow: "Membership",
+    pattern: "membership",
     heading: "Build Your Index. Then Keep Improving It.",
     lead: "Subscribe directly, or access UHI through a participating gym. Three levels, so you choose how far you want to take it.",
     title: "Membership — UHI Start, Improve and Pro | Ultimate Human Index",
@@ -72,6 +79,7 @@ export const routes = [
     label: "For Gyms",
     blurb: "Supported assessments, validated results and coaching, in your gym.",
     eyebrow: "Partner Gyms",
+    pattern: "gyms",
     heading: "UHI in Your Gym",
     lead: "A shared measure of fitness your members can build, understand and improve — with your coaches alongside them.",
     title: "For Gyms — Become a UHI Partner Gym | Ultimate Human Index",
@@ -83,6 +91,7 @@ export const routes = [
     label: "Challenges",
     blurb: "Events and challenges — one way to test your Index, not the only way.",
     eyebrow: "Challenges & Events",
+    pattern: "challenges",
     heading: "Challenges and Events",
     lead: "A way to test yourself, add evidence to your Index and compete if you want to. Never a requirement.",
     title: "Challenges and Events — Test Your Index | Ultimate Human Index",
@@ -94,6 +103,7 @@ export const routes = [
     label: "About",
     blurb: "Who is building this, and what is still being developed.",
     eyebrow: "The Team",
+    pattern: "about",
     heading: "About Ultimate Human",
     lead: "The people building the Index, why it exists, and what is still in development.",
     title: "About — The People Building UHI | Ultimate Human Index",

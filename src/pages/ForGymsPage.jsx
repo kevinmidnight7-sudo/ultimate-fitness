@@ -13,7 +13,12 @@ export default function ForGymsPage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <GymPitchSection surface={SURFACE_CREAM} />
       <GymBenefitsSection surface={SURFACE_BONE} />
       <CtaBand

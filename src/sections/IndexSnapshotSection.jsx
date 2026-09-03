@@ -35,7 +35,7 @@ export default function IndexSnapshotSection({
             {link && (
               <Link
                 to={link.to}
-                className="group inline-flex shrink-0 items-center gap-2.5 border-b border-line pb-1 text-[15px] font-bold uppercase tracking-[0.14em] text-ink no-underline transition-colors hover:border-ember hover:text-ember"
+                className="group inline-flex shrink-0 items-center gap-2.5 border-b border-line pb-1 text-[15px] font-bold uppercase tracking-[0.14em] text-ink no-underline transition-colors hover:border-ember hover:text-ember-deep"
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
               >
                 {link.label}

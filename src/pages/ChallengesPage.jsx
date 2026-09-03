@@ -14,7 +14,12 @@ export default function ChallengesPage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <ChallengesSection surface={SURFACE_SAND} />
       <ChallengeBreakSection />
       <ChallengeFormatSection surface={SURFACE_CREAM} />

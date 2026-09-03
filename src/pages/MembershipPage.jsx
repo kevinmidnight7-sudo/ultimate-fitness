@@ -22,7 +22,12 @@ export default function MembershipPage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <AccessRoutesSection surface={SURFACE_CREAM} />
       <MembershipSection surface={SURFACE_BONE} />
       <ThreeQuestionsSection

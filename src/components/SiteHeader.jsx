@@ -49,7 +49,7 @@ function NavGroup({ group, open, onOpen, onClose, isCurrent }) {
         aria-controls={`nav-${group.label.replace(/\s+/g, "-").toLowerCase()}`}
         onClick={() => (open ? onClose() : onOpen())}
         className={`flex items-center gap-1.5 py-2 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors ${
-          isCurrent ? "text-ember" : "text-ink-70 hover:text-ink"
+          isCurrent ? "text-ember-deep" : "text-ink-70 hover:text-ink"
         }`}
         style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
       >
@@ -73,7 +73,7 @@ function NavGroup({ group, open, onOpen, onClose, isCurrent }) {
                 onClick={onClose}
                 className={({ isActive }) =>
                   `block border-b border-line px-5 py-3.5 text-[14px] font-bold uppercase tracking-[0.12em] no-underline transition-colors last:border-b-0 ${
-                    isActive ? "text-ember" : "text-ink hover:bg-ember-tint hover:text-ember"
+                    isActive ? "text-ember-deep" : "text-ink hover:bg-ember-tint hover:text-ember-deep"
                   }`
                 }
                 style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -112,7 +112,7 @@ export default function SiteHeader() {
 
   const topLinkClass = ({ isActive }) =>
     `py-2 text-[13px] font-bold uppercase tracking-[0.14em] no-underline transition-colors ${
-      isActive ? "text-ember" : "text-ink-70 hover:text-ink"
+      isActive ? "text-ember-deep" : "text-ink-70 hover:text-ink"
     }`;
 
   return (
@@ -196,7 +196,7 @@ export default function SiteHeader() {
                           to={path}
                           className={({ isActive }) =>
                             `block py-2.5 text-[19px] font-bold uppercase tracking-[0.12em] no-underline transition-colors ${
-                              isActive ? "text-ember" : "text-ink"
+                              isActive ? "text-ember-deep" : "text-ink"
                             }`
                           }
                           style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -213,7 +213,7 @@ export default function SiteHeader() {
                   end={item.path === "/"}
                   className={({ isActive }) =>
                     `block py-2.5 text-[19px] font-bold uppercase tracking-[0.12em] no-underline transition-colors ${
-                      isActive ? "text-ember" : "text-ink"
+                      isActive ? "text-ember-deep" : "text-ink"
                     }`
                   }
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}

@@ -21,7 +21,12 @@ export default function ImprovePage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <CoachingSection surface={SURFACE_CREAM} />
       <ThreeQuestionsSection
         label="What it's for"
