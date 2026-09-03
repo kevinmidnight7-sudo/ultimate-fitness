@@ -181,6 +181,35 @@ and the warm grade in one place, and it requires `alt`.
   tall on a phone, which crops a person to a torso.
 - Never set text over the busy part of a photograph.
 
+## Page-introduction pattern
+
+`<IndexPattern>` draws the branded background for page introductions: one
+instrument — a score dial with a calibrated scale, centred just off the right
+edge — rendered in seven arrangements that vary only rotation, which rings are
+drawn, marker positions and where the short ember segment falls. Variants are
+named per page in `routes.js` and passed through `<PageHeader pattern=…>`.
+
+Rules that are load-bearing, not preferences:
+
+- **It sheds layers as the space disappears.** The ember marks are the only
+  saturated thing in it, so they are `lg` and up only; the tick scale is `sm`
+  and up. With every layer on at 320px the ember segment put a **2.0:1**
+  background behind an eyebrow. Verify with the pixel test
+  (`scratchpad/hdrcontrast.mjs`) — it hides the text, screenshots the real
+  render and samples the darkest pixel actually behind each text box. The
+  gradient-aware DOM checker cannot see an absolutely-positioned SVG sibling.
+- No numerals, labels, legends, rounded progress caps or rectangles. Each of
+  those pushes it from "capability framework" toward "software dashboard".
+- Absolutely positioned, `aria-hidden`, `pointer-events-none`, no animation at
+  all (so there is nothing for `prefers-reduced-motion` to switch off), no
+  external reference, tokens only.
+- Vertical placement belongs to the caller, not the component — a page
+  introduction fills edge to edge, a taller section must not.
+- **Not used on the home hero.** It was built and tested there; at that height
+  even the most restrained arrangement resolved to two thin curves crossing the
+  rule above the eight areas. The `hero` variant is kept for a future shorter
+  hero.
+
 ## Motion system
 
 Apple-style feel = three distinct effects. Don't blur them together.

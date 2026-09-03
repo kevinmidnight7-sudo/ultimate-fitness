@@ -24,7 +24,12 @@ export default function IndexPage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <EightAreasSection surface={SURFACE_CREAM} />
       <IndexSnapshotSection
         surface={SURFACE_BONE}

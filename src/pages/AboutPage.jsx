@@ -57,7 +57,12 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <AboutStorySection surface={SURFACE_CREAM} />
       <FoundersSection surface={SURFACE_BONE} />
       <InDevelopmentSection surface={SURFACE_SAND} />

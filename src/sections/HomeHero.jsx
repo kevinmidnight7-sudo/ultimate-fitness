@@ -30,13 +30,13 @@ export default function HomeHero() {
 
   return (
     <section
-      className="px-6 pb-20 pt-16 sm:px-8 sm:pb-28 sm:pt-24"
+      className="relative px-6 pb-20 pt-16 sm:px-8 sm:pb-28 sm:pt-24"
       style={{
         background:
           "linear-gradient(175deg, var(--color-ember-tint) 0%, var(--color-bone) 46%, var(--color-bone) 100%)",
       }}
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-7xl">
         <motion.div {...rise}>
           <SectionLabel>{homeHero.eyebrow}</SectionLabel>
 
@@ -66,7 +66,7 @@ export default function HomeHero() {
       {/* The eight areas, stated once at the top of the site, plus the one
           sentence that explains what kind of number this is. Everything else
           about the benchmark now lives on The Index. */}
-      <div className="mx-auto mt-20 max-w-7xl border-t border-line pt-8 sm:mt-24">
+      <div className="relative mx-auto mt-20 max-w-7xl border-t border-line pt-8 sm:mt-24">
         <p className="type-label text-ink-50">{homeHero.areasIntro}</p>
         <ul className="mt-5 flex list-none flex-wrap gap-x-7 gap-y-3 p-0">
           {fitnessAreas.map((area) => (

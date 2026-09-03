@@ -20,7 +20,12 @@ export default function HowItWorksPage() {
 
   return (
     <>
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+      <PageHeader
+        eyebrow={page.eyebrow}
+        heading={page.heading}
+        lead={page.lead}
+        pattern={page.pattern}
+      />
       <FrameworkSection surface={SURFACE_CREAM} />
       <ExerciseLibrarySection surface={SURFACE_SAND} />
       <MovementStandardSection surface={SURFACE_BONE} />
