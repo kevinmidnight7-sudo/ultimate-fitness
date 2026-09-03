@@ -148,29 +148,41 @@ Reskinning the site is a change to that one block.
 
 ## Photography
 
-Use `<Photograph>` — it handles the reserved box, lazy loading, the crop anchor
-and the warm grade in one place, and it requires `alt`.
+Use `<Photograph>` — it handles the reserved box, lazy loading, the crop anchor,
+the format ladder and the warm grade in one place, and it requires `alt`.
 
-- **Three images today, chosen to carry an argument.** A woman in her fifties
-  training outdoors on the home page (answers "is this for people like me?"), a
-  sled push above the exercise library (a movement that is actually in the
-  list), and a full-bleed break on Challenges. Not one per page, and not
-  decoration.
-- **They are temporary.** Ken asked for photography that feels more
-  egalitarian; the current three are the same lean, able-bodied, solo, cool-lit
-  photograph three times over. `IMAGE-GENERATION-BRIEF.md` specifies the six
-  that replace and extend them, with measured crops for every breakpoint. Do
-  not add more archive photography in the meantime, and do not build empty
-  slots for images that have not arrived.
-- `<Photograph grade="none">` for the new set — they are shot warm, and the
-  built-in grade exists to rescue the cool stock currently in place. Warming an
+- **Five images today, chosen to carry an argument.** Four campaign frames —
+  a sandbag carry outdoors on the home page (answers "is this for people like
+  me?"), a farmers carry beside the exercise library (a movement that is
+  actually in the list), a single-leg balance reach on Improve (one of the four
+  worked examples), a group of three on For Gyms — plus the full-bleed break
+  kept on Challenges. Not one per page, and not decoration. The Index,
+  Membership and About have none, deliberately.
+- **They alternate.** Home right, How It Works right, Improve left, For Gyms a
+  full-width band. Three identical splits in a row read as a template.
+- `grade="none"` on all four campaign images. They are shot warm; the built-in
+  grade exists to rescue the cool stock still on Challenges, and warming an
   already-warm image twice makes it muddy.
+- **Sized renditions, not one file.** The campaign images ship as
+  `<base>-<width>.{avif,webp,jpg}` and are called with `set` + `widths`, which
+  renders a `<picture>`. `sizes` describes the **box**, not the rendered image —
+  under `object-fit: cover` a hard sideways crop scales the file well past the
+  box width, and a srcset resolved against the box then picks a rendition the
+  browser upscales. Where the crop is heavy (How It Works, 2.33:1 into 1.6:1),
+  ship one honest width instead.
+- **What is left to shoot** is in `IMAGE-GENERATION-BRIEF.md` §0. Two of the six
+  specified frames are deferred, not missing; the one real gap is that no
+  adaptive athlete appears anywhere in the set. Do not add archive photography
+  to fill it, and do not build empty slots for images that have not arrived.
 - `priority` sets both `loading="eager"` and `fetchpriority="high"`. Nothing
   above the fold uses an image today.
 - **`movement-analysis-still.jpg` is deliberately unused.** It is saturated
   with the old lime, and it is a picture of joint tracking — the exact feature
   that is still in development. Retinting would fix the first problem and not
   the second.
+- `hero-athlete-primary.jpg` and `why-enter-lifestyle.jpg` are off every live
+  page but stay in the repository: `src/sections/archived/` still points at
+  them, and the archive is meant to stay restorable.
 - `converge-left.png` / `converge-right.png` are cut-outs built for the
   archived pinned scene. Leave them there.
 - Neither OG card is page content.

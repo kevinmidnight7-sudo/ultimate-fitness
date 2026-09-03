@@ -8,11 +8,11 @@ import { trainYourWay } from "@/data/content";
    One of the two or three things the site most needs a visitor to believe, so
    it gets a section of its own rather than a bullet inside another one.
 
-   The photograph is doing argument, not decoration: a woman in her fifties
-   carrying a sandbag outdoors at dawn is the clearest possible answer to "is
-   this for people like me?" — no event, no arena, no twenty-five-year-old.
-   It sits beside the copy rather than behind it, so nothing is read over a
-   photograph. */
+   The photograph is doing argument, not decoration: someone in their fifties
+   carrying a sandbag along a path on an ordinary morning is the clearest
+   possible answer to "is this for people like me?" — no event, no arena, no
+   twenty-five-year-old. It sits beside the copy rather than behind it, so
+   nothing is read over a photograph. */
 export default function TrainYourWaySection({ surface = SURFACE_SAND }) {
   return (
     <section className="uh-rule px-6 py-24 sm:px-8 sm:py-32" style={{ background: surface }}>
@@ -40,19 +40,23 @@ export default function TrainYourWaySection({ surface = SURFACE_SAND }) {
             <p className="type-body mt-7 text-ink-70">{trainYourWay.closer}</p>
           </div>
 
-          {/* Portrait original (864x1821), shown at 4:5 and anchored high so the
-              crop keeps her head and the load on her shoulder rather than
-              centring on her knees. Given a column of its own rather than
-              squeezed between two blocks of copy — at a third of the width it
-              read as a thumbnail, which is not what an image making an argument
-              should look like. */}
+          {/* Native 4:5, shown at 4:5, so there is no crop at all: the whole
+              frame from the top of her head to the ground is the picture.
+              Given a column of its own rather than squeezed between two blocks
+              of copy — at a third of the width it read as a thumbnail, which is
+              not what an image making an argument should look like.
+
+              `sizes` is the column, not the viewport: 47.5% of a 1280px content
+              width less the 80px gap on lg, full width once the grid stacks. */}
           <Photograph
-            file="why-enter-lifestyle.jpg"
-            alt="A woman in her fifties carrying a sandbag on her shoulder, training outdoors on a frosty morning."
+            set="uhi-home-train-your-way"
+            widths={[560, 1120]}
+            sizes="(min-width: 1024px) 41vw, calc(100vw - 3rem)"
+            alt="Someone carrying a weighted sandbag on one shoulder, walking a path outdoors on a bright autumn morning."
             ratio="aspect-[4/5]"
-            position="52% 24%"
-            width={864}
-            height={1821}
+            grade="none"
+            width={1120}
+            height={1400}
           />
         </div>
       </div>
