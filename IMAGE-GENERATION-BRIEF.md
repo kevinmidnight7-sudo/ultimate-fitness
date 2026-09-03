@@ -7,12 +7,14 @@ imagery.
 
 ## 0. Status — what has landed (Sep 2026)
 
-**Four of the six are live. They are the production set; the rest are
+**Five of the six are live. They are the production set; the sixth is
 deferred, not outstanding work.**
 
-Ken supplied nine generated frames and chose four of them. They were re-encoded
-here, placed, and cropped against the real frames at every breakpoint. Nothing
-is waiting on anything to ship.
+Ken supplied nine generated frames. Four were chosen first; a fifth was added
+when he pointed out that the Challenges page was still carrying a photograph
+from the event-first site. They were re-encoded here, placed, and cropped
+against the real frames at every breakpoint. Nothing is waiting on anything to
+ship.
 
 | Page | File base | Source | Shipped renditions | Slot |
 | --- | --- | --- | --- | --- |
@@ -20,9 +22,11 @@ is waiting on anything to ship.
 | How It Works | `uhi-how-it-works-farmers-carry` | 1915x821 PNG, 1.66 MB | 1600w — AVIF / WebP / JPEG | `ExerciseLibrarySection`, right column beside the introduction |
 | Improve | `uhi-improve-balance` | 1122x1402 PNG, 1.72 MB | 480w, 960w — AVIF / WebP / JPEG | `CoachingSection`, left column, native 4:5, uncropped |
 | For Gyms | `uhi-for-gyms-community` | 1824x862 PNG, 1.81 MB | 760w, 1824w — AVIF / WebP / JPEG | `GymCommunitySection` (new), a contained band between the pitch and the benefits |
+| Challenges | `uhi-challenges-morning-run` | 1536x1024 PNG, 2.14 MB | 768w, 1536w — AVIF / WebP / JPEG | `ChallengeBreakSection`, a centred plate at `max-w-5xl` |
 
-All four use `grade="none"` — they are shot warm and the CSS grade is off.
-All four sit in a box that reserves its own space, so nothing moves when they
+All five use `grade="none"` — they are shot warm and the CSS grade is off. No
+live image on the site uses the warm grade any more.
+All five sit in a box that reserves its own space, so nothing moves when they
 arrive; measured CLS is 0.03 or lower on each page with the images held back
 past first paint.
 
@@ -42,39 +46,50 @@ supplied PNG each time rather than from another encode:
 | JPEG | `quality: 82, mozjpeg, progressive, '4:2:0'` | 28–152 KB |
 
 A browser downloads one file per image, so a page costs one AVIF: 63 KB on
-Home, 28 KB on How It Works, 27 KB on Improve, 48 KB on For Gyms. All 21 files
-together are 1.1 MB in the repository, against 7.7 MB for the four PNGs they
-came from.
+Home, 28 KB on How It Works, 27 KB on Improve, 48 KB on For Gyms, 52 KB on
+Challenges. All 27 files together are 1.4 MB in the repository, against 9.8 MB
+for the five PNGs they came from.
 
 ### Deferred
 
-Both of these have a specification below that still stands. Neither is a gap in
-the current site.
+- **02 "The long way round" (The Index)** — its specification below still
+  stands, and it is not a gap in the current site. The Index page carries the
+  profile component, which is the densest thing on the site; it does not need
+  an image to stop it feeling empty, and the empty-page problem this phase was
+  solving was on the longer prose pages.
 
-- **02 "The long way round" (The Index)** — The Index page carries the profile
-  component, which is the densest thing on the site. It does not need an image
-  to stop it feeling empty, and the empty-page problem this phase was solving
-  was on the longer prose pages.
-- **06 "Somewhere in the middle" (Challenges)** — Challenges keeps
-  `challenge-fatigue-moment.jpg`, which already makes the argument that section
-  needs (an athlete recovering, alone, not on a start line). Replacing a working
-  image was not worth a fifth generation round.
+### The four supplied frames that are not placed
 
-### Coverage the delivered four do not carry
+They are in this repository's history (commit `a150044^`) and on `main`, not in
+`public/`. Extract one with
+`git show a150044^:"public/images/marketing/ChatGPT Image Sep 2, 2026, <name>.png"`.
 
-Stated plainly rather than quietly dropped, because this was the point of the
+| Frame | Subject | Why it is not placed |
+| --- | --- | --- |
+| `10_54_41 PM (6)` | **A woman with a below-knee prosthesis, loaded step-up onto a box.** 1122x1402 portrait | **The one that matters.** See below. |
+| `10_54_18 PM (2)` | Lateral lunge, studio. 1122x1402 portrait | Mobility again, and Improve already has the balance reach |
+| `10_54_38 PM (2)` | Farmers carry, light hall. 1536x1024 | Same movement as How It Works |
+| `10_54_39 PM (3)` | Farmers carry, wide. 1915x821 | Same movement as How It Works |
+
+### Coverage the delivered five do not carry
+
+Stated plainly rather than quietly dropped, because this is the point of the
 brief:
 
-- **No adaptive athlete anywhere in the set.** The brief put a wheelchair user
-  in 02 and an amputee in 05; the frames Ken chose have neither. Disability is
-  not represented in the site's photography at all today.
-- **The Index and Challenges** keep the coverage they had.
+- **No adaptive athlete is on the site.** The brief asked for a wheelchair user
+  in 02 and an amputee in 05. Ken **did** supply an amputee frame —
+  `10_54_41 PM (6)`, a woman with a below-knee prosthesis doing a loaded
+  step-up — and it is simply unplaced. This is a decision about where it goes, not a missing asset,
+  and it is the single most valuable thing left to do to this set. The Index is
+  the obvious home: it is the one page with no photograph and the frame is
+  portrait.
+- **The Index** keeps the coverage it had, which is none.
 
-What the four do carry between them: two people over sixty, two women, a
+What the five carry between them: two people over sixty, three women, a
 larger-bodied person, four ethnicities, outdoor / studio / gym settings, and one
-group of three against three solo frames. That is a long way from "the same lean
-twenty-five-year-old three times". It is not the whole of what section 6 asked
-for.
+group of three against four solo frames. That is a long way from "the same lean
+twenty-five-year-old three times". It is not yet the whole of what section 6
+asked for.
 
 ---
 
@@ -439,7 +454,7 @@ score — supervised, supported, and open to whoever walks in.
 
 ---
 
-### 06 — "Somewhere in the middle" — DEFERRED (see section 0)
+### 06 — "Somewhere in the middle" — DELIVERED (see section 0)
 
 | Field | Specification |
 | --- | --- |
@@ -537,8 +552,9 @@ that disability reads as ordinary in this set rather than as a single gesture.
 
 ## 8. Still open
 
-- **An adaptive athlete.** Nothing in the delivered four shows one. If only one
-  more frame is ever generated, this is the one.
+- **An adaptive athlete.** Nothing on a live page shows one, but the frame
+  exists — `10_54_41 PM (6)`, in history. It needs a page, and The Index is the
+  obvious candidate. Nothing needs generating.
 - **`hero-athlete-primary.jpg` and `why-enter-lifestyle.jpg`** are no longer on
   any live page — 03 and 01 replaced them. They stay in the repository because
   the archived event-first sections still reference them, and those sections are

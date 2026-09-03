@@ -151,18 +151,24 @@ Reskinning the site is a change to that one block.
 Use `<Photograph>` — it handles the reserved box, lazy loading, the crop anchor,
 the format ladder and the warm grade in one place, and it requires `alt`.
 
-- **Five images today, chosen to carry an argument.** Four campaign frames —
-  a sandbag carry outdoors on the home page (answers "is this for people like
-  me?"), a farmers carry beside the exercise library (a movement that is
-  actually in the list), a single-leg balance reach on Improve (one of the four
-  worked examples), a group of three on For Gyms — plus the full-bleed break
-  kept on Challenges. Not one per page, and not decoration. The Index,
-  Membership and About have none, deliberately.
+- **Five images today, all from the campaign set, chosen to carry an
+  argument.** A sandbag carry outdoors on the home page (answers "is this for
+  people like me?"), a farmers carry beside the exercise library (a movement
+  that is actually in the list), a single-leg balance reach on Improve (one of
+  the four worked examples), a group of three on For Gyms, a solo morning run
+  on Challenges (a run, not a start line — the page's point is that events are
+  optional). Not one per page, and not decoration. The Index, Membership and
+  About have none, deliberately.
 - **They alternate.** Home right, How It Works right, Improve left, For Gyms a
-  full-width band. Three identical splits in a row read as a template.
-- `grade="none"` on all four campaign images. They are shot warm; the built-in
-  grade exists to rescue the cool stock still on Challenges, and warming an
-  already-warm image twice makes it muddy.
+  full-width band, Challenges a centred plate. Three identical splits in a row
+  read as a template.
+- **No live image uses the warm grade any more** — `grade="none"` on all five.
+  They are shot warm, and warming an already-warm image twice makes it muddy.
+  The grade exists for the cool blue-grey stock from the event-first site,
+  which is now only referenced from `archived/`.
+- **Nothing shot in the old dark key stays on a live page.** The Challenges
+  break used to be `challenge-fatigue-moment.jpg`, a near-black gym photograph;
+  next to the campaign set it read as a different brand, and Ken said so.
 - **Sized renditions, not one file.** The campaign images ship as
   `<base>-<width>.{avif,webp,jpg}` and are called with `set` + `widths`, which
   renders a `<picture>`. `sizes` describes the **box**, not the rendered image —
@@ -170,19 +176,23 @@ the format ladder and the warm grade in one place, and it requires `alt`.
   box width, and a srcset resolved against the box then picks a rendition the
   browser upscales. Where the crop is heavy (How It Works, 2.33:1 into 1.6:1),
   ship one honest width instead.
-- **What is left to shoot** is in `IMAGE-GENERATION-BRIEF.md` §0. Two of the six
-  specified frames are deferred, not missing; the one real gap is that no
-  adaptive athlete appears anywhere in the set. Do not add archive photography
-  to fill it, and do not build empty slots for images that have not arrived.
+- **What is left to place** is in `IMAGE-GENERATION-BRIEF.md` §0. One of the
+  six specified frames (02, The Index) is deferred, not missing. Four of the
+  nine frames Ken supplied are unplaced and stay in git history rather than in
+  `public/` — **one of them shows an amputee athlete**, and until it is placed
+  no adaptive athlete appears anywhere on the site. That is a placement
+  decision for Ken, not a missing asset. Do not add archive photography to fill
+  it, and do not build empty slots for images that have not arrived.
 - `priority` sets both `loading="eager"` and `fetchpriority="high"`. Nothing
   above the fold uses an image today.
 - **`movement-analysis-still.jpg` is deliberately unused.** It is saturated
   with the old lime, and it is a picture of joint tracking — the exact feature
   that is still in development. Retinting would fix the first problem and not
   the second.
-- `hero-athlete-primary.jpg` and `why-enter-lifestyle.jpg` are off every live
-  page but stay in the repository: `src/sections/archived/` still points at
-  them, and the archive is meant to stay restorable.
+- `hero-athlete-primary.jpg`, `why-enter-lifestyle.jpg` and
+  `challenge-fatigue-moment.jpg` are off every live page but stay in the
+  repository: `src/sections/archived/` still points at all three, and the
+  archive is meant to stay restorable.
 - `converge-left.png` / `converge-right.png` are cut-outs built for the
   archived pinned scene. Leave them there.
 - Neither OG card is page content.
