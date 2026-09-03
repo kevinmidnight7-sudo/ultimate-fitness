@@ -159,9 +159,14 @@ the format ladder and the warm grade in one place, and it requires `alt`.
   on Challenges (a run, not a start line — the page's point is that events are
   optional). Not one per page, and not decoration. The Index, Membership and
   About have none, deliberately.
-- **They alternate.** Home right, How It Works right, Improve left, For Gyms a
-  full-width band, Challenges a centred plate. Three identical splits in a row
-  read as a template.
+- **They alternate.** Home right, How It Works right, Improve left, For Gyms
+  and Challenges full-width bands. Three identical splits in a row read as a
+  template.
+- **Measure the subject before choosing a ratio; do not eyeball it.** The
+  Challenges runner occupies 88% of her frame's height, so the widest band she
+  survives is 1.70:1 — 16:9 takes the top of her head. Crop a ruled strip of
+  the original (`scratchpad/shots/headscan.png` shows the method) and read the
+  percentages off it. Two wrong guesses shipped a clipped crown.
 - **No live image uses the warm grade any more** — `grade="none"` on all five.
   They are shot warm, and warming an already-warm image twice makes it muddy.
   The grade exists for the cool blue-grey stock from the event-first site,

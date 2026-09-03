@@ -22,7 +22,7 @@ ship.
 | How It Works | `uhi-how-it-works-farmers-carry` | 1915x821 PNG, 1.66 MB | 1600w — AVIF / WebP / JPEG | `ExerciseLibrarySection`, right column beside the introduction |
 | Improve | `uhi-improve-balance` | 1122x1402 PNG, 1.72 MB | 480w, 960w — AVIF / WebP / JPEG | `CoachingSection`, left column, native 4:5, uncropped |
 | For Gyms | `uhi-for-gyms-community` | 1824x862 PNG, 1.81 MB | 760w, 1824w — AVIF / WebP / JPEG | `GymCommunitySection` (new), a contained band between the pitch and the benefits |
-| Challenges | `uhi-challenges-morning-run` | 1536x1024 PNG, 2.14 MB | 768w, 1536w — AVIF / WebP / JPEG | `ChallengeBreakSection`, a centred plate at `max-w-5xl` |
+| Challenges | `uhi-challenges-morning-run` | 1536x1024 PNG, 2.14 MB | 768w, 1536w — AVIF / WebP / JPEG | `ChallengeBreakSection`, a 5:3 band at the full content width |
 
 All five use `grade="none"` — they are shot warm and the CSS grade is off. No
 live image on the site uses the warm grade any more.
@@ -52,6 +52,13 @@ for the five PNGs they came from.
 
 ### Deferred
 
+- **A wide letterbox frame for Challenges.** `uhi-challenges-morning-run` is
+  3:2 and the runner occupies 88% of its height (hair at 7%, trailing shoe at
+  95%), so nothing wider than 1.70:1 can be cut from it — 16:9 takes the top of
+  her head and 2:1 takes all of it. It is placed at 5:3, which is the ceiling.
+  A true 21:9 or 2:1 band on this page needs a frame composed for one, with the
+  subject sitting in the middle third of the height. Worth adding to any future
+  generation round.
 - **02 "The long way round" (The Index)** — its specification below still
   stands, and it is not a gap in the current site. The Index page carries the
   profile component, which is the densest thing on the site; it does not need
